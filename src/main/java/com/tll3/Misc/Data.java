@@ -10,7 +10,7 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class Data {
 
-    //Entities
+    //Entities or player
     public static NamespacedKey key(String key) {
         return new NamespacedKey(GenericUtils.getPlugin(), key);
     }
