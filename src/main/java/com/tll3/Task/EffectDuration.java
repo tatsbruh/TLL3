@@ -1,6 +1,6 @@
 package com.tll3.Task;
 
-import com.tll3.Misc.Data;
+import com.tll3.Misc.DataManager.Data;
 import org.bukkit.entity.Player;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;

@@ -1,5 +1,6 @@
 package com.tll3.Misc;
 
+import com.tll3.Misc.DataManager.Data;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;

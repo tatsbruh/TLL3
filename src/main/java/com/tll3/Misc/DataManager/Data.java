@@ -1,6 +1,7 @@
-package com.tll3.Misc;
+package com.tll3.Misc.DataManager;
 
 import com.tll3.Misc.Files.CreateFile;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.TLL3;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Player;
