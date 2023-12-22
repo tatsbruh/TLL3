@@ -3,6 +3,7 @@ package com.tll3;
 import co.aikar.commands.PaperCommandManager;
 import com.tll3.Commands.staffCMD;
 import com.tll3.Listeners.GenericPlayerListeners;
+import com.tll3.Listeners.GlobalListeners;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import org.bukkit.entity.Player;
@@ -48,7 +49,8 @@ public final class TLL3 extends JavaPlugin {
     public void loadListeners(){
         registerListeners(
                 new CraftingEvents(),
-                new GenericPlayerListeners()
+                new GenericPlayerListeners(),
+                new GlobalListeners()
         );
     }
 
