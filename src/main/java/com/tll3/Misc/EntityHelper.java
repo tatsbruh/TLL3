@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class EntityHelper {
+    //A easier way to setup entities, instead of going in annoying ways
     public static void setName(LivingEntity entity, String name){
         entity.setCustomName(ChatUtils.format(name));
     }

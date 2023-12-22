@@ -18,22 +18,32 @@ public class Scoreboard extends BukkitRunnable {
 
     @Override
     public void run() {
-        scoreHelper.setTitle(ChatUtils.format("&6&lThe Last Life 3"));
-        scoreHelper.setSlot(9,"§");
-        checkForEffect();
+        scoreHelper.setTitle(ChatUtils.format("&4&k|||&6The Last Life 3&4&k|||"));
+        checkForEffectSlot1();
+        checkForEffectSlot2();
 
     }
 
-    public void checkForEffect(){
+    public void checkForEffectSlot1(){
         if(Data.has(p,"curse", PersistentDataType.STRING)){
             var timeInSeconds = Data.get(p, "curse_d", PersistentDataType.INTEGER);
             var minutes = timeInSeconds / 60;
             var seconds = timeInSeconds % 60;
             var formattedTime = String.format("%02d:%02d", minutes, seconds);
-            scoreHelper.setSlot(8, "&4&lCurse: &f" + formattedTime);
+            scoreHelper.setSlot(9, "&4&lCurse: &f" + formattedTime);
+        }else{
+            scoreHelper.removeSlot(9);
+        }
+    }
+    public void checkForEffectSlot2(){
+        if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
+            var timeInSeconds = Data.get(p, "invulnerable_d", PersistentDataType.INTEGER);
+            var minutes = timeInSeconds / 60;
+            var seconds = timeInSeconds % 60;
+            var formattedTime = String.format("%02d:%02d", minutes, seconds);
+            scoreHelper.setSlot(8, "&7&lInvulnerable: &f" + formattedTime);
         }else{
             scoreHelper.removeSlot(8);
         }
     }
-
 }

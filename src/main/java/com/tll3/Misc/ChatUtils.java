@@ -6,6 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatUtils {
+    //aesthethic
     private static final Pattern pattern = Pattern.compile("#[a-fA-F0-9]{6}");
     public static String format(String s) {
         s = s.replace("#&", "#");
