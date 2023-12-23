@@ -2,6 +2,7 @@ package com.tll3;
 
 import co.aikar.commands.PaperCommandManager;
 import com.tll3.Commands.staffCMD;
+import com.tll3.Listeners.GenericEntityListeners;
 import com.tll3.Listeners.GenericPlayerListeners;
 import com.tll3.Listeners.GlobalListeners;
 import com.tll3.Misc.Crafting.CraftingEvents;
@@ -50,7 +51,8 @@ public final class TLL3 extends JavaPlugin {
         registerListeners(
                 new CraftingEvents(),
                 new GenericPlayerListeners(),
-                new GlobalListeners()
+                new GlobalListeners(),
+                new GenericEntityListeners()
         );
     }
 

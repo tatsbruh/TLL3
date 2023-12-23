@@ -19,8 +19,20 @@ public class Entities {
 
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);
-        setHead(s,new ItemStack(Material.END_GATEWAY));
+        setMobRange(s,100);
+        setHead(s,new ItemStack(Material.END_PORTAL_FRAME));
+        setChestplate(s,new ItemStack(Material.NETHERITE_CHESTPLATE));
+        setIdentifierString(s,"void_overseer");
+    }
 
+    public static void railGun(WitherSkeleton s){
+        setMobHealth(s,35);
+        setMobRange(s,100);
+        setHead(s,new ItemStack(Material.TINTED_GLASS));
+        setChestplate(s,new ItemStack(Material.DIAMOND_CHESTPLATE));
+        setMainHand(s,new ItemStack(Material.BOW));
+        setIdentifierString(s,"railgunner");
+        setIdentifierInt(s,"rl_charge",0);
     }
 
     public void summonBarrier(Location loc){
