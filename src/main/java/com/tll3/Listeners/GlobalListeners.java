@@ -1,8 +1,88 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.Entities;
+import com.tll3.Misc.DataManager.Data;
+import com.tll3.Misc.EntityHelper;
+import net.minecraft.server.level.WorldServer;
+import net.minecraft.world.level.LevelHeightAccessor;
+import net.minecraft.world.level.biome.BiomeBase;
+import net.minecraft.world.level.biome.BiomeManager;
+import net.minecraft.world.level.biome.BiomeSettingsMobs;
+import org.bukkit.GameMode;
+import org.bukkit.RegionAccessor;
+import org.bukkit.block.Biome;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.event.world.WorldInitEvent;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffectType;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class GlobalListeners implements Listener {
+
+    @EventHandler
+    public void damageE(EntityDamageEvent e){
+        var entity = e.getEntity();
+        var reason = e.getCause();
+        if(entity instanceof Player p){
+            if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
+                e.setCancelled(true);
+            }
+            if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
+        }
+
+        if(entity instanceof Blaze && reason == EntityDamageEvent.DamageCause.DROWNING){
+            e.setCancelled(true);
+        }
+
+        if(entity instanceof Enemy){
+          if(e instanceof EntityDamageByEntityEvent event){
+              if (event.getDamager() instanceof Enemy) {
+                  event.setCancelled(true);
+              }
+          }
+        }
+    }
+
+
+    @EventHandler
+    public void chunkthing(ChunkLoadEvent e){
+        for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
+            if(liv instanceof Pig p){
+                p.remove();
+                PiglinBrute pg = (PiglinBrute) Entities.spawnMob(p.getLocation(),EntityType.PIGLIN_BRUTE);
+                pg.setImmuneToZombification(true);
+            }
+            if(liv instanceof Cow w){
+                w.remove();
+                Ravager r = (Ravager) Entities.spawnMob(w.getLocation(),EntityType.RAVAGER);
+                r.setCanJoinRaid(false);
+            }
+            if(liv instanceof Sheep s){
+                s.remove();
+                Blaze c = (Blaze) Entities.spawnMob(s.getLocation(),EntityType.BLAZE);
+            }
+            if(liv instanceof Chicken s){
+                s.remove();
+                Silverfish c = (Silverfish)Entities.spawnMob(s.getLocation(),EntityType.SILVERFISH);
+                EntityHelper.addPotionEffect(c, PotionEffectType.SPEED,2);
+            }
+            if(liv instanceof Horse  || liv instanceof Donkey  || liv instanceof Mule){
+                liv.remove();
+                SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(),EntityType.SKELETON_HORSE);
+                h.setTrapped(true);
+            }
+        }
+
+    }
 
 
 }

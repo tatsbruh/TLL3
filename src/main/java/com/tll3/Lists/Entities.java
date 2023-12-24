@@ -35,6 +35,10 @@ public class Entities {
         setIdentifierInt(s,"rl_charge",0);
     }
 
+    public static void timeS(Creeper c){
+        setIdentifierString(c,"time_sand");
+    }
+
     public void summonBarrier(Location loc){
         EnderCrystal c = (EnderCrystal) spawnMob(loc,EntityType.ENDER_CRYSTAL);
         c.setShowingBottom(false);

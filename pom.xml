@@ -80,5 +80,11 @@
             <artifactId>acf-paper</artifactId>
             <version>0.5.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot</artifactId>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>

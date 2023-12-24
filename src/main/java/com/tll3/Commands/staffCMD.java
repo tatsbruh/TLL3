@@ -5,13 +5,11 @@ import co.aikar.commands.annotation.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
-import org.bukkit.entity.WitherSkeleton;
+import org.bukkit.entity.*;
 
 @CommandAlias("staff")
 public class staffCMD extends BaseCommand {
@@ -40,7 +38,7 @@ public class staffCMD extends BaseCommand {
         }
     }
     @Subcommand("summon")
-    @CommandCompletion("void_overseer|railgunner")
+    @CommandCompletion("void_overseer|railgunner|sand_time")
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
@@ -48,6 +46,7 @@ public class staffCMD extends BaseCommand {
             switch (args[0].toLowerCase()){
                 case "void_overseer" -> Entities.voidOver((Skeleton) Entities.spawnMob(p.getLocation(), EntityType.SKELETON));
                 case "railgunner" -> Entities.railGun((WitherSkeleton) Entities.spawnMob(p.getLocation(),EntityType.WITHER_SKELETON));
+                case "sand_time" -> Entities.timeS((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }
         }
@@ -59,6 +58,17 @@ public class staffCMD extends BaseCommand {
     public void boss(CommandSender sender,String[] args){
         if (sender instanceof Player p ){
             new BossTask().runTaskTimer(TLL3.getInstance(),0L,1L);
+        }
+    }
+    @Subcommand("day")
+    @CommandPermission("staff.admin")
+    @Description("sets the day")
+    public void setday(CommandSender sender,String[] args){
+        if (sender instanceof Player p ){
+            int day = Integer.parseInt(args[0]);
+
+            if(day < 0)return;
+            GenericUtils.setDays(String.valueOf(day));
         }
     }
 }

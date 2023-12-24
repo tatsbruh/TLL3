@@ -5,6 +5,7 @@ import com.tll3.TLL3;
 import com.tll3.Task.EffectDuration;
 import com.tll3.Task.EffectTask;
 import com.tll3.Task.Scoreboard;
+import org.bukkit.GameMode;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,23 +18,20 @@ import org.bukkit.persistence.PersistentDataType;
 
 public class GenericPlayerListeners implements Listener {
 
+
+
+
+
     @EventHandler
     public void joinL(PlayerJoinEvent e){
         var p = e.getPlayer();
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
         new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
+
     }
 
-    @EventHandler
-    public void damageE(EntityDamageEvent e){
-        var entity = e.getEntity();
-        if(entity instanceof Player p){
-            if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
-                e.setCancelled(true);
-            }
-        }
-    }
+
 
 
 }

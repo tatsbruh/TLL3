@@ -2,9 +2,7 @@ package com.tll3;
 
 import co.aikar.commands.PaperCommandManager;
 import com.tll3.Commands.staffCMD;
-import com.tll3.Listeners.GenericEntityListeners;
-import com.tll3.Listeners.GenericPlayerListeners;
-import com.tll3.Listeners.GlobalListeners;
+import com.tll3.Listeners.*;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import org.bukkit.entity.Player;
@@ -16,6 +14,7 @@ public final class TLL3 extends JavaPlugin {
 
 
     private static TLL3 plugin;
+    public static boolean playingAnim = false;
     public static String cf = "[TheLastLife] >>> "; //console format
     public static TLL3 getInstance(){return plugin;}
     @Override
@@ -51,10 +50,14 @@ public final class TLL3 extends JavaPlugin {
         registerListeners(
                 new CraftingEvents(),
                 new GenericPlayerListeners(),
+                new PlayerDeathListeners(),
                 new GlobalListeners(),
-                new GenericEntityListeners()
+                new GenericEntityListeners(),
+                new EntityNaturalSpawn(),
+                new MonsoonListeners()
         );
     }
+
 
     public void loadCommands(){
         PaperCommandManager commandManager = new PaperCommandManager(this);

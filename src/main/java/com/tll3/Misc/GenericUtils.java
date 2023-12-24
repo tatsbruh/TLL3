@@ -1,5 +1,6 @@
 package com.tll3.Misc;
 
+import com.tll3.Misc.Files.ConfigData;
 import com.tll3.TLL3;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -7,10 +8,23 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 public class GenericUtils {
     private static final Plugin plugin = TLL3.getPlugin(TLL3.class);
+
+    private static LocalDate actualDate = LocalDate.now();
+    private static LocalDate startDate = LocalDate.parse(ConfigData.getConfig("start_date",""));
+
+    public static int getDay(){
+        return (int) ChronoUnit.DAYS.between(startDate, actualDate);
+    };
+    public static World getWorld(){
+        return Bukkit.getWorld("world");
+    }
+
     public static Plugin getPlugin() {
         return plugin;
     }
@@ -25,5 +39,39 @@ public class GenericUtils {
         double z = center.getZ() + (new Random().nextDouble() * 2 - 1) * radius; //Creates a random Y around the radius
 
         return new Location(world, x, world.getHighestBlockYAt((int) x, (int) z), z); //returns a random location of said thing
+    }
+    public static void setDays(String args1) {
+        int nD;
+        try {
+            nD = Math.max(0, Math.min(60, Integer.parseInt(args1)));
+        } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+            return;
+        }
+        LocalDate add = LocalDate.now().minusDays(nD);
+        int month = add.getMonthValue();
+        int day = add.getDayOfMonth();
+        String s;
+        if (month < 10) {
+            s = add.getYear() + "-0" + month + "-";
+        } else {
+            s = add.getYear() + "-" + month + "-";
+        }
+
+        if (day < 10) {
+            s = s + "0" + day;
+        } else {
+            s = s + day;
+        }
+        startDate = LocalDate.parse(s);
+        ConfigData.setConfig("start_date",s);
+    }
+
+    public static String doTimeFormat(int i){
+        int hours = i / 3600;
+        int remainingSeconds = i % 3600;
+        int minutes = remainingSeconds / 60;
+        int seconds = remainingSeconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 }
