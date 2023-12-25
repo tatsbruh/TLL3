@@ -57,7 +57,8 @@ public class EntityNaturalSpawn implements Listener {
         if(entity instanceof CustomCreeper)return;
         switch (entity.getType()){
             case CREEPER -> {
-                if(getDay() >= 5 && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
+                if(getDay() >= 5 && (reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.EGG)){
+                    e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomCreeper cC = new CustomCreeper(worldServer);
                     cC.a_(loc.getX(),loc.getY(),loc.getZ());

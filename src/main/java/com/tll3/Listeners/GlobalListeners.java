@@ -1,5 +1,6 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
@@ -17,6 +18,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -64,8 +66,9 @@ public class GlobalListeners implements Listener {
 
     @EventHandler
     public void chunkthing(ChunkLoadEvent e){
-        if(getDay() >= 15) {
+
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
+                if(getDay() >= 15) {
                 if (liv instanceof Pig p) {
                     p.remove();
                     PiglinBrute pg = (PiglinBrute) Entities.spawnMob(p.getLocation(), EntityType.PIGLIN_BRUTE);
@@ -91,6 +94,16 @@ public class GlobalListeners implements Listener {
                     h.setTrapped(true);
                 }
             }
+                if(getDay() >= 5) {
+                    if(liv instanceof CustomCreeper)return;
+                    if(liv instanceof Creeper c){
+                        WorldServer worldServer = ((CraftWorld)c.getLocation().getWorld()).getHandle();
+                        CustomCreeper cC = new CustomCreeper(worldServer);
+                        cC.a_(c.getLocation().getX(),c.getLocation().getY(),c.getLocation().getZ());
+                        worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        c.remove();
+                    }
+                }
         }
     }
 

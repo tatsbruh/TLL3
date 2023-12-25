@@ -2,14 +2,19 @@ package com.tll3.Commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import com.tll3.Lists.CustomEntities.CustomCreeper;
+import com.tll3.Lists.CustomEntities.CustomGuardian;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
+import net.minecraft.server.level.WorldServer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 
 @CommandAlias("staff")
 public class staffCMD extends BaseCommand {
@@ -42,12 +47,20 @@ public class staffCMD extends BaseCommand {
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
+
         if (sender instanceof Player p && args.length > 0){
+            var loc = p.getLocation();
             switch (args[0].toLowerCase()){
                 case "zombie_ninja" -> Entities.zNinka((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "void_overseer" -> Entities.voidOver((Skeleton) Entities.spawnMob(p.getLocation(), EntityType.SKELETON));
                 case "railgunner" -> Entities.railGun((WitherSkeleton) Entities.spawnMob(p.getLocation(),EntityType.WITHER_SKELETON));
                 case "sand_time" -> Entities.timeS((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
+                case "super_guardian" ->{
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomGuardian customGuardian = new CustomGuardian(worldServer);
+                    customGuardian.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(customGuardian, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }
         }
