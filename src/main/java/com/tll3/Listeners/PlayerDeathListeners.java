@@ -24,7 +24,8 @@ public class PlayerDeathListeners implements Listener {
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
         for(Player sp : Bukkit.getOnlinePlayers()){
-            doDeathAnimation(sp);
+            doDeathAnimation1(sp);
+            sp.sendMessage(ChatUtils.format("#63513aEl jugador #fad19b" + p.getName() + " #63513aa perdido su ultima vida!"));
         }
 
         new BukkitRunnable() {
@@ -47,10 +48,12 @@ public class PlayerDeathListeners implements Listener {
                         int targetTime = 18000;
 
                         if (time == targetTime) {
-                            int storm_time = world.isThundering() ? world.getWeatherDuration() / 20 + GenericUtils.getDay() * 900 : GenericUtils.getDay() * 900;
+                            int stormDurationInTicks = 18000; // 15 minutos en ticks
+                            int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
                             String setThunder = "weather thunder " + storm_time;
                             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
                             for (Player sp : Bukkit.getOnlinePlayers()) {
+                                sp.sendMessage(setThunder);
                                 sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"),ChatUtils.format("#4d52d1☂ Duracion: " + GenericUtils.doTimeFormat(storm_time) + " ☂"),0,80,0);
                             }
                             Bukkit.getPluginManager().callEvent(new Monsoon.StartMonsoon(Monsoon.StartMonsoon.Cause.DEATH));
@@ -64,16 +67,14 @@ public class PlayerDeathListeners implements Listener {
             }
 
 
-        }.runTaskLater(TLL3.getInstance(), 50L);
+        }.runTaskLater(TLL3.getInstance(), 100L);
 
 
 
     }
 
 
-    public void doDeathAnimation(Player p) {
-        if(!playingAnim) {
-            playingAnim = true;
+    public void doDeathAnimation1(Player p) {
             new BukkitRunnable() {
                 int i = 1;
                 String title = "\\uE" + i + "\\";
@@ -89,7 +90,6 @@ public class PlayerDeathListeners implements Listener {
                     }
                 }
             }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
-        }
 
     }
 

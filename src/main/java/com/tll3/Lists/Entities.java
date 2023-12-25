@@ -1,6 +1,7 @@
 package com.tll3.Lists;
 
 import com.tll3.Misc.DataManager.Data;
+import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
@@ -8,14 +9,46 @@ import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.security.Guard;
 import java.util.Locale;
 import static com.tll3.Misc.EntityHelper.*;
 
 public class Entities {
+    /*
+    * Day 5 mobs
+    * */
+
+    public static void creChr(Creeper c){
+        setName(c,"&bSupercharged Creeper");
+        c.setPowered(true);
+    }
+
+    public static void skeW(Skeleton s){
+        setName(s,"#024f3cSkeleton Warden");
+        setHead(s,new ItemStack(Material.BLAST_FURNACE));
+        setChestplate(s,new ItemStack(Material.IRON_CHESTPLATE));
+        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,9).build());
+    }
+
+    public static void zNinka(Zombie z){
+        setName(z,"&7Ninja Zombie");
+        setMobHealth(z,25);
+        setMobDamage(z,6);
+        addPotionEffect(z, PotionEffectType.INVISIBILITY,0);
+        addPotionEffect(z, PotionEffectType.SPEED,2);
+        addPotionEffect(z,PotionEffectType.JUMP,2);
+        z.setSilent(true);
+        z.setShouldBurnInDay(false);
+        setIdentifierString(z,"zninja");
+    }
+
+
 
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);

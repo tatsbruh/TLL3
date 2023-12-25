@@ -2,6 +2,8 @@ package com.tll3.Misc;
 
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.TLL3;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -17,10 +19,12 @@ public class GenericUtils {
 
     private static LocalDate actualDate = LocalDate.now();
     private static LocalDate startDate = LocalDate.parse(ConfigData.getConfig("start_date",""));
+    public static @Getter String monsoon_active = ConfigData.getConfig("monsoon_active","");
 
     public static int getDay(){
         return (int) ChronoUnit.DAYS.between(startDate, actualDate);
     };
+
     public static World getWorld(){
         return Bukkit.getWorld("world");
     }
@@ -66,12 +70,18 @@ public class GenericUtils {
         startDate = LocalDate.parse(s);
         ConfigData.setConfig("start_date",s);
     }
+    public static void setMonsoonActive(String args1){
+        monsoon_active = args1;
+        ConfigData.setConfig("monsoon_active",args1);
+    }
+
+
 
     public static String doTimeFormat(int i){
-        int hours = i / 3600;
-        int remainingSeconds = i % 3600;
+        int seconds = i / 20; // Convert ticks to seconds
+        int hours = seconds / 3600;
+        int remainingSeconds = seconds % 3600;
         int minutes = remainingSeconds / 60;
-        int seconds = remainingSeconds % 60;
-        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+        return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds % 60);
     }
 }

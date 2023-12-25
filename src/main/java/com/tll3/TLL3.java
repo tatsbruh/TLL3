@@ -5,9 +5,12 @@ import com.tll3.Commands.staffCMD;
 import com.tll3.Listeners.*;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
+import com.tll3.Misc.GenericUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 //TODO Please, promise me that you won't make a mess just like last time, okay? - 17/12/23
 public final class TLL3 extends JavaPlugin {
@@ -23,9 +26,11 @@ public final class TLL3 extends JavaPlugin {
         //*sigh*
         plugin = this;
         console(cf + "Plugin activado correctamente");
-        ConfigData.setConfig("active","true");
         loadListeners();
         loadCommands();
+        if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
+            MonsoonListeners.createBossBar();
+        }
 
     }
 

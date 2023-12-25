@@ -11,8 +11,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import java.util.Objects;
 
 public class GenericEntityListeners implements Listener {
 
@@ -50,11 +53,11 @@ public class GenericEntityListeners implements Listener {
                     s.getLocation().getWorld().spawnParticle(
                             Particle.FLAME,
                             projectile.getLocation(),
-                            30,
+                            20,
                             0,
                             0,
                             0,
-                            1
+                            0.1
                     );
                     e.setCancelled(true);
                     s.getLocation().getWorld().playSound(s.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 10.0F, -1.0F);
@@ -63,11 +66,11 @@ public class GenericEntityListeners implements Listener {
                     s.getLocation().getWorld().spawnParticle(
                             Particle.FLAME,
                             projectile.getLocation(),
-                            30,
+                            20,
                             0,
                             0,
                             0,
-                            -1
+                            -0.1
                     );
                     s.getLocation().getWorld().playSound(s.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 10.0F, 2.0F);
                     Data.set(s, "rl_charge", PersistentDataType.INTEGER, 0);
@@ -160,6 +163,40 @@ public class GenericEntityListeners implements Listener {
     public void targetE(EntityTargetLivingEntityEvent e){
         var target = e.getTarget();
         var origin = e.getEntity();
+
+        if(origin instanceof Zombie z && target instanceof Player){
+            if(Data.has(z,"zninja",PersistentDataType.STRING)){
+                if(z.hasPotionEffect(PotionEffectType.INVISIBILITY)){
+                    z.removePotionEffect(PotionEffectType.INVISIBILITY);
+                    z.setSilent(true);
+                    z.getLocation().getWorld().spawnParticle(
+                            Particle.SMOKE_NORMAL,
+                            z.getLocation(),
+                            20,
+                            0,
+                            0,
+                            0,
+                            -0.1
+                    );
+                    new BukkitRunnable(){
+                        int i = 0;
+                        @Override
+                        public void run() {
+                            if(z.getTarget() == null || z.isDead() || !z.isValid()){cancel();return;}
+                            if(i < 80){
+                                i++;
+                            }else{
+                                Arrow s = z.launchProjectile(Arrow.class);
+                                s.setDamage(Objects.requireNonNull(z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)).getBaseValue());
+                                s.setShooter(z);
+                                i = 0;
+                            }
+                        }
+                    }.runTaskTimer(TLL3.getInstance(),0L,1L);
+                }
+            }
+        }
+
         if(origin instanceof Enemy && target instanceof Enemy){
             e.setCancelled(true);
         }

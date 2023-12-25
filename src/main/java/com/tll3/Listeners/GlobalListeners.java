@@ -4,6 +4,7 @@ import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
 import net.minecraft.server.level.WorldServer;
+import net.minecraft.world.entity.projectile.WindCharge;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeManager;
@@ -26,6 +27,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static com.tll3.Misc.GenericUtils.*;
 public class GlobalListeners implements Listener {
 
     @EventHandler
@@ -36,11 +38,16 @@ public class GlobalListeners implements Listener {
             if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
                 e.setCancelled(true);
             }
+
             if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
         }
 
         if(entity instanceof Blaze && reason == EntityDamageEvent.DamageCause.DROWNING){
             e.setCancelled(true);
+        }
+
+        if(entity instanceof Zombie z){
+            if(Data.has(z,"zninja",PersistentDataType.STRING) && reason == EntityDamageEvent.DamageCause.FALL)e.setCancelled(true);
         }
 
         if(entity instanceof Enemy){
@@ -50,38 +57,41 @@ public class GlobalListeners implements Listener {
               }
           }
         }
+
+
     }
 
 
     @EventHandler
     public void chunkthing(ChunkLoadEvent e){
-        for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
-            if(liv instanceof Pig p){
-                p.remove();
-                PiglinBrute pg = (PiglinBrute) Entities.spawnMob(p.getLocation(),EntityType.PIGLIN_BRUTE);
-                pg.setImmuneToZombification(true);
-            }
-            if(liv instanceof Cow w){
-                w.remove();
-                Ravager r = (Ravager) Entities.spawnMob(w.getLocation(),EntityType.RAVAGER);
-                r.setCanJoinRaid(false);
-            }
-            if(liv instanceof Sheep s){
-                s.remove();
-                Blaze c = (Blaze) Entities.spawnMob(s.getLocation(),EntityType.BLAZE);
-            }
-            if(liv instanceof Chicken s){
-                s.remove();
-                Silverfish c = (Silverfish)Entities.spawnMob(s.getLocation(),EntityType.SILVERFISH);
-                EntityHelper.addPotionEffect(c, PotionEffectType.SPEED,2);
-            }
-            if(liv instanceof Horse  || liv instanceof Donkey  || liv instanceof Mule){
-                liv.remove();
-                SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(),EntityType.SKELETON_HORSE);
-                h.setTrapped(true);
+        if(getDay() >= 15) {
+            for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
+                if (liv instanceof Pig p) {
+                    p.remove();
+                    PiglinBrute pg = (PiglinBrute) Entities.spawnMob(p.getLocation(), EntityType.PIGLIN_BRUTE);
+                    pg.setImmuneToZombification(true);
+                }
+                if (liv instanceof Cow w) {
+                    w.remove();
+                    Ravager r = (Ravager) Entities.spawnMob(w.getLocation(), EntityType.RAVAGER);
+                    r.setCanJoinRaid(false);
+                }
+                if (liv instanceof Sheep s) {
+                    s.remove();
+                    Blaze c = (Blaze) Entities.spawnMob(s.getLocation(), EntityType.BLAZE);
+                }
+                if (liv instanceof Chicken s) {
+                    s.remove();
+                    Silverfish c = (Silverfish) Entities.spawnMob(s.getLocation(), EntityType.SILVERFISH);
+                    EntityHelper.addPotionEffect(c, PotionEffectType.SPEED, 2);
+                }
+                if (liv instanceof Horse || liv instanceof Donkey || liv instanceof Mule) {
+                    liv.remove();
+                    SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
+                    h.setTrapped(true);
+                }
             }
         }
-
     }
 
 

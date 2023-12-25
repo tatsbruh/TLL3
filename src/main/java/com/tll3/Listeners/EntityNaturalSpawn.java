@@ -7,10 +7,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.persistence.PersistentDataHolder;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 import org.eclipse.sisu.Priority;
 
 import java.util.PriorityQueue;
+import java.util.Random;
+
+import static com.tll3.Misc.GenericUtils.*;
 
 public class EntityNaturalSpawn implements Listener {
 
@@ -19,6 +24,8 @@ public class EntityNaturalSpawn implements Listener {
         var entity = e.getEntity();
         var reason = e.getSpawnReason();
         var loc = e.getLocation();
+
+        if(getDay() >= 15){
         if(entity instanceof Pig){
             PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc, EntityType.PIGLIN_BRUTE);
             pg.setImmuneToZombification(true);
@@ -41,7 +48,37 @@ public class EntityNaturalSpawn implements Listener {
         if(entity instanceof Horse || entity instanceof Mule || entity instanceof Donkey){
             SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
             h.setTrapped(true);
+            e.setCancelled(true);
         }
-    }
+        }
 
-}
+        switch (entity.getType()){
+            case CREEPER -> {
+                if(getDay() >= 5 && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
+                    Entities.creChr((Creeper) entity);
+                }
+            }
+            case SKELETON -> {
+                if(getDay() >= 5 && (reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY)){
+                    Entities.skeW((Skeleton) entity);
+                }
+            }
+            case ZOMBIE -> {
+                if(getDay() >= 5){
+                    if(doRandomChance(10)){
+                       Entities.zNinka((Zombie) entity);
+                    }
+                }
+            }
+
+        }
+
+
+    }
+    public static boolean doRandomChance(int chance){
+            Random random = new Random();
+            int chancemax = random.nextInt(100);
+            return chancemax <= chance;
+        }
+ }
+

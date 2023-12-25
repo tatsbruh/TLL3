@@ -38,12 +38,13 @@ public class staffCMD extends BaseCommand {
         }
     }
     @Subcommand("summon")
-    @CommandCompletion("void_overseer|railgunner|sand_time")
+    @CommandCompletion("zombie_ninja|void_overseer|railgunner|sand_time")
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
         if (sender instanceof Player p && args.length > 0){
             switch (args[0].toLowerCase()){
+                case "zombie_ninja" -> Entities.zNinka((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "void_overseer" -> Entities.voidOver((Skeleton) Entities.spawnMob(p.getLocation(), EntityType.SKELETON));
                 case "railgunner" -> Entities.railGun((WitherSkeleton) Entities.spawnMob(p.getLocation(),EntityType.WITHER_SKELETON));
                 case "sand_time" -> Entities.timeS((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
@@ -69,6 +70,24 @@ public class staffCMD extends BaseCommand {
 
             if(day < 0)return;
             GenericUtils.setDays(String.valueOf(day));
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aSe a cambiado el dia a " + day));
+        }
+    }
+
+    @Subcommand("debug")
+    @CommandCompletion("timeformat")
+    @CommandPermission("staff.admin")
+    @Description("debugs a ton of shit")
+    public void debug(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            switch (args[0].toLowerCase()){
+                case "timeformat" -> {
+                    int ticks = Integer.parseInt(args[1]);
+                    if(ticks < 0)return;
+                    sender.sendMessage("Hola " + GenericUtils.doTimeFormat(ticks));
+                }
+                default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Tienes que ingresar un comando debug valido"));
+            }
         }
     }
 }
