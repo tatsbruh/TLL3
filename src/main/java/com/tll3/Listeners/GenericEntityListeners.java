@@ -178,22 +178,22 @@ public class GenericEntityListeners implements Listener {
                             0,
                             -0.1
                     );
-                    new BukkitRunnable(){
-                        int i = 0;
-                        @Override
-                        public void run() {
-                            if(z.getTarget() == null || z.isDead() || !z.isValid()){cancel();return;}
-                            if(i < 80){
-                                i++;
-                            }else{
-                                Arrow s = z.launchProjectile(Arrow.class);
-                                s.setDamage(Objects.requireNonNull(z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE)).getBaseValue());
-                                s.setShooter(z);
-                                i = 0;
-                            }
-                        }
-                    }.runTaskTimer(TLL3.getInstance(),0L,1L);
                 }
+                BukkitRunnable r = new BukkitRunnable() {
+                    int i = 0;
+                    @Override
+                    public void run() {
+                        if(z.getTarget() == null || z.isDead() || !z.isValid() || z.getTarget().isDead())cancel();
+                        if(i < 90){
+                            i++;
+                        }else{
+                            SpectralArrow s = z.launchProjectile(SpectralArrow.class);
+                            i = 0;
+                        }
+                    }
+                };
+                r.runTaskTimer(TLL3.getInstance(),0L,1L);
+
             }
         }
 

@@ -1,18 +1,20 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
+import net.minecraft.server.level.WorldServer;
+import net.minecraft.world.entity.EntityTypes;
+import net.minecraft.world.entity.monster.EntityCreeper;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftCreeper;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.persistence.PersistentDataHolder;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
-import org.eclipse.sisu.Priority;
 
-import java.util.PriorityQueue;
 import java.util.Random;
 
 import static com.tll3.Misc.GenericUtils.*;
@@ -52,10 +54,14 @@ public class EntityNaturalSpawn implements Listener {
         }
         }
 
+        if(entity instanceof CustomCreeper)return;
         switch (entity.getType()){
             case CREEPER -> {
                 if(getDay() >= 5 && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
-                    Entities.creChr((Creeper) entity);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomCreeper cC = new CustomCreeper(worldServer);
+                    cC.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
             }
             case SKELETON -> {
