@@ -20,9 +20,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class GenericPlayerListeners implements Listener {
 
@@ -48,6 +51,9 @@ public class GenericPlayerListeners implements Listener {
                 for(Player online : Bukkit.getOnlinePlayers()){
                     totemEvent(p,online,e);
                 }
+                new BukkitRunnable(){
+                    @Override
+                    public void run() {totemEffects(p);}}.runTaskLater(TLL3.getInstance(),1L);
             }
         }
     }
@@ -73,11 +79,11 @@ public class GenericPlayerListeners implements Listener {
             int size = p.getInventory().all(Material.TOTEM_OF_UNDYING).size() + result;
             if(tot_amount > size){
                 e.setCancelled(true);
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario!"));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
             }else{
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),20L);
@@ -86,7 +92,7 @@ public class GenericPlayerListeners implements Listener {
                 PlayerData.setTotemCount(p,totem_c + 2);
             }
         }
-        if(totem_c >= 35 && totem_c <= 68){
+        if(totem_c >= 35 && totem_c <= 54){
             int tot_amount = 3;
             int main = 0;
             int off = 0;
@@ -100,17 +106,17 @@ public class GenericPlayerListeners implements Listener {
             int size = p.getInventory().all(Material.TOTEM_OF_UNDYING).size() + result;
             if(tot_amount > size){
                 e.setCancelled(true);
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario!"));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
             }else{
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),20L);
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),40L);
@@ -119,7 +125,7 @@ public class GenericPlayerListeners implements Listener {
                 PlayerData.setTotemCount(p,totem_c + 3);
             }
         }
-        if(totem_c >= 69){
+        if(totem_c >= 55){
             int tot_amount = 5;
             int main = 0;
             int off = 0;
@@ -133,40 +139,141 @@ public class GenericPlayerListeners implements Listener {
             int size = p.getInventory().all(Material.TOTEM_OF_UNDYING).size() + result;
             if(tot_amount > size){
                 e.setCancelled(true);
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario!"));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
             }else{
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),20L);
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),40L);
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),60L);
                 new BukkitRunnable(){
                     public void run(){
-                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 5.0F, 1.0F);
+                        p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 0.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
                     }
                 }.runTaskLater(TLL3.getInstance(),80L);
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 4));
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7a usado 5 Totems de la Inmortalidad &8(Totem #" + totem_c + ", #" + (totem_c + 1) + ", " + (totem_c + 2) + ", #" + (totem_c + 3) + "y #" + (totem_c + 4) +") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7a usado 5 Totems de la Inmortalidad &8(Totem #" + totem_c + ", #" + (totem_c + 1) + ", " + (totem_c + 2) + ", #" + (totem_c + 3) + " y #" + (totem_c + 4) +") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
                 PlayerData.setTotemCount(p,totem_c + 5);
             }
         }
 
     }
+    public void totemEffects(Player p){
+        int a = PlayerData.getTotemCount(p);
 
+        if(a >= 3 && a <= 8){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,1,true, false,true));
+        }
+        if(a >= 9 && a <= 13){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,1,true, false,true));
+        }
+        if(a >= 14 && a <= 17){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,1,true, false,true));
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+        }
+        if(a >= 18 && a <= 23) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,450,1,true, false,true));
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+        }
+        if(a >= 24 && a <= 29) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,1,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,400,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,0,true, false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+        }
+        if(a >= 30 && a <= 34) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,1,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,400,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,0,true, false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
 
+        }
+        if(a >= 34 && a <= 48) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,500,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,500,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,500,3,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,700,0,true, false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            p.setFoodLevel(p.getFoodLevel() - 2);
+        }
+        if(a >= 49 && a <= 57) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,500,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,500,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,500,3,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,700,0,true, false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            p.setFoodLevel(p.getFoodLevel() - 5);
+        }
+        if(a >= 58 && a <= 67) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,500,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,500,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,500,3,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,700,0,true, false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            p.setFoodLevel(p.getFoodLevel() - 15);
+
+        }
+        if(a >= 68 && a <= 74) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,1900,9,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,650,4,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,850,6,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,1250,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,1100,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,2,true,false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            p.setFoodLevel(0);
+        }
+        if(a >= 75) {
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,1900,9,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,650,4,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,850,6,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,1250,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,1100,2,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,4,true,false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            p.setFoodLevel(0);
+        }
+    }
 
 }

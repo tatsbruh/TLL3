@@ -37,6 +37,8 @@ public class GlobalListeners implements Listener {
         var entity = e.getEntity();
         var reason = e.getCause();
         if(entity instanceof Player p){
+
+
             if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
                 e.setCancelled(true);
             }
@@ -60,6 +62,46 @@ public class GlobalListeners implements Listener {
           }
         }
 
+        if(entity instanceof Spider s){
+            if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
+                int melee = Data.get(s,"melee",PersistentDataType.INTEGER);
+                int proj = Data.get(s,"proj",PersistentDataType.INTEGER);
+                int fire = Data.get(s,"fire",PersistentDataType.INTEGER);
+
+                if(reason == EntityDamageEvent.DamageCause.ENTITY_ATTACK || reason == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
+                    var amount = (e.getDamage() / 10);
+                    var result = melee + amount;
+                    var damage = (e.getDamage() - result);
+                    if(damage < 0){
+                        e.setDamage(0);
+                    }else{
+                        e.setDamage(damage);
+                    }
+                }
+                if(reason == EntityDamageEvent.DamageCause.PROJECTILE){
+                    var amount = (e.getDamage() / 10);
+                    var result = proj + amount;
+                    var damage = (e.getDamage() - result);
+                    if(damage < 0){
+                        e.setDamage(0);
+                    }else{
+                        e.setDamage(damage);
+                    }
+                }
+                if(reason == EntityDamageEvent.DamageCause.FIRE || reason == EntityDamageEvent.DamageCause.LAVA || reason == EntityDamageEvent.DamageCause.FIRE_TICK || reason == EntityDamageEvent.DamageCause.HOT_FLOOR){
+                    var amount = (e.getDamage() / 10);
+                    var result = fire + amount;
+                    var damage = (e.getDamage() - result);
+                    if(damage < 0){
+                        e.setDamage(0);
+                    }else{
+                        e.setDamage(damage);
+                    }
+                }
+
+            }
+        }
+
 
     }
 
@@ -68,6 +110,7 @@ public class GlobalListeners implements Listener {
     public void chunkthing(ChunkLoadEvent e){
 
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
+                if(liv instanceof CustomCreeper)return;
                 if(getDay() >= 15) {
                 if (liv instanceof Pig p) {
                     p.remove();
@@ -94,16 +137,6 @@ public class GlobalListeners implements Listener {
                     h.setTrapped(true);
                 }
             }
-                if(getDay() >= 5) {
-                    if(liv instanceof CustomCreeper)return;
-                    if(liv instanceof Creeper c){
-                        WorldServer worldServer = ((CraftWorld)c.getLocation().getWorld()).getHandle();
-                        CustomCreeper cC = new CustomCreeper(worldServer);
-                        cC.a_(c.getLocation().getX(),c.getLocation().getY(),c.getLocation().getZ());
-                        worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                        c.remove();
-                    }
-                }
         }
     }
 

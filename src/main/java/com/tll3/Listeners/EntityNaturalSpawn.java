@@ -57,24 +57,28 @@ public class EntityNaturalSpawn implements Listener {
         if(entity instanceof CustomCreeper)return;
         switch (entity.getType()){
             case CREEPER -> {
-                if(getDay() >= 5 && (reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.EGG)){
-                    e.setCancelled(true);
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomCreeper cC = new CustomCreeper(worldServer);
-                    cC.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                if(getDay() >= 5 && (reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    Entities.creChr((Creeper) entity);
                 }
             }
             case SKELETON -> {
-                if(getDay() >= 5 && (reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY)){
-                    Entities.skeW((Skeleton) entity);
+                if(getDay() >= 5){
+                    if((reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY))Entities.skeW((Skeleton) entity);
+                    if(doRandomChance(35) && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
+                        Entities.skeAd((Skeleton) entity);
+                    }
                 }
             }
             case ZOMBIE -> {
                 if(getDay() >= 5){
-                    if(doRandomChance(20)){
+                    if(doRandomChance(35)){
                        Entities.zNinka((Zombie) entity);
                     }
+                }
+            }
+            case SPIDER -> {
+                if(getDay() >= 5){
+                    chooseRandomSpider(getDay(), (Spider) entity,e);
                 }
             }
 
@@ -86,6 +90,25 @@ public class EntityNaturalSpawn implements Listener {
             Random random = new Random();
             int chancemax = random.nextInt(100);
             return chancemax <= chance;
+    }
+
+    public static void chooseRandomSpider(int day,Spider s,CreatureSpawnEvent e){
+        Random random = new Random();
+        int chance = 0;
+        if(day >= 5){
+            chance = random.nextInt(3);
         }
+
+        switch (chance){
+            case 0 -> Entities.blackRev(s);
+            case 1 -> Entities.adapSp(s);
+            case 2 -> {
+                e.setCancelled(true);
+                CaveSpider cs = (CaveSpider) Entities.spawnMob(e.getLocation(),EntityType.CAVE_SPIDER);
+                Entities.termite(cs);
+            }
+        }
+    }
+
  }
 

@@ -9,6 +9,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import static com.tll3.TLL3.playingAnim;
@@ -53,7 +55,7 @@ public class PlayerDeathListeners implements Listener {
                             String setThunder = "weather thunder " + storm_time;
                             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
                             for (Player sp : Bukkit.getOnlinePlayers()) {
-                                sp.sendMessage(setThunder);
+                                sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
                                 sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
                                 sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"),ChatUtils.format("#4d52d1☂ Duracion: " + GenericUtils.doTimeFormat(storm_time) + " ☂"),0,80,0);
                             }

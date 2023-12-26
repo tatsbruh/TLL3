@@ -4,16 +4,26 @@ import com.tll3.Misc.Files.ConfigData;
 import com.tll3.TLL3;
 import lombok.Getter;
 import lombok.Setter;
+import net.minecraft.world.entity.ai.attributes.AttributeBase;
+import net.minecraft.world.entity.ai.attributes.AttributeMapBase;
+import net.minecraft.world.entity.ai.attributes.AttributeModifiable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+
+import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_20_R3.attribute.CraftAttribute;
+import org.bukkit.craftbukkit.v1_20_R3.attribute.CraftAttributeMap;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
+import java.lang.reflect.Field;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Map;
 import java.util.Random;
 
 import static com.tll3.Misc.ChatUtils.format;
@@ -134,7 +144,7 @@ public class GenericUtils {
             case ENTITY_SWEEP_ATTACK:
             case ENTITY_ATTACK:
                 if (e instanceof EntityDamageByEntityEvent) {
-                    return "&8Entidad [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&7]";
+                    return "&8Entidad [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&8]";
                 }
             case FALLING_BLOCK:
                 return format("&8Bloque Cayendo");
@@ -142,7 +152,7 @@ public class GenericUtils {
                 return format("&8Estrellarse contra la Pared");
             case ENTITY_EXPLOSION:
                 if (e instanceof EntityDamageByEntityEvent) {
-                    return "&8Explosión [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&7]";
+                    return "&8Explosión [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&8]";
                 }
             default:
                 return "Desconocida";

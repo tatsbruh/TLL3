@@ -20,7 +20,8 @@ import java.util.function.Predicate;
 public class CustomGuardian extends EntityGuardian {
     public CustomGuardian(World world) {
         super(EntityTypes.W, world);
-
+        this.getBukkitEntity().setPersistent(false);
+        this.persist = false;
     }
 
     public PathfinderGoalGuardianAttack guardianAttack;

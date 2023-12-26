@@ -29,6 +29,16 @@ public class Entities {
         c.setPowered(true);
     }
 
+    public static void skeAd(Skeleton s){
+        setName(s,"&4Brute Skeleton");
+        setMobHealth(s,35);
+        setMobDamage(s,6);
+        setHead(s,new ItemStack(Material.BEACON));
+        setChestplate(s,new ItemStack(Material.DIAMOND_CHESTPLATE));
+        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).addEnchant(Enchantment.ARROW_FIRE,5).build());
+        addPotionEffect(s,PotionEffectType.SPEED,1);
+        setIdentifierString(s,"bruteskeleton");
+    }
     public static void skeW(Skeleton s){
         setName(s,"#024f3cSkeleton Warden");
         setHead(s,new ItemStack(Material.BLAST_FURNACE));
@@ -45,7 +55,37 @@ public class Entities {
         addPotionEffect(z,PotionEffectType.JUMP,2);
         z.setSilent(true);
         z.setShouldBurnInDay(false);
+        z.setAdult();
         setIdentifierString(z,"zninja");
+    }
+    public static void blackRev(Spider s){
+        setName(s,"&0Black Tarantula");
+        setMobHealth(s,35);
+        setMobDamage(s,7);
+        addPotionEffect(s, PotionEffectType.SPEED,0);
+        s.setAggressive(true);
+        setIdentifierString(s,"blackreaver");
+    }
+
+    public static void adapSp(Spider s){
+        setName(s,"&6&lAdaptative Mauler");
+        setMobHealth(s,35);
+        setMobDamage(s,6);
+        addPotionEffect(s, PotionEffectType.SPEED,0);
+        s.setAggressive(true);
+        setIdentifierString(s,"adeptmauler");
+        setIdentifierInt(s,"melee",0);
+        setIdentifierInt(s,"proj",0);
+        setIdentifierInt(s,"fire",0);
+    }
+
+    public static void termite(CaveSpider s){
+        setName(s,"&6&lTermite");
+        setMobHealth(s,15);
+        addPotionEffect(s, PotionEffectType.SPEED,1);
+        s.setAggressive(true);
+        setIdentifierString(s,"termite");
+        setIdentifierInt(s,"t_state",0);
     }
 
 

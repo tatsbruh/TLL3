@@ -44,7 +44,7 @@ public class staffCMD extends BaseCommand {
         }
     }
     @Subcommand("summon")
-    @CommandCompletion("zombie_ninja|void_overseer|railgunner|sand_time")
+    @CommandCompletion("zombie_ninja|black_reaver|adaptative_spider|termite|brute_skeleton|zenith_creeper")
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
@@ -53,14 +53,21 @@ public class staffCMD extends BaseCommand {
             var loc = p.getLocation();
             switch (args[0].toLowerCase()){
                 case "zombie_ninja" -> Entities.zNinka((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
-                case "void_overseer" -> Entities.voidOver((Skeleton) Entities.spawnMob(p.getLocation(), EntityType.SKELETON));
-                case "railgunner" -> Entities.railGun((WitherSkeleton) Entities.spawnMob(p.getLocation(),EntityType.WITHER_SKELETON));
-                case "sand_time" -> Entities.timeS((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
+                case "black_reaver" -> Entities.blackRev((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
+                case "adaptative_spider" -> Entities.adapSp((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
+                case "termite" -> Entities.termite((CaveSpider) Entities.spawnMob(p.getLocation(),EntityType.CAVE_SPIDER));
+                case "brute_skeleton" -> Entities.skeAd((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
                 case "super_guardian" ->{
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomGuardian customGuardian = new CustomGuardian(worldServer);
                     customGuardian.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(customGuardian, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenith_creeper" ->{
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomCreeper cC = new CustomCreeper(worldServer);
+                    cC.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }

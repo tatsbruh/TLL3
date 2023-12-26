@@ -3,13 +3,17 @@ package com.tll3.Listeners;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
+import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -19,6 +23,36 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 
 public class GenericEntityListeners implements Listener {
+
+
+    @EventHandler
+    public void damageentityE(EntityDamageByEntityEvent e){
+        var target = e.getEntity();
+        var damager = e.getDamager();
+        if(target instanceof Player p){
+            if(damager instanceof Spider s){
+                if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,9));
+                }
+                if(Data.has(s,"termite",PersistentDataType.STRING)){
+                    var state = Data.get(s,"t_state",PersistentDataType.INTEGER);
+                    if(state == 0){
+                        Data.set(s,"t_state",PersistentDataType.INTEGER,1);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if(s.isDead() || !s.isValid()){cancel();return;}
+                                s.getLocation().getWorld().createExplosion(s,3,false,true);
+                                s.remove();
+                            }
+                        }.runTaskLater(TLL3.getInstance(),60L);
+                    }
+                }
+            }
+
+        }
+    }
+
 
     @EventHandler
     public void shoowbowE(EntityShootBowEvent e) {
@@ -108,34 +142,7 @@ public class GenericEntityListeners implements Listener {
         var hen = e.getHitEntity();
         var hbl = e.getHitBlock();
 
-        if(source instanceof Zombie z){
-            if(Data.has(z,"zninja",PersistentDataType.STRING)){
-                if(hen != null){
-                    hen.getLocation().getWorld().playSound(hen.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,10.0F,1.0F);
-                    hen.getLocation().getWorld().spawnParticle(Particle.SMOKE_LARGE,hen.getLocation(),10,1,1,1,1);
-                    hen.getWorld().getNearbyEntities(hen.getLocation(),3,3,3).stream()
-                            .filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity)entity)
-                            .forEach(player ->{
-                                if(player instanceof Player c){
-                                    c.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,60,0,true,false,true));
-                                    c.damage(z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue(),z);
-                                }
-                            });
-                }
-                if(hbl != null){
-                    hbl.getLocation().getWorld().playSound(hbl.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,10.0F,1.0F);
-                    hbl.getLocation().getWorld().spawnParticle(Particle.SMOKE_LARGE,hbl.getLocation(),10,1,1,1,1);
-                    hbl.getWorld().getNearbyEntities(hbl.getLocation(),3,3,3).stream()
-                            .filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity)entity)
-                            .forEach(player ->{
-                                if(player instanceof Player c){
-                                    c.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,60,0,true,false,true));
-                                    c.damage(z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue(),z);
-                                }
-                            });
-                }
-            }
-        }
+
 
         if (source instanceof Skeleton s) {
             if (Data.has(s, "void_overseer", PersistentDataType.STRING)) {
@@ -193,38 +200,38 @@ public class GenericEntityListeners implements Listener {
         var target = e.getTarget();
         var origin = e.getEntity();
 
-        if(origin instanceof Zombie z && target instanceof Player){
+        if(target instanceof Player p){
+           if(origin instanceof Zombie z){
             if(Data.has(z,"zninja",PersistentDataType.STRING)){
                 if(z.hasPotionEffect(PotionEffectType.INVISIBILITY)){
-                    z.removePotionEffect(PotionEffectType.INVISIBILITY);
-                    z.setSilent(true);
-                    z.getLocation().getWorld().spawnParticle(
+                       z.getLocation().getWorld().playSound(z.getLocation(),Sound.ENTITY_PLAYER_ATTACK_SWEEP,10.0F,2.0F);
+                       EntityHelper.setMainHand(z,new ItemStack(Material.IRON_SWORD));
+                       z.removePotionEffect(PotionEffectType.INVISIBILITY);
+                       z.setSilent(true);
+                       z.getLocation().getWorld().spawnParticle(
                             Particle.SMOKE_NORMAL,
                             z.getLocation(),
                             20,
-                            0,
-                            0,
-                            0,
+                            1,
+                            1,
+                            1,
                             -0.1
-                    );
-                }
-                BukkitRunnable r = new BukkitRunnable() {
-                    int i = 0;
-                    @Override
-                    public void run() {
-                        if(z.getTarget() == null || z.isDead() || !z.isValid() || z.getTarget().isDead()){cancel();return;}
-                        if(i < 120){
-                            i++;
-                        }else{
-                            Snowball s = z.launchProjectile(Snowball.class);
-                            s.setShooter(z);
-                            i = 0;
-                        }
-                    }
-                };
-                r.runTaskTimer(TLL3.getInstance(),0L,1L);
-
-            }
+                       );
+                   }
+               }
+           }
+           if(origin instanceof Skeleton s){
+               if(Data.has(s,"bruteskeleton",PersistentDataType.STRING)) {
+                   double distance = s.getLocation().distance(p.getLocation());
+                   if (distance < 10.0) {
+                       s.getWorld().playSound(s.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, 10.0F, 1.0F);
+                       EntityHelper.setMainHand(s, new ItemBuilder(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).build());
+                   } else {
+                       s.getWorld().playSound(s.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, 10.0F, 1.0F);
+                       EntityHelper.setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 5).addEnchant(Enchantment.ARROW_FIRE, 5).build());
+                   }
+               }
+           }
         }
 
         if(origin instanceof Enemy && target instanceof Enemy){
