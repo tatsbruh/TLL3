@@ -8,11 +8,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Random;
+
+import static com.tll3.Misc.ChatUtils.format;
 
 public class GenericUtils {
     private static final Plugin plugin = TLL3.getPlugin(TLL3.class);
@@ -83,5 +87,65 @@ public class GenericUtils {
         int remainingSeconds = seconds % 3600;
         int minutes = remainingSeconds / 60;
         return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds % 60);
+    }
+    public static String damageCause(EntityDamageEvent e) {
+
+        switch (e.getCause()) {
+            case FALL:
+                return format("&8Caída");
+            case FIRE:
+                return format("&8Fuego");
+            case FREEZE:
+                return format("&8Congelado");
+            case LAVA:
+                return format("&8Lava");
+            case VOID:
+                return format("&8Vacío");
+            case MAGIC:
+                return format("&8Magia");
+            case BLOCK_EXPLOSION:
+                return format("&8Explosion");
+            case POISON:
+                return format("&8Veneno");
+            case THORNS:
+                return format("&8Espinas");
+            case WITHER:
+                return format("&8Wither");
+            case CONTACT:
+                return format("&8Contacto");
+            case CRAMMING:
+                return format("&8Cramming");
+            case DRAGON_BREATH:
+                return format("&8Aliento de Dragon");
+            case DROWNING:
+                return format("&8Ahogado");
+            case FIRE_TICK:
+                return format("&8Tick de Fuego");
+            case HOT_FLOOR:
+                return format("&8Piso Ardiente");
+            case LIGHTNING:
+                return format("&8Rayo");
+            case PROJECTILE:
+                return format("&8Proyectil");
+            case STARVATION:
+                return format("&8Hambre");
+            case SUFFOCATION:
+                return format("&8Sofocación");
+            case ENTITY_SWEEP_ATTACK:
+            case ENTITY_ATTACK:
+                if (e instanceof EntityDamageByEntityEvent) {
+                    return "&8Entidad [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&7]";
+                }
+            case FALLING_BLOCK:
+                return format("&8Bloque Cayendo");
+            case FLY_INTO_WALL:
+                return format("&8Estrellarse contra la Pared");
+            case ENTITY_EXPLOSION:
+                if (e instanceof EntityDamageByEntityEvent) {
+                    return "&8Explosión [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&7]";
+                }
+            default:
+                return "Desconocida";
+        }
     }
 }

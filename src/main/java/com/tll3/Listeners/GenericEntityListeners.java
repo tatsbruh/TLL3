@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -107,6 +108,34 @@ public class GenericEntityListeners implements Listener {
         var hen = e.getHitEntity();
         var hbl = e.getHitBlock();
 
+        if(source instanceof Zombie z){
+            if(Data.has(z,"zninja",PersistentDataType.STRING)){
+                if(hen != null){
+                    hen.getLocation().getWorld().playSound(hen.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,10.0F,1.0F);
+                    hen.getLocation().getWorld().spawnParticle(Particle.SMOKE_LARGE,hen.getLocation(),10,1,1,1,1);
+                    hen.getWorld().getNearbyEntities(hen.getLocation(),3,3,3).stream()
+                            .filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity)entity)
+                            .forEach(player ->{
+                                if(player instanceof Player c){
+                                    c.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,60,0,true,false,true));
+                                    c.damage(z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue(),z);
+                                }
+                            });
+                }
+                if(hbl != null){
+                    hbl.getLocation().getWorld().playSound(hbl.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,10.0F,1.0F);
+                    hbl.getLocation().getWorld().spawnParticle(Particle.SMOKE_LARGE,hbl.getLocation(),10,1,1,1,1);
+                    hbl.getWorld().getNearbyEntities(hbl.getLocation(),3,3,3).stream()
+                            .filter(entity -> entity instanceof LivingEntity).map(entity -> (LivingEntity)entity)
+                            .forEach(player ->{
+                                if(player instanceof Player c){
+                                    c.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,60,0,true,false,true));
+                                    c.damage(z.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue(),z);
+                                }
+                            });
+                }
+            }
+        }
 
         if (source instanceof Skeleton s) {
             if (Data.has(s, "void_overseer", PersistentDataType.STRING)) {
@@ -183,11 +212,12 @@ public class GenericEntityListeners implements Listener {
                     int i = 0;
                     @Override
                     public void run() {
-                        if(z.getTarget() == null || z.isDead() || !z.isValid() || z.getTarget().isDead())cancel();
-                        if(i < 90){
+                        if(z.getTarget() == null || z.isDead() || !z.isValid() || z.getTarget().isDead()){cancel();return;}
+                        if(i < 120){
                             i++;
                         }else{
-                            SpectralArrow s = z.launchProjectile(SpectralArrow.class);
+                            Snowball s = z.launchProjectile(Snowball.class);
+                            s.setShooter(z);
                             i = 0;
                         }
                     }

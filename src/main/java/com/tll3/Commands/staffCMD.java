@@ -11,6 +11,7 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
 import net.minecraft.server.level.WorldServer;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.*;
@@ -84,6 +85,21 @@ public class staffCMD extends BaseCommand {
             if(day < 0)return;
             GenericUtils.setDays(String.valueOf(day));
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aSe a cambiado el dia a " + day));
+        }
+    }
+
+    @Subcommand("totems")
+    @CommandPermission("staff.admin")
+    @Description("does the fucking totem count ok")
+    public void settotems(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            Player target = Bukkit.getPlayer(args[0]);
+            if(target != null){
+                int count = Integer.parseInt(args[1]);
+                if(count < 0)return;
+                PlayerData.setTotemCount(target,count);
+            }
+
         }
     }
 

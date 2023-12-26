@@ -20,4 +20,12 @@ public class PlayerData {
         }
     }
 
+
+    public static void setTotemCount(Player target,int i){
+        Data.setPlayerData(target, "totemcount", String.valueOf(i));
+    }
+    public static int getTotemCount(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"totemcount","1"));
+    }
+
 }

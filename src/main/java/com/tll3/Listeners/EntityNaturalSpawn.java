@@ -72,7 +72,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case ZOMBIE -> {
                 if(getDay() >= 5){
-                    if(doRandomChance(10)){
+                    if(doRandomChance(20)){
                        Entities.zNinka((Zombie) entity);
                     }
                 }
