@@ -1,6 +1,7 @@
 package com.tll3.Listeners;
 
 import com.tll3.Lists.CustomEntities.CustomCreeper;
+import com.tll3.Lists.CustomEntities.CustomIronGolem;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
@@ -11,6 +12,7 @@ import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
 import org.bukkit.GameMode;
+import org.bukkit.Location;
 import org.bukkit.RegionAccessor;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
@@ -37,8 +39,6 @@ public class GlobalListeners implements Listener {
         var entity = e.getEntity();
         var reason = e.getCause();
         if(entity instanceof Player p){
-
-
             if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
                 e.setCancelled(true);
             }
@@ -54,7 +54,7 @@ public class GlobalListeners implements Listener {
             if(Data.has(z,"zninja",PersistentDataType.STRING) && reason == EntityDamageEvent.DamageCause.FALL)e.setCancelled(true);
         }
 
-        if(entity instanceof Enemy){
+        if(entity instanceof Enemy || entity instanceof IronGolem){
           if(e instanceof EntityDamageByEntityEvent event){
               if (event.getDamager() instanceof Enemy) {
                   event.setCancelled(true);
@@ -69,7 +69,7 @@ public class GlobalListeners implements Listener {
                 int fire = Data.get(s,"fire",PersistentDataType.INTEGER);
 
                 if(reason == EntityDamageEvent.DamageCause.ENTITY_ATTACK || reason == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
-                    var amount = (e.getDamage() / 10);
+                    var amount = (e.getDamage() / 5);
                     var result = melee + amount;
                     var damage = (e.getDamage() - result);
                     if(damage < 0){
@@ -79,7 +79,7 @@ public class GlobalListeners implements Listener {
                     }
                 }
                 if(reason == EntityDamageEvent.DamageCause.PROJECTILE){
-                    var amount = (e.getDamage() / 10);
+                    var amount = (e.getDamage() / 5);
                     var result = proj + amount;
                     var damage = (e.getDamage() - result);
                     if(damage < 0){
@@ -89,7 +89,7 @@ public class GlobalListeners implements Listener {
                     }
                 }
                 if(reason == EntityDamageEvent.DamageCause.FIRE || reason == EntityDamageEvent.DamageCause.LAVA || reason == EntityDamageEvent.DamageCause.FIRE_TICK || reason == EntityDamageEvent.DamageCause.HOT_FLOOR){
-                    var amount = (e.getDamage() / 10);
+                    var amount = (e.getDamage() / 5);
                     var result = fire + amount;
                     var damage = (e.getDamage() - result);
                     if(damage < 0){
@@ -110,7 +110,14 @@ public class GlobalListeners implements Listener {
     public void chunkthing(ChunkLoadEvent e){
 
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
-                if(liv instanceof CustomCreeper)return;
+                if(liv instanceof CustomCreeper || liv instanceof CustomIronGolem)return;
+                Location loc = liv.getLocation();
+                if(getDay() >= 5){
+                    if(liv instanceof IronGolem i){
+               
+                    }
+                }
+
                 if(getDay() >= 15) {
                 if (liv instanceof Pig p) {
                     p.remove();

@@ -1,11 +1,13 @@
 package com.tll3.Listeners;
 
 import com.tll3.Lists.CustomEntities.CustomCreeper;
+import com.tll3.Lists.CustomEntities.CustomIronGolem;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.EntityCreeper;
+import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftCreeper;
 import org.bukkit.entity.*;
@@ -15,17 +17,79 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.potion.PotionEffectType;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import static com.tll3.Misc.GenericUtils.*;
 
 public class EntityNaturalSpawn implements Listener {
+    public void setCustomMobcap(LivingEntity entity, int maxPerDistance, double multiplier, int distance, int maxPerWorld, boolean withSameName) {
+        ArrayList<LivingEntity> nearbyEntities = new ArrayList<>();
+        maxPerDistance *= multiplier;
+        maxPerWorld *= multiplier;
+        if (withSameName) {
+            for (LivingEntity nearbyEntity : entity.getLocation().getNearbyEntitiesByType(entity.getClass(), distance, distance, distance)) {
+
+                if (nearbyEntity.getName().equalsIgnoreCase(entity.getName())) nearbyEntities.add(nearbyEntity);
+            }
+            if (nearbyEntities.size() >= maxPerDistance || entity.getWorld().getEntitiesByClass(entity.getClass()).size() > maxPerWorld) {
+                entity.remove();
+            }
+        } else {
+            for (LivingEntity nearbyEntity : entity.getLocation().getNearbyEntitiesByType(entity.getClass(), distance, distance, distance)) {
+                nearbyEntities.add(nearbyEntity);
+            }
+            if (nearbyEntities.size() >= maxPerDistance || entity.getWorld().getEntitiesByClass(entity.getClass()).size() > maxPerWorld) {
+                entity.remove();
+            }
+        }
+    }
 
     @EventHandler(priority = EventPriority.HIGH)
     public void mainSpawnEv(CreatureSpawnEvent e){
         var entity = e.getEntity();
         var reason = e.getSpawnReason();
         var loc = e.getLocation();
+
+
+        if(entity instanceof CustomCreeper || entity instanceof CustomIronGolem)return;
+        if(getDay() >= 5){
+            if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && entity instanceof Enemy){
+                if(doRandomChance(1)){
+                    e.setCancelled(true);
+                    Entities.enrIG((IronGolem) Entities.spawnMob(loc,EntityType.IRON_GOLEM));
+                }
+            }
+
+        switch (entity.getType()){
+            case CREEPER -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    Entities.creChr((Creeper) entity);
+                }
+            }
+            case SKELETON -> {
+                    if((reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY))Entities.skeW((Skeleton) entity);
+                    if(doRandomChance(35) && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
+                        Entities.skeAd((Skeleton) entity);
+                    }
+            }
+            case ZOMBIE -> {
+                if(getDay() >= 5){
+                    if(doRandomChance(35)){
+                        Entities.zNinka((Zombie) entity);
+                    }
+                }
+            }
+            case SPIDER -> {
+                    chooseRandomSpider1(getDay(), (Spider) entity,e);
+            }
+            case IRON_GOLEM -> {
+
+                Entities.enrIG((IronGolem) entity);
+            }
+
+        }
+        }
 
         if(getDay() >= 15){
         if(entity instanceof Pig){
@@ -54,35 +118,7 @@ public class EntityNaturalSpawn implements Listener {
         }
         }
 
-        if(entity instanceof CustomCreeper)return;
-        switch (entity.getType()){
-            case CREEPER -> {
-                if(getDay() >= 5 && (reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    Entities.creChr((Creeper) entity);
-                }
-            }
-            case SKELETON -> {
-                if(getDay() >= 5){
-                    if((reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY))Entities.skeW((Skeleton) entity);
-                    if(doRandomChance(35) && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
-                        Entities.skeAd((Skeleton) entity);
-                    }
-                }
-            }
-            case ZOMBIE -> {
-                if(getDay() >= 5){
-                    if(doRandomChance(35)){
-                       Entities.zNinka((Zombie) entity);
-                    }
-                }
-            }
-            case SPIDER -> {
-                if(getDay() >= 5){
-                    chooseRandomSpider(getDay(), (Spider) entity,e);
-                }
-            }
 
-        }
 
 
     }
@@ -92,13 +128,9 @@ public class EntityNaturalSpawn implements Listener {
             return chancemax <= chance;
     }
 
-    public static void chooseRandomSpider(int day,Spider s,CreatureSpawnEvent e){
+    public static void chooseRandomSpider1(int day,Spider s,CreatureSpawnEvent e){
         Random random = new Random();
-        int chance = 0;
-        if(day >= 5){
-            chance = random.nextInt(3);
-        }
-
+        int chance = random.nextInt(3);
         switch (chance){
             case 0 -> Entities.blackRev(s);
             case 1 -> Entities.adapSp(s);

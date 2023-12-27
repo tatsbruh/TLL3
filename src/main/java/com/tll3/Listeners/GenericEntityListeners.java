@@ -237,5 +237,9 @@ public class GenericEntityListeners implements Listener {
         if(origin instanceof Enemy && target instanceof Enemy){
             e.setCancelled(true);
         }
+
+        if(target instanceof IronGolem && origin instanceof Enemy)e.setCancelled(true);
+        if(target instanceof Enemy && origin instanceof IronGolem)e.setCancelled(true);
+
     }
 }

@@ -5,16 +5,24 @@ import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
+import net.minecraft.world.entity.EntityInsentient;
+import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
+import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
+import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
+import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.Field;
 import java.security.Guard;
 import java.util.Locale;
 import static com.tll3.Misc.EntityHelper.*;
@@ -44,6 +52,24 @@ public class Entities {
         setHead(s,new ItemStack(Material.BLAST_FURNACE));
         setChestplate(s,new ItemStack(Material.IRON_CHESTPLATE));
         setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,9).build());
+    }
+    public static void enrIG(IronGolem i) {
+        CraftIronGolem craft = ((CraftIronGolem) i);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {}
+        i.setRemoveWhenFarAway(true);
+        setName(i,"&4Enraged Iron Golem");
     }
 
     public static void zNinka(Zombie z){
