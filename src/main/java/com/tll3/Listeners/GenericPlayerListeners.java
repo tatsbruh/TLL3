@@ -7,6 +7,7 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.TLL3;
 import com.tll3.Task.EffectDuration;
 import com.tll3.Task.EffectTask;
+import com.tll3.Task.ExposureTask;
 import com.tll3.Task.Scoreboard;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
@@ -35,7 +36,10 @@ public class GenericPlayerListeners implements Listener {
 
     @EventHandler
     public void joinL(PlayerJoinEvent e){
+
         var p = e.getPlayer();
+        PlayerData.addExposure(p);
+        new ExposureTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
         new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
@@ -66,7 +70,7 @@ public class GenericPlayerListeners implements Listener {
             online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado un Totem de la Inmortalidad &8(Totem #" + totem_c + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
             PlayerData.setTotemCount(p,totem_c + 1);
         }
-        if(totem_c >= 25 && totem_c <= 39){
+        if(totem_c >= 29 && totem_c <= 54){
             int tot_amount = 2;
             int main = 0;
             int off = 0;
@@ -94,7 +98,7 @@ public class GenericPlayerListeners implements Listener {
                 PlayerData.setTotemCount(p,totem_c + 2);
             }
         }
-        if(totem_c >= 40 && totem_c <= 64){
+        if(totem_c >= 55 && totem_c <= 84){
             int tot_amount = 3;
             int main = 0;
             int off = 0;
@@ -127,7 +131,7 @@ public class GenericPlayerListeners implements Listener {
                 PlayerData.setTotemCount(p,totem_c + 3);
             }
         }
-        if(totem_c >= 65){
+        if(totem_c >= 85){
             int tot_amount = 5;
             int main = 0;
             int off = 0;
@@ -177,26 +181,26 @@ public class GenericPlayerListeners implements Listener {
     public void totemEffects(Player p){
         int a = PlayerData.getTotemCount(p);
 
-        if(a >= 3 && a <= 8){
+        if(a >= 5 && a <= 12){
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,1,true, false,true));
         }
-        if(a >= 9 && a <= 13){
+        if(a >= 13 && a <= 20){
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,1,true, false,true));
         }
-        if(a >= 14 && a <= 17){
+        if(a >= 21 && a <= 32){
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,1,true, false,true));
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         }
-        if(a >= 18 && a <= 23) {
+        if(a >= 33 && a <= 43) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,450,1,true, false,true));
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         }
-        if(a >= 24 && a <= 29) {
+        if(a >= 44 && a <= 54) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,1,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true, false,true));
@@ -204,7 +208,7 @@ public class GenericPlayerListeners implements Listener {
             p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,400,0,true, false,true));
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
         }
-        if(a >= 30 && a <= 34) {
+        if(a >= 55 && a <= 62) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,400,1,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,400,1,true, false,true));
@@ -214,7 +218,7 @@ public class GenericPlayerListeners implements Listener {
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
 
         }
-        if(a >= 34 && a <= 48) {
+        if(a >= 63 && a <= 78) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,500,2,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,500,2,true, false,true));
@@ -224,7 +228,7 @@ public class GenericPlayerListeners implements Listener {
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
             p.setFoodLevel(p.getFoodLevel() - 2);
         }
-        if(a >= 49 && a <= 57) {
+        if(a >= 79 && a <= 87) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,500,2,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,500,2,true, false,true));
@@ -235,7 +239,7 @@ public class GenericPlayerListeners implements Listener {
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
             p.setFoodLevel(p.getFoodLevel() - 5);
         }
-        if(a >= 58 && a <= 67) {
+        if(a >= 88 && a <= 96) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,500,0,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,500,2,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,500,2,true, false,true));
@@ -247,19 +251,7 @@ public class GenericPlayerListeners implements Listener {
             p.setFoodLevel(p.getFoodLevel() - 15);
 
         }
-        if(a >= 68 && a <= 74) {
-            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,1900,9,true, false,true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,650,4,true, false,true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,850,6,true, false,true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,1250,0,true, false,true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,1100,2,true, false,true));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,2,true,false,true));
-            p.removePotionEffect(PotionEffectType.REGENERATION);
-            p.removePotionEffect(PotionEffectType.ABSORPTION);
-            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-            p.setFoodLevel(0);
-        }
-        if(a >= 75) {
+        if(a >= 97 ) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,1900,9,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,650,4,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,850,6,true, false,true));

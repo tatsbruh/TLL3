@@ -114,7 +114,12 @@ public class GlobalListeners implements Listener {
                 Location loc = liv.getLocation();
                 if(getDay() >= 5){
                     if(liv instanceof IronGolem i){
-               
+                        Entities.enrIG(i);
+                    }
+                    if(liv instanceof Mule m){
+                        m.remove();
+                        SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
+                        h.setTrapped(true);
                     }
                 }
 
@@ -138,7 +143,7 @@ public class GlobalListeners implements Listener {
                     Silverfish c = (Silverfish) Entities.spawnMob(s.getLocation(), EntityType.SILVERFISH);
                     EntityHelper.addPotionEffect(c, PotionEffectType.SPEED, 2);
                 }
-                if (liv instanceof Horse || liv instanceof Donkey || liv instanceof Mule) {
+                if (liv instanceof Horse || liv instanceof Donkey) {
                     liv.remove();
                     SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
                     h.setTrapped(true);

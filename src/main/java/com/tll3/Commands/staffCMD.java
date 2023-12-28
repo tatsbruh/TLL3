@@ -43,6 +43,35 @@ public class staffCMD extends BaseCommand {
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Se aplico el efecto Invulnerable por " + i));
         }
     }
+
+    @Subcommand("exposure")
+    @CommandCompletion("set|get")
+    @CommandPermission("staff.admin")
+    @Description("Sets or gets the exposure of someone")
+    public void exposure(CommandSender sender, String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            switch (args[0].toLowerCase()){
+                case "set" ->{
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if(target != null){
+                        int count = Integer.parseInt(args[2]);
+                        if(count < 0)return;
+                        PlayerData.setExposure(target,count);
+                        p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eSe ha cambiado la exposicion de " + target.getName() + " a " + count));
+                    }
+                }
+                case "get" ->{
+                    Player target = Bukkit.getPlayer(args[1]);
+                    if(target != null){
+                        p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eLa exposicion de  " + target.getName() + " es " + PlayerData.getExposure(target)));
+                    }
+                }
+            }
+        }else{
+            TLL3.getInstance().console("LOL LMAO XD");
+        }
+    }
+
     @Subcommand("summon")
     @CommandCompletion("zombie_ninja|black_reaver|adaptative_spider|termite|brute_skeleton|zenith_creeper")
     @CommandPermission("staff.admin")
@@ -74,14 +103,6 @@ public class staffCMD extends BaseCommand {
         }
     }
 
-    @Subcommand("boss")
-    @CommandPermission("staff.admin")
-    @Description("do the fucking boss ok")
-    public void boss(CommandSender sender,String[] args){
-        if (sender instanceof Player p ){
-            new BossTask().runTaskTimer(TLL3.getInstance(),0L,1L);
-        }
-    }
     @Subcommand("day")
     @CommandPermission("staff.admin")
     @Description("sets the day")
@@ -91,7 +112,7 @@ public class staffCMD extends BaseCommand {
 
             if(day < 0)return;
             GenericUtils.setDays(String.valueOf(day));
-            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aSe a cambiado el dia a " + day));
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aSe ha cambiado el dia al dia " + day));
         }
     }
 
@@ -105,10 +126,13 @@ public class staffCMD extends BaseCommand {
                 int count = Integer.parseInt(args[1]);
                 if(count < 0)return;
                 PlayerData.setTotemCount(target,count);
+                p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eSe ha cambiado la cantidad de totems usados de " + target.getName() + " a " + count));
             }
 
         }
     }
+
+
 
     @Subcommand("debug")
     @CommandCompletion("timeformat")

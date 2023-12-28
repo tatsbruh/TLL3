@@ -4,12 +4,15 @@ import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomIronGolem;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.EntityCreeper;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftCreeper;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -54,7 +57,7 @@ public class EntityNaturalSpawn implements Listener {
 
         if(entity instanceof CustomCreeper || entity instanceof CustomIronGolem)return;
         if(getDay() >= 5){
-            if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && entity instanceof Enemy){
+            if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))){
                 if(doRandomChance(1)){
                     e.setCancelled(true);
                     Entities.enrIG((IronGolem) Entities.spawnMob(loc,EntityType.IRON_GOLEM));
@@ -69,8 +72,12 @@ public class EntityNaturalSpawn implements Listener {
             }
             case SKELETON -> {
                     if((reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY))Entities.skeW((Skeleton) entity);
-                    if(doRandomChance(35) && reason == CreatureSpawnEvent.SpawnReason.NATURAL){
+                    if(reason == CreatureSpawnEvent.SpawnReason.NATURAL){
+                    if(doRandomChance(35)){
                         Entities.skeAd((Skeleton) entity);
+                    }else{
+                        EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
+                    }
                     }
             }
             case ZOMBIE -> {
@@ -84,8 +91,12 @@ public class EntityNaturalSpawn implements Listener {
                     chooseRandomSpider1(getDay(), (Spider) entity,e);
             }
             case IRON_GOLEM -> {
-
                 Entities.enrIG((IronGolem) entity);
+            }
+            case MULE -> {
+                SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
+                h.setTrapped(true);
+                e.setCancelled(true);
             }
 
         }
@@ -111,7 +122,7 @@ public class EntityNaturalSpawn implements Listener {
             EntityHelper.addPotionEffect(c, PotionEffectType.SPEED,2);
             e.setCancelled(true);
         }
-        if(entity instanceof Horse || entity instanceof Mule || entity instanceof Donkey){
+        if(entity instanceof Horse || entity instanceof Donkey){
             SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
             h.setTrapped(true);
             e.setCancelled(true);

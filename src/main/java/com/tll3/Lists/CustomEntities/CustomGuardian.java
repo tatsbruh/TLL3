@@ -103,7 +103,7 @@ public class CustomGuardian extends EntityGuardian {
                 if (!this.a.E(entityliving)) {
                     this.a.h((EntityLiving)null);
                 } else {
-                    this.b += 2.1;
+                    this.b += 2;
                     if (this.b == 0) {
                         this.a.b(entityliving.aj());
                         if (!this.a.aU()) {

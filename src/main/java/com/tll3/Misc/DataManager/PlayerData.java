@@ -20,6 +20,23 @@ public class PlayerData {
         }
     }
 
+    public static void setExposure(Player p, int amount){
+        if(Data.has(p,"exposure",PersistentDataType.INTEGER)){
+            Data.set(p,"exposure",PersistentDataType.INTEGER,amount);
+        }
+    }
+    public static int getExposure(Player p){
+        if(Data.has(p,"exposure",PersistentDataType.INTEGER)){
+            return Data.get(p,"exposure",PersistentDataType.INTEGER);
+        }
+        return 0;
+    }
+    public static void addExposure(Player p){
+        if(!Data.has(p,"exposure",PersistentDataType.INTEGER)){
+            Data.set(p,"exposure",PersistentDataType.INTEGER,200);
+        }
+    }
+
 
     public static void setTotemCount(Player target,int i){
         Data.setPlayerData(target, "totemcount", String.valueOf(i));
@@ -27,5 +44,7 @@ public class PlayerData {
     public static int getTotemCount(Player target){
         return Integer.parseInt(Data.getPlayerData(target,"totemcount","1"));
     }
+
+
 
 }
