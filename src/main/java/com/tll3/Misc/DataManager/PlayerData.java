@@ -10,13 +10,16 @@ public class PlayerData {
     * for example: addDataEffect(p,"collapse",10);, this will add the collapse effect for 10 seconds
     * also, the data adds the duration itself because my brain is big har har har
     * */
-    public static void addDataEffect(Player player,String name, int duration){
+    public static void addDataEffect(Player player,String name, int duration,int effect){
         var duration_name = name + "_d"; //duration data name
+        var effect_name = name + "_e"; //effect data name
         if(Data.has(player,name, PersistentDataType.STRING)){ //check if you already have the effect
             Data.set(player,duration_name,PersistentDataType.INTEGER,duration);
+            Data.set(player,effect_name,PersistentDataType.INTEGER,effect);
         }else{//if not, add it
             Data.set(player,name,PersistentDataType.STRING,name);
             Data.set(player,duration_name,PersistentDataType.INTEGER,duration);
+            Data.set(player,effect_name,PersistentDataType.INTEGER,effect);
         }
     }
 
@@ -31,9 +34,27 @@ public class PlayerData {
         }
         return 0;
     }
+    public static void sumExp(Player p,int amount){
+        if(Data.has(p,"exposure",PersistentDataType.INTEGER)){
+            var d = Data.get(p,"exposure",PersistentDataType.INTEGER);
+            int result = d + amount;
+            if(result >= 200) {
+                Data.set(p,"exposure",PersistentDataType.INTEGER,200);
+            }else Data.set(p,"exposure",PersistentDataType.INTEGER,result);
+        }
+    }
+    public static void restExp(Player p,int amount){
+        if(Data.has(p,"exposure",PersistentDataType.INTEGER)){
+            var d = Data.get(p,"exposure",PersistentDataType.INTEGER);
+            int result = d - amount;
+            if(result <= 0) {
+                Data.set(p,"exposure",PersistentDataType.INTEGER,0);
+            }else Data.set(p,"exposure",PersistentDataType.INTEGER,result);
+        }
+    }
     public static void addExposure(Player p){
         if(!Data.has(p,"exposure",PersistentDataType.INTEGER)){
-            Data.set(p,"exposure",PersistentDataType.INTEGER,200);
+            Data.set(p,"exposure",PersistentDataType.INTEGER,0);
         }
     }
 

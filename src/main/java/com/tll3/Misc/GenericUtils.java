@@ -141,6 +141,8 @@ public class GenericUtils {
                 return format("&8Hambre");
             case SUFFOCATION:
                 return format("&8Sofocación");
+            case SONIC_BOOM:
+                return format("&8Onda supersónica");
             case ENTITY_SWEEP_ATTACK:
             case ENTITY_ATTACK:
                 if (e instanceof EntityDamageByEntityEvent) {

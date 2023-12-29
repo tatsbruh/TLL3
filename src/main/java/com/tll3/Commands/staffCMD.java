@@ -5,6 +5,7 @@ import co.aikar.commands.annotation.*;
 import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomGuardian;
 import com.tll3.Lists.Entities;
+import com.tll3.Lists.Items;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
@@ -27,7 +28,9 @@ public class staffCMD extends BaseCommand {
         if (sender instanceof Player p && args.length > 0){
             int i = Integer.parseInt(args[0]);
             if(i <= 0)return;
-            PlayerData.addDataEffect(p,"curse",i);
+            int i2 = Integer.parseInt(args[1]);
+            if(i2 <= 0)return;
+            PlayerData.addDataEffect(p,"curse",i,i2);
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Se aplico el efecto Maldicion por " + i));
         }
     }
@@ -39,7 +42,9 @@ public class staffCMD extends BaseCommand {
         if (sender instanceof Player p && args.length > 0){
             int i = Integer.parseInt(args[0]);
             if(i <= 0)return;
-            PlayerData.addDataEffect(p,"invulnerable",i);
+            int i2 = Integer.parseInt(args[1]);
+            if(i2 <= 0)return;
+            PlayerData.addDataEffect(p,"invulnerable",i,i2);
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Se aplico el efecto Invulnerable por " + i));
         }
     }
@@ -69,6 +74,19 @@ public class staffCMD extends BaseCommand {
             }
         }else{
             TLL3.getInstance().console("LOL LMAO XD");
+        }
+    }
+
+    @Subcommand("give")
+    @CommandCompletion("miracle_fruit")
+    @CommandPermission("staff.admin")
+    @Description("get your items ok its ok")
+    public void give(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            switch (args[0].toLowerCase()){
+                case "miracle_fruit" -> Items.addInventory(p,Items.miracleFruit());
+                default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un item valido"));
+            }
         }
     }
 

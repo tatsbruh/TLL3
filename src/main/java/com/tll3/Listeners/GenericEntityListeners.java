@@ -32,7 +32,10 @@ public class GenericEntityListeners implements Listener {
         if(target instanceof Player p){
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,9));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
+                }
+                if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
+                    s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,60,1,false,false,false));
                 }
                 if(Data.has(s,"termite",PersistentDataType.STRING)){
                     var state = Data.get(s,"t_state",PersistentDataType.INTEGER);
@@ -82,6 +85,26 @@ public class GenericEntityListeners implements Listener {
             }
         }
         if (entity instanceof WitherSkeleton s) {
+            if(Data.has(s,"w_mage",PersistentDataType.STRING)){
+                Vector arrowVelocity = projectile.getVelocity().clone().normalize();
+                e.setCancelled(true);
+                new BukkitRunnable(){
+                    int i = 0;
+                    @Override
+                    public void run() {
+                        if(s.isDead() || !s.isValid()){cancel();return;}
+                        if(i < 15){
+                            double offsetDistance = 2.0;
+                            Vector offset = arrowVelocity.multiply(offsetDistance);
+                            var loc = projectile.getLocation().clone().add(offset);
+                            EvokerFangs esdsa = (EvokerFangs)Entities.spawnMob(loc, EntityType.EVOKER_FANGS);
+                        }else{
+                            cancel();
+                        }
+                    }
+                }.runTaskTimer(TLL3.getInstance(),20L,20L);
+            }
+
             if (Data.has(s, "railgunner", PersistentDataType.STRING)) {
                 var charge = Data.get(s, "rl_charge", PersistentDataType.INTEGER);
                 if (charge < 2) {

@@ -30,7 +30,18 @@ public class Scoreboard extends BukkitRunnable {
             var minutes = timeInSeconds / 60;
             var seconds = timeInSeconds % 60;
             var formattedTime = String.format("%02d:%02d", minutes, seconds);
-            scoreHelper.setSlot(9, "&4&lCurse: &f" + formattedTime);
+
+            var effect = Data.get(p,"curse_e",PersistentDataType.INTEGER);
+            String lol = "";
+            switch (effect){
+                case 1 ->lol = "";
+                case 2 -> lol = "II";
+                case 3 -> lol = "III";
+                case 4 -> lol = "IV";
+                default -> lol = "I";
+            }
+
+            scoreHelper.setSlot(9, "&4&lPánico " + lol +" : &f" + formattedTime);
         }else{
             scoreHelper.removeSlot(9);
         }

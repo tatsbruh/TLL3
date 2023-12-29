@@ -27,6 +27,7 @@ public class EffectDuration extends BukkitRunnable {
             }else{
                 player.getPersistentDataContainer().remove(Data.key("curse"));
                 player.getPersistentDataContainer().remove(Data.key("curse_d"));
+                player.getPersistentDataContainer().remove(Data.key("curse_e"));
             }
         }
         if(Data.has(player,"invulnerable", PersistentDataType.STRING)){

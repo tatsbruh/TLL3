@@ -1,5 +1,6 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.CustomEntities.CustomChicken;
 import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomIronGolem;
 import com.tll3.Lists.Entities;
@@ -55,7 +56,8 @@ public class EntityNaturalSpawn implements Listener {
         var loc = e.getLocation();
 
 
-        if(entity instanceof CustomCreeper || entity instanceof CustomIronGolem)return;
+        if(entity instanceof CustomCreeper || entity instanceof CustomIronGolem
+        || entity instanceof CustomChicken)return;
         if(getDay() >= 5){
             if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))){
                 if(doRandomChance(1)){
@@ -88,16 +90,26 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case SPIDER -> {
-                    chooseRandomSpider1(getDay(), (Spider) entity,e);
+                    chooseRandomSpider1((Spider) entity,e);
             }
             case IRON_GOLEM -> {
                 Entities.enrIG((IronGolem) entity);
+            }
+            case CHICKEN ->  {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomChicken customChicken = new CustomChicken(worldServer);
+                    customChicken.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(customChicken, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
             }
             case MULE -> {
                 SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
                 h.setTrapped(true);
                 e.setCancelled(true);
             }
+            case WITHER_SKELETON -> chooseWitherSkeletonClass1((WitherSkeleton) entity);
 
         }
         }
@@ -117,11 +129,6 @@ public class EntityNaturalSpawn implements Listener {
             Blaze c = (Blaze) Entities.spawnMob(loc,EntityType.BLAZE);
             e.setCancelled(true);
         }
-        if(entity instanceof Chicken){
-            Silverfish c = (Silverfish)Entities.spawnMob(loc,EntityType.SILVERFISH);
-            EntityHelper.addPotionEffect(c, PotionEffectType.SPEED,2);
-            e.setCancelled(true);
-        }
         if(entity instanceof Horse || entity instanceof Donkey){
             SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
             h.setTrapped(true);
@@ -139,7 +146,7 @@ public class EntityNaturalSpawn implements Listener {
             return chancemax <= chance;
     }
 
-    public static void chooseRandomSpider1(int day,Spider s,CreatureSpawnEvent e){
+    public static void chooseRandomSpider1(Spider s,CreatureSpawnEvent e){
         Random random = new Random();
         int chance = random.nextInt(3);
         switch (chance){
@@ -150,6 +157,18 @@ public class EntityNaturalSpawn implements Listener {
                 CaveSpider cs = (CaveSpider) Entities.spawnMob(e.getLocation(),EntityType.CAVE_SPIDER);
                 Entities.termite(cs);
             }
+
+        }
+    }
+
+    public static void chooseWitherSkeletonClass1(WitherSkeleton w){
+        Random random = new Random();
+        int chance = random.nextInt(4);
+        switch (chance){
+            case 0 -> Entities.wsM(w);
+            case 1 -> Entities.wsR(w);
+            case 2 -> Entities.wsT(w);
+            case 3 -> Entities.wsW(w);
         }
     }
 

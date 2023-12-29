@@ -94,15 +94,12 @@ public class Entities {
     }
 
     public static void adapSp(Spider s){
-        setName(s,"&6&lAdaptative Mauler");
+        setName(s,"&cScarlet Leech");
         setMobHealth(s,35);
         setMobDamage(s,6);
         addPotionEffect(s, PotionEffectType.SPEED,0);
         s.setAggressive(true);
         setIdentifierString(s,"adeptmauler");
-        setIdentifierInt(s,"melee",0);
-        setIdentifierInt(s,"proj",0);
-        setIdentifierInt(s,"fire",0);
     }
 
     public static void termite(CaveSpider s){
@@ -114,7 +111,38 @@ public class Entities {
         setIdentifierInt(s,"t_state",0);
     }
 
-
+    public static void wsM(WitherSkeleton s){
+        setName(s,"&eWither Swordsman");
+        setMobHealth(s,25);
+        setMobDamage(s,7);
+        setMainHand(s,new ItemBuilder(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL,4).addEnchant(Enchantment.FIRE_ASPECT,0).build());
+        setIdentifierString(s,"w_swordsman");
+        addPotionEffect(s,PotionEffectType.SPEED,0);
+    }
+    public static void wsR(WitherSkeleton s){
+        setName(s,"&eWither Archer");
+        setMobHealth(s,20);
+        setMobDamage(s,4);
+        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).addEnchant(Enchantment.ARROW_FIRE,5).addEnchant(Enchantment.ARROW_KNOCKBACK,1).build());
+        setIdentifierString(s,"w_archer");
+    }
+    public static void wsT(WitherSkeleton s){
+        setName(s,"&eWither Juggernaut");
+        setMobHealth(s,45);
+        setMobDamage(s,2);
+        setMainHand(s,new ItemStack(Material.STONE_AXE));
+        setChestplate(s,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,3).build());
+        setBoots(s,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,3).build());
+        setIdentifierString(s,"w_tank");
+    }
+    public static void wsW(WitherSkeleton s) {
+        setName(s,"&eWither Sorcerer");
+        setMobHealth(s,20);
+        setMobDamage(s,4);
+        setMainHand(s,new ItemBuilder(Material.BOW).setCustomModelData(100).build());
+        setHead(s,new ItemStack(Material.TURTLE_HELMET));
+        setIdentifierString(s,"w_mage");
+    }
 
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);

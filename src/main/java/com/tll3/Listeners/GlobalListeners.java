@@ -1,5 +1,6 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.CustomEntities.CustomChicken;
 import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomIronGolem;
 import com.tll3.Lists.Entities;
@@ -61,48 +62,6 @@ public class GlobalListeners implements Listener {
               }
           }
         }
-
-        if(entity instanceof Spider s){
-            if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
-                int melee = Data.get(s,"melee",PersistentDataType.INTEGER);
-                int proj = Data.get(s,"proj",PersistentDataType.INTEGER);
-                int fire = Data.get(s,"fire",PersistentDataType.INTEGER);
-
-                if(reason == EntityDamageEvent.DamageCause.ENTITY_ATTACK || reason == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK){
-                    var amount = (e.getDamage() / 5);
-                    var result = melee + amount;
-                    var damage = (e.getDamage() - result);
-                    if(damage < 0){
-                        e.setDamage(0);
-                    }else{
-                        e.setDamage(damage);
-                    }
-                }
-                if(reason == EntityDamageEvent.DamageCause.PROJECTILE){
-                    var amount = (e.getDamage() / 5);
-                    var result = proj + amount;
-                    var damage = (e.getDamage() - result);
-                    if(damage < 0){
-                        e.setDamage(0);
-                    }else{
-                        e.setDamage(damage);
-                    }
-                }
-                if(reason == EntityDamageEvent.DamageCause.FIRE || reason == EntityDamageEvent.DamageCause.LAVA || reason == EntityDamageEvent.DamageCause.FIRE_TICK || reason == EntityDamageEvent.DamageCause.HOT_FLOOR){
-                    var amount = (e.getDamage() / 5);
-                    var result = fire + amount;
-                    var damage = (e.getDamage() - result);
-                    if(damage < 0){
-                        e.setDamage(0);
-                    }else{
-                        e.setDamage(damage);
-                    }
-                }
-
-            }
-        }
-
-
     }
 
 
@@ -110,7 +69,8 @@ public class GlobalListeners implements Listener {
     public void chunkthing(ChunkLoadEvent e){
 
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
-                if(liv instanceof CustomCreeper || liv instanceof CustomIronGolem)return;
+                if(liv instanceof CustomCreeper || liv instanceof CustomIronGolem
+                || liv instanceof CustomChicken)return;
                 Location loc = liv.getLocation();
                 if(getDay() >= 5){
                     if(liv instanceof IronGolem i){
@@ -120,6 +80,13 @@ public class GlobalListeners implements Listener {
                         m.remove();
                         SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
                         h.setTrapped(true);
+                    }
+                    if(liv instanceof Chicken c){
+                        c.remove();
+                        WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                        CustomChicken customChicken = new CustomChicken(worldServer);
+                        customChicken.a_(loc.getX(),loc.getY(),loc.getZ());
+                        worldServer.addFreshEntity(customChicken, CreatureSpawnEvent.SpawnReason.CUSTOM);
                     }
                 }
 
@@ -137,11 +104,6 @@ public class GlobalListeners implements Listener {
                 if (liv instanceof Sheep s) {
                     s.remove();
                     Blaze c = (Blaze) Entities.spawnMob(s.getLocation(), EntityType.BLAZE);
-                }
-                if (liv instanceof Chicken s) {
-                    s.remove();
-                    Silverfish c = (Silverfish) Entities.spawnMob(s.getLocation(), EntityType.SILVERFISH);
-                    EntityHelper.addPotionEffect(c, PotionEffectType.SPEED, 2);
                 }
                 if (liv instanceof Horse || liv instanceof Donkey) {
                     liv.remove();
