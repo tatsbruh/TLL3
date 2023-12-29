@@ -30,6 +30,11 @@ public class GenericEntityListeners implements Listener {
         var target = e.getEntity();
         var damager = e.getDamager();
         if(target instanceof Player p){
+            if(damager instanceof Husk s){
+                if(Data.has(s,"starved_husk",PersistentDataType.STRING)){
+                    p.setFoodLevel((int) (p.getFoodLevel() - e.getFinalDamage()));
+                }
+            }
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
@@ -40,6 +45,7 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"termite",PersistentDataType.STRING)){
                     var state = Data.get(s,"t_state",PersistentDataType.INTEGER);
                     if(state == 0){
+                        s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
                         Data.set(s,"t_state",PersistentDataType.INTEGER,1);
                         new BukkitRunnable() {
                             @Override
@@ -51,8 +57,22 @@ public class GenericEntityListeners implements Listener {
                         }.runTaskLater(TLL3.getInstance(),60L);
                     }
                 }
+                if(Data.has(s,"termite_ex",PersistentDataType.STRING)){
+                    var state = Data.get(s,"tex_state",PersistentDataType.INTEGER);
+                    if(state == 0){
+                        Data.set(s,"tex_state",PersistentDataType.INTEGER,1);
+                        s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
+                        new BukkitRunnable() {
+                            @Override
+                            public void run() {
+                                if(s.isDead() || !s.isValid()){cancel();return;}
+                                s.getLocation().getWorld().createExplosion(s,6,false,true);
+                                s.remove();
+                            }
+                        }.runTaskLater(TLL3.getInstance(),60L);
+                    }
+                }
             }
-
         }
     }
 
@@ -98,7 +118,7 @@ public class GenericEntityListeners implements Listener {
                             double offsetDistance = 1.5;
                             Vector offset = arrowVelocity.multiply(offsetDistance);
                             var loc = projectile.getLocation().clone().add(offset);
-                            EvokerFangs esdsa = (EvokerFangs)Entities.spawnMob(loc.add(0,-2,0), EntityType.EVOKER_FANGS);
+                            EvokerFangs s = loc.getWorld().spawn(loc.add(0,-2,0), EvokerFangs.class);
                         }else{
                             cancel();
                         }

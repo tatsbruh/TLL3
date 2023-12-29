@@ -55,6 +55,8 @@ public class GlobalListeners implements Listener {
             if(Data.has(z,"zninja",PersistentDataType.STRING) && reason == EntityDamageEvent.DamageCause.FALL)e.setCancelled(true);
         }
 
+        if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
+
         if(entity instanceof Enemy || entity instanceof IronGolem){
           if(e instanceof EntityDamageByEntityEvent event){
               if (event.getDamager() instanceof Enemy) {

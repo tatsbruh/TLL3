@@ -103,7 +103,7 @@ public class Entities {
     }
 
     public static void termite(CaveSpider s){
-        setName(s,"&6&lTermite");
+        setName(s,"&6Termita");
         setMobHealth(s,15);
         addPotionEffect(s, PotionEffectType.SPEED,1);
         s.setAggressive(true);
@@ -143,6 +143,26 @@ public class Entities {
         setHead(s,new ItemStack(Material.TURTLE_HELMET));
         setIdentifierString(s,"w_mage");
     }
+    public static void huStr(Husk s){
+        setName(s,"&eStarved Husk");
+        setMobHealth(s,25);
+        setMobDamage(s,6);
+        addPotionEffect(s,PotionEffectType.SPEED,1);
+        setIdentifierString(s,"starved_husk");
+    }
+    public static void csTerCol(CaveSpider s){
+        setName(s,"&6&lTermita de Colonia");
+        setMobHealth(s,25);
+        addPotionEffect(s, PotionEffectType.SPEED,2);
+        s.setAggressive(true);
+        setIdentifierString(s,"termite_ex");
+        setIdentifierInt(s,"tex_state",0);
+    }
+
+
+
+
+
 
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);

@@ -110,6 +110,12 @@ public class EntityNaturalSpawn implements Listener {
                 e.setCancelled(true);
             }
             case WITHER_SKELETON -> chooseWitherSkeletonClass1((WitherSkeleton) entity);
+            case HUSK -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.huStr((Husk) entity);
+            }
+            case CAVE_SPIDER -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.csTerCol((CaveSpider) entity);
+            }
 
         }
         }
