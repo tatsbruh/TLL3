@@ -93,16 +93,17 @@ public class GenericEntityListeners implements Listener {
                     @Override
                     public void run() {
                         if(s.isDead() || !s.isValid()){cancel();return;}
-                        if(i < 15){
-                            double offsetDistance = 2.0;
+                        if(i < 25){
+                            i++;
+                            double offsetDistance = 1.5;
                             Vector offset = arrowVelocity.multiply(offsetDistance);
                             var loc = projectile.getLocation().clone().add(offset);
-                            EvokerFangs esdsa = (EvokerFangs)Entities.spawnMob(loc, EntityType.EVOKER_FANGS);
+                            EvokerFangs esdsa = (EvokerFangs)Entities.spawnMob(loc.add(0,-2,0), EntityType.EVOKER_FANGS);
                         }else{
                             cancel();
                         }
                     }
-                }.runTaskTimer(TLL3.getInstance(),20L,20L);
+                }.runTaskTimer(TLL3.getInstance(),0L,5L);
             }
 
             if (Data.has(s, "railgunner", PersistentDataType.STRING)) {
