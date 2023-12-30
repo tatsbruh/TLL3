@@ -18,7 +18,7 @@ public class Scoreboard extends BukkitRunnable {
 
     @Override
     public void run() {
-        scoreHelper.setTitle(ChatUtils.format("&k&4z &6Afterlife &k&4z"));
+        scoreHelper.setTitle(ChatUtils.format("&6&lAfterlife"));
         checkForEffectSlot1();
         checkForEffectSlot2();
 
@@ -35,13 +35,13 @@ public class Scoreboard extends BukkitRunnable {
             String lol = "";
             switch (effect){
                 case 1 ->lol = "";
-                case 2 -> lol = "II";
-                case 3 -> lol = "III";
-                case 4 -> lol = "IV";
-                default -> lol = "I";
+                case 2 -> lol = " II";
+                case 3 -> lol = " III";
+                case 4 -> lol = " IV";
+                default -> lol = " I";
             }
 
-            scoreHelper.setSlot(9, "&4&lPánico " + lol +" : &f" + formattedTime);
+            scoreHelper.setSlot(9, "&4&lPánico" + lol +" : &f" + formattedTime);
         }else{
             scoreHelper.removeSlot(9);
         }

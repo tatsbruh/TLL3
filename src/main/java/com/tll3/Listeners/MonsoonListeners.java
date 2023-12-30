@@ -28,14 +28,10 @@ public class MonsoonListeners implements Listener {
     private static BossBar bossBar;
     private static Integer TaskBossBarID = 0;
     public static void createBossBar() {
-
-        int stime = GenericUtils.getWorld().getWeatherDuration();
-
-
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
         }
-
+        int stime = GenericUtils.getWorld().getWeatherDuration();
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
             int updtime = GenericUtils.getWorld().getWeatherDuration();
             double percentage = (double) updtime / stime;
@@ -62,7 +58,7 @@ public class MonsoonListeners implements Listener {
             Bukkit.getScheduler().cancelTask(TaskBossBarID);
             TaskBossBarID = null;
         }
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999"); // nose cuantos 9 son pero hola:
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999");
         GenericUtils.setMonsoonActive("false");
         for(Player players : Bukkit.getOnlinePlayers()) {
             bossBar.removePlayer(players);

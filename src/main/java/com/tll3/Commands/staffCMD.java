@@ -3,9 +3,7 @@ package com.tll3.Commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.tll3.Enviroments.Worlds;
-import com.tll3.Lists.CustomEntities.CustomAllay;
-import com.tll3.Lists.CustomEntities.CustomCreeper;
-import com.tll3.Lists.CustomEntities.CustomGuardian;
+import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Lists.Items;
 import com.tll3.Misc.ChatUtils;
@@ -135,11 +133,17 @@ public class staffCMD extends BaseCommand {
                     cC.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
-                case "allay_lol" ->{
+                case "zenith_skeleton" ->{
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomAllay customAllay = new CustomAllay(worldServer);
-                    customAllay.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(customAllay, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    CustomSkeleton s = new CustomSkeleton(worldServer);
+                    s.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenith_ghast" ->{
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomGhast s = new CustomGhast(worldServer);
+                    s.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }
