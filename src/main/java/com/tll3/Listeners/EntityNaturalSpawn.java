@@ -197,11 +197,11 @@ public class EntityNaturalSpawn implements Listener {
             if(w.getLivingEntities().size() > 140)return;
             Random random = new Random();
             int lol = random.nextInt(101);
-            if(lol <= 35){
+            if(lol <= 45){
                 PiglinBrute s = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
                 Entities.scBrute(s);
             }
-            if (lol > 35 && lol <= 50) {
+            if (lol > 45 && lol <= 50) {
                 WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                 CustomAllay customAllay = new CustomAllay(worldServer);
                 customAllay.a_(loc.getX(),loc.getY(),loc.getZ());
@@ -211,11 +211,11 @@ public class EntityNaturalSpawn implements Listener {
                 Pillager p = (Pillager)Entities.spawnMob(loc,EntityType.PILLAGER);
                 Entities.lostScav(p);
             }
-            if(lol > 65 && lol <= 75){
+            if(lol > 65 && lol <= 80){
                 MagmaCube c = (MagmaCube) Entities.spawnMob(loc,EntityType.MAGMA_CUBE);
                 Entities.toxcrawl(c);
             }
-            if(lol > 75 && lol <= 84){
+            if(lol > 80 && lol <= 84){
                 Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
                 Entities.soulVg(g);
 
