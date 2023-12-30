@@ -273,6 +273,7 @@ public class Entities {
         meta.addCustomEffect(new PotionEffect(PotionEffectType.GLOWING,180,0),false);
         meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,180,1),false);
         arrow.setItemMeta(meta);
+        arrow.setAmount(128);
         return arrow;
     }
 

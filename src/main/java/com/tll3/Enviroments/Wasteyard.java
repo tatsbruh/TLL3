@@ -23,13 +23,14 @@ public class Wasteyard extends ChunkGenerator {
             for (int Z = 0; Z < 16; Z++) {
                 double noise = generator.noise(chunkX * 16 + X, chunkZ * 16 + Z, 0.32D, 0.17D);
                 int height = (int) (noise * 38);
-                int y = 155;
+                int y = 135;
                 for (int i = 0; i < height / 2; i++) {
                     this.setBlock(chunkData, X, y + i, Z, this.getRandomMaterial());
                 }
                 for (int i = 0; i < height; i++) {
                     this.setBlock(chunkData, X, y - i, Z, this.getUnderMaterial());
                 }
+
             }
         }
     }
@@ -48,6 +49,11 @@ public class Wasteyard extends ChunkGenerator {
                 height += 84;
                 if (height > chunkData.getMaxHeight()) {
                     height = chunkData.getMaxHeight();
+                }
+                if (height <= 82) {
+                    for(int y2 = height; y2 <= 82; y2++) {
+                        this.setBlock(chunkData,x,y2,z,Material.LAVA);
+                    }
                 }
                 for (int y = 0; y < height / 2; y++) {
                     chunkData.setBlock(x, y, z, getRandomMaterial());
@@ -100,22 +106,19 @@ public class Wasteyard extends ChunkGenerator {
         return Material.DEEPSLATE;
     }
 
-    @Override
-    public boolean shouldGenerateSurface() {
-        return true;
-    }
+
 
 
     public static class WasteyardBiome extends BiomeProvider {
         @NotNull
         @Override
         public Biome getBiome(@NotNull WorldInfo worldInfo, int i, int i1, int i2) {
-            return Biome.CRIMSON_FOREST;
+            return Biome.BASALT_DELTAS;
         }
         @NotNull
         @Override
         public List<Biome> getBiomes(@NotNull WorldInfo worldInfo) {
-            return List.of(Biome.CRIMSON_FOREST);
+            return List.of(Biome.BASALT_DELTAS);
         }
     }
 }

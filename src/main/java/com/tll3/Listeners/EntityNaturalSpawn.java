@@ -218,7 +218,6 @@ public class EntityNaturalSpawn implements Listener {
             if(lol > 80 && lol <= 84){
                 Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
                 Entities.soulVg(g);
-
             }
             if(lol >= 85){
                 Creeper c = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
