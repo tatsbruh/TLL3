@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
@@ -19,7 +20,11 @@ import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionData;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.lang.reflect.Field;
@@ -40,7 +45,7 @@ public class Entities {
     public static void skeAd(Skeleton s){
         setName(s,"&4Brute Skeleton");
         setMobHealth(s,35);
-        setMobDamage(s,6);
+        setMobDamage(s,4);
         setHead(s,new ItemStack(Material.BEACON));
         setChestplate(s,new ItemStack(Material.DIAMOND_CHESTPLATE));
         setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).addEnchant(Enchantment.ARROW_FIRE,5).build());
@@ -75,7 +80,7 @@ public class Entities {
     public static void zNinka(Zombie z){
         setName(z,"&7Ninja Zombie");
         setMobHealth(z,25);
-        setMobDamage(z,6);
+        setMobDamage(z,5);
         addPotionEffect(z, PotionEffectType.INVISIBILITY,0);
         addPotionEffect(z, PotionEffectType.SPEED,2);
         addPotionEffect(z,PotionEffectType.JUMP,2);
@@ -158,8 +163,11 @@ public class Entities {
         setIdentifierString(s,"termite_ex");
         setIdentifierInt(s,"tex_state",0);
     }
-
-
+    public static void gPower(Ghast s){
+        setName(s,"&6Cataclysmic Ghast");
+        setMobHealth(s,20);
+        setIdentifierString(s,"cata_ghast");
+    }
 
 
 
@@ -209,7 +217,66 @@ public class Entities {
     }
 
 
+    public static void soulVg(Ghast s){
+        setName(s,"#636363Brimstone Vagrant");
+        setMobHealth(s,55);
+        setIdentifierString(s,"soulvag");
+    }
+    public static void scBrute(PiglinBrute c){
+        setName(c,"#a84738Scorchbeast");
+        c.setImmuneToZombification(true);
+        setMobHealth(c,75);
+        setMainHand(c,new ItemBuilder(Material.NETHERITE_AXE).addEnchant(Enchantment.DAMAGE_ALL,9).addEnchant(Enchantment.FIRE_ASPECT,4).setUnbreakable(true).build());
+        addPotionEffect(c,PotionEffectType.SPEED,0);
+        setIdentifierString(c,"scorchbeast");
+    }
+    public static void rustwalker(Creeper c){
+        setName(c,"#ffab4aRustwalker");
+        setMobHealth(c,35);
+        c.setPowered(true);
+        c.setMaxFuseTicks(25);
+        c.setFuseTicks(25);
+        c.setExplosionRadius(10);
+        addPotionEffect(c,PotionEffectType.SPEED,0);
+        setIdentifierString(c,"rustwalker");
+    }
+    public static void lostScav(Pillager p){
+        setName(p,"#615e58Lost Scavenger");
+        setMobHealth(p,45);
+        p.setCanJoinRaid(false);
+        setMainHand(p,new ItemBuilder(Material.CROSSBOW).addEnchant(Enchantment.QUICK_CHARGE,4).addEnchant(Enchantment.MULTISHOT,0).addEnchant(Enchantment.PIERCING,4).setUnbreakable(true).build());
+        setOffhand(p,lostScavxd());
+        addPotionEffect(p,PotionEffectType.SPEED,0);
+        setIdentifierString(p,"lostscav");
+    }
+    public static void toxcrawl(MagmaCube s){
+        setName(s,"#2e2e2eToxic Crawler");
+        setMobHealth(s,60);
+        setMobDamage(s,20);
+        s.setSize(12);
+        setIdentifierString(s,"toxiccrawler");
+    }
+
+
+
+
+
     public static LivingEntity spawnMob(Location loc, EntityType entityType){
        return (LivingEntity) loc.getWorld().spawnEntity(loc,entityType);
     }
+
+    public static ItemStack lostScavxd() {
+        ItemStack arrow = new ItemStack(Material.TIPPED_ARROW);
+        PotionMeta meta = (PotionMeta) arrow.getItemMeta();
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.WITHER,180,4),false);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW,180,1),false);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.GLOWING,180,0),false);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,180,1),false);
+        arrow.setItemMeta(meta);
+        return arrow;
+    }
+
+
+
+
 }

@@ -1,5 +1,6 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.CustomEntities.CustomAllay;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
@@ -14,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -35,12 +37,17 @@ public class GenericEntityListeners implements Listener {
                     p.setFoodLevel((int) (p.getFoodLevel() - e.getFinalDamage()));
                 }
             }
+            if(damager instanceof MagmaCube m){
+                if(Data.has(m,"toxiccrawler",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,4));
+                }
+            }
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
                 }
                 if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
-                    s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,60,1,false,false,false));
+                    s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,60,2,false,false,false));
                 }
                 if(Data.has(s,"termite",PersistentDataType.STRING)){
                     var state = Data.get(s,"t_state",PersistentDataType.INTEGER);
@@ -174,6 +181,23 @@ public class GenericEntityListeners implements Listener {
                         }
                     }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
 
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void projlaunchE(ProjectileLaunchEvent e){
+        var proj = e.getEntity();
+        var shooter = e.getEntity().getShooter();
+        var loc = e.getLocation();
+        if(shooter instanceof Ghast g){
+            if(proj instanceof Fireball s){
+                if(Data.has(g,"cata_ghast",PersistentDataType.STRING)){
+                    s.setYield(4);
+                }
+                if(Data.has(g,"soulvag",PersistentDataType.STRING)){
+                    s.setYield(8);
                 }
             }
         }

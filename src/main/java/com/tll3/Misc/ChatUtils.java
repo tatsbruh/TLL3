@@ -21,6 +21,6 @@ public class ChatUtils {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
 
-    public static final String prefix = format("&c[&6&lTheLastLife&c] &7► &f");
+    public static final String prefix = format("&8[#fb6820A#fc8725f#fca62bt#fdc430e#fde335r#fdc430l#fca62bi#fc8725f#fb6820e&8] &7► &f");
 
 }

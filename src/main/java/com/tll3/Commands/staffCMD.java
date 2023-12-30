@@ -2,6 +2,8 @@ package com.tll3.Commands;
 
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
+import com.tll3.Enviroments.Worlds;
+import com.tll3.Lists.CustomEntities.CustomAllay;
 import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomGuardian;
 import com.tll3.Lists.Entities;
@@ -90,6 +92,23 @@ public class staffCMD extends BaseCommand {
         }
     }
 
+    @Subcommand("dimension")
+    @CommandCompletion("overworld|nether|end|wasteyard")
+    @CommandPermission("staff.admin")
+    @Description("teleports you to the dimension given do you understand")
+    public void teleport(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            switch (args[0].toLowerCase()){
+                case "overworld" -> p.teleport(Worlds.getOverworld().getSpawnLocation());
+                case "nether" -> p.teleport(Worlds.getNether().getSpawnLocation());
+                case "end" -> p.teleport(Worlds.getEnd().getSpawnLocation());
+                case "wasteyard" -> p.teleport(Worlds.getWasteyard().getSpawnLocation());
+                default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Ingresa una Dimension valida"));
+            }
+        }
+    }
+
+
     @Subcommand("summon")
     @CommandCompletion("zombie_ninja|black_reaver|adaptative_spider|termite|brute_skeleton|zenith_creeper")
     @CommandPermission("staff.admin")
@@ -115,6 +134,12 @@ public class staffCMD extends BaseCommand {
                     CustomCreeper cC = new CustomCreeper(worldServer);
                     cC.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "allay_lol" ->{
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomAllay customAllay = new CustomAllay(worldServer);
+                    customAllay.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(customAllay, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }

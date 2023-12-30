@@ -1,14 +1,18 @@
 package com.tll3.Listeners;
 
+import com.tll3.Enviroments.Worlds;
+import com.tll3.Lists.CustomEntities.CustomAllay;
 import com.tll3.Lists.CustomEntities.CustomChicken;
 import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomIronGolem;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.monster.EntityCreeper;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
@@ -22,6 +26,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 import static com.tll3.Misc.GenericUtils.*;
@@ -54,10 +59,9 @@ public class EntityNaturalSpawn implements Listener {
         var entity = e.getEntity();
         var reason = e.getSpawnReason();
         var loc = e.getLocation();
-
-
         if(entity instanceof CustomCreeper || entity instanceof CustomIronGolem
-        || entity instanceof CustomChicken)return;
+        || entity instanceof CustomChicken || entity instanceof CustomAllay)return;
+        spawnWasteyard(e,loc);
         if(getDay() >= 5){
             if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))){
                 if(doRandomChance(1)){
@@ -116,6 +120,10 @@ public class EntityNaturalSpawn implements Listener {
             case CAVE_SPIDER -> {
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.csTerCol((CaveSpider) entity);
             }
+            case GHAST -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.gPower((Ghast) entity);
+            }
+
 
         }
         }
@@ -161,7 +169,11 @@ public class EntityNaturalSpawn implements Listener {
             case 2 -> {
                 e.setCancelled(true);
                 CaveSpider cs = (CaveSpider) Entities.spawnMob(e.getLocation(),EntityType.CAVE_SPIDER);
-                Entities.termite(cs);
+                if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
+                    Entities.csTerCol(cs);
+                }else{
+                    Entities.termite(cs);
+                }
             }
 
         }
@@ -175,6 +187,43 @@ public class EntityNaturalSpawn implements Listener {
             case 1 -> Entities.wsR(w);
             case 2 -> Entities.wsT(w);
             case 3 -> Entities.wsW(w);
+        }
+    }
+
+    public static void spawnWasteyard(CreatureSpawnEvent e, Location loc){
+        World w = Worlds.getWasteyard();
+        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && loc.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
+            e.setCancelled(true);
+            if(w.getLivingEntities().size() > 140)return;
+            Random random = new Random();
+            int lol = random.nextInt(101);
+            if(lol <= 35){
+                PiglinBrute s = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                Entities.scBrute(s);
+            }
+            if (lol > 35 && lol <= 50) {
+                WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                CustomAllay customAllay = new CustomAllay(worldServer);
+                customAllay.a_(loc.getX(),loc.getY(),loc.getZ());
+                worldServer.addFreshEntity(customAllay, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            }
+            if(lol > 50 && lol <= 65){
+                Pillager p = (Pillager)Entities.spawnMob(loc,EntityType.PILLAGER);
+                Entities.lostScav(p);
+            }
+            if(lol > 65 && lol <= 75){
+                MagmaCube c = (MagmaCube) Entities.spawnMob(loc,EntityType.MAGMA_CUBE);
+                Entities.toxcrawl(c);
+            }
+            if(lol > 75 && lol <= 84){
+                Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
+                Entities.soulVg(g);
+
+            }
+            if(lol >= 85){
+                Creeper c = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
+                Entities.rustwalker(c);
+            }
         }
     }
 
