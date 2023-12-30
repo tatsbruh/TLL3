@@ -1,20 +1,25 @@
 package com.tll3.Enviroments;
 
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Biome;
 import org.bukkit.generator.BiomeProvider;
+import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
 import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
-import java.util.List;
-import java.util.Random;
-import java.util.SplittableRandom;
+import java.util.*;
 
 public class Wasteyard extends ChunkGenerator {
     private final SplittableRandom random = new SplittableRandom();
+    private final WasteyardPopulator populator;
+    public Wasteyard() {
+        this.populator = new WasteyardPopulator();
+    }
+
     @Override
     public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
         SimplexOctaveGenerator generator = new SimplexOctaveGenerator(worldInfo.getSeed(), 8);
@@ -23,9 +28,14 @@ public class Wasteyard extends ChunkGenerator {
             for (int Z = 0; Z < 16; Z++) {
                 double noise = generator.noise(chunkX * 16 + X, chunkZ * 16 + Z, 0.32D, 0.17D);
                 int height = (int) (noise * 38);
-                int y = 135;
+                int y = 95;
+                if (height <= 40) {
+                    for(int y2 = height; y2 <= 40; y2++) {
+                        this.setBlock(chunkData,X,y2,Z,Material.LAVA);
+                    }
+                }
                 for (int i = 0; i < height / 2; i++) {
-                    this.setBlock(chunkData, X, y + i, Z, this.getRandomMaterial());
+                    this.setBlock(chunkData, X, y + i, Z, this.getRandomMaterial2());
                 }
                 for (int i = 0; i < height; i++) {
                     this.setBlock(chunkData, X, y - i, Z, this.getUnderMaterial());
@@ -50,16 +60,9 @@ public class Wasteyard extends ChunkGenerator {
                 if (height > chunkData.getMaxHeight()) {
                     height = chunkData.getMaxHeight();
                 }
-                if (height <= 82) {
-                    for(int y2 = height; y2 <= 82; y2++) {
-                        this.setBlock(chunkData,x,y2,z,Material.LAVA);
-                    }
-                }
+
                 for (int y = 0; y < height / 2; y++) {
                     chunkData.setBlock(x, y, z, getRandomMaterial());
-                }
-                for (int y = 0; y < height; y++) {
-                    chunkData.setBlock(x, y, z, getUnderMaterial());
                 }
             }
         }
@@ -84,6 +87,11 @@ public class Wasteyard extends ChunkGenerator {
         return new WasteyardBiome();
     }
 
+
+    @Override
+    public @NotNull List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
+        return List.of(populator);
+    }
     protected Material getRandomMaterial() {
         int r = random.nextInt(100);
         if(r >= 70){return Material.LIGHT_GRAY_CONCRETE_POWDER;
@@ -91,6 +99,16 @@ public class Wasteyard extends ChunkGenerator {
             return Material.GRAY_GLAZED_TERRACOTTA;
         }else if(r < 55 && r >= 25){
             return Material.BLACKSTONE;
+        }
+        return Material.GRAY_CONCRETE_POWDER;
+    }
+    protected Material getRandomMaterial2() {
+        int r = random.nextInt(100);
+        if(r >= 70){return Material.LIGHT_GRAY_CONCRETE_POWDER;
+        }else if(r < 70 && r >= 55){
+            return Material.GRAY_GLAZED_TERRACOTTA;
+        }else if(r < 55 && r >= 25){
+            return Material.MAGMA_BLOCK;
         }
         return Material.GRAY_CONCRETE_POWDER;
     }
@@ -107,8 +125,6 @@ public class Wasteyard extends ChunkGenerator {
     }
 
 
-
-
     public static class WasteyardBiome extends BiomeProvider {
         @NotNull
         @Override
@@ -121,4 +137,6 @@ public class Wasteyard extends ChunkGenerator {
             return List.of(Biome.BASALT_DELTAS);
         }
     }
+    public boolean shouldGenerateSurface() { return true; }
+
 }

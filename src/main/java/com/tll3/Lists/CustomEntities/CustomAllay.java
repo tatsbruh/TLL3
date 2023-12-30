@@ -40,7 +40,7 @@ public class CustomAllay extends Allay {
     private static Field attributeMap;
     public CustomAllay(World world){
         super(EntityTypes.b,world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#3da1bfDustseeker"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#3da1bfVoidseeker"));
         EntityHelper.setIdentifierString(this.getBukkitEntity(),"dustseeker");
         EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(),new ItemBuilder(Material.TNT).addEnchant(Enchantment.KNOCKBACK,19).build());
         this.getBukkitEntity().setPersistent(false);

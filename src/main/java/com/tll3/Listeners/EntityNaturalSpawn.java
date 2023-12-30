@@ -5,25 +5,22 @@ import com.tll3.Lists.CustomEntities.CustomAllay;
 import com.tll3.Lists.CustomEntities.CustomChicken;
 import com.tll3.Lists.CustomEntities.CustomCreeper;
 import com.tll3.Lists.CustomEntities.CustomIronGolem;
+import com.tll3.Lists.CustomEntities.CustomParrot;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
-import net.minecraft.world.entity.EntityTypes;
-import net.minecraft.world.entity.monster.EntityCreeper;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftCreeper;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -203,9 +200,9 @@ public class EntityNaturalSpawn implements Listener {
             }
             if (lol > 45 && lol <= 50) {
                 WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                CustomAllay customAllay = new CustomAllay(worldServer);
-                customAllay.a_(loc.getX(),loc.getY(),loc.getZ());
-                worldServer.addFreshEntity(customAllay, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                CustomParrot c = new CustomParrot(worldServer);
+                c.a_(loc.getX(),loc.getY(),loc.getZ());
+                worldServer.addFreshEntity(c, CreatureSpawnEvent.SpawnReason.CUSTOM);
             }
             if(lol > 50 && lol <= 65){
                 Pillager p = (Pillager)Entities.spawnMob(loc,EntityType.PILLAGER);

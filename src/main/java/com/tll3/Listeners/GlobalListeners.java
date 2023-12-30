@@ -57,6 +57,19 @@ public class GlobalListeners implements Listener {
 
         if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
 
+        if(entity.getLocation().getWorld().getName().equalsIgnoreCase("world_wasteyard")){
+            if(entity instanceof Enemy){
+            if(reason == EntityDamageEvent.DamageCause.WITHER || reason == EntityDamageEvent.DamageCause.HOT_FLOOR || reason == EntityDamageEvent.DamageCause.LAVA || reason == EntityDamageEvent.DamageCause.FIRE || reason == EntityDamageEvent.DamageCause.FIRE_TICK)e.setCancelled(true);
+            }
+            if(entity instanceof Player){
+                switch (reason){
+                    case LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 5);
+                    case FIRE,FIRE_TICK -> e.setDamage(e.getDamage() * 3);
+                }
+            }
+        }
+
+
         if(entity instanceof Enemy || entity instanceof IronGolem){
           if(e instanceof EntityDamageByEntityEvent event){
               if (event.getDamager() instanceof Enemy) {

@@ -18,7 +18,7 @@ public class Scoreboard extends BukkitRunnable {
 
     @Override
     public void run() {
-        scoreHelper.setTitle(ChatUtils.format("&4&k|||&6The Last Life 3&4&k|||"));
+        scoreHelper.setTitle(ChatUtils.format("&k&4z &6Afterlife &k&4z"));
         checkForEffectSlot1();
         checkForEffectSlot2();
 
