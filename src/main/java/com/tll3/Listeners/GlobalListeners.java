@@ -1,8 +1,6 @@
 package com.tll3.Listeners;
 
-import com.tll3.Lists.CustomEntities.CustomChicken;
-import com.tll3.Lists.CustomEntities.CustomCreeper;
-import com.tll3.Lists.CustomEntities.CustomIronGolem;
+import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
@@ -88,24 +86,70 @@ public class GlobalListeners implements Listener {
 
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
                 if (liv instanceof CustomCreeper || liv instanceof CustomIronGolem
-                        || liv instanceof CustomChicken) return;
+                        || liv instanceof CustomChicken || liv instanceof CustomFox
+                || liv instanceof CustomPanda || liv instanceof CustomPolarBear || liv instanceof CustomSniffer
+                || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls) return;
                 Location loc = liv.getLocation();
                 if (getDay() >= 5) {
-                    if (liv instanceof IronGolem i) {
-                        Entities.enrIG(i);
+                    switch (liv.getType()){
+                        case IRON_GOLEM -> Entities.enrIG((IronGolem) liv);
+                        case MULE -> {
+                            liv.remove();
+                            SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc, EntityType.SKELETON_HORSE);
+                            h.setTrapped(true);
+                        }
+                        case CHICKEN -> {
+                           liv.remove();
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomChicken customChicken = new CustomChicken(worldServer);
+                            customChicken.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(customChicken, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case FOX -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomFox f = new CustomFox(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case AXOLOTL -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomAxolotls f = new CustomAxolotls(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case PANDA -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomPanda f = new CustomPanda(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case POLAR_BEAR -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomPolarBear f = new CustomPolarBear(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case SNIFFER -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomSniffer f = new CustomSniffer(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case MUSHROOM_COW -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomMooshroom f = new CustomMooshroom(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case ZOMBIFIED_PIGLIN -> Entities.enrPig((PigZombie) liv);
                     }
-                    if (liv instanceof Mule m) {
-                        m.remove();
-                        SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
-                        h.setTrapped(true);
-                    }
-                    if (liv instanceof Chicken c) {
-                        c.remove();
-                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
-                        CustomChicken customChicken = new CustomChicken(worldServer);
-                        customChicken.a_(loc.getX(), loc.getY(), loc.getZ());
-                        worldServer.addFreshEntity(customChicken, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                    }
+
                 }
         }
     }

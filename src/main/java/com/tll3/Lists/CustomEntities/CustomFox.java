@@ -14,7 +14,7 @@ import org.bukkit.entity.LivingEntity;
 import java.util.EnumSet;
 
 public class CustomFox extends EntityFox {
-    private PathfinderGoalNearestAttackableTarget ck;
+
 
     public CustomFox(World world){
         super(EntityTypes.O,world);
@@ -25,14 +25,15 @@ public class CustomFox extends EntityFox {
 
     @Override
     protected void B() {
-        this.ck = new PathfinderGoalNearestAttackableTarget<>(this, EntityHuman.class, true);
         this.bO.a(0, new PathfinderGoalFloat(this));
         this.bO.a(0, new ClimbOnTopOfPowderSnowGoal(this, this.dM()));
+        this.bO.a(2, new PathfinderGoalMoveTowardsTarget(this, 0.9, 32.0F));
         this.bO.a(6, new o());
         this.bO.a(1, new PathfinderGoalMeleeAttack(this, 1.2000000476837158, true));
         this.bO.a(10, new PathfinderGoalLeapAtTarget(this, 0.4F));
         this.bO.a(11, new PathfinderGoalRandomStrollLand(this, 1.0));
         this.bO.a(6, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 24.0F));
+        this.bP.a(3,new PathfinderGoalNearestAttackableTarget<>(this, EntityHuman.class, true));
     }
 
  }

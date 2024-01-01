@@ -10,6 +10,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
 import net.minecraft.world.entity.player.EntityHuman;
 import org.bukkit.EntityEffect;
@@ -17,6 +18,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
@@ -94,6 +96,24 @@ public class Entities {
         } catch (Exception e) {}
         i.setRemoveWhenFarAway(true);
         setName(i,"&4Enraged Iron Golem");
+    }
+    public static void enrPig(PigZombie z){
+        CraftPigZombie craft = ((CraftPigZombie) z);
+        EntityPigZombie entityPigZombie = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {}
+        z.setRemoveWhenFarAway(true);
+        setName(z,"&4Enraged Zombie Piglin");
     }
 
     public static void zNinka(Zombie z){

@@ -1,11 +1,7 @@
 package com.tll3.Listeners;
 
 import com.tll3.Enviroments.Worlds;
-import com.tll3.Lists.CustomEntities.CustomAllay;
-import com.tll3.Lists.CustomEntities.CustomChicken;
-import com.tll3.Lists.CustomEntities.CustomCreeper;
-import com.tll3.Lists.CustomEntities.CustomIronGolem;
-import com.tll3.Lists.CustomEntities.CustomParrot;
+import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
@@ -59,7 +55,10 @@ public class EntityNaturalSpawn implements Listener {
         var reason = e.getSpawnReason();
         var loc = e.getLocation();
         if(entity instanceof CustomCreeper || entity instanceof CustomIronGolem
-        || entity instanceof CustomChicken || entity instanceof CustomAllay)return;
+        || entity instanceof CustomChicken || entity instanceof CustomAllay
+        || entity instanceof CustomFox || entity instanceof CustomMooshroom || entity instanceof CustomPanda
+        || entity instanceof CustomPolarBear || entity instanceof CustomSniffer || entity instanceof CustomAxolotls
+        )return;
         spawnWasteyard(e,loc);
         if(getDay() >= 5){
             if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))){
@@ -68,7 +67,6 @@ public class EntityNaturalSpawn implements Listener {
                     Entities.enrIG((IronGolem) Entities.spawnMob(loc,EntityType.IRON_GOLEM));
                 }
             }
-
         switch (entity.getType()){
             case CREEPER -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
@@ -121,6 +119,65 @@ public class EntityNaturalSpawn implements Listener {
             }
             case GHAST -> {
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.gPower((Ghast) entity);
+            }
+            case AXOLOTL -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomAxolotls r = new CustomAxolotls(worldServer);
+                    r.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+            }
+            case FOX -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomFox r = new CustomFox(worldServer);
+                    r.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+            }
+            case SNIFFER -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomSniffer r = new CustomSniffer(worldServer);
+                    r.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+            }
+            case POLAR_BEAR -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomPolarBear r = new CustomPolarBear(worldServer);
+                    r.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+            }
+            case PANDA -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomPanda r = new CustomPanda(worldServer);
+                    r.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+            }
+            case MUSHROOM_COW -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomMooshroom r = new CustomMooshroom(worldServer);
+                    r.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+            }
+            case ZOMBIFIED_PIGLIN -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    Entities.enrPig((PigZombie) entity);
+                }
             }
 
 
