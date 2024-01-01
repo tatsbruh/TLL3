@@ -98,6 +98,9 @@ public class GenericUtils {
         int minutes = remainingSeconds / 60;
         return String.format("%02d:%02d:%02d", hours, minutes, remainingSeconds % 60);
     }
+    public static Integer getRandomValue(int n) {
+        return (int)(Math.random() * (double)n);
+    }
     public static String damageCause(EntityDamageEvent e) {
 
         switch (e.getCause()) {

@@ -10,6 +10,8 @@ import com.tll3.Lists.Entities;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
+import com.tll3.TLL3;
+import com.tll3.Task.Mobs.ArqBlockBreak;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -86,7 +88,7 @@ public class EntityNaturalSpawn implements Listener {
             case ZOMBIE -> {
                 if(getDay() >= 5){
                     if(doRandomChance(35)){
-                        Entities.zNinka((Zombie) entity);
+                        chooseZombieClass1((Zombie) entity);
                     }
                 }
             }
@@ -125,27 +127,7 @@ public class EntityNaturalSpawn implements Listener {
         }
         }
 
-        if(getDay() >= 15){
-        if(entity instanceof Pig){
-            PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc, EntityType.PIGLIN_BRUTE);
-            pg.setImmuneToZombification(true);
-            e.setCancelled(true);
-        }
-        if(entity instanceof Cow){
-            Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
-            r.setCanJoinRaid(false);
-            e.setCancelled(true);
-        }
-        if(entity instanceof Sheep){
-            Blaze c = (Blaze) Entities.spawnMob(loc,EntityType.BLAZE);
-            e.setCancelled(true);
-        }
-        if(entity instanceof Horse || entity instanceof Donkey){
-            SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
-            h.setTrapped(true);
-            e.setCancelled(true);
-        }
-        }
+
 
 
 
@@ -193,6 +175,16 @@ public class EntityNaturalSpawn implements Listener {
             case 0 -> Entities.skeAd(w);
             case 1 -> Entities.skeFi(w);
             case 2 -> Entities.skeRz(w);
+        }
+    }
+    public static void chooseZombieClass1(Zombie z){
+        Random random = new Random();
+        int chance = random.nextInt(2);
+        switch (chance){
+            case 0 -> Entities.zNinka(z);
+            case 1 -> {Entities.zArqueo(z);
+            new ArqBlockBreak(z).runTaskTimer(TLL3.getInstance(),20L,35L);
+            }
         }
     }
 

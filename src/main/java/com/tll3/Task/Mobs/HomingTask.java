@@ -22,7 +22,7 @@ public class HomingTask extends BukkitRunnable {
     @Override
     public void run() {
         if (target == null) seekTarget();
-        if (arrow.isDead() || target.isDead() || arrow.isOnGround()) {cancel();return;}
+        if (arrow.isDead() || !arrow.isValid() ||target.isDead() || arrow.isOnGround()) {cancel();return;}
         Vector newVector = target.getBoundingBox().getCenter().subtract(arrow.getLocation().toVector()).normalize();
         arrow.setVelocity(newVector);
     }

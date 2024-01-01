@@ -43,7 +43,6 @@ public class GlobalListeners implements Listener {
             if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
                 e.setCancelled(true);
             }
-
             if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
         }
 
@@ -51,8 +50,12 @@ public class GlobalListeners implements Listener {
             e.setCancelled(true);
         }
 
+
         if(entity instanceof Zombie z){
             if(Data.has(z,"zninja",PersistentDataType.STRING) && reason == EntityDamageEvent.DamageCause.FALL)e.setCancelled(true);
+        }
+        if(entity instanceof Skeleton s){
+            if(Data.has(s,"firemancer",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
 
         if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
@@ -84,50 +87,26 @@ public class GlobalListeners implements Listener {
     public void chunkthing(ChunkLoadEvent e){
 
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
-                if(liv instanceof CustomCreeper || liv instanceof CustomIronGolem
-                || liv instanceof CustomChicken)return;
+                if (liv instanceof CustomCreeper || liv instanceof CustomIronGolem
+                        || liv instanceof CustomChicken) return;
                 Location loc = liv.getLocation();
-                if(getDay() >= 5){
-                    if(liv instanceof IronGolem i){
+                if (getDay() >= 5) {
+                    if (liv instanceof IronGolem i) {
                         Entities.enrIG(i);
                     }
-                    if(liv instanceof Mule m){
+                    if (liv instanceof Mule m) {
                         m.remove();
                         SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
                         h.setTrapped(true);
                     }
-                    if(liv instanceof Chicken c){
+                    if (liv instanceof Chicken c) {
                         c.remove();
-                        WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
                         CustomChicken customChicken = new CustomChicken(worldServer);
-                        customChicken.a_(loc.getX(),loc.getY(),loc.getZ());
+                        customChicken.a_(loc.getX(), loc.getY(), loc.getZ());
                         worldServer.addFreshEntity(customChicken, CreatureSpawnEvent.SpawnReason.CUSTOM);
                     }
                 }
-
-                if(getDay() >= 15) {
-                if (liv instanceof Pig p) {
-                    p.remove();
-                    PiglinBrute pg = (PiglinBrute) Entities.spawnMob(p.getLocation(), EntityType.PIGLIN_BRUTE);
-                    pg.setImmuneToZombification(true);
-                }
-                if (liv instanceof Cow w) {
-                    w.remove();
-                    Ravager r = (Ravager) Entities.spawnMob(w.getLocation(), EntityType.RAVAGER);
-                    r.setCanJoinRaid(false);
-                }
-                if (liv instanceof Sheep s) {
-                    s.remove();
-                    Blaze c = (Blaze) Entities.spawnMob(s.getLocation(), EntityType.BLAZE);
-                }
-                if (liv instanceof Horse || liv instanceof Donkey) {
-                    liv.remove();
-                    SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(liv.getLocation(), EntityType.SKELETON_HORSE);
-                    h.setTrapped(true);
-                }
-            }
         }
     }
-
-
 }

@@ -5,8 +5,10 @@ import com.tll3.Lists.CustomEntities.CustomSniffer;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
+import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.HomingTask;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.*;
@@ -26,6 +28,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.Objects;
+import java.util.Random;
 
 public class GenericEntityListeners implements Listener {
 
@@ -119,6 +122,7 @@ public class GenericEntityListeners implements Listener {
                 e.setProjectile(f);
             }
             if(Data.has(s,"razorback",PersistentDataType.STRING)){
+                EntityHelper.setIdentifierString(projectile,"lol");
                 new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
             }
 
@@ -199,6 +203,23 @@ public class GenericEntityListeners implements Listener {
     }
 
     @EventHandler
+    public void moveE(EntityMoveEvent e){
+        var entity = e.getEntity();
+        Random random = new Random();
+        if(GenericUtils.getDay() >= 5){
+        if(entity instanceof Enderman end){
+            for (Player player : end.getWorld().getPlayers()) {
+                if (player.getLocation().distanceSquared(end.getLocation()) <= Math.pow(4, 2)) {
+                    if(player.getGameMode() == GameMode.SURVIVAL){
+                        end.setTarget(player);
+                    }
+                }
+            }
+        }
+        }
+    }
+
+    @EventHandler
     public void projlaunchE(ProjectileLaunchEvent e){
         var proj = e.getEntity();
         var shooter = e.getEntity().getShooter();
@@ -222,7 +243,13 @@ public class GenericEntityListeners implements Listener {
         var hen = e.getHitEntity();
         var hbl = e.getHitBlock();
 
-
+        if(proj instanceof Arrow a){
+            if(Data.has(a,"lol",PersistentDataType.STRING)){
+                if(hen instanceof Player p){
+                    if(p.isBlocking())a.remove();
+                }
+            }
+        }
 
         if (source instanceof Skeleton s) {
             if (Data.has(s, "void_overseer", PersistentDataType.STRING)) {

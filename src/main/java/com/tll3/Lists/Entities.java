@@ -43,9 +43,10 @@ public class Entities {
     }
 
     public static void skeAd(Skeleton s){
-        setName(s,"&4Brute Skeleton");
+        setName(s,"&4Rogue Skeleton");
         setMobHealth(s,30);
         setMobDamage(s,4);
+        s.setShouldBurnInDay(false);
         setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).addEnchant(Enchantment.ARROW_FIRE,4).build());
         addPotionEffect(s,PotionEffectType.SPEED,1);
         setIdentifierString(s,"bruteskeleton");
@@ -55,7 +56,9 @@ public class Entities {
         setName(s,"&6&lFiremancer");
         setMobHealth(s,25);
         setHead(s,new ItemBuilder(Material.LEATHER_HELMET).setLeatherColor(255, 156, 25).build());
+        addPotionEffect(s,PotionEffectType.FIRE_RESISTANCE,0);
         setIdentifierString(s,"firemancer");
+        s.setShouldBurnInDay(false);
     }
     public static void skeRz(Skeleton s){
         setName(s,"&0Razorback");
@@ -63,6 +66,7 @@ public class Entities {
         setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
         setHead(s,new ItemStack(Material.TARGET));
         setIdentifierString(s,"razorback");
+        s.setShouldBurnInDay(false);
     }
 
 
@@ -71,6 +75,7 @@ public class Entities {
         setHead(s,new ItemStack(Material.BLAST_FURNACE));
         setChestplate(s,new ItemStack(Material.IRON_CHESTPLATE));
         setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,9).build());
+        s.setShouldBurnInDay(false);
     }
     public static void enrIG(IronGolem i) {
         CraftIronGolem craft = ((CraftIronGolem) i);
@@ -102,6 +107,16 @@ public class Entities {
         z.setShouldBurnInDay(false);
         z.setAdult();
         setIdentifierString(z,"zninja");
+    }
+    public static void zArqueo(Zombie z){
+        setName(z,"&6Zombie Archaeologist");
+        setMobHealth(z,25);
+        setMobDamage(z,5);
+        addPotionEffect(z, PotionEffectType.SPEED,0);
+        setMobRange(z,100);
+        z.setAdult();
+        z.setShouldBurnInDay(false);
+        setIdentifierString(z,"dead_arq");
     }
     public static void blackRev(Spider s){
         setName(s,"&0Black Tarantula");
