@@ -46,9 +46,7 @@ public class Entities {
         setName(s,"&4Brute Skeleton");
         setMobHealth(s,35);
         setMobDamage(s,4);
-        setHead(s,new ItemStack(Material.BEACON));
-        setChestplate(s,new ItemStack(Material.DIAMOND_CHESTPLATE));
-        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).addEnchant(Enchantment.ARROW_FIRE,5).build());
+        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).addEnchant(Enchantment.ARROW_FIRE,4).build());
         addPotionEffect(s,PotionEffectType.SPEED,1);
         setIdentifierString(s,"bruteskeleton");
     }

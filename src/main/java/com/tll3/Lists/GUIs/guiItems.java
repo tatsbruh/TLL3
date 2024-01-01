@@ -14,7 +14,7 @@ public class guiItems {
                 .setDisplayName("&e&lTienda")
                 .setLore(
                         "&a¡Aqui puedes comprar objetos y demas usando tu",
-                        "&e&lPrestigio &aganado de las misiones!",
+                        "&e&lPrestigio &aobtenido de las misiones!",
                         ""
                 ).build();
     }

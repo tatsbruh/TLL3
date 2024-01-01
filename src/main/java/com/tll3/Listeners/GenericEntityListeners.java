@@ -1,6 +1,7 @@
 package com.tll3.Listeners;
 
 import com.tll3.Lists.CustomEntities.CustomAllay;
+import com.tll3.Lists.CustomEntities.CustomSniffer;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
@@ -269,6 +270,7 @@ public class GenericEntityListeners implements Listener {
         var origin = e.getEntity();
 
         if(target instanceof Player p){
+           if(origin instanceof Enemy && (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR))e.setCancelled(true);
            if(origin instanceof Zombie z){
             if(Data.has(z,"zninja",PersistentDataType.STRING)){
                 if(z.hasPotionEffect(PotionEffectType.INVISIBILITY)){

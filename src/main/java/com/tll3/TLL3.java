@@ -17,7 +17,6 @@ public final class TLL3 extends JavaPlugin {
 
 
     private static TLL3 plugin;
-    public static boolean playingAnim = false;
     public static String cf = "[TheLastLife] >>> "; //console format
     public static TLL3 getInstance(){return plugin;}
     @Override

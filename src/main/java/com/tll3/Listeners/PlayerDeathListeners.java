@@ -13,7 +13,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import static com.tll3.TLL3.playingAnim;
+
 
 public class PlayerDeathListeners implements Listener {
 
@@ -24,10 +24,14 @@ public class PlayerDeathListeners implements Listener {
         p.setGameMode(GameMode.SPECTATOR);
 
         for(Player sp : Bukkit.getOnlinePlayers()){
-            doDeathAnimation1(sp);
+            if(!sp.getName().equalsIgnoreCase(p.getName())) {
+                doDeathAnimation1(sp);
+            }else{
+                doDeathAnimation2(p);
+            }
             sp.sendMessage(ChatUtils.format("#63513aEl jugador &6&l" + p.getName() + " #63513aa perdido su ultima vida y su alma desata la furia de la Monsoon!"));
             sp.sendMessage(ChatUtils.format("&8Coordenadas: X - " + p.getLocation().getBlockX() + " | Y - " + p.getLocation().getBlockY() + " | Z - " + p.getLocation().getBlockZ()));
-            //Aqui va los mensajes de muerte
+            sp.sendMessage(getDeathMessages(p));
         }
 
         new BukkitRunnable() {
@@ -70,7 +74,7 @@ public class PlayerDeathListeners implements Listener {
             }
 
 
-        }.runTaskLater(TLL3.getInstance(), 100L);
+        }.runTaskLater(TLL3.getInstance(), 120L);
 
 
 
@@ -88,12 +92,57 @@ public class PlayerDeathListeners implements Listener {
                     title = "\\uE" + i + "\\";
                     p.sendTitle(title, "", 0, 80, 0);
                     if (i > 56) {
-                        playingAnim = false;
                         cancel();
                     }
                 }
             }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
             p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN,10.0F,-1.0F);//Placeholder
+    }
+    public void doDeathAnimation2(Player p) {
+        new BukkitRunnable() {
+            int i = 1;
+            int change = 0;
+            String title = ChatUtils.format("#fb6c37A");
+            String subtitle = ChatUtils.format("");
+
+            @Override
+            public void run() {
+                i++;
+                if(i > 5 && change <= 10){
+                    change++;
+                    i = 0;
+                }
+                switch (change){
+                    case 0 -> title = ChatUtils.format("#fb6c37A");
+                    case 1 -> title = ChatUtils.format("#fb6c37A#fb6c37f");
+                    case 2 -> title = ChatUtils.format("#fb6c37A#fded1ef#fb6c37t");
+                    case 3 -> title = ChatUtils.format("#fb6c37A#fcc226f#fcc226t#fb6c37e");
+                    case 4 -> title = ChatUtils.format("#fb6c37A#fcad2bf#fded1et#fcad2be#fb6c37r");
+                    case 5 -> title = ChatUtils.format("#fb6c37A#fca02df#fdd323t#fdd323e#fca02dr#fb6c37l");
+                    case 6 -> title = ChatUtils.format("#fb6c37A#fc972ff#fcc226t#fded1ee#fcc226r#fc972fl#fb6c37i");
+                    case 7 -> title = ChatUtils.format("#fb6c37A#fc9130f#fcb629t#fddb22e#fddb22r#fcb629l#fc9130i#fb6c37f");
+                    case 8,9,10,11 -> title = ChatUtils.format("#fb6c37A#fc8c31f#fcad2bt#fdcd24e#fded1er#fdcd24l#fcad2bi#fc8c31f#fb6c37e");
+                }
+                subtitle = getDeathMessages(p);
+                if(change >= 10){
+                    cancel();
+                }
+
+                p.sendTitle(title, subtitle, 0, 120, 20);
+
+            }
+        }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
+        p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN,10.0F,-1.0F);//Placeholder
+    }
+
+
+    public static String getDeathMessages(Player p){
+        String s;
+        switch (p.getName()){
+            case "tatsushiri" -> s = ChatUtils.format("&8" + p.getName() + ": r");
+            default -> s = ChatUtils.format("&8Rest in peace, " + p.getName());
+        }
+        return s;
     }
 
 }

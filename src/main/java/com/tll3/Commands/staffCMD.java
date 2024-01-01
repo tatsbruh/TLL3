@@ -145,6 +145,12 @@ public class staffCMD extends BaseCommand {
                     s.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
+                case "sniffer_lol" ->{
+                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                    CustomSniffer s = new CustomSniffer(worldServer);
+                    s.a_(loc.getX(),loc.getY(),loc.getZ());
+                    worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }
         }

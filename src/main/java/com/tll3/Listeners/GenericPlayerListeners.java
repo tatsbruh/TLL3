@@ -83,9 +83,9 @@ public class GenericPlayerListeners implements Listener {
         if(totem_c <= 29){
             online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado un Totem de la Inmortalidad &8(Totem #" + totem_c + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
             PlayerData.setTotemCount(p,totem_c + 1);
-            PlayerData.sumExp(p,10);
+            PlayerData.addDataEffect(p,"curse",60,1);
         }
-        if(totem_c >= 29 && totem_c <= 54){
+        if(totem_c > 29 && totem_c <= 54){
             int tot_amount = 2;
             int main = 0;
             int off = 0;
@@ -102,12 +102,11 @@ public class GenericPlayerListeners implements Listener {
                 online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
 
             }else{
-                PlayerData.sumExp(p,10);
+                PlayerData.addDataEffect(p,"curse",80,2);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),20L);
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
@@ -131,19 +130,17 @@ public class GenericPlayerListeners implements Listener {
                 e.setCancelled(true);
                 online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
             }else{
-                PlayerData.sumExp(p,10);
+                PlayerData.addDataEffect(p,"curse",120,3);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),20L);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),40L);
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 2));
@@ -167,33 +164,29 @@ public class GenericPlayerListeners implements Listener {
                 e.setCancelled(true);
                 online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
             }else{
-                PlayerData.sumExp(p,10);
+                PlayerData.addDataEffect(p,"curse",145,4);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),20L);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),40L);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),60L);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
                         p.playEffect(EntityEffect.TOTEM_RESURRECT);
-                        PlayerData.sumExp(p,10);
                     }
                 }.runTaskLater(TLL3.getInstance(),80L);
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 4));

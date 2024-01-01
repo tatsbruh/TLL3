@@ -19,7 +19,6 @@ public class EffectTask extends BukkitRunnable {
     @Override
     public void run() {
         if(Data.has(player,"curse", PersistentDataType.STRING)){
-            TLL3.getInstance().console("lol " + curse_time + " " + consume);
             var s = Data.get(player,"curse_e",PersistentDataType.INTEGER);
             switch (s){
                 case 1 -> consume = 1;
