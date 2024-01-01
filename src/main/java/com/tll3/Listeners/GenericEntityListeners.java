@@ -7,9 +7,11 @@ import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
+import com.tll3.Task.Mobs.HomingTask;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.data.type.Fire;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -111,6 +113,15 @@ public class GenericEntityListeners implements Listener {
                     }
                 }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
             }
+            if(Data.has(s,"firemancer",PersistentDataType.STRING)){
+                Fireball f = s.launchProjectile(Fireball.class);
+                f.setYield(4);
+                e.setProjectile(f);
+            }
+            if(Data.has(s,"razorback",PersistentDataType.STRING)){
+                new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
+            }
+
         }
         if (entity instanceof WitherSkeleton s) {
             if(Data.has(s,"w_mage",PersistentDataType.STRING)){

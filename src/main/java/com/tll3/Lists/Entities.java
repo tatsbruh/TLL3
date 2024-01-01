@@ -44,12 +44,28 @@ public class Entities {
 
     public static void skeAd(Skeleton s){
         setName(s,"&4Brute Skeleton");
-        setMobHealth(s,35);
+        setMobHealth(s,30);
         setMobDamage(s,4);
         setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).addEnchant(Enchantment.ARROW_FIRE,4).build());
         addPotionEffect(s,PotionEffectType.SPEED,1);
         setIdentifierString(s,"bruteskeleton");
     }
+
+    public static void skeFi(Skeleton s){
+        setName(s,"&6&lFiremancer");
+        setMobHealth(s,25);
+        setHead(s,new ItemBuilder(Material.LEATHER_HELMET).setLeatherColor(255, 156, 25).build());
+        setIdentifierString(s,"firemancer");
+    }
+    public static void skeRz(Skeleton s){
+        setName(s,"&0Razorback");
+        setMobHealth(s,25);
+        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
+        setHead(s,new ItemStack(Material.TARGET));
+        setIdentifierString(s,"razorback");
+    }
+
+
     public static void skeW(Skeleton s){
         setName(s,"#024f3cSkeleton Warden");
         setHead(s,new ItemStack(Material.BLAST_FURNACE));

@@ -77,7 +77,7 @@ public class EntityNaturalSpawn implements Listener {
                     if((reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY))Entities.skeW((Skeleton) entity);
                     if(reason == CreatureSpawnEvent.SpawnReason.NATURAL){
                     if(doRandomChance(35)){
-                        Entities.skeAd((Skeleton) entity);
+                        chooseSkeletonClass1((Skeleton) entity);
                     }else{
                         EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
                     }
@@ -184,6 +184,15 @@ public class EntityNaturalSpawn implements Listener {
             case 1 -> Entities.wsR(w);
             case 2 -> Entities.wsT(w);
             case 3 -> Entities.wsW(w);
+        }
+    }
+    public static void chooseSkeletonClass1(Skeleton w){
+        Random random = new Random();
+        int chance = random.nextInt(3);
+        switch (chance){
+            case 0 -> Entities.skeAd(w);
+            case 1 -> Entities.skeFi(w);
+            case 2 -> Entities.skeRz(w);
         }
     }
 
