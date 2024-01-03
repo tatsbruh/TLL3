@@ -3,6 +3,7 @@ package com.tll3.Task.Mobs;
 import com.tll3.Listeners.EntityNaturalSpawn;
 import com.tll3.Misc.GenericUtils;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Zombie;
@@ -18,7 +19,7 @@ public class ArqBlockBreak extends BukkitRunnable {
     }
     @Override
     public void run() {
-        Block block = zombie.getTargetBlock(null,3);
+        Block block = zombie.getTargetBlock(null,1);
         int x = block.getX();
         int y = block.getY();
         int z = block.getZ();
@@ -28,11 +29,15 @@ public class ArqBlockBreak extends BukkitRunnable {
             if(getValidBlocks(block) && zombie.getTarget() != null){
                 int random = GenericUtils.getRandomValue(100);
                 if(random >= 50){
+                    block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK,block.getLocation(),10,1,1,1,1,block.getBlockData());
+                    block1.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK,block1.getLocation(),10,1,1,1,1,block1.getBlockData());
                     block.breakNaturally();
                     block1.breakNaturally();
                     block.getLocation().getWorld().playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 1.0F, 1.0F);
                 }else{
-                    block.getLocation().getWorld().playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_IRON_DOOR, 1.0F, 1.0F);
+                    block.getLocation().getWorld().playSound(block.getLocation(), Sound.ENTITY_ZOMBIE_ATTACK_WOODEN_DOOR, 1.0F, 1.0F);
+                    block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK,block.getLocation(),10,1,1,1,1,block.getBlockData());
+                    block1.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK,block1.getLocation(),10,1,1,1,1,block1.getBlockData());
                 }
             }
 

@@ -102,7 +102,7 @@ public class PlayerDeathListeners implements Listener {
         new BukkitRunnable() {
             int i = 1;
             int change = 0;
-            String title = ChatUtils.format("#fb6c37A");
+            String title = ChatUtils.format("#63513aaA   #fb6c37A");
             String subtitle = ChatUtils.format("");
 
             @Override
@@ -113,15 +113,15 @@ public class PlayerDeathListeners implements Listener {
                     i = 0;
                 }
                 switch (change){
-                    case 0 -> title = ChatUtils.format("#fb6c37A");
-                    case 1 -> title = ChatUtils.format("#fb6c37A#fb6c37f");
-                    case 2 -> title = ChatUtils.format("#fb6c37A#fded1ef#fb6c37t");
-                    case 3 -> title = ChatUtils.format("#fb6c37A#fcc226f#fcc226t#fb6c37e");
-                    case 4 -> title = ChatUtils.format("#fb6c37A#fcad2bf#fded1et#fcad2be#fb6c37r");
-                    case 5 -> title = ChatUtils.format("#fb6c37A#fca02df#fdd323t#fdd323e#fca02dr#fb6c37l");
-                    case 6 -> title = ChatUtils.format("#fb6c37A#fc972ff#fcc226t#fded1ee#fcc226r#fc972fl#fb6c37i");
-                    case 7 -> title = ChatUtils.format("#fb6c37A#fc9130f#fcb629t#fddb22e#fddb22r#fcb629l#fc9130i#fb6c37f");
-                    case 8,9,10,11 -> title = ChatUtils.format("#fb6c37A#fc8c31f#fcad2bt#fdcd24e#fded1er#fdcd24l#fcad2bi#fc8c31f#fb6c37e");
+                    case 0 -> title = ChatUtils.format("#63513aaA   #fb6c37A   #63513aAa");
+                    case 1 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fb6c37f   #63513aAa");
+                    case 2 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fded1ef#fb6c37t   #63513aAa");
+                    case 3 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fcc226f#fcc226t#fb6c37e   #63513aAa");
+                    case 4 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fcad2bf#fded1et#fcad2be#fb6c37r   #63513aAa");
+                    case 5 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fca02df#fdd323t#fdd323e#fca02dr#fb6c37l   #63513aAa");
+                    case 6 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fc972ff#fcc226t#fded1ee#fcc226r#fc972fl#fb6c37i   #63513aAa");
+                    case 7 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fc9130f#fcb629t#fddb22e#fddb22r#fcb629l#fc9130i#fb6c37f   #63513aAa");
+                    case 8,9,10,11 -> title = ChatUtils.format("#63513aaA   #fb6c37A#fc8c31f#fcad2bt#fdcd24e#fded1er#fdcd24l#fcad2bi#fc8c31f#fb6c37e   #63513aAa");
                 }
                 subtitle = getDeathMessages(p);
                 if(change >= 10){

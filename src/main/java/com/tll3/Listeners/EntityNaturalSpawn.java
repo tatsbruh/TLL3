@@ -8,6 +8,7 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
 import com.tll3.Task.Mobs.ArqBlockBreak;
+import com.tll3.Task.Mobs.SpiderLungeTask;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,42 +61,93 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomPolarBear || entity instanceof CustomSniffer || entity instanceof CustomAxolotls
         )return;
         spawnWasteyard(e,loc);
-        if(getDay() >= 5){
-            if(loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))){
-                if(doRandomChance(1)){
+        if(getDay() >= 5) {
+            if (loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
+                if (doRandomChance(1)) {
                     e.setCancelled(true);
-                    Entities.enrIG((IronGolem) Entities.spawnMob(loc,EntityType.IRON_GOLEM));
+                    Entities.enrIG((IronGolem) Entities.spawnMob(loc, EntityType.IRON_GOLEM));
                 }
             }
+        }
         switch (entity.getType()){
-            case CREEPER -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    Entities.creChr((Creeper) entity);
+            case ZOMBIE -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if(getDay() >= 5) {
+                    var random = getRandomValue(100);
+                    if (random <= 45) {
+                        chooseZombieClass1((Zombie) entity);
+                    } else if (random > 45 && random <= 70) {
+                        Entities.revZombie((Zombie) entity);
+                    }
+                }
                 }
             }
             case SKELETON -> {
-                    if((reason == CreatureSpawnEvent.SpawnReason.TRAP || reason == CreatureSpawnEvent.SpawnReason.JOCKEY))Entities.skeW((Skeleton) entity);
-                    if(reason == CreatureSpawnEvent.SpawnReason.NATURAL){
-                    if(doRandomChance(35)){
-                        chooseSkeletonClass1((Skeleton) entity);
-                    }else{
-                        EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if(getDay() >= 5){
+                        var random = getRandomValue(100);
+                        if (random <= 45) {
+                            chooseSkeletonClass1((Skeleton) entity);
+                        } else if (random > 45 && random <= 70) {
+                            Entities.revSkeleton((Skeleton) entity);
+                        }else{
+                            if(getMonsoon_active().equalsIgnoreCase("true")){
+                                EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,9).build());
+                            }else{
+                                EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
+                            }
+                        }
                     }
-                    }
-            }
-            case ZOMBIE -> {
-                if(getDay() >= 5){
-                    if(doRandomChance(35)){
-                        chooseZombieClass1((Zombie) entity);
-                    }
+                }
+                if(reason == CreatureSpawnEvent.SpawnReason.JOCKEY || reason == CreatureSpawnEvent.SpawnReason.TRAP){
+                    if(getDay() >= 5){
+                    Entities.skeW((Skeleton) entity);
+                }
                 }
             }
             case SPIDER -> {
-                    chooseRandomSpider1((Spider) entity,e);
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if(getDay() >= 5){
+                        var random = getRandomValue(100);
+                        if (random <= 45) {
+                            Entities.revSpider((Spider) entity);
+                            new SpiderLungeTask((Spider) entity).runTaskTimer(TLL3.getInstance(),0L,1L);
+                        } else {
+                            chooseRandomSpider1((Spider) entity,e);
+                        }
+                    }
+                }
             }
-            case IRON_GOLEM -> {
-                Entities.enrIG((IronGolem) entity);
+            case CREEPER -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if(getDay() >= 5){
+                        var random = getRandomValue(100);
+                        if(random <= 35){
+                            Entities.revCreeper((Creeper) entity);
+                        }else{
+                            Entities.creChr((Creeper) entity);
+                        }
+                    }
+                }
             }
+            case ENDERMAN -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if(getDay() >= 5){
+                        var random = getRandomValue(100);
+                        if(random <= 35){
+                            Entities.revEnderman((Enderman) entity);
+                        }
+                    }
+                }
+            }
+            case PHANTOM -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if(getDay() >= 5){
+                        Entities.phanD((Phantom) entity);
+                    }
+                }
+            }
+            case IRON_GOLEM -> Entities.enrIG((IronGolem) entity);
             case CHICKEN ->  {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
                     e.setCancelled(true);
@@ -179,17 +231,9 @@ public class EntityNaturalSpawn implements Listener {
                     Entities.enrPig((PigZombie) entity);
                 }
             }
-
-
         }
-        }
-
-
-
-
-
-
     }
+
     public static boolean doRandomChance(int chance){
             Random random = new Random();
             int chancemax = random.nextInt(100);
@@ -197,21 +241,22 @@ public class EntityNaturalSpawn implements Listener {
     }
 
     public static void chooseRandomSpider1(Spider s,CreatureSpawnEvent e){
+        if(getDay() >= 5){
         Random random = new Random();
         int chance = random.nextInt(3);
-        switch (chance){
+        switch (chance) {
             case 0 -> Entities.blackRev(s);
             case 1 -> Entities.adapSp(s);
             case 2 -> {
                 e.setCancelled(true);
-                CaveSpider cs = (CaveSpider) Entities.spawnMob(e.getLocation(),EntityType.CAVE_SPIDER);
-                if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
+                CaveSpider cs = (CaveSpider) Entities.spawnMob(e.getLocation(), EntityType.CAVE_SPIDER);
+                if (Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
                     Entities.csTerCol(cs);
-                }else{
+                } else {
                     Entities.termite(cs);
                 }
             }
-
+        }
         }
     }
 
@@ -226,6 +271,7 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
     public static void chooseSkeletonClass1(Skeleton w){
+        if(getDay() >= 5){
         Random random = new Random();
         int chance = random.nextInt(3);
         switch (chance){
@@ -233,14 +279,18 @@ public class EntityNaturalSpawn implements Listener {
             case 1 -> Entities.skeFi(w);
             case 2 -> Entities.skeRz(w);
         }
+        }
     }
     public static void chooseZombieClass1(Zombie z){
-        Random random = new Random();
-        int chance = random.nextInt(2);
-        switch (chance){
-            case 0 -> Entities.zNinka(z);
-            case 1 -> {Entities.zArqueo(z);
-            new ArqBlockBreak(z).runTaskTimer(TLL3.getInstance(),20L,35L);
+        if(getDay() >= 5) {
+            Random random = new Random();
+            int chance = random.nextInt(2);
+            switch (chance) {
+                case 0 -> Entities.zNinka(z);
+                case 1 -> {
+                    Entities.zArqueo(z);
+                    new ArqBlockBreak(z).runTaskTimer(TLL3.getInstance(), 20L, 35L);
+                }
             }
         }
     }

@@ -132,6 +132,7 @@ public class Entities {
         setName(z,"&6Zombie Archaeologist");
         setMobHealth(z,25);
         setMobDamage(z,5);
+        setMainHand(z,new ItemStack(Material.IRON_PICKAXE));
         addPotionEffect(z, PotionEffectType.SPEED,0);
         setMobRange(z,100);
         z.setAdult();
@@ -217,6 +218,19 @@ public class Entities {
         setMobHealth(s,20);
         setIdentifierString(s,"cata_ghast");
     }
+    public static void phanD(Phantom phantom){
+        setName(phantom,"&7Dusk Phantom");
+        setMobDamage(phantom,4);
+        phantom.setSize(15);
+        setIdentifierString(phantom,"duskphantom");
+    }
+    public static void silverday5(Silverfish silverfish){
+        setName(silverfish,"&cSilverfish Poderoso");
+        addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,19);
+        addPotionEffect(silverfish,PotionEffectType.SPEED,1);
+    }
+
+
 
 
 
@@ -229,43 +243,62 @@ public class Entities {
         setIdentifierString(s,"void_overseer");
     }
 
-    public static void railGun(WitherSkeleton s){
-        setMobHealth(s,35);
-        setMobRange(s,100);
-        setHead(s,new ItemStack(Material.TINTED_GLASS));
-        setChestplate(s,new ItemStack(Material.DIAMOND_CHESTPLATE));
-        setMainHand(s,new ItemStack(Material.BOW));
-        setIdentifierString(s,"railgunner");
-        setIdentifierInt(s,"rl_charge",0);
+
+
+    //Revenant Mobs
+    public static void revZombie(Zombie z){
+        setName(z,"#592929Revenant Zombie");
+        setMobDamage(z,6);
+        setMobHealth(z,28);
+        setMobRange(z,96);
+        addPotionEffect(z,PotionEffectType.SPEED,0);
+        setIdentifierString(z,"revenant_class");
+        setIdentifierString(z,"revenantzombie");
+        setIdentifierInt(z,"revzom_state",0);
+    }
+    public static void revSkeleton(Skeleton z){
+        setName(z,"#592929Revenant Skeleton");
+        setMobHealth(z,32);
+        setMobRange(z,96);
+        setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,19).addEnchant(Enchantment.ARROW_KNOCKBACK,2).addEnchant(Enchantment.ARROW_FIRE,2).build());
+        setIdentifierString(z,"revenant_class");
+        setIdentifierString(z,"revenantskeleton");
+        setIdentifierInt(z,"revske_amount",0); //Controla las veces que ha disparado
+    }
+    public static void revSpider(Spider z){
+        setName(z,"#592929Revenant Spider");
+        setMobHealth(z,35);
+        setMobDamage(z,8);
+        setMobRange(z,96);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        setIdentifierString(z,"revenant_class");
+        setIdentifierString(z,"revenantspider");
+    }
+    public static void revCreeper(Creeper z){
+        setName(z,"#592929Revenant Creeper");
+        setMobHealth(z,35);
+        z.setExplosionRadius(8);
+        z.setPowered(true);
+        setMobRange(z,96);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        setIdentifierString(z,"revenant_class");
+        setIdentifierString(z,"revenantcreeper");
+    }
+    public static void revEnderman(Enderman z){
+        setName(z,"#592929Revenant Enderman");
+        setMobHealth(z,50);
+        setMobDamage(z,10);
+        setMobRange(z,96);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        setIdentifierString(z,"revenant_class");
+        setIdentifierString(z,"revenantenderman");
     }
 
-    public static void timeS(Creeper c){
-        setIdentifierString(c,"time_sand");
-    }
-
-    public void summonBarrier(Location loc){
-        EnderCrystal c = (EnderCrystal) spawnMob(loc,EntityType.ENDER_CRYSTAL);
-        c.setShowingBottom(false);
-        c.setInvulnerable(true);
-        setIdentifierString(c,"barrier");
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                XParticle.sphere(5,5, ParticleDisplay.display(c.getLocation(), Particle.END_ROD));
-                for (Entity entity : c.getWorld().getEntities()) {
-                    if (entity.getType() == EntityType.ENDER_PEARL) {
-                        if (entity.getLocation().distance(c.getLocation()) <= 5) {
-                            entity.playEffect(EntityEffect.SNOWBALL_BREAK);
-                            Item i = entity.getLocation().getWorld().dropItem(entity.getLocation(),new ItemStack(Material.ENDER_PEARL));
-                            entity.remove();
-                        }
-                    }
-                }
-            }
-        }.runTaskTimer(TLL3.getInstance(),0L,1L);
-    }
 
 
+
+
+    //Wasteyard Mobs
     public static void soulVg(Ghast s){
         setName(s,"#636363Brimstone Vagrant");
         setMobHealth(s,55);

@@ -42,13 +42,27 @@ public class GlobalListeners implements Listener {
                 e.setCancelled(true);
             }
             if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
+            if(getDay() >= 5){
+                switch (reason){
+                    case DROWNING -> e.setDamage(e.getDamage() * 2);
+                }
+            }
+
+        }
+        if(getDay() >= 5){
+            if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
+            if(entity instanceof Enemy || entity instanceof IronGolem){
+                if(e instanceof EntityDamageByEntityEvent event){
+                    if (event.getDamager() instanceof Enemy) {
+                        event.setCancelled(true);
+                    }
+                }
+            }
         }
 
-        if(entity instanceof Blaze && reason == EntityDamageEvent.DamageCause.DROWNING){
-            e.setCancelled(true);
-        }
 
 
+        //Basic
         if(entity instanceof Zombie z){
             if(Data.has(z,"zninja",PersistentDataType.STRING) && reason == EntityDamageEvent.DamageCause.FALL)e.setCancelled(true);
         }
@@ -56,8 +70,11 @@ public class GlobalListeners implements Listener {
             if(Data.has(s,"firemancer",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
 
-        if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
 
+
+
+
+        //Wasteyard
         if(entity.getLocation().getWorld().getName().equalsIgnoreCase("world_wasteyard")){
             if(entity instanceof Enemy){
             if(reason == EntityDamageEvent.DamageCause.WITHER || reason == EntityDamageEvent.DamageCause.HOT_FLOOR || reason == EntityDamageEvent.DamageCause.LAVA || reason == EntityDamageEvent.DamageCause.FIRE || reason == EntityDamageEvent.DamageCause.FIRE_TICK)e.setCancelled(true);
@@ -71,19 +88,11 @@ public class GlobalListeners implements Listener {
         }
 
 
-        if(entity instanceof Enemy || entity instanceof IronGolem){
-          if(e instanceof EntityDamageByEntityEvent event){
-              if (event.getDamager() instanceof Enemy) {
-                  event.setCancelled(true);
-              }
-          }
-        }
     }
 
 
     @EventHandler
     public void chunkthing(ChunkLoadEvent e){
-
             for (LivingEntity liv : Arrays.stream(e.getChunk().getEntities()).filter(entity -> entity instanceof LivingEntity).map(LivingEntity.class::cast).collect(Collectors.toList())) {
                 if (liv instanceof CustomCreeper || liv instanceof CustomIronGolem
                         || liv instanceof CustomChicken || liv instanceof CustomFox

@@ -11,9 +11,12 @@ import com.tll3.TLL3;
 import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.HomingTask;
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Fire;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -37,10 +40,29 @@ public class GenericEntityListeners implements Listener {
     public void damageentityE(EntityDamageByEntityEvent e){
         var target = e.getEntity();
         var damager = e.getDamager();
+        if(damager instanceof Player p){
+            if(target instanceof Zombie z){
+                if(Data.has(z,"revenantzombie",PersistentDataType.STRING)){
+                    var result = z.getHealth() - e.getFinalDamage();
+                    if(result < 14){
+                        int g = Data.get(z,"revzom_state",PersistentDataType.INTEGER);
+                        if(g == 0){
+                            Data.set(z,"revzom_state",PersistentDataType.INTEGER,1);
+                            EntityHelper.addPotionEffect(z,PotionEffectType.INCREASE_DAMAGE,4);
+                            EntityHelper.addPotionEffect(z,PotionEffectType.DAMAGE_RESISTANCE,1);
+                            EntityHelper.addPotionEffect(z,PotionEffectType.SPEED,2);
+                        }
+                    }
+                }
+            }
+        }
+
         if(target instanceof Player p){
             if(damager instanceof Husk s){
                 if(Data.has(s,"starved_husk",PersistentDataType.STRING)){
-                    p.setFoodLevel((int) (p.getFoodLevel() - e.getFinalDamage()));
+                    var amount = p.getFoodLevel() - e.getFinalDamage();
+                    if(amount < 0){p.setFoodLevel(0);return;}
+                    p.setFoodLevel((int) amount);
                 }
             }
             if(damager instanceof MagmaCube m){
@@ -48,12 +70,26 @@ public class GenericEntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,4));
                 }
             }
+            if(damager instanceof Enderman enderman){
+                if(Data.has(enderman,"revenantenderman",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,150,1,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,150,0,true,false,true));
+                }
+            }
+
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
                 }
                 if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
                     s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,60,2,false,false,false));
+                }
+                if(Data.has(s,"revenantspider",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,100,0,true,false,true));
+                    Block block = p.getLocation().getBlock();
+                    if(getValidBlocks(block)){
+                        block.getWorld().setType(block.getLocation(),Material.COBWEB);
+                    }
                 }
                 if(Data.has(s,"termite",PersistentDataType.STRING)){
                     var state = Data.get(s,"t_state",PersistentDataType.INTEGER);
@@ -125,6 +161,15 @@ public class GenericEntityListeners implements Listener {
                 EntityHelper.setIdentifierString(projectile,"lol");
                 new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
             }
+            if(Data.has(s,"revenantskeleton",PersistentDataType.STRING)){
+                int g = Data.get(s,"revske_amount",PersistentDataType.INTEGER);
+                if(g < 5){
+                    Data.set(s,"revske_amount",PersistentDataType.INTEGER,g + 1);
+                }else{
+                    EntityHelper.setIdentifierString(projectile,"rev_explosion");
+                    Data.set(s,"revske_amount",PersistentDataType.INTEGER,0);
+                }
+            }
 
         }
         if (entity instanceof WitherSkeleton s) {
@@ -148,57 +193,6 @@ public class GenericEntityListeners implements Listener {
                     }
                 }.runTaskTimer(TLL3.getInstance(),0L,5L);
             }
-
-            if (Data.has(s, "railgunner", PersistentDataType.STRING)) {
-                var charge = Data.get(s, "rl_charge", PersistentDataType.INTEGER);
-                if (charge < 2) {
-                    s.getLocation().getWorld().spawnParticle(
-                            Particle.FLAME,
-                            projectile.getLocation(),
-                            20,
-                            0,
-                            0,
-                            0,
-                            0.1
-                    );
-                    e.setCancelled(true);
-                    s.getLocation().getWorld().playSound(s.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CONVERTED, 10.0F, -1.0F);
-                    Data.set(s, "rl_charge", PersistentDataType.INTEGER, charge + 1);
-                } else {
-                    s.getLocation().getWorld().spawnParticle(
-                            Particle.FLAME,
-                            projectile.getLocation(),
-                            20,
-                            0,
-                            0,
-                            0,
-                            -0.1
-                    );
-                    s.getLocation().getWorld().playSound(s.getLocation(), Sound.ENTITY_ZOMBIE_VILLAGER_CURE, 10.0F, 2.0F);
-                    Data.set(s, "rl_charge", PersistentDataType.INTEGER, 0);
-                    WitherSkull w = (WitherSkull) projectile.getLocation().getWorld().spawnEntity(entity.getLocation().add(0, 1, 0), EntityType.WITHER_SKULL);
-                    w.setShooter(s);
-                    e.setProjectile(w);
-                    w.setCharged(true);
-                    new BukkitRunnable() {
-                        int i = 0;
-
-                        @Override
-                        public void run() {
-                            if (!w.isValid() || w.isDead() || w.isOnGround()) {
-                                cancel();
-                                return;
-                            }
-                            if (i++ > 60) {
-                                w.getLocation().createExplosion(s, 7, true, true);
-                                w.remove();
-                                cancel();
-                            }
-                        }
-                    }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
-
-                }
-            }
         }
     }
 
@@ -216,6 +210,33 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
+        }
+    }
+
+    @EventHandler
+    public void explodeE(EntityExplodeEvent e){
+        var entity = e.getEntity();
+        var loc = e.getLocation();
+        if(entity instanceof Creeper c){
+            if(Data.has(c,"revenantcreeper",PersistentDataType.STRING)){
+                loc.getNearbyPlayers(8).forEach(player -> {
+                    player.setFireTicks(200);
+                });
+            }
+        }
+    }
+
+
+    @EventHandler
+    public void entdieE(EntityDeathEvent e){
+        var entity = e.getEntity();
+        var killer = e.getEntity().getKiller();
+        var loc = e.getEntity().getLocation().clone();
+        if(killer == null)return;
+        if(entity instanceof Phantom p){
+            if(Data.has(p,"duskphantom",PersistentDataType.STRING)){
+                returnMob(loc);
+            }
         }
     }
 
@@ -249,6 +270,10 @@ public class GenericEntityListeners implements Listener {
                     if(p.isBlocking())a.remove();
                 }
             }
+            if(Data.has(a,"rev_explosion",PersistentDataType.STRING)){
+                proj.remove();
+                proj.getLocation().getWorld().createExplosion((Entity) source,4,false,true);
+            }
         }
 
         if (source instanceof Skeleton s) {
@@ -269,37 +294,9 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
-        if (source instanceof WitherSkeleton s) {
-            if (Data.has(s, "railgunner", PersistentDataType.STRING)) {
-                if (hen != null) {
-                    hen.getLocation().createExplosion(s, 7, true, true);
-                }
-                if (hbl != null) {
-                    hbl.getLocation().createExplosion(s, 7, true, true);
-                }
-            }
-        }
-
-
     }
 
 
-    @EventHandler
-    public void explodeE(EntityExplodeEvent e){
-        var entity = e.getEntity();
-        var loc = e.getLocation();
-
-        if(entity instanceof Creeper c){
-            if(Data.has(c,"time_sand",PersistentDataType.STRING)){
-                loc.getWorld().spawnParticle(Particle.EXPLOSION_HUGE,loc,10,1,1,1,1);
-                Creeper cr = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
-                Entities.timeS(cr);
-                EntityHelper.setMobHealth(cr, (int) c.getHealth());
-                e.setCancelled(true);
-            }
-        }
-
-    }
 
 
     @EventHandler
@@ -327,6 +324,7 @@ public class GenericEntityListeners implements Listener {
                        );
                    }
                }
+
            }
            if(origin instanceof Skeleton s){
                if(Data.has(s,"bruteskeleton",PersistentDataType.STRING)) {
@@ -350,4 +348,30 @@ public class GenericEntityListeners implements Listener {
         if(target instanceof Enemy && origin instanceof IronGolem)e.setCancelled(true);
 
     }
+
+    public static void returnMob(Location loc){
+        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+        int r = GenericUtils.getRandomValue(11);
+        switch (r){
+            case 0 -> {Zombie entity = (Zombie) Entities.spawnMob(loc,EntityType.ZOMBIE); Entities.zArqueo(entity);}
+            case 1 -> {Skeleton entity = (Skeleton) Entities.spawnMob(loc,EntityType.SKELETON); Entities.skeFi(entity);}
+            case 2 -> {Spider entity = (Spider) Entities.spawnMob(loc,EntityType.SPIDER); Entities.blackRev(entity);}
+            case 3 -> {Creeper entity = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER); Entities.creChr(entity);}
+            case 4 -> {Enderman entity = (Enderman) Entities.spawnMob(loc,EntityType.ENDERMAN);}
+            case 5 -> {Witch entity = (Witch) Entities.spawnMob(loc,EntityType.WITCH);}
+            case 6 -> {Drowned entity = (Drowned) Entities.spawnMob(loc,EntityType.DROWNED);}
+            case 7 ->{Husk entity = (Husk) Entities.spawnMob(loc,EntityType.HUSK); Entities.huStr(entity);}
+            case 8 -> {CaveSpider entity = (CaveSpider) Entities.spawnMob(loc,EntityType.CAVE_SPIDER); Entities.csTerCol(entity);}
+            case 9 -> {Silverfish entity = (Silverfish) Entities.spawnMob(loc,EntityType.SILVERFISH); Entities.silverday5(entity);}
+            case 10 -> {Stray entity = (Stray) Entities.spawnMob(loc,EntityType.STRAY);}
+        }
+    }
+
+    public boolean getValidBlocks(Block block){
+        switch (block.getType()){
+            case LAVA,WATER,OBSIDIAN,BEDROCK,CHEST,FURNACE,BLAST_FURNACE,SMOKER,ENDER_CHEST,END_PORTAL_FRAME,BREWING_STAND,CHISELED_BOOKSHELF,TRAPPED_CHEST,DISPENSER,LECTERN,DROPPER: return false;
+            default: return true;
+        }
+    }
+    
 }
