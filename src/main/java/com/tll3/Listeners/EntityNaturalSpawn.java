@@ -10,6 +10,7 @@ import com.tll3.TLL3;
 import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.SpiderLungeTask;
 import net.minecraft.server.level.WorldServer;
+import net.minecraft.world.level.block.InfestedRotatedPillarBlock;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -20,6 +21,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -62,12 +64,21 @@ public class EntityNaturalSpawn implements Listener {
         )return;
         spawnWasteyard(e,loc);
         if(getDay() >= 5) {
-            if (loc.getWorld().getEnvironment() == World.Environment.NORMAL && reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
+            if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
+                if(doRandomChance(50) && getMonsoon_active().equalsIgnoreCase("true")){
+                    EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,1);
+                    EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,1);
+                }
+
+                if(loc.getWorld().getEnvironment() == World.Environment.NORMAL){
                 if (doRandomChance(1)) {
                     e.setCancelled(true);
                     Entities.enrIG((IronGolem) Entities.spawnMob(loc, EntityType.IRON_GOLEM));
                 }
+                }
+
             }
+
         }
         switch (entity.getType()){
             case ZOMBIE -> {
@@ -103,6 +114,12 @@ public class EntityNaturalSpawn implements Listener {
                     if(getDay() >= 5){
                     Entities.skeW((Skeleton) entity);
                 }
+                }
+            }
+            case SILVERFISH -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
+                        reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK)) {
+                    Entities.silverday5((Silverfish) entity);
                 }
             }
             case SPIDER -> {
@@ -147,7 +164,14 @@ public class EntityNaturalSpawn implements Listener {
                     }
                 }
             }
-            case IRON_GOLEM -> Entities.enrIG((IronGolem) entity);
+            case DROWNED -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if(getDay() >= 5){
+                        Entities.drowAby((Drowned) entity);
+                    }
+                }
+            }
+            case IRON_GOLEM ->{ if(getDay() >= 5)Entities.enrIG((IronGolem) entity);}
             case CHICKEN ->  {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
                     e.setCancelled(true);

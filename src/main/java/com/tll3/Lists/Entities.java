@@ -229,6 +229,13 @@ public class Entities {
         addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,19);
         addPotionEffect(silverfish,PotionEffectType.SPEED,1);
     }
+    public static void drowAby(Drowned drowned){
+        setName(drowned,"&bAbyssal Drowned");
+        setMobDamage(drowned,6);
+        setMobHealth(drowned,25);
+        setMainHand(drowned,new ItemBuilder(Material.TRIDENT).addEnchant(Enchantment.IMPALING,9).addEnchant(Enchantment.CHANNELING,0).build());
+
+    }
 
 
 

@@ -22,6 +22,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
@@ -32,6 +33,8 @@ import org.bukkit.util.Vector;
 
 import java.util.Objects;
 import java.util.Random;
+
+import static com.tll3.Misc.GenericUtils.getDay;
 
 public class GenericEntityListeners implements Listener {
 
@@ -125,12 +128,27 @@ public class GenericEntityListeners implements Listener {
         }
     }
 
+    @EventHandler
+    public void vehicleenE(VehicleEnterEvent e){
+        var entity = e.getEntered();
+        if(entity instanceof Enemy && getDay() >= 5){
+            e.setCancelled(true);
+        }
+    }
+
 
     @EventHandler
     public void shoowbowE(EntityShootBowEvent e) {
         var entity = e.getEntity();
         var bow = e.getBow();
         var projectile = e.getProjectile();
+
+        if(entity instanceof Pillager p){
+            if(getDay() >= 5){
+                Arrow arrow = (Arrow) projectile;
+                arrow.setDamage(arrow.getDamage() * 3);
+            }
+        }
 
         if (entity instanceof Skeleton s) {
             if (Data.has(s, "void_overseer", PersistentDataType.STRING)) {
@@ -200,7 +218,7 @@ public class GenericEntityListeners implements Listener {
     public void moveE(EntityMoveEvent e){
         var entity = e.getEntity();
         Random random = new Random();
-        if(GenericUtils.getDay() >= 5){
+        if(getDay() >= 5){
         if(entity instanceof Enderman end){
             for (Player player : end.getWorld().getPlayers()) {
                 if (player.getLocation().distanceSquared(end.getLocation()) <= Math.pow(4, 2)) {
@@ -339,7 +357,6 @@ public class GenericEntityListeners implements Listener {
                }
            }
         }
-
         if(origin instanceof Enemy && target instanceof Enemy){
             e.setCancelled(true);
         }

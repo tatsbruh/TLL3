@@ -22,9 +22,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPortalEnterEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
@@ -45,10 +47,20 @@ public class GlobalListeners implements Listener {
             if(getDay() >= 5){
                 switch (reason){
                     case DROWNING -> e.setDamage(e.getDamage() * 2);
+                    case LIGHTNING -> {
+                        if(getMonsoon_active().equalsIgnoreCase("true")){
+                            e.setDamage(e.getDamage() * 3);
+                        }
+                    }
                 }
             }
-
         }
+        if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
+            switch (reason){
+                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
+            }
+        }
+
         if(getDay() >= 5){
             if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
             if(entity instanceof Enemy || entity instanceof IronGolem){
@@ -90,6 +102,15 @@ public class GlobalListeners implements Listener {
 
     }
 
+    @EventHandler
+    public void changeporE(EntityPortalEnterEvent e){
+        var entity = e.getEntity();
+        if(entity instanceof Player p){
+            if(getMonsoon_active().equalsIgnoreCase("true")){
+                p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,0,false,false,false));
+            }
+        }
+    }
 
     @EventHandler
     public void chunkthing(ChunkLoadEvent e){
