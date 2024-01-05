@@ -23,6 +23,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -81,13 +82,14 @@ public class GenericPlayerListeners implements Listener {
         if(entity instanceof Player p){
             if(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING){
                 if(e.isCancelled())return;
-                    totemEvent(p,e);
+                totemEvent(p,e);
                 new BukkitRunnable(){
                     @Override
                     public void run() {totemEffects(p);}}.runTaskLater(TLL3.getInstance(),1L);
             }
         }
     }
+
 
 
     public void totemEvent(Player p,EntityResurrectEvent e){

@@ -44,6 +44,14 @@ public class GenericEntityListeners implements Listener {
         var target = e.getEntity();
         var damager = e.getDamager();
         if(damager instanceof Player p){
+            var item = p.getInventory().getItemInMainHand();
+            if(damager instanceof LivingEntity l){
+                if(new ItemBuilder(item).hasID("dread_claymore")){
+                    l.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0,false,false,false));
+                    l.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,false,false,false));
+                }
+            }
+
             if(target instanceof Zombie z){
                 if(Data.has(z,"revenantzombie",PersistentDataType.STRING)){
                     var result = z.getHealth() - e.getFinalDamage();
@@ -147,6 +155,12 @@ public class GenericEntityListeners implements Listener {
             if(getDay() >= 5){
                 Arrow arrow = (Arrow) projectile;
                 arrow.setDamage(arrow.getDamage() * 3);
+            }
+        }
+
+        if(entity instanceof Player p){
+            if(new ItemBuilder(bow).hasID("dread_bow")){
+                EntityHelper.setIdentifierString(projectile,"dread");
             }
         }
 
@@ -274,6 +288,15 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
+        if(shooter instanceof Player p){
+            if(proj instanceof EnderPearl enderPearl){
+                var item1 = p.getInventory().getItemInMainHand();
+                var item2 = p.getInventory().getItemInOffHand();
+                if(new ItemBuilder(item1).hasID("revenant_pearl") || new ItemBuilder(item2).hasID("revenant_pearl")){
+                    EntityHelper.setIdentifierString(enderPearl,"rev_pearl");
+                }
+            }
+        }
 
         if(shooter instanceof Ghast g){
             if(proj instanceof Fireball s){
@@ -294,6 +317,15 @@ public class GenericEntityListeners implements Listener {
         var hen = e.getHitEntity();
         var hbl = e.getHitBlock();
 
+        if(source instanceof Player p){
+            if(proj instanceof EnderPearl enderPearl){
+                if(Data.has(enderPearl,"rev_pearl",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,200,1,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,200,0,true,false,true));
+                }
+            }
+        }
+
         if(proj instanceof Arrow a){
             if(Data.has(a,"lol",PersistentDataType.STRING)){
                 if(hen instanceof Player p){
@@ -302,7 +334,18 @@ public class GenericEntityListeners implements Listener {
             }
             if(Data.has(a,"rev_explosion",PersistentDataType.STRING)){
                 proj.remove();
-                proj.getLocation().getWorld().createExplosion((Entity) source,4,false,true);
+                if (hen != null) {
+                    hen.getLocation().getWorld().createExplosion((Entity) source,4,false,true);
+                }
+                if (hbl != null) {
+                    hbl.getLocation().getWorld().createExplosion((Entity) source,4,false,true);
+                }
+            }
+            if(Data.has(a,"dread",PersistentDataType.STRING)){
+                if(hen instanceof LivingEntity l){
+                    l.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,200,0,false,false,false));
+                    l.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,false,false,false));
+                }
             }
         }
 

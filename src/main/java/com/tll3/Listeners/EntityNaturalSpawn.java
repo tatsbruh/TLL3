@@ -76,6 +76,9 @@ public class EntityNaturalSpawn implements Listener {
                     Entities.enrIG((IronGolem) Entities.spawnMob(loc, EntityType.IRON_GOLEM));
                 }
                 }
+                if(loc.getWorld().getEnvironment() == World.Environment.NETHER){
+                    EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,1);
+                }
 
             }
 

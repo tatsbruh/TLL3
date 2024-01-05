@@ -57,11 +57,15 @@ public class GlobalListeners implements Listener {
                 }
             }
         }
-        if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
-            switch (reason){
-                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
+
+        if(entity instanceof Creature enemy){
+            if(enemy.hasPotionEffect(PotionEffectType.BLINDNESS)){
+                switch (reason){
+                    case FIRE,FIRE_TICK,LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 3);
+                }
             }
         }
+
 
         if(getDay() >= 5){
             if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
@@ -83,7 +87,11 @@ public class GlobalListeners implements Listener {
         if(entity instanceof Skeleton s){
             if(Data.has(s,"firemancer",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
-
+        if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
+            switch (reason){
+                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
+            }
+        }
 
 
 
