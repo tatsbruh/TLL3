@@ -15,17 +15,36 @@ public class Items {
                 .setID("miraclefruit").build();
     }
 
+    public static ItemStack brokenTrident(){
+        return new ItemBuilder(Material.TRIDENT).setDurability(1).build();
+    }
+
     public static ItemStack dreadClaymore(){
         return new ItemBuilder(Material.NETHERITE_SWORD)
-                .setDisplayName("&cClaymore de la Perdicíon")
+                .setDisplayName("&cClaymore de la Perdición")
                 .setID("dread_claymore")
                 .setUnbreakable(true)
                 .addEnchant(Enchantment.FIRE_ASPECT,2)
                 .setLore(
                         "",
-                        "&8Espada hecho de los resto de los &cRevenants.",
+                        "&8Espada hecho de los restos de los &cRevenants.",
                         "&8Infligue &7Debilidad I &8en los mobs y hacen que",
                         "&8tomen &cx3 &8de daño por fuego.",
+                        ""
+                ).build();
+    }
+
+    public static ItemStack dreadBow(){
+        return new ItemBuilder(Material.BOW)
+                .setDisplayName("&cArco de la Perdición")
+                .setID("dread_bow")
+                .setUnbreakable(true)
+                .addEnchant(Enchantment.ARROW_FIRE,1)
+                .setLore(
+                        "",
+                        "&8Arco hecho de los restos de los &cRevenants.",
+                        "&8Sus flechas infliguen &7Slowness I &8en los mobs y hacen",
+                        "&8que tomen &cx3 &8de daño por fuego.",
                         ""
                 ).build();
     }

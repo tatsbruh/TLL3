@@ -46,6 +46,10 @@ public class ItemBuilder {
         this.is.setAmount(amount);
         return this;
     }
+    public ItemBuilder setDurability(int durability) {
+        this.is.setDurability((short) durability);
+        return this;
+    }
 
     public ItemBuilder setCustomModelData(int data) {
         this.im = this.is.getItemMeta();

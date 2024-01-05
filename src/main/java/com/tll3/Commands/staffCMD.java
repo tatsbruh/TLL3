@@ -78,13 +78,20 @@ public class staffCMD extends BaseCommand {
     }
 
     @Subcommand("give")
-    @CommandCompletion("miracle_fruit")
+    @CommandCompletion("miracle_fruit|dread_claymore|dread_bow|rev_flesh|rev_bones|rev_powder|rev_cobweb|rev_pearl")
     @CommandPermission("staff.admin")
     @Description("get your items ok its ok")
     public void give(CommandSender sender,String[] args){
         if (sender instanceof Player p && args.length > 0){
             switch (args[0].toLowerCase()){
                 case "miracle_fruit" -> Items.addInventory(p,Items.miracleFruit());
+                case "dread_claymore" -> Items.addInventory(p,Items.dreadClaymore());
+                case "dread_bow" -> Items.addInventory(p,Items.dreadBow());
+                case "rev_flesh" -> Items.addInventory(p,Items.infestedFlesh());
+                case "rev_bones" -> Items.addInventory(p,Items.infestedBones());
+                case "rev_powder" -> Items.addInventory(p,Items.goldenGunpowder());
+                case "rev_cobweb" -> Items.addInventory(p,Items.silverStrings());
+                case "rev_pearl" -> Items.addInventory(p,Items.revenantPearl());
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un item valido"));
             }
         }

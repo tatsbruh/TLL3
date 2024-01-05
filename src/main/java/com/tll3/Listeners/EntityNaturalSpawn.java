@@ -167,7 +167,9 @@ public class EntityNaturalSpawn implements Listener {
             case DROWNED -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
                     if(getDay() >= 5){
-                        Entities.drowAby((Drowned) entity);
+                        if(getMonsoon_active().equalsIgnoreCase("true")){
+                            Entities.drowAby((Drowned) entity);
+                        }
                     }
                 }
             }

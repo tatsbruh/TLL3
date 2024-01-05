@@ -234,7 +234,7 @@ public class Entities {
         setMobDamage(drowned,6);
         setMobHealth(drowned,25);
         setMainHand(drowned,new ItemBuilder(Material.TRIDENT).addEnchant(Enchantment.IMPALING,9).addEnchant(Enchantment.CHANNELING,0).build());
-
+        setIdentifierString(drowned,"abyssdrow");
     }
 
 

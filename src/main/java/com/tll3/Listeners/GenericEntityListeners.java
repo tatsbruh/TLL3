@@ -150,6 +150,8 @@ public class GenericEntityListeners implements Listener {
             }
         }
 
+
+
         if (entity instanceof Skeleton s) {
             if (Data.has(s, "void_overseer", PersistentDataType.STRING)) {
                 EntityHelper.setIdentifierString(projectile, "void");
@@ -263,6 +265,16 @@ public class GenericEntityListeners implements Listener {
         var proj = e.getEntity();
         var shooter = e.getEntity().getShooter();
         var loc = e.getLocation();
+
+        if(shooter instanceof Drowned d){
+            if(proj instanceof Trident t){
+                if(Data.has(d,"abyssdrow",PersistentDataType.STRING)){
+                    t.setDamage(t.getDamage() * 5);
+                    EntityHelper.setIdentifierString(t,"lolxd");
+                }
+            }
+        }
+
         if(shooter instanceof Ghast g){
             if(proj instanceof Fireball s){
                 if(Data.has(g,"cata_ghast",PersistentDataType.STRING)){

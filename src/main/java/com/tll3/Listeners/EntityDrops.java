@@ -18,6 +18,12 @@ public class EntityDrops implements Listener {
         var killer = e.getEntity().getKiller();
         var drops = e.getDrops();
         if(killer == null)return;
+        if(entity instanceof Drowned d){
+            if(Data.has(d,"abyssdrow",PersistentDataType.STRING)){
+                drops.clear();
+                drops.add(dropAmmountWithChance(Items.brokenTrident(),1,3));
+            }
+        }
         if(entity instanceof Zombie z){
             if(Data.has(z,"revenantzombie", PersistentDataType.STRING)){
                 drops.clear();

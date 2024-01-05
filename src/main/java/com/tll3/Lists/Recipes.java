@@ -2,6 +2,7 @@ package com.tll3.Lists;
 
 import com.tll3.Misc.Crafting.BuildReciper;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import static com.tll3.Misc.GenericUtils.getDay;
 
@@ -24,7 +25,7 @@ public class Recipes {
                 .setIngredient('B',Items.infestedBones(),64)
                 .setIngredient('S',Items.silverStrings(),64)
                 .setIngredient('G',Items.goldenGunpowder(),64)
-                .setIngredient('N', Material.NETHERITE_SWORD)
+                .setIngredient('N', new ItemStack(Material.NETHERITE_SWORD))
                 .register();
     }
 
