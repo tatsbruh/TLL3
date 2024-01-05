@@ -4,6 +4,7 @@ import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.projectile.WindCharge;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -19,6 +20,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -98,7 +100,16 @@ public class GlobalListeners implements Listener {
                 }
             }
         }
+    }
 
+    @EventHandler
+    public void blockplaceE(BlockPlaceEvent e){
+        var item = e.getItemInHand();
+        if(item != null){
+            if(new ItemBuilder(item).hasID("unplaceable")){
+                e.setCancelled(true);
+            }
+        }
 
     }
 

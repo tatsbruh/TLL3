@@ -3,6 +3,7 @@ package com.tll3;
 import co.aikar.commands.PaperCommandManager;
 import com.tll3.Commands.staffCMD;
 import com.tll3.Listeners.*;
+import com.tll3.Lists.Recipes;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.Misc.GenericUtils;
@@ -17,7 +18,7 @@ public final class TLL3 extends JavaPlugin {
 
 
     private static TLL3 plugin;
-    public static String cf = "[TheLastLife] >>> "; //console format
+    public static String cf = "[Afterlife] "; //console format
     public static TLL3 getInstance(){return plugin;}
     @Override
     public void onEnable() {
@@ -27,6 +28,7 @@ public final class TLL3 extends JavaPlugin {
         console(cf + "Plugin activado correctamente");
         loadListeners();
         loadCommands();
+        Recipes.registerAllRecipes();
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
             MonsoonListeners.createBossBar();
         }
@@ -58,7 +60,8 @@ public final class TLL3 extends JavaPlugin {
                 new GlobalListeners(),
                 new GenericEntityListeners(),
                 new EntityNaturalSpawn(),
-                new MonsoonListeners()
+                new MonsoonListeners(),
+                new EntityDrops()
         );
     }
 
