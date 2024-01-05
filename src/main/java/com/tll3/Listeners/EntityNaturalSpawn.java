@@ -178,7 +178,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case IRON_GOLEM ->{ if(getDay() >= 5)Entities.enrIG((IronGolem) entity);}
             case CHICKEN ->  {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.JOCKEY)){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomChicken customChicken = new CustomChicken(worldServer);

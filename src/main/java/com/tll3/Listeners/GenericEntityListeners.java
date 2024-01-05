@@ -45,7 +45,7 @@ public class GenericEntityListeners implements Listener {
         var damager = e.getDamager();
         if(damager instanceof Player p){
             var item = p.getInventory().getItemInMainHand();
-            if(damager instanceof LivingEntity l){
+            if(target instanceof LivingEntity l){
                 if(new ItemBuilder(item).hasID("dread_claymore")){
                     l.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0,false,false,false));
                     l.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,false,false,false));
@@ -345,6 +345,18 @@ public class GenericEntityListeners implements Listener {
                 if(hen instanceof LivingEntity l){
                     l.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,200,0,false,false,false));
                     l.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,false,false,false));
+                }
+            }
+        }
+
+        if(proj instanceof Trident t){
+            if(Data.has(t,"lolxd",PersistentDataType.STRING)){
+                t.remove();
+                if (hen != null) {
+                    hen.getLocation().getWorld().strikeLightning(hen.getLocation());
+                }
+                if (hbl != null) {
+                    hbl.getLocation().getWorld().strikeLightning(hbl.getLocation());
                 }
             }
         }
