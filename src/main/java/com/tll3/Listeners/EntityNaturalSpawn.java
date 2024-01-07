@@ -61,7 +61,7 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomChicken || entity instanceof CustomAllay
         || entity instanceof CustomFox || entity instanceof CustomMooshroom || entity instanceof CustomPanda
         || entity instanceof CustomPolarBear || entity instanceof CustomSniffer || entity instanceof CustomAxolotls
-        )return;
+        || entity instanceof CustomDolphin)return;
         spawnWasteyard(e,loc);
         if(getDay() >= 5) {
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
@@ -179,85 +179,119 @@ public class EntityNaturalSpawn implements Listener {
             case IRON_GOLEM ->{ if(getDay() >= 5)Entities.enrIG((IronGolem) entity);}
             case CHICKEN ->  {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.JOCKEY)){
+                    if(getDay() >= 5){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomChicken customChicken = new CustomChicken(worldServer);
                     customChicken.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(customChicken, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }
             case MULE -> {
+                if(getDay() >= 5){
                 SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
                 h.setTrapped(true);
                 e.setCancelled(true);
+                }
             }
-            case WITHER_SKELETON -> chooseWitherSkeletonClass1((WitherSkeleton) entity);
-            case HUSK -> {
+            case WITHER_SKELETON -> {
+                if(getDay() >= 5){ chooseWitherSkeletonClass1((WitherSkeleton) entity);}
+            }
+            case HUSK -> { if(getDay() >= 5){
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.huStr((Husk) entity);
             }
-            case CAVE_SPIDER -> {
+            }
+            case CAVE_SPIDER -> { if(getDay() >= 5){
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.csTerCol((CaveSpider) entity);
             }
-            case GHAST -> {
+            }
+            case GHAST -> { if(getDay() >= 5){
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.gPower((Ghast) entity);
             }
+            }
             case AXOLOTL -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    e.setCancelled(true);
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomAxolotls r = new CustomAxolotls(worldServer);
-                    r.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 5) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomAxolotls r = new CustomAxolotls(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }
             case FOX -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    if(getDay() >= 5){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomFox r = new CustomFox(worldServer);
                     r.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
+                }
             }
             case SNIFFER -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    if(getDay() >= 5){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomSniffer r = new CustomSniffer(worldServer);
                     r.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
+                }
             }
             case POLAR_BEAR -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    e.setCancelled(true);
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomPolarBear r = new CustomPolarBear(worldServer);
-                    r.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 5) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomPolarBear r = new CustomPolarBear(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }
             case PANDA -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    if(getDay() >= 5){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomPanda r = new CustomPanda(worldServer);
                     r.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
+                }
             }
             case MUSHROOM_COW -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    e.setCancelled(true);
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomMooshroom r = new CustomMooshroom(worldServer);
-                    r.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 5) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomMooshroom r = new CustomMooshroom(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }
             case ZOMBIFIED_PIGLIN -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    if(getDay() >= 5){
                     Entities.enrPig((PigZombie) entity);
+                }
+                }
+            }
+            case DOLPHIN -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 5) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomDolphin r = new CustomDolphin(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }
         }

@@ -29,7 +29,7 @@ public class CustomFox extends EntityFox {
         this.bO.a(0, new ClimbOnTopOfPowderSnowGoal(this, this.dM()));
         this.bO.a(2, new PathfinderGoalMoveTowardsTarget(this, 0.9, 32.0F));
         this.bO.a(6, new o());
-        this.bO.a(1, new PathfinderGoalMeleeAttack(this, 1.2000000476837158, true));
+        this.bO.a(1, new PathfinderGoalMeleeAttack(this, 1.0, true));
         this.bO.a(10, new PathfinderGoalLeapAtTarget(this, 0.4F));
         this.bO.a(11, new PathfinderGoalRandomStrollLand(this, 1.0));
         this.bO.a(6, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 24.0F));

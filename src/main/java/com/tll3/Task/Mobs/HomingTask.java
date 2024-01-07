@@ -1,5 +1,6 @@
 package com.tll3.Task.Mobs;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,9 +34,12 @@ public class HomingTask extends BukkitRunnable {
         Optional<Entity> optionalEntity = nearbyEntities.stream()
                 .filter(entity -> entity instanceof Player)
                 .min(Comparator.comparing(entity -> entity.getLocation().distanceSquared(arrow.getLocation())));
-
         if (!optionalEntity.isPresent())
             cancel();
-        target = optionalEntity.get();
+        if(optionalEntity.get() instanceof Player p){
+            if(p.getGameMode() == GameMode.SURVIVAL){
+                target = optionalEntity.get();
+            }
+        }
     }
 }

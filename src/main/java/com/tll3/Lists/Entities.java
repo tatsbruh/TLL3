@@ -208,7 +208,7 @@ public class Entities {
     public static void csTerCol(CaveSpider s){
         setName(s,"&6&lTermita de Colonia");
         setMobHealth(s,25);
-        addPotionEffect(s, PotionEffectType.SPEED,2);
+        addPotionEffect(s, PotionEffectType.SPEED,0);
         s.setAggressive(true);
         setIdentifierString(s,"termite_ex");
         setIdentifierInt(s,"tex_state",0);
@@ -226,7 +226,7 @@ public class Entities {
     }
     public static void silverday5(Silverfish silverfish){
         setName(silverfish,"&cSilverfish Poderoso");
-        addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,19);
+        addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,14);
         addPotionEffect(silverfish,PotionEffectType.SPEED,1);
     }
     public static void drowAby(Drowned drowned){

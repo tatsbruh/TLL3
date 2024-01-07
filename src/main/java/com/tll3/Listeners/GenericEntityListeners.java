@@ -1,6 +1,7 @@
 package com.tll3.Listeners;
 
 import com.tll3.Lists.CustomEntities.CustomAllay;
+import com.tll3.Lists.CustomEntities.CustomDolphin;
 import com.tll3.Lists.CustomEntities.CustomSniffer;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
@@ -46,9 +47,11 @@ public class GenericEntityListeners implements Listener {
         if(damager instanceof Player p){
             var item = p.getInventory().getItemInMainHand();
             if(target instanceof LivingEntity l){
+                if(item.hasItemMeta()){
                 if(new ItemBuilder(item).hasID("dread_claymore")){
                     l.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0,false,false,false));
                     l.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,false,false,false));
+                }
                 }
             }
 
@@ -76,6 +79,10 @@ public class GenericEntityListeners implements Listener {
                     p.setFoodLevel((int) amount);
                 }
             }
+            if(damager instanceof CustomDolphin || damager instanceof Dolphin){
+                p.setVelocity(new Vector(0, -1, 0));
+            }
+
             if(damager instanceof MagmaCube m){
                 if(Data.has(m,"toxiccrawler",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,4));
@@ -159,8 +166,10 @@ public class GenericEntityListeners implements Listener {
         }
 
         if(entity instanceof Player p){
+            if(bow.hasItemMeta()){
             if(new ItemBuilder(bow).hasID("dread_bow")){
                 EntityHelper.setIdentifierString(projectile,"dread");
+            }
             }
         }
 
@@ -292,9 +301,11 @@ public class GenericEntityListeners implements Listener {
             if(proj instanceof EnderPearl enderPearl){
                 var item1 = p.getInventory().getItemInMainHand();
                 var item2 = p.getInventory().getItemInOffHand();
+                if(item1.hasItemMeta() || item2.hasItemMeta()){
                 if(new ItemBuilder(item1).hasID("revenant_pearl") || new ItemBuilder(item2).hasID("revenant_pearl")){
                     EntityHelper.setIdentifierString(enderPearl,"rev_pearl");
                 }
+            }
             }
         }
 
@@ -320,8 +331,8 @@ public class GenericEntityListeners implements Listener {
         if(source instanceof Player p){
             if(proj instanceof EnderPearl enderPearl){
                 if(Data.has(enderPearl,"rev_pearl",PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,200,1,true,false,true));
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,200,0,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,100,1,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,100,0,true,false,true));
                 }
             }
         }

@@ -58,6 +58,7 @@ public class GlobalListeners implements Listener {
             }
         }
 
+
         if(entity instanceof Creature enemy){
             if(enemy.hasPotionEffect(PotionEffectType.BLINDNESS)){
                 switch (reason){
@@ -137,7 +138,8 @@ public class GlobalListeners implements Listener {
                 if (liv instanceof CustomCreeper || liv instanceof CustomIronGolem
                         || liv instanceof CustomChicken || liv instanceof CustomFox
                 || liv instanceof CustomPanda || liv instanceof CustomPolarBear || liv instanceof CustomSniffer
-                || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls) return;
+                || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls
+                || liv instanceof CustomDolphin) return;
                 Location loc = liv.getLocation();
                 if (getDay() >= 5) {
                     switch (liv.getType()){
@@ -193,6 +195,13 @@ public class GlobalListeners implements Listener {
                             liv.remove();
                             WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                             CustomMooshroom f = new CustomMooshroom(worldServer);
+                            f.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case DOLPHIN -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomDolphin f = new CustomDolphin(worldServer);
                             f.a_(loc.getX(), loc.getY(), loc.getZ());
                             worldServer.addFreshEntity(f, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }

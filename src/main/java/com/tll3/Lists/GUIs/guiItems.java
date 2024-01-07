@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class guiItems {
     public static ItemStack filler(){
-        return new ItemBuilder(Material.BLACK_STAINED_GLASS).setDisplayName("").setCustomModelData(99).build();
+        return new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("").setCustomModelData(99).build();
     }
     public static ItemStack infoNinja(){
         return new ItemBuilder(Material.ZOMBIE_HEAD)
@@ -193,6 +193,108 @@ public class guiItems {
                         "",
                         "&8'A pesar de su funcion basica, estos aparecen en conjunto",
                         "&8asi que no te confies!'"
+                ).build();
+    }
+    public static ItemStack infoDuskPha(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2U5NTE1M2VjMjMyODRiMjgzZjAwZDE5ZDI5NzU2ZjI0NDMxM2EwNjFiNzBhYzAzYjk3ZDIzNmVlNTdiZDk4MiJ9fX0="))
+                .setDisplayName("&6Dusk Phantom | &eDía 5")
+                .setLore(
+                        "&7Phantoms gigantes que tienen el alma de",
+                        "&7un mob en su interior.",
+                        "",
+                        "&6&lAparece en: &7Durante la noche al no dormir",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Infliguen x5 de daño que un phantom normal y dejan caer",
+                        "&7un mob aleatorio al morir",
+                        "",
+                        "&8'Hagas lo que hagas, NO mates a uno de estos encima de ti,",
+                        "&8creeme que te arrepentirás'"
+                ).build();
+    }
+    public static ItemStack infoRevZomb(){
+        return new ItemBuilder(Material.ZOMBIE_HEAD)
+                .setDisplayName("&6Revenant Zombie | &eDía 5")
+                .setLore(
+                        "&7Un zombi poseido por demonios que ronda por el",
+                        "&7mundo, buscando su siguiente victima.",
+                        "",
+                        "&6&lAparece en: &cCualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Al ser reducido a la mitad de su vida, gana Fuerza 5,",
+                        "&7Speed 3 y Resistencia 2",
+                        "",
+                        "&8'Incluso si no parecen la gran cosa, enfocate en acabar",
+                        "&8con estos zombis antes de que se acumulen demasiado'"
+                ).build();
+    }
+    public static ItemStack infoRevSkele(){
+        return new ItemBuilder(Material.SKELETON_SKULL)
+                .setDisplayName("&6Revenant Skeleton | &eDía 5")
+                .setLore(
+                        "&7Un esqueleto poseido por demonios que busca a su",
+                        "&7siguiente objetivo para lanzarle sus flechas especiales.",
+                        "",
+                        "&6&lAparece en: &cCualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Cada 5 disparos lanza una flecha explosiva de nivel 4.",
+                        "",
+                        "&8'A pesar de su simple funcionamiento, estos esqueletos pueden",
+                        "&8causar problemas si no son tratados correctamente, evita que te disparen",
+                        "&8demasiado y deberías estar bien'"
+                ).build();
+    }
+    public static ItemStack infoRevSpid(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVlMjQ4ZGEyZTEwOGYwOTgxM2E2Yjg0OGEwZmNlZjExMTMwMDk3ODE4MGVkYTQxZDNkMWE3YThlNGRiYTNjMyJ9fX0="))
+                .setDisplayName("&6Revenant Spider | &eDía 5")
+                .setLore(
+                        "&7Una araña grande con una fuerza brutal en sus",
+                        "&7mandibulas y una picadura debilitante.",
+                        "",
+                        "&6&lAparece en: &cCualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Al golpear infligue Weakness I y atrapa en telarañas al jugador,",
+                        "&7y a veces se lanza hacia su objetivo.",
+                        "",
+                        "&8'Intentar escapar de estos bichos nunca resulta en algo bueno,",
+                        "&8evita sus telarañas y no te dejes atrapar por su lanzamiento!'"
+                ).build();
+    }
+    public static ItemStack infoRevCreeper(){
+        return new ItemBuilder(Material.CREEPER_HEAD)
+                .setDisplayName("&6Revenant Creeper | &eDía 5")
+                .setLore(
+                        "&7Un creeper poderoso que busca a su proxima",
+                        "&7victima para explotar.",
+                        "",
+                        "&6&lAparece en: &cCualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Genera una explosion de nivel 8 y quema a los jugadores",
+                        "&7que caen en su radio de explosion.",
+                        "",
+                        "&8'Evitar pelear con estos si no estas preparado o no reaccionas rapido",
+                        "&8su explosion es devastadora y puede causarte muchos problemas!."
+                ).build();
+    }
+    public static ItemStack infoRevEnderman(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTZjMGIzNmQ1M2ZmZjY5YTQ5YzdkNmYzOTMyZjJiMGZlOTQ4ZTAzMjIyNmQ1ZTgwNDVlYzU4NDA4YTM2ZTk1MSJ9fX0="))
+                .setDisplayName("&6Revenant Enderman | &eDía 5")
+                .setLore(
+                        "&7Un enderman poseido que busca a una desafortunada",
+                        "&7victima para acabar con ella.",
+                        "",
+                        "&6&lAparece en: &cCualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Se enoja si se acerca demasiado a el, sus golpes inflige",
+                        "&7Slowness 2.",
+                        "",
+                        "&8'Esta entidad es capaz de despistar a jugadores no preparados,",
+                        "&8asi que has lo posible para evitar ser asesinado por el."
                 ).build();
     }
 }

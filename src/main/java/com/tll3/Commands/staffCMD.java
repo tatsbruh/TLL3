@@ -5,6 +5,7 @@ import co.aikar.commands.annotation.*;
 import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
+import com.tll3.Lists.GUIs.HunterJournal;
 import com.tll3.Lists.Items;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
@@ -115,7 +116,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("summon")
-    @CommandCompletion("zombie_ninja|black_reaver|adaptative_spider|termite|brute_skeleton|zenith_creeper")
+    @CommandCompletion("zombie_ninja|zombie_arq|black_reaver|scarlet_leech|termite|colony_termite|rogue_skeleton|firemancer|razorback|rev_zombie|rev_skeleton|rev_creeper|rev_spider|rev_enderman")
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
@@ -124,40 +125,21 @@ public class staffCMD extends BaseCommand {
             var loc = p.getLocation();
             switch (args[0].toLowerCase()){
                 case "zombie_ninja" -> Entities.zNinka((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
+                case "zombie_arq" -> Entities.zArqueo((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "black_reaver" -> Entities.blackRev((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
-                case "adaptative_spider" -> Entities.adapSp((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
+                case "scarlet_leech" -> Entities.adapSp((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
                 case "termite" -> Entities.termite((CaveSpider) Entities.spawnMob(p.getLocation(),EntityType.CAVE_SPIDER));
-                case "brute_skeleton" -> Entities.skeAd((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
-                case "super_guardian" ->{
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomGuardian customGuardian = new CustomGuardian(worldServer);
-                    customGuardian.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(customGuardian, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                }
-                case "zenith_creeper" ->{
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomCreeper cC = new CustomCreeper(worldServer);
-                    cC.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(cC, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                }
-                case "zenith_skeleton" ->{
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomSkeleton s = new CustomSkeleton(worldServer);
-                    s.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                }
-                case "zenith_ghast" ->{
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomGhast s = new CustomGhast(worldServer);
-                    s.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                }
-                case "sniffer_lol" ->{
-                    WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
-                    CustomSniffer s = new CustomSniffer(worldServer);
-                    s.a_(loc.getX(),loc.getY(),loc.getZ());
-                    worldServer.addFreshEntity(s, CreatureSpawnEvent.SpawnReason.CUSTOM);
-                }
+                case "colony_termite" -> Entities.csTerCol((CaveSpider) Entities.spawnMob(p.getLocation(),EntityType.CAVE_SPIDER));
+                case "rogue_skeleton" -> Entities.skeAd((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
+                case "firemancer" -> Entities.skeFi((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
+                case "razorback" -> Entities.skeRz((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
+                case "rev_zombie" -> Entities.revZombie((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
+                case "rev_skeleton" -> Entities.revSkeleton((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
+                case "rev_spider" -> Entities.revSpider((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
+                case "rev_creeper" -> Entities.revCreeper((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
+                case "rev_enderman" -> Entities.revEnderman((Enderman) Entities.spawnMob(p.getLocation(),EntityType.ENDERMAN));
+
+
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));
             }
         }
@@ -175,6 +157,8 @@ public class staffCMD extends BaseCommand {
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aSe ha cambiado el dia al dia " + day));
         }
     }
+
+
 
     @Subcommand("totems")
     @CommandPermission("staff.admin")
@@ -195,7 +179,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("debug")
-    @CommandCompletion("timeformat")
+    @CommandCompletion("timeformat|diary")
     @CommandPermission("staff.admin")
     @Description("debugs a ton of shit")
     public void debug(CommandSender sender,String[] args){
@@ -206,6 +190,7 @@ public class staffCMD extends BaseCommand {
                     if(ticks < 0)return;
                     sender.sendMessage("Hola " + GenericUtils.doTimeFormat(ticks));
                 }
+                case "diary" -> HunterJournal.hunterDiary((Player) sender);
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Tienes que ingresar un comando debug valido"));
             }
         }
