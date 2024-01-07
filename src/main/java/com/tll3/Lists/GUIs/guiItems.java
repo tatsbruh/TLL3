@@ -21,14 +21,14 @@ public class guiItems {
         return new ItemBuilder(SkullCreator.itemFromUuid(p.getUniqueId()))
                 .setDisplayName("#c9124c" + p.getName())
                 .setLore(
-                        "&e&l☠ ¡Bienvenido a las Misiones! ☠",
+                        "&e☠ ¡Bienvenido a las Misiones! ☠",
                         "&7Aqui puedes ver lo que estas misiones piden y completarlas",
                         "&7una vez que sus pedidos esten rellenados, recompensandote con lo",
-                        "&7que se ofrecio en la mision, mayormente &cPrestigio y &eCreditos",
+                        "&7que se ofrecio en la mision, mayormente &cPrestigio &7y &eCreditos",
                         "",
-                        "&c&l✪ Prestigio: &7" + PlayerData.getPrestige(p),
-                        "&e&l✦ Creditos: &7" + PlayerData.getCredits(p),
-                        "&b&l☀ Misiones Completadas: &7" + PlayerData.getHunts(p)
+                        "&c✪ &c&lPrestigio: &7" + PlayerData.getPrestige(p),
+                        "&e✦ &e&lCreditos: &7" + PlayerData.getCredits(p),
+                        "&b☀ &b&lMisiones Completadas: &7" + PlayerData.getHunts(p)
                 ).build();
     }
 
@@ -41,29 +41,66 @@ public class guiItems {
                 .setDisplayName("#ff954fViolencia Innecesaria")
                 .setLore(
                         "&6&lObjetivo:",
-                        "&7Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
+                        "&7- Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
                         "",
                         "&6&lRecompensas:",
-                        "&cx1 Prestigio",
-                        "&ex5 Creditos",
+                        "&7x1 &cPrestigio",
+                        "&7x5 &eCreditos",
                         "",
                         cosa
                 ).build();
     }
     public static ItemStack day0mission4(Player p){
         var cosa = ChatUtils.format("&c&lNo Completado");
-        if(PlayerData.getMission(p,"05_atlantis") >= 1){
+        if(PlayerData.getMission(p,"04_atlantis") >= 1){
             cosa = ChatUtils.format("&a&l¡Completado!");
         }
-        return new ItemBuilder(Material.IRON_INGOT)
-                .setDisplayName("#ff954fViolencia Innecesaria")
+        return new ItemBuilder(Material.PRISMARINE_SHARD)
+                .setDisplayName("#69c5ffAnti-Atlantis")
                 .setLore(
                         "&6&lObjetivo:",
-                        "&7Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
+                        "&7- Mata 20 Guardianes &8(" + PlayerData.getObjective(p,"04guardianes") + "/20)",
+                        "&7- Mata 1 Guardian Anciano &8(" + PlayerData.getObjective(p,"04elderguardian") + "/1)",
                         "",
                         "&6&lRecompensas:",
-                        "&cx1 Prestigio",
-                        "&ex5 Creditos",
+                        "&7x5 &cPrestigio",
+                        "&7x10 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day0mission3(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"03_warden") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.ECHO_SHARD)
+                .setDisplayName("#004736Aprende y Escucha")
+                .setLore(
+                        "&6&lObjetivo:",
+                        "&7- Mata 1 Warden &8(" + PlayerData.getObjective(p,"03warden") + "/1)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x5 &cPrestigio",
+                        "&7x10 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day0mission2(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"02_wither") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.ECHO_SHARD)
+                .setDisplayName("#474747Maestro Descompuesto")
+                .setLore(
+                        "&6&lObjetivo:",
+                        "&7- Mata 5 Withers &8(" + PlayerData.getObjective(p,"02wither") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x5 &cPrestigio",
+                        "&7x15 &eCreditos",
                         "",
                         cosa
                 ).build();

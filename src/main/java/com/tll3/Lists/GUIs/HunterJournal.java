@@ -48,18 +48,20 @@ public class HunterJournal {
         var gui = Gui.normal()
                 .setStructure(
                         "# # # # R # # # #",
-                        "# . . . . . . 7 #",
-                        "# . . . . . . . #",
-                        "# . . . . . . . #",
-                        "# . . . . . . . #",
-                        "# # # # # # # # #")
+                        "# # a b c d e # #",
+                        "# # . . . . . # #",
+                        "# # . . . . . # #",
+                        "# # . . . . . # #",
+                        "# # . . . . . # #")
                 .addIngredient('#',guiItems.filler2())
                 .addIngredient('R',guiItems.playerheadMission(player))
-                .addIngredient('7',guiItems.day0mission5(player))
+                .addIngredient('c',guiItems.day0mission3(player))
+                .addIngredient('d',guiItems.day0mission4(player))
+                .addIngredient('e',guiItems.day0mission5(player))
                 .build();
         var window = Window.single()
                 .setViewer(player)
-                .setTitle(ChatUtils.format("#ffc259Misiones de Hunter"))
+                .setTitle(ChatUtils.format("#96000fMisiones de Hunter"))
                 .setGui(gui)
                 .build();
         window.open();
