@@ -1,18 +1,82 @@
 package com.tll3.Lists.GUIs;
 
+import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Skulls.SkullCreator;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 
 public class guiItems {
     public static ItemStack filler(){
-        return new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("").setCustomModelData(99).build();
+        return new ItemBuilder(Material.BLACK_STAINED_GLASS_PANE).setDisplayName("§").setCustomModelData(99).build();
     }
+    public static ItemStack filler2(){
+        return new ItemBuilder(Material.RED_STAINED_GLASS_PANE).setDisplayName("§").setCustomModelData(99).build();
+    }
+
+    public static ItemStack playerheadMission(Player p){
+        return new ItemBuilder(SkullCreator.itemFromUuid(p.getUniqueId()))
+                .setDisplayName("#c9124c" + p.getName())
+                .setLore(
+                        "&e&l☠ ¡Bienvenido a las Misiones! ☠",
+                        "&7Aqui puedes ver lo que estas misiones piden y completarlas",
+                        "&7una vez que sus pedidos esten rellenados, recompensandote con lo",
+                        "&7que se ofrecio en la mision, mayormente &cPrestigio y &eCreditos",
+                        "",
+                        "&c&l✪ Prestigio: &7" + PlayerData.getPrestige(p),
+                        "&e&l✦ Creditos: &7" + PlayerData.getCredits(p),
+                        "&b&l☀ Misiones Completadas: &7" + PlayerData.getHunts(p)
+                ).build();
+    }
+
+    public static ItemStack day0mission5(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"05_violencia") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.IRON_INGOT)
+                .setDisplayName("#ff954fViolencia Innecesaria")
+                .setLore(
+                        "&6&lObjetivo:",
+                        "&7Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&cx1 Prestigio",
+                        "&ex5 Creditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day0mission4(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"05_atlantis") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.IRON_INGOT)
+                .setDisplayName("#ff954fViolencia Innecesaria")
+                .setLore(
+                        "&6&lObjetivo:",
+                        "&7Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&cx1 Prestigio",
+                        "&ex5 Creditos",
+                        "",
+                        cosa
+                ).build();
+    }
+
+
+
+
+
+
     public static ItemStack infoNinja(){
         return new ItemBuilder(Material.ZOMBIE_HEAD)
-                .setDisplayName("&6Ninja Zombi | &eDía 5")
+                .setDisplayName("&6Ninja Zombi | &eDía 7")
                 .setLore(
                         "&7Un Zombi maestro en las artes ninja, pero nunca",
                         "&7se sabe hasta donde se quedo.",
@@ -30,7 +94,7 @@ public class guiItems {
     }
     public static ItemStack infoArque(){
         return new ItemBuilder(Material.ZOMBIE_HEAD)
-                .setDisplayName("&6Zombi Arqueólogo | &eDía 5")
+                .setDisplayName("&6Zombi Arqueólogo | &eDía 7")
                 .setLore(
                         "&7Un aventurero muerto que se perdio en las profundidades",
                         "&7del mundo, lleva consigo su confiable pico.",
@@ -47,7 +111,7 @@ public class guiItems {
     }
     public static ItemStack infoRogue(){
         return new ItemBuilder(Material.SKELETON_SKULL)
-                .setDisplayName("&6Rogue Skeleton | &eDía 5")
+                .setDisplayName("&6Rogue Skeleton | &eDía 7")
                 .setLore(
                         "&7Un esqueleto agresivo que no duda en sacar su",
                         "&7daga en momentos de amenaza.",
@@ -64,7 +128,7 @@ public class guiItems {
     }
     public static ItemStack infoFireman(){
         return new ItemBuilder(Material.SKELETON_SKULL)
-                .setDisplayName("&6Firemancer | &eDía 5")
+                .setDisplayName("&6Firemancer | &eDía 7")
                 .setLore(
                         "&7Un esqueleto mago cuyo poder es lanzar bolas",
                         "&7de fuego hacia su oponente.",
@@ -81,7 +145,7 @@ public class guiItems {
     }
     public static ItemStack infoRazor(){
         return new ItemBuilder(Material.SKELETON_SKULL)
-                .setDisplayName("&6Razorback | &eDía 5")
+                .setDisplayName("&6Razorback | &eDía 7")
                 .setLore(
                         "&7Un esqueleto robot cuyo arco tiene implementos",
                         "&7que hacen las flechas teledirigidas.",
@@ -97,7 +161,7 @@ public class guiItems {
     }
     public static ItemStack infoTarantula(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVlMjQ4ZGEyZTEwOGYwOTgxM2E2Yjg0OGEwZmNlZjExMTMwMDk3ODE4MGVkYTQxZDNkMWE3YThlNGRiYTNjMyJ9fX0="))
-                .setDisplayName("&6Black Tarantula | &eDía 5")
+                .setDisplayName("&6Black Tarantula | &eDía 7")
                 .setLore(
                         "&7Una araña cuyas picaduras puede descomponer",
                         "&7hasta la persona mas fuerte del mundo.",
@@ -113,7 +177,7 @@ public class guiItems {
     }
     public static ItemStack infoScarlet(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVlMjQ4ZGEyZTEwOGYwOTgxM2E2Yjg0OGEwZmNlZjExMTMwMDk3ODE4MGVkYTQxZDNkMWE3YThlNGRiYTNjMyJ9fX0="))
-                .setDisplayName("&6Scarlet Leech | &eDía 5")
+                .setDisplayName("&6Scarlet Leech | &eDía 7")
                 .setLore(
                         "&7Una araña cuyas picaduras absorben la vida",
                         "&7de su objetivo y lo usan para recuperarse.",
@@ -129,7 +193,7 @@ public class guiItems {
     }
     public static ItemStack infoTermite(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWNjYzRhMzJkNDVkNzRlOGIxNGVmMWZmZDU1Y2Q1ZjM4MWEwNmQ0OTk5MDgxZDUyZWFlYTEyZTEzMjkzZTIwOSJ9fX0="))
-                .setDisplayName("&6Termita | &eDía 5")
+                .setDisplayName("&6Termita | &eDía 7")
                 .setLore(
                         "&7Bichos cuya picadura desata una reacción interna",
                         "&7y las hacen estallar.",
@@ -146,7 +210,7 @@ public class guiItems {
     }
     public static ItemStack infoTermiteCol(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWNjYzRhMzJkNDVkNzRlOGIxNGVmMWZmZDU1Y2Q1ZjM4MWEwNmQ0OTk5MDgxZDUyZWFlYTEyZTEzMjkzZTIwOSJ9fX0="))
-                .setDisplayName("&6Termita de Colonia | &eDía 5")
+                .setDisplayName("&6Termita de Colonia | &eDía 7")
                 .setLore(
                         "&7Bichos coloniales cuya picadura desata una reacción",
                         "&7interna y las hacen estallar.",
@@ -164,7 +228,7 @@ public class guiItems {
     }
     public static ItemStack infoEnragedGolem(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTEzZjM0MjI3MjgzNzk2YmMwMTcyNDRjYjQ2NTU3ZDY0YmQ1NjJmYTlkYWIwZTEyYWY1ZDIzYWQ2OTljZjY5NyJ9fX0="))
-                .setDisplayName("&6Enraged Iron Golem | &eDía 5")
+                .setDisplayName("&6Enraged Iron Golem | &eDía 7")
                 .setLore(
                         "&7Iron Golems cuya conciencia fue completamente modificada",
                         "&7para atacar jugadores.",
@@ -181,7 +245,7 @@ public class guiItems {
 
     public static ItemStack infoSkeWarden(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTgzMDZiZjhlZTQwMzZhNmZkYjQ4NDE2NzBiMzE3Mjg5NDg1MDMxYjU2NTQ1ZDNkMWE1YzBlNTc0ZWNmZDFkNCJ9fX0="))
-                .setDisplayName("&6Skeleton Warden | &eDía 5")
+                .setDisplayName("&6Skeleton Warden | &eDía 7")
                 .setLore(
                         "&7Esqueletos verdugos que aparecen raras veces",
                         "&7para ejecutar al jugador que los invoco.",
@@ -197,7 +261,7 @@ public class guiItems {
     }
     public static ItemStack infoDuskPha(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2U5NTE1M2VjMjMyODRiMjgzZjAwZDE5ZDI5NzU2ZjI0NDMxM2EwNjFiNzBhYzAzYjk3ZDIzNmVlNTdiZDk4MiJ9fX0="))
-                .setDisplayName("&6Dusk Phantom | &eDía 5")
+                .setDisplayName("&6Dusk Phantom | &eDía 7")
                 .setLore(
                         "&7Phantoms gigantes que tienen el alma de",
                         "&7un mob en su interior.",
@@ -214,7 +278,7 @@ public class guiItems {
     }
     public static ItemStack infoRevZomb(){
         return new ItemBuilder(Material.ZOMBIE_HEAD)
-                .setDisplayName("&6Revenant Zombie | &eDía 5")
+                .setDisplayName("&6Revenant Zombie | &eDía 7")
                 .setLore(
                         "&7Un zombi poseido por demonios que ronda por el",
                         "&7mundo, buscando su siguiente victima.",
@@ -231,7 +295,7 @@ public class guiItems {
     }
     public static ItemStack infoRevSkele(){
         return new ItemBuilder(Material.SKELETON_SKULL)
-                .setDisplayName("&6Revenant Skeleton | &eDía 5")
+                .setDisplayName("&6Revenant Skeleton | &eDía 7")
                 .setLore(
                         "&7Un esqueleto poseido por demonios que busca a su",
                         "&7siguiente objetivo para lanzarle sus flechas especiales.",
@@ -248,7 +312,7 @@ public class guiItems {
     }
     public static ItemStack infoRevSpid(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVlMjQ4ZGEyZTEwOGYwOTgxM2E2Yjg0OGEwZmNlZjExMTMwMDk3ODE4MGVkYTQxZDNkMWE3YThlNGRiYTNjMyJ9fX0="))
-                .setDisplayName("&6Revenant Spider | &eDía 5")
+                .setDisplayName("&6Revenant Spider | &eDía 7")
                 .setLore(
                         "&7Una araña grande con una fuerza brutal en sus",
                         "&7mandibulas y una picadura debilitante.",
@@ -265,7 +329,7 @@ public class guiItems {
     }
     public static ItemStack infoRevCreeper(){
         return new ItemBuilder(Material.CREEPER_HEAD)
-                .setDisplayName("&6Revenant Creeper | &eDía 5")
+                .setDisplayName("&6Revenant Creeper | &eDía 7")
                 .setLore(
                         "&7Un creeper poderoso que busca a su proxima",
                         "&7victima para explotar.",
@@ -282,7 +346,7 @@ public class guiItems {
     }
     public static ItemStack infoRevEnderman(){
         return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTZjMGIzNmQ1M2ZmZjY5YTQ5YzdkNmYzOTMyZjJiMGZlOTQ4ZTAzMjIyNmQ1ZTgwNDVlYzU4NDA4YTM2ZTk1MSJ9fX0="))
-                .setDisplayName("&6Revenant Enderman | &eDía 5")
+                .setDisplayName("&6Revenant Enderman | &eDía 7")
                 .setLore(
                         "&7Un enderman poseido que busca a una desafortunada",
                         "&7victima para acabar con ella.",

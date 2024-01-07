@@ -26,7 +26,7 @@ public class ArqBlockBreak extends BukkitRunnable {
         Block block1 = block.getLocation().subtract(0,1,0).getBlock();
         if(zombie.isDead() || !zombie.isValid()){cancel();return;}
         if(block.getType() != Material.AIR || block1.getType() != Material.AIR){
-            if((getValidBlocks(block) || getValidBlocks(block1)) && zombie.getTarget() != null){
+            if((getValidBlocks(block) && getValidBlocks(block1)) && zombie.getTarget() != null){
                 int random = GenericUtils.getRandomValue(100);
                 if(random >= 50){
                     block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK,block.getLocation(),10,1,1,1,1,block.getBlockData());

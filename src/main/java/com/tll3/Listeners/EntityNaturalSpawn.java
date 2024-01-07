@@ -63,7 +63,7 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomPolarBear || entity instanceof CustomSniffer || entity instanceof CustomAxolotls
         || entity instanceof CustomDolphin)return;
         spawnWasteyard(e,loc);
-        if(getDay() >= 5) {
+        if(getDay() >= 7) {
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if(doRandomChance(50) && getMonsoon_active().equalsIgnoreCase("true")){
                     EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,1);
@@ -86,7 +86,7 @@ public class EntityNaturalSpawn implements Listener {
         switch (entity.getType()){
             case ZOMBIE -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                if(getDay() >= 5) {
+                if(getDay() >= 7) {
                     var random = getRandomValue(100);
                     if (random <= 45) {
                         chooseZombieClass1((Zombie) entity);
@@ -98,7 +98,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case SKELETON -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if (random <= 45) {
                             chooseSkeletonClass1((Skeleton) entity);
@@ -114,7 +114,7 @@ public class EntityNaturalSpawn implements Listener {
                     }
                 }
                 if(reason == CreatureSpawnEvent.SpawnReason.JOCKEY || reason == CreatureSpawnEvent.SpawnReason.TRAP){
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                     Entities.skeW((Skeleton) entity);
                 }
                 }
@@ -122,12 +122,14 @@ public class EntityNaturalSpawn implements Listener {
             case SILVERFISH -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
                         reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK)) {
-                    Entities.silverday5((Silverfish) entity);
+                    if (getDay() >= 7) {
+                        Entities.silverday5((Silverfish) entity);
+                    }
                 }
             }
             case SPIDER -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if (random <= 45) {
                             Entities.revSpider((Spider) entity);
@@ -140,7 +142,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case CREEPER -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if(random <= 35){
                             Entities.revCreeper((Creeper) entity);
@@ -152,7 +154,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case ENDERMAN -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if(random <= 35){
                             Entities.revEnderman((Enderman) entity);
@@ -162,24 +164,24 @@ public class EntityNaturalSpawn implements Listener {
             }
             case PHANTOM -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                         Entities.phanD((Phantom) entity);
                     }
                 }
             }
             case DROWNED -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                         if(getMonsoon_active().equalsIgnoreCase("true")){
                             Entities.drowAby((Drowned) entity);
                         }
                     }
                 }
             }
-            case IRON_GOLEM ->{ if(getDay() >= 5)Entities.enrIG((IronGolem) entity);}
+            case IRON_GOLEM ->{ if(getDay() >= 7)Entities.enrIG((IronGolem) entity);}
             case CHICKEN ->  {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.JOCKEY)){
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomChicken customChicken = new CustomChicken(worldServer);
@@ -189,30 +191,30 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case MULE -> {
-                if(getDay() >= 5){
+                if(getDay() >= 7){
                 SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
                 h.setTrapped(true);
                 e.setCancelled(true);
                 }
             }
             case WITHER_SKELETON -> {
-                if(getDay() >= 5){ chooseWitherSkeletonClass1((WitherSkeleton) entity);}
+                if(getDay() >= 7){ chooseWitherSkeletonClass1((WitherSkeleton) entity);}
             }
-            case HUSK -> { if(getDay() >= 5){
+            case HUSK -> { if(getDay() >= 7){
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.huStr((Husk) entity);
             }
             }
-            case CAVE_SPIDER -> { if(getDay() >= 5){
+            case CAVE_SPIDER -> { if(getDay() >= 7){
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.csTerCol((CaveSpider) entity);
             }
             }
-            case GHAST -> { if(getDay() >= 5){
+            case GHAST -> { if(getDay() >= 7){
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.gPower((Ghast) entity);
             }
             }
             case AXOLOTL -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if (getDay() >= 5) {
+                    if (getDay() >= 7) {
                         e.setCancelled(true);
                         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
                         CustomAxolotls r = new CustomAxolotls(worldServer);
@@ -223,7 +225,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case FOX -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomFox r = new CustomFox(worldServer);
@@ -234,7 +236,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case SNIFFER -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomSniffer r = new CustomSniffer(worldServer);
@@ -245,7 +247,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case POLAR_BEAR -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if (getDay() >= 5) {
+                    if (getDay() >= 7) {
                         e.setCancelled(true);
                         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
                         CustomPolarBear r = new CustomPolarBear(worldServer);
@@ -256,7 +258,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case PANDA -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                     e.setCancelled(true);
                     WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                     CustomPanda r = new CustomPanda(worldServer);
@@ -267,7 +269,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case MUSHROOM_COW -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if (getDay() >= 5) {
+                    if (getDay() >= 7) {
                         e.setCancelled(true);
                         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
                         CustomMooshroom r = new CustomMooshroom(worldServer);
@@ -278,14 +280,14 @@ public class EntityNaturalSpawn implements Listener {
             }
             case ZOMBIFIED_PIGLIN -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
-                    if(getDay() >= 5){
+                    if(getDay() >= 7){
                     Entities.enrPig((PigZombie) entity);
                 }
                 }
             }
             case DOLPHIN -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if (getDay() >= 5) {
+                    if (getDay() >= 7) {
                         e.setCancelled(true);
                         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
                         CustomDolphin r = new CustomDolphin(worldServer);
@@ -304,7 +306,7 @@ public class EntityNaturalSpawn implements Listener {
     }
 
     public static void chooseRandomSpider1(Spider s,CreatureSpawnEvent e){
-        if(getDay() >= 5){
+        if(getDay() >= 7){
         Random random = new Random();
         int chance = random.nextInt(3);
         switch (chance) {
@@ -334,7 +336,7 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
     public static void chooseSkeletonClass1(Skeleton w){
-        if(getDay() >= 5){
+        if(getDay() >= 7){
         Random random = new Random();
         int chance = random.nextInt(3);
         switch (chance){
@@ -345,7 +347,7 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
     public static void chooseZombieClass1(Zombie z){
-        if(getDay() >= 5) {
+        if(getDay() >= 7) {
             Random random = new Random();
             int chance = random.nextInt(2);
             switch (chance) {

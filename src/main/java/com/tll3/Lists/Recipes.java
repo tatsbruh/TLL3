@@ -9,7 +9,7 @@ import static com.tll3.Misc.GenericUtils.getDay;
 public class Recipes {
 
     public static void registerAllRecipes(){
-        if(getDay() >= 5){
+        if(getDay() >= 7){
             dclRecipe();
             dlbRecipe();
         }

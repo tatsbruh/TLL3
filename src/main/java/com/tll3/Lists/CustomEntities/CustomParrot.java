@@ -48,6 +48,7 @@ public class CustomParrot extends EntityParrot {
         ((LivingEntity) this.getBukkitEntity()).setHealth(25);
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
+        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(5);
     }
 
     @Override

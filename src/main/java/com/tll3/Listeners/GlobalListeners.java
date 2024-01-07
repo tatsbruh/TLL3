@@ -46,7 +46,7 @@ public class GlobalListeners implements Listener {
                 e.setCancelled(true);
             }
             if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
-            if(getDay() >= 5){
+            if(getDay() >= 7){
                 switch (reason){
                     case DROWNING -> e.setDamage(e.getDamage() * 2);
                     case LIGHTNING -> {
@@ -68,7 +68,7 @@ public class GlobalListeners implements Listener {
         }
 
 
-        if(getDay() >= 5){
+        if(getDay() >= 7){
             if(entity instanceof Enemy && reason == EntityDamageEvent.DamageCause.MAGIC)e.setCancelled(true);
             if(entity instanceof Enemy || entity instanceof IronGolem){
                 if(e instanceof EntityDamageByEntityEvent event){
@@ -126,8 +126,10 @@ public class GlobalListeners implements Listener {
     public void changeporE(EntityPortalEnterEvent e){
         var entity = e.getEntity();
         if(entity instanceof Player p){
+            if(getDay() >= 7){
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,0,false,false,false));
+            }
             }
         }
     }
@@ -141,7 +143,7 @@ public class GlobalListeners implements Listener {
                 || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls
                 || liv instanceof CustomDolphin) return;
                 Location loc = liv.getLocation();
-                if (getDay() >= 5) {
+                if (getDay() >= 7) {
                     switch (liv.getType()){
                         case IRON_GOLEM -> Entities.enrIG((IronGolem) liv);
                         case MULE -> {

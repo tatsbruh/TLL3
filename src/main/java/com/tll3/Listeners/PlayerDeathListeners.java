@@ -22,7 +22,8 @@ public class PlayerDeathListeners implements Listener {
         var p = e.getPlayer();
         p.setHealth(20);
         p.setGameMode(GameMode.SPECTATOR);
-
+        World world = GenericUtils.getWorld();
+        world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,false);
         for(Player sp : Bukkit.getOnlinePlayers()){
             if(!sp.getName().equalsIgnoreCase(p.getName())) {
                 doDeathAnimation1(sp);
@@ -39,7 +40,6 @@ public class PlayerDeathListeners implements Listener {
             public void run() {
                 World world = GenericUtils.getWorld();
                 long time = world.getTime();
-                world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,false);
                 if (time >= 0 && time < 12000) {
                     world.setTime(0);
                 }
@@ -58,6 +58,7 @@ public class PlayerDeathListeners implements Listener {
                             int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
                             String setThunder = "weather thunder " + storm_time;
                             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+                            world.strikeLightning(new Location(world,0,0,0));
                             for (Player sp : Bukkit.getOnlinePlayers()) {
                                 sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
                                 sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder

@@ -1,5 +1,6 @@
 package com.tll3.Listeners;
 
+import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.DataManager.PlayerData;
@@ -12,6 +13,7 @@ import com.tll3.Task.ExposureTask;
 import com.tll3.Task.Scoreboard;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -44,7 +46,9 @@ public class GenericPlayerListeners implements Listener {
 
         var p = e.getPlayer();
         PlayerData.addExposure(p);
-        new ExposureTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
+        if(GenericUtils.getDay() >= 7) {
+            new ExposureTask(p).runTaskTimer(TLL3.getInstance(), 0L, 1L);
+        }
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
         new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
@@ -54,7 +58,7 @@ public class GenericPlayerListeners implements Listener {
     @EventHandler
     public void itemduraE(PlayerItemDamageEvent e){
         var player = e.getPlayer();
-        if(GenericUtils.getDay() >= 5){
+        if(GenericUtils.getDay() >= 7){
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true") && player.getGameMode() == GameMode.SURVIVAL){
             Location block = player.getWorld().getHighestBlockAt(player.getLocation().clone()).getLocation();
             int highestY = block.getBlockY();
@@ -302,7 +306,7 @@ public class GenericPlayerListeners implements Listener {
             p.setFoodLevel(p.getFoodLevel() - 15);
 
         }
-        if(a >= 97 ) {
+        if(a >= 97  && a <= 119) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,350,9,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,4,true, false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,350,6,true, false,true));
@@ -313,6 +317,22 @@ public class GenericPlayerListeners implements Listener {
             p.removePotionEffect(PotionEffectType.ABSORPTION);
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
             p.setFoodLevel(0);
+        }
+        if(a >= 120){
+            p.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,350,9,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,350,9,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,350,9,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,350,0,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,350,9,true, false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.BAD_OMEN,Integer.MAX_VALUE,4,true,false,true));
+            p.removePotionEffect(PotionEffectType.REGENERATION);
+            p.removePotionEffect(PotionEffectType.ABSORPTION);
+            p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
+            p.setFoodLevel(0);
+            if(EntityNaturalSpawn.doRandomChance(50)){
+                for(Player online : Bukkit.getOnlinePlayers())online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&c&lEl Totem de " + p.getName() + " ha invocado un &8&lWITHER BOSS"));
+                Entities.spawnMob(p.getLocation(), EntityType.WITHER);
+            }
         }
     }
 

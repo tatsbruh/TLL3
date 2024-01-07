@@ -146,7 +146,7 @@ public class GenericEntityListeners implements Listener {
     @EventHandler
     public void vehicleenE(VehicleEnterEvent e){
         var entity = e.getEntered();
-        if(entity instanceof Enemy && getDay() >= 5){
+        if(entity instanceof Enemy && getDay() >= 7){
             e.setCancelled(true);
         }
     }
@@ -159,7 +159,7 @@ public class GenericEntityListeners implements Listener {
         var projectile = e.getProjectile();
 
         if(entity instanceof Pillager p){
-            if(getDay() >= 5){
+            if(getDay() >= 7){
                 Arrow arrow = (Arrow) projectile;
                 arrow.setDamage(arrow.getDamage() * 3);
             }
@@ -243,7 +243,7 @@ public class GenericEntityListeners implements Listener {
     public void moveE(EntityMoveEvent e){
         var entity = e.getEntity();
         Random random = new Random();
-        if(getDay() >= 5){
+        if(getDay() >= 7){
         if(entity instanceof Enderman end){
             for (Player player : end.getWorld().getPlayers()) {
                 if (player.getLocation().distanceSquared(end.getLocation()) <= Math.pow(4, 2)) {

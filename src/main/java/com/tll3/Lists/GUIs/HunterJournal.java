@@ -44,4 +44,24 @@ public class HunterJournal {
                 .build();
         window.open();
     }
+    public static void hunterHuntsXDLOLLMAO(Player player){
+        var gui = Gui.normal()
+                .setStructure(
+                        "# # # # R # # # #",
+                        "# . . . . . . 7 #",
+                        "# . . . . . . . #",
+                        "# . . . . . . . #",
+                        "# . . . . . . . #",
+                        "# # # # # # # # #")
+                .addIngredient('#',guiItems.filler2())
+                .addIngredient('R',guiItems.playerheadMission(player))
+                .addIngredient('7',guiItems.day0mission5(player))
+                .build();
+        var window = Window.single()
+                .setViewer(player)
+                .setTitle(ChatUtils.format("#ffc259Misiones de Hunter"))
+                .setGui(gui)
+                .build();
+        window.open();
+    }
 }

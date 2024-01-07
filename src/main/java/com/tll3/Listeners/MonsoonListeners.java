@@ -7,6 +7,7 @@ import com.tll3.Misc.Monsoon;
 import com.tll3.TLL3;
 import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
+import org.bukkit.Sound;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -34,9 +35,8 @@ public class MonsoonListeners implements Listener {
         int stime = GenericUtils.getWorld().getWeatherDuration();
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
             int updtime = GenericUtils.getWorld().getWeatherDuration();
-            double percentage = (double) updtime / stime;
             bossBar.setTitle(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()));
-            bossBar.setProgress(percentage);
+            bossBar.setProgress(updtime / stime);
         }, 0L, 20L);
     }
 
@@ -63,6 +63,7 @@ public class MonsoonListeners implements Listener {
         for(Player players : Bukkit.getOnlinePlayers()) {
             bossBar.removePlayer(players);
             players.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aLos cielos se despejan de la Monsoon..."));
+            players.getLocation().getWorld().playSound(players.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,10.0F,2.0F);
         }
         bossBar.setVisible(false);
         GenericUtils.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);

@@ -61,7 +61,8 @@ public final class TLL3 extends JavaPlugin {
                 new GenericEntityListeners(),
                 new EntityNaturalSpawn(),
                 new MonsoonListeners(),
-                new EntityDrops()
+                new EntityDrops(),
+                new MissionListeners()
         );
     }
 

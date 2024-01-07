@@ -14,7 +14,7 @@ public class EffectDuration extends BukkitRunnable {
     @Override
     public void run() {
         /*
-        * Checks every single effect to work like Potion Effect do
+        * Checks every single effect to work like a Potion Effect does
         * can this be optimized? yeah
         * do i know how to optimize it? no
         * also because i want some effects to have some effects when ending so uuuh yeahg

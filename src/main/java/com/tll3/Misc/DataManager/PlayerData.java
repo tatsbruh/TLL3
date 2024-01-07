@@ -59,13 +59,43 @@ public class PlayerData {
     }
 
 
+    public static void setMissionCount(Player target,String mission,int number){
+        Data.setPlayerData(target, "mission_" + mission, String.valueOf(number));
+    }
+    public static int getMission(Player target,String mission){
+        return Integer.parseInt(Data.getPlayerData(target,"mission_" + mission,"0"));
+    }
+
+    public static void setObjectiveCount(Player target,String mission,int number){
+        Data.setPlayerData(target, "obj_" + mission, String.valueOf(number));
+    }
+    public static int getObjective(Player target,String mission){
+        return Integer.parseInt(Data.getPlayerData(target,"obj_" + mission,"0"));
+    }
+
     public static void setTotemCount(Player target,int i){
         Data.setPlayerData(target, "totemcount", String.valueOf(i));
     }
     public static int getTotemCount(Player target){
         return Integer.parseInt(Data.getPlayerData(target,"totemcount","1"));
     }
-
-
+    public static int getHunts(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"completed_hunts","0"));
+    }
+    public static void setHunts(Player target,int i){
+        Data.setPlayerData(target, "completed_hunts", String.valueOf(i));
+    }
+    public static int getPrestige(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"prestige","0"));
+    }
+    public static void setPrestige(Player target,int i){
+        Data.setPlayerData(target, "prestige", String.valueOf(i));
+    }
+    public static int getCredits(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"credits","0"));
+    }
+    public static void setCredits(Player target,int i){
+        Data.setPlayerData(target, "credits", String.valueOf(i));
+    }
 
 }

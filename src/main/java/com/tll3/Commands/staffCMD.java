@@ -179,7 +179,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("debug")
-    @CommandCompletion("timeformat|diary")
+    @CommandCompletion("timeformat|diary|missions")
     @CommandPermission("staff.admin")
     @Description("debugs a ton of shit")
     public void debug(CommandSender sender,String[] args){
@@ -191,6 +191,7 @@ public class staffCMD extends BaseCommand {
                     sender.sendMessage("Hola " + GenericUtils.doTimeFormat(ticks));
                 }
                 case "diary" -> HunterJournal.hunterDiary((Player) sender);
+                case "missions" -> HunterJournal.hunterHuntsXDLOLLMAO((Player) sender);
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Tienes que ingresar un comando debug valido"));
             }
         }

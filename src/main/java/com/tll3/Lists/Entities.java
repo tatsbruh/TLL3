@@ -95,6 +95,7 @@ public class Entities {
 
         } catch (Exception e) {}
         i.setRemoveWhenFarAway(true);
+        i.setPersistent(false);
         setName(i,"&4Enraged Iron Golem");
     }
     public static void enrPig(PigZombie z){
