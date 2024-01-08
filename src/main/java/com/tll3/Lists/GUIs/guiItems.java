@@ -44,7 +44,7 @@ public class guiItems {
                         "&7- Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x1 &cPrestigio",
+                        "&7x2 &cPrestigio",
                         "&7x5 &eCreditos",
                         "",
                         cosa
@@ -58,13 +58,13 @@ public class guiItems {
         return new ItemBuilder(Material.PRISMARINE_SHARD)
                 .setDisplayName("#69c5ffAnti-Atlantis")
                 .setLore(
-                        "&6&lObjetivo:",
+                        "&6&lObjetivos:",
                         "&7- Mata 20 Guardianes &8(" + PlayerData.getObjective(p,"04guardianes") + "/20)",
                         "&7- Mata 1 Guardian Anciano &8(" + PlayerData.getObjective(p,"04elderguardian") + "/1)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x5 &cPrestigio",
-                        "&7x10 &eCreditos",
+                        "&7x6 &cPrestigio",
+                        "&7x15 &eCreditos",
                         "",
                         cosa
                 ).build();
@@ -81,8 +81,8 @@ public class guiItems {
                         "&7- Mata 1 Warden &8(" + PlayerData.getObjective(p,"03warden") + "/1)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x5 &cPrestigio",
-                        "&7x10 &eCreditos",
+                        "&7x6 &cPrestigio",
+                        "&7x15 &eCreditos",
                         "",
                         cosa
                 ).build();
@@ -92,19 +92,56 @@ public class guiItems {
         if(PlayerData.getMission(p,"02_wither") >= 1){
             cosa = ChatUtils.format("&a&l¡Completado!");
         }
-        return new ItemBuilder(Material.ECHO_SHARD)
+        return new ItemBuilder(Material.WITHER_ROSE)
                 .setDisplayName("#474747Maestro Descompuesto")
                 .setLore(
                         "&6&lObjetivo:",
                         "&7- Mata 5 Withers &8(" + PlayerData.getObjective(p,"02wither") + "/5)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x5 &cPrestigio",
-                        "&7x15 &eCreditos",
+                        "&7x6 &cPrestigio",
+                        "&7x10 &eCreditos",
                         "",
                         cosa
                 ).build();
     }
+    public static ItemStack day0mission1(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"01_killall") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.IRON_SWORD)
+                .setDisplayName("#ff4769Sin Piedad")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 1 Zombi &8(" + PlayerData.getObjective(p,"01zom") + "/1)",
+                        "&7- Mata 1 Esqueleto &8(" + PlayerData.getObjective(p,"01ske") + "/1)",
+                        "&7- Mata 1 Creeper &8(" + PlayerData.getObjective(p,"01cre") + "/1)",
+                        "&7- Mata 1 Araña &8(" + PlayerData.getObjective(p,"01ara") + "/1)",
+                        "&7- Mata 1 Enderman &8(" + PlayerData.getObjective(p,"01end") + "/1)",
+                        "&7- Mata 1 Araña de cueva &8(" + PlayerData.getObjective(p,"01cue") + "/1)",
+                        "&7- Mata 1 Bruja &8(" + PlayerData.getObjective(p,"01bru") + "/1)",
+                        "&7- Mata 1 Lepisma &8(" + PlayerData.getObjective(p,"01lep") + "/1)",
+                        "&7- Mata 1 Endermite &8(" + PlayerData.getObjective(p,"01mit") + "/1)",
+                        "&7- Mata 1 Husk &8(" + PlayerData.getObjective(p,"01hus") + "/1)",
+                        "&7- Mata 1 Stray &8(" + PlayerData.getObjective(p,"01str") + "/1)",
+                        "&7- Mata 1 Drowned &8(" + PlayerData.getObjective(p,"01dro") + "/1)",
+                        "&7- Mata 1 Pillager &8(" + PlayerData.getObjective(p,"01pil") + "/1)",
+                        "&7- Mata 1 Vindicator &8(" + PlayerData.getObjective(p,"01vin") + "/1)",
+                        "&7- Mata 1 Evoker &8(" + PlayerData.getObjective(p,"01evo") + "/1)",
+                        "&7- Mata 1 Ravager &8(" + PlayerData.getObjective(p,"01rav") + "/1)",
+                        "&7- Mata 1 Vex &8(" + PlayerData.getObjective(p,"01vex") + "/1)",
+                        "&7- Mata 1 Phantom &8(" + PlayerData.getObjective(p,"01pha") + "/1)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x15 &cPrestigio",
+                        "&7x30 &eCreditos",
+                        "",
+                        cosa
+                ).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
+                .build();
+    }
+
 
 
 

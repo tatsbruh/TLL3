@@ -6,6 +6,8 @@ import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Lists.GUIs.HunterJournal;
+import com.tll3.Lists.GUIs.staffGUI;
+import com.tll3.Lists.GUIs.statsGUI;
 import com.tll3.Lists.Items;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
@@ -14,6 +16,7 @@ import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.*;
@@ -78,23 +81,13 @@ public class staffCMD extends BaseCommand {
         }
     }
 
-    @Subcommand("give")
-    @CommandCompletion("miracle_fruit|dread_claymore|dread_bow|rev_flesh|rev_bones|rev_powder|rev_cobweb|rev_pearl")
+    @Subcommand("items")
     @CommandPermission("staff.admin")
     @Description("get your items ok its ok")
     public void give(CommandSender sender,String[] args){
-        if (sender instanceof Player p && args.length > 0){
-            switch (args[0].toLowerCase()){
-                case "miracle_fruit" -> Items.addInventory(p,Items.miracleFruit());
-                case "dread_claymore" -> Items.addInventory(p,Items.dreadClaymore());
-                case "dread_bow" -> Items.addInventory(p,Items.dreadBow());
-                case "rev_flesh" -> Items.addInventory(p,Items.infestedFlesh());
-                case "rev_bones" -> Items.addInventory(p,Items.infestedBones());
-                case "rev_powder" -> Items.addInventory(p,Items.goldenGunpowder());
-                case "rev_cobweb" -> Items.addInventory(p,Items.silverStrings());
-                case "rev_pearl" -> Items.addInventory(p,Items.revenantPearl());
-                default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un item valido"));
-            }
+        if (sender instanceof Player p){
+            staffGUI.itemsgui(p);
+            p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-2.0F);
         }
     }
 
@@ -179,7 +172,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("debug")
-    @CommandCompletion("timeformat|diary|missions")
+    @CommandCompletion("timeformat|diary|missions|stats")
     @CommandPermission("staff.admin")
     @Description("debugs a ton of shit")
     public void debug(CommandSender sender,String[] args){
@@ -192,6 +185,7 @@ public class staffCMD extends BaseCommand {
                 }
                 case "diary" -> HunterJournal.hunterDiary((Player) sender);
                 case "missions" -> HunterJournal.hunterHuntsXDLOLLMAO((Player) sender);
+                case "stats" -> statsGUI.showstatsupgrade((Player) sender);
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Tienes que ingresar un comando debug valido"));
             }
         }

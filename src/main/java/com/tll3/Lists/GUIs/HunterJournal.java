@@ -55,6 +55,8 @@ public class HunterJournal {
                         "# # . . . . . # #")
                 .addIngredient('#',guiItems.filler2())
                 .addIngredient('R',guiItems.playerheadMission(player))
+                .addIngredient('a',guiItems.day0mission1(player))
+                .addIngredient('b',guiItems.day0mission2(player))
                 .addIngredient('c',guiItems.day0mission3(player))
                 .addIngredient('d',guiItems.day0mission4(player))
                 .addIngredient('e',guiItems.day0mission5(player))

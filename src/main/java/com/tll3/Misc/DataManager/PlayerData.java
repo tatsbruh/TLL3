@@ -97,5 +97,23 @@ public class PlayerData {
     public static void setCredits(Player target,int i){
         Data.setPlayerData(target, "credits", String.valueOf(i));
     }
+    public static int getExtraHealth(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"extrahealth","0"));
+    }
+    public static void setExtraHealth(Player target,int i){
+        Data.setPlayerData(target, "extrahealth", String.valueOf(i));
+    }
+    public static void setUpgrade(Player target,String upgrade,int number){
+        Data.setPlayerData(target, "upgrade_" + upgrade, String.valueOf(number));
+    }
+    public static int getUpgrade(Player target,String upgrade){
+        return Integer.parseInt(Data.getPlayerData(target,"upgrade_" + upgrade,"0"));
+    }
+    public static void setUpgradeCost(Player target,String upgrade,int number){
+        Data.setPlayerData(target, "upgrade_cost" + upgrade, String.valueOf(number));
+    }
+    public static int getUpgradeCost(Player target,String upgrade){
+        return Integer.parseInt(Data.getPlayerData(target,"upgrade_cost" + upgrade,"2"));
+    }
 
 }

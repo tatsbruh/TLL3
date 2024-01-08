@@ -7,10 +7,7 @@ import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
-import com.tll3.Task.EffectDuration;
-import com.tll3.Task.EffectTask;
-import com.tll3.Task.ExposureTask;
-import com.tll3.Task.Scoreboard;
+import com.tll3.Task.*;
 import org.bukkit.*;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.EntityType;
@@ -52,6 +49,7 @@ public class GenericPlayerListeners implements Listener {
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
         new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
+        new ArmorEffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
 
     }
 
