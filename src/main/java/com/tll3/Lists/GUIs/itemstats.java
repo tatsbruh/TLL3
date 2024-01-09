@@ -31,8 +31,8 @@ public class itemstats {
                     setDisplayName("&c❤ Mejoras de vida ❤")
                     .setLore(
                             "&7Cada mejora de vida otorga &8+1 &ccorazon &7extra",
-                            "&6Mejoras: " + PlayerData.getUpgrade(p,"health") + "/10",
-                            "&c&lCosto: " + PlayerData.getUpgradeCost(p,"health")
+                            "&6Mejoras: &7" + PlayerData.getUpgrade(p,"health") + "/10",
+                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"health" + " de prestigio")
                     ).build());
         }
         @Override
@@ -46,7 +46,7 @@ public class itemstats {
                         PlayerData.setPrestige(player,prestige - cost);
                         PlayerData.setUpgrade(player,"health",level + 1);
                         PlayerData.setExtraHealth(player,PlayerData.getExtraHealth(player) + 1);
-                        PlayerData.setUpgradeCost(player,"health",cost * 2);
+                        PlayerData.setUpgradeCost(player,"health",cost + 2);
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,10.0F,2.0F);
                     }else{
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-2.0F);

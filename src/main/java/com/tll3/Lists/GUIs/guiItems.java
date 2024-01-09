@@ -44,8 +44,8 @@ public class guiItems {
                         "&7- Mata 5 Iron Golems &8(" + PlayerData.getObjective(p,"05golems") + "/5)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x2 &cPrestigio",
-                        "&7x5 &eCreditos",
+                        "&7x4 &cPrestigio",
+                        "&7x10 &eCreditos",
                         "",
                         cosa
                 ).build();
@@ -60,11 +60,11 @@ public class guiItems {
                 .setLore(
                         "&6&lObjetivos:",
                         "&7- Mata 20 Guardianes &8(" + PlayerData.getObjective(p,"04guardianes") + "/20)",
-                        "&7- Mata 1 Guardian Anciano &8(" + PlayerData.getObjective(p,"04elderguardian") + "/1)",
+                        "&7- Mata 3 Guardianes Ancianos &8(" + PlayerData.getObjective(p,"04elderguardian") + "/3)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x6 &cPrestigio",
-                        "&7x15 &eCreditos",
+                        "&7x14 &cPrestigio",
+                        "&7x20 &eCreditos",
                         "",
                         cosa
                 ).build();
@@ -81,8 +81,8 @@ public class guiItems {
                         "&7- Mata 1 Warden &8(" + PlayerData.getObjective(p,"03warden") + "/1)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x6 &cPrestigio",
-                        "&7x15 &eCreditos",
+                        "&7x15 &cPrestigio",
+                        "&7x30 &eCreditos",
                         "",
                         cosa
                 ).build();
@@ -99,8 +99,8 @@ public class guiItems {
                         "&7- Mata 5 Withers &8(" + PlayerData.getObjective(p,"02wither") + "/5)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x6 &cPrestigio",
-                        "&7x10 &eCreditos",
+                        "&7x10 &cPrestigio",
+                        "&7x18 &eCreditos",
                         "",
                         cosa
                 ).build();

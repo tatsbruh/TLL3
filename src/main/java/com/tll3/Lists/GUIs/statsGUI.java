@@ -11,8 +11,8 @@ public class statsGUI {
                 .setStructure(
                         "# # # # R # # # #",
                         "# . . . . . . . #",
-                        "# A . . . . . D #",
-                        "# . . B . C . . #",
+                        "# . A . . . D . #",
+                        "# F . B . C . E #",
                         "# . . . . . . . #",
                         "# # # # # # # # #")
                 .addIngredient('#',guiItems.filler2())

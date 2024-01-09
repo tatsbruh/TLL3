@@ -21,7 +21,7 @@ public class MissionListeners implements Listener {
                 if(PlayerData.getObjective(killer,"05golems") < 5){
                    PlayerData.setObjectiveCount(killer,"05golems",PlayerData.getObjective(killer,"05golems") + 1);
                 }else{
-                    missionCompleted(killer,"#ff954fViolencia Innecesaria","05_violencia",5,1);
+                    missionCompleted(killer,"#ff954fViolencia Innecesaria","05_violencia",10,4);
                 }
             }
             if(entity.getType() == EntityType.GUARDIAN && killer != null && PlayerData.getMission(killer,"04_atlantis") != 1){
@@ -29,15 +29,15 @@ public class MissionListeners implements Listener {
                     PlayerData.setObjectiveCount(killer,"04guardianes",PlayerData.getObjective(killer,"04guardianes") + 1);
                 }
                 if(PlayerData.getObjective(killer,"04guardianes") >= 20 && PlayerData.getObjective(killer,"04elderguardian") >= 1){
-                    missionCompleted(killer,"#69c5ffAnti-Atlantis","04_atlantis",10,5);
+                    missionCompleted(killer,"#69c5ffAnti-Atlantis","04_atlantis",20,14);
                 }
             }
             if(entity.getType() == EntityType.ELDER_GUARDIAN && killer != null && PlayerData.getMission(killer,"04_atlantis") != 1){
-                if(PlayerData.getObjective(killer,"04elderguardian") == 0){
+                if(PlayerData.getObjective(killer,"04elderguardian") < 3){
                     PlayerData.setObjectiveCount(killer,"04elderguardian",PlayerData.getObjective(killer,"04elderguardian") + 1);
                 }
-                if(PlayerData.getObjective(killer,"04guardianes") >= 20 && PlayerData.getObjective(killer,"04elderguardian") >= 1){
-                    missionCompleted(killer,"#69c5ffAnti-Atlantis","04_atlantis",10,5);
+                if(PlayerData.getObjective(killer,"04guardianes") >= 20 && PlayerData.getObjective(killer,"04elderguardian") >= 3){
+                    missionCompleted(killer,"#69c5ffAnti-Atlantis","04_atlantis",20,14);
                 }
             }
             if(entity.getType() == EntityType.WARDEN && killer != null && PlayerData.getMission(killer,"03_warden") != 1){
@@ -45,7 +45,7 @@ public class MissionListeners implements Listener {
                     PlayerData.setObjectiveCount(killer,"03warden",PlayerData.getObjective(killer,"03warden") + 1);
                 }
                 if(PlayerData.getObjective(killer,"03warden") >= 1){
-                    missionCompleted(killer,"#004736Aprende y Escucha","03_warden",10,5);
+                    missionCompleted(killer,"#004736Aprende y Escucha","03_warden",30,15);
                 }
             }
             if(entity.getType() == EntityType.WITHER && killer != null && PlayerData.getMission(killer,"02_wither") != 1){
