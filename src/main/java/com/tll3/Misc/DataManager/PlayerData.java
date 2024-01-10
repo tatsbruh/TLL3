@@ -103,6 +103,12 @@ public class PlayerData {
     public static void setExtraHealth(Player target,int i){
         Data.setPlayerData(target, "extrahealth", String.valueOf(i));
     }
+    public static int getSigile(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"sigilo","0"));
+    }
+    public static void setSigile(Player target,int i){
+        Data.setPlayerData(target, "sigilo", String.valueOf(i));
+    }
     public static void setUpgrade(Player target,String upgrade,int number){
         Data.setPlayerData(target, "upgrade_" + upgrade, String.valueOf(number));
     }

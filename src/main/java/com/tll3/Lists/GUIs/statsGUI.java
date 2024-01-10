@@ -10,13 +10,16 @@ public class statsGUI {
         var gui = Gui.normal()
                 .setStructure(
                         "# # # # R # # # #",
-                        "# . . . . . . . #",
-                        "# . A . . . D . #",
-                        "# F . B . C . E #",
-                        "# . . . . . . . #",
+                        "# # # # # # # # #",
+                        "# # A . C . E # #",
+                        "# # . B . D . # #",
+                        "# # # # # # # # #",
                         "# # # # # # # # #")
                 .addIngredient('#',guiItems.filler2())
                 .addIngredient('A', new itemstats.healthUpgrades(player))
+                .addIngredient('B',new itemstats.damageupgrades(player))
+                .addIngredient('D',new itemstats.defenseupgrade(player))
+                .addIngredient('E',new itemstats.speedupgrades(player))
                 .build();
         var window = Window.single()
                 .setViewer(player)

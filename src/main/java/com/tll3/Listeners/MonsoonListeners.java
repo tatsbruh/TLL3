@@ -5,10 +5,7 @@ import com.tll3.Misc.Files.ConfigData;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.Monsoon;
 import com.tll3.TLL3;
-import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -21,6 +18,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.world.WorldInitEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.Objects;
 
@@ -43,6 +42,17 @@ public class MonsoonListeners implements Listener {
     @EventHandler
     public void monstartE(Monsoon.StartMonsoon e){
         GenericUtils.setMonsoonActive("true");
+        World world = GenericUtils.getWorld();
+        int stormDurationInTicks = 18000; // 15 minutos en ticks
+        int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
+        String setThunder = "weather thunder " + storm_time;
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+        world.strikeLightning(new Location(world,0,0,0));
+        for (Player sp : Bukkit.getOnlinePlayers()) {
+            sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
+            sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
+            sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"),ChatUtils.format("#4d52d1☂ Duracion: " + GenericUtils.doTimeFormat(storm_time) + " ☂"),0,80,20);
+        }
         createBossBar();
         Bukkit.getOnlinePlayers().forEach(player -> {
             bossBar.setVisible(true);

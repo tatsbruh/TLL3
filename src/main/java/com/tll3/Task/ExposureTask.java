@@ -4,10 +4,14 @@ import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
 import org.bukkit.GameMode;
 import org.bukkit.entity.*;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class ExposureTask extends BukkitRunnable {
     private final Player player;
+
+    int darkness = 0;
+    int glowing = 0;
     public ExposureTask(Player p){
         this.player = p;
     }
@@ -45,6 +49,27 @@ public class ExposureTask extends BukkitRunnable {
                 }
             });
         }
+
+        if(player.getGameMode() == GameMode.SURVIVAL){
+            byte luz = player.getLocation().subtract(0,1,0).getBlock().getState().getLightLevel();
+            if(luz <= 7){
+                if(darkness < 200){
+                    darkness++;
+                }else{
+                    darkness = 0;
+                    PlayerData.setExposure(player,PlayerData.getExposure(player) + 1);
+                }
+            }
+            if(player.hasPotionEffect(PotionEffectType.GLOWING)){
+                if(glowing < 50){
+                    glowing++;
+                }else{
+                    glowing = 0;
+                    PlayerData.setExposure(player,PlayerData.getExposure(player) + 1);
+                }
+            }
+        }
+
     }
 
 

@@ -12,11 +12,13 @@ import com.tll3.Lists.Items;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
+import com.tll3.Misc.Monsoon;
 import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.*;
@@ -88,6 +90,18 @@ public class staffCMD extends BaseCommand {
         if (sender instanceof Player p){
             staffGUI.itemsgui(p);
             p.playSound(p.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-2.0F);
+        }
+    }
+
+    @Subcommand("monsoon")
+    @CommandPermission("staff.admin")
+    @Description("starts or ends a monsoon fuck tg")
+    public void monsoon(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            switch (args[0].toLowerCase()){
+                case "start" -> Bukkit.getPluginManager().callEvent(new Monsoon.StartMonsoon(Monsoon.StartMonsoon.Cause.COMMAND));
+                case "stop" -> Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.COMMAND));
+            }
         }
     }
 
@@ -172,7 +186,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("debug")
-    @CommandCompletion("timeformat|diary|missions|stats")
+    @CommandCompletion("timeformat|diary|missions|stats|get_stats|reset_stats_to_default")
     @CommandPermission("staff.admin")
     @Description("debugs a ton of shit")
     public void debug(CommandSender sender,String[] args){
@@ -186,6 +200,17 @@ public class staffCMD extends BaseCommand {
                 case "diary" -> HunterJournal.hunterDiary((Player) sender);
                 case "missions" -> HunterJournal.hunterHuntsXDLOLLMAO((Player) sender);
                 case "stats" -> statsGUI.showstatsupgrade((Player) sender);
+                case "get_stats" ->{
+                    p.sendMessage("Daño " + p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).getBaseValue());
+                    p.sendMessage("Armor " + p.getAttribute(Attribute.GENERIC_ARMOR).getBaseValue());
+                    p.sendMessage("Speed " + p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue());
+                }
+                case "reset_stats_to_default" ->{
+                    PlayerData.setExtraHealth(p,0);
+                    p.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(1.0);
+                    p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0.0);
+                    p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.10000000149011612);
+                }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Tienes que ingresar un comando debug valido"));
             }
         }

@@ -30,8 +30,8 @@ public class PlayerDeathListeners implements Listener {
             }else{
                 doDeathAnimation2(p);
             }
-            sp.sendMessage(ChatUtils.format("#63513aEl jugador &6&l" + p.getName() + " #63513aa perdido su ultima vida y su alma desata la furia de la Monsoon!"));
-            sp.sendMessage(ChatUtils.format("&8Coordenadas: X - " + p.getLocation().getBlockX() + " | Y - " + p.getLocation().getBlockY() + " | Z - " + p.getLocation().getBlockZ()));
+            sp.sendMessage(ChatUtils.format("#63513aEl jugador &6&l" + p.getName() + " #63513aha sucumbido ante el desafió y ha perdido su ultima vida!"));
+            sp.sendMessage(ChatUtils.format("&8Coordenadas: X - " + p.getLocation().getBlockX() + " | Y - " + p.getLocation().getBlockY() + " | Z - " + p.getLocation().getBlockZ() + "("+ dimension(p.getLocation()) + ")"));
             sp.sendMessage(getDeathMessages(p));
         }
 
@@ -52,20 +52,8 @@ public class PlayerDeathListeners implements Listener {
                         World world = GenericUtils.getWorld();
                         int time = (int) world.getTime();
                         int targetTime = 18000;
-
                         if (time == targetTime) {
-                            int stormDurationInTicks = 18000; // 15 minutos en ticks
-                            int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
-                            String setThunder = "weather thunder " + storm_time;
-                            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
-                            world.strikeLightning(new Location(world,0,0,0));
-                            for (Player sp : Bukkit.getOnlinePlayers()) {
-                                sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
-                                sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
-                                sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"),ChatUtils.format("#4d52d1☂ Duracion: " + GenericUtils.doTimeFormat(storm_time) + " ☂"),0,80,0);
-                            }
                             Bukkit.getPluginManager().callEvent(new Monsoon.StartMonsoon(Monsoon.StartMonsoon.Cause.DEATH));
-
                             cancel();
                         }else{
                             world.setTime(time + 200);
@@ -75,7 +63,7 @@ public class PlayerDeathListeners implements Listener {
             }
 
 
-        }.runTaskLater(TLL3.getInstance(), 120L);
+        }.runTaskLater(TLL3.getInstance(), 180L);
 
 
 
@@ -83,21 +71,18 @@ public class PlayerDeathListeners implements Listener {
 
 
     public void doDeathAnimation1(Player p) {
-            new BukkitRunnable() {
-                int i = 1;
-                String title = "\\uE" + i + "\\";
-
-                @Override
-                public void run() {
-                    i++;
-                    title = "\\uE" + i + "\\";
-                    p.sendTitle(title, "", 0, 80, 0);
-                    if (i > 56) {
-                        cancel();
-                    }
+        new BukkitRunnable() {
+            int count = 0;
+            @Override
+            public void run() {
+                if (count <= 92) {
+                    sendUnicodeTitle(Bukkit.getOnlinePlayers(), count++);
+                } else {
+                    cancel();
                 }
-            }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
-            p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN,10.0F,-1.0F);//Placeholder
+            }
+        }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
+        p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_WITHER_SPAWN,10.0F,-1.0F);//Placeholder
     }
     public void doDeathAnimation2(Player p) {
         new BukkitRunnable() {
@@ -140,10 +125,28 @@ public class PlayerDeathListeners implements Listener {
     public static String getDeathMessages(Player p){
         String s;
         switch (p.getName()){
-            case "tatsushiri" -> s = ChatUtils.format("&8" + p.getName() + ": r");
-            default -> s = ChatUtils.format("&8Rest in peace, " + p.getName());
+            case "tatsushiri" -> s = ChatUtils.format("&8r.");
+            default -> s = ChatUtils.format("&8Descansa en paz.");
         }
         return s;
     }
 
+
+    private void sendUnicodeTitle(Iterable<? extends Player> players, int count) {
+        String titleText = Character.toString((char) ('\uE000' + count));
+        for (Player player : players) {
+            player.sendTitle("", titleText, 0, 80, 20);
+        }
+    }
+    public static String dimension(Location location){
+        return switch (location.getWorld().getName()) {
+            case "world" -> "Overworld";
+            case "world_nether" -> "Nether";
+            case "world_the_end" -> "The End";
+            case "world_wasteyard" -> "Wasteyard";
+            case "world_cosmic" -> "Oceano Cosmico";
+            case "world_warzone" -> "Zona de Guerra";
+            default -> "Desconocido";
+        };
+    }
 }

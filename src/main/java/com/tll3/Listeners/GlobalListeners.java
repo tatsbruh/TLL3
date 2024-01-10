@@ -104,7 +104,7 @@ public class GlobalListeners implements Listener {
             }
             if(entity instanceof Player){
                 switch (reason){
-                    case LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 5);
+                    case LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 8);
                     case FIRE,FIRE_TICK -> e.setDamage(e.getDamage() * 3);
                 }
             }
