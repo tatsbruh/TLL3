@@ -73,7 +73,9 @@ public class EntityNaturalSpawn implements Listener {
                 if(loc.getWorld().getEnvironment() == World.Environment.NORMAL){
                 if (doRandomChance(1)) {
                     e.setCancelled(true);
-                    Entities.enrIG((IronGolem) Entities.spawnMob(loc, EntityType.IRON_GOLEM));
+                    IronGolem ironGolem =(IronGolem)  Entities.spawnMob(loc, EntityType.IRON_GOLEM);
+                    Entities.enrIG(ironGolem);
+                    setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
                 }
                 }
                 if(loc.getWorld().getEnvironment() == World.Environment.NETHER){
@@ -352,10 +354,8 @@ public class EntityNaturalSpawn implements Listener {
             int chance = random.nextInt(2);
             switch (chance) {
                 case 0 -> Entities.zNinka(z);
-                case 1 -> {
-                    Entities.zArqueo(z);
-                    new ArqBlockBreak(z).runTaskTimer(TLL3.getInstance(), 20L, 35L);
-                }
+                case 1 -> Entities.zArqueo(z);
+
             }
         }
     }

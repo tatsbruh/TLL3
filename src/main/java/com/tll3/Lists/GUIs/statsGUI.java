@@ -18,6 +18,7 @@ public class statsGUI {
                 .addIngredient('#',guiItems.filler2())
                 .addIngredient('A', new itemstats.healthUpgrades(player))
                 .addIngredient('B',new itemstats.damageupgrades(player))
+                .addIngredient('C',new itemstats.stealthupgrade(player))
                 .addIngredient('D',new itemstats.defenseupgrade(player))
                 .addIngredient('E',new itemstats.speedupgrades(player))
                 .build();

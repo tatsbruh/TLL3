@@ -202,6 +202,8 @@ public class MissionListeners implements Listener {
                 }
             }
             //Sin Piedad fin
+        }else if(getDay() >= 7 && getDay() < 14){
+
         }
     }
 

@@ -5,6 +5,7 @@ import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
+import com.tll3.Task.Mobs.ArqBlockBreak;
 import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
@@ -139,6 +140,7 @@ public class Entities {
         z.setAdult();
         z.setShouldBurnInDay(false);
         setIdentifierString(z,"dead_arq");
+        new ArqBlockBreak(z).runTaskTimer(TLL3.getInstance(), 20L, 35L);
     }
     public static void blackRev(Spider s){
         setName(s,"&0Black Tarantula");

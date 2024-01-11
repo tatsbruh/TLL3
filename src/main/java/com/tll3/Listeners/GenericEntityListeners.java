@@ -344,12 +344,13 @@ public class GenericEntityListeners implements Listener {
                 }
             }
             if(Data.has(a,"rev_explosion",PersistentDataType.STRING)){
-                proj.remove();
                 if (hen != null) {
-                    hen.getLocation().getWorld().createExplosion((Entity) source,4,false,true);
+                    hen.getLocation().createExplosion((Entity) source,4,false,true);
+                    proj.remove();
                 }
                 if (hbl != null) {
-                    hbl.getLocation().getWorld().createExplosion((Entity) source,4,false,true);
+                    hbl.getLocation().createExplosion((Entity) source,4,false,true);
+                    proj.remove();
                 }
             }
             if(Data.has(a,"dread",PersistentDataType.STRING)){

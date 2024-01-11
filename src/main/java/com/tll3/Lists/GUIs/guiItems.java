@@ -32,6 +32,7 @@ public class guiItems {
                 ).build();
     }
 
+    //Misiones del dia 0 - dia 6
     public static ItemStack day0mission5(Player p){
         var cosa = ChatUtils.format("&c&lNo Completado");
         if(PlayerData.getMission(p,"05_violencia") >= 1){
@@ -142,7 +143,109 @@ public class guiItems {
                 .build();
     }
 
+    //Fin de misiones del dia 0 - 6
 
+
+    //Misiones del dia 7 - 13
+    public static ItemStack day7mission1(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"11_rol") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.BOW)
+                .setDisplayName("#474747Juegos de Rol")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 5 Wither Swordsman &8(" + PlayerData.getObjective(p,"11_sword") + "/5)",
+                        "&7- Mata 5 Wither Juggernauts &8(" + PlayerData.getObjective(p,"11_jugger") + "/5)",
+                        "&7- Mata 5 Wither Archers &8(" + PlayerData.getObjective(p,"11_archer") + "/5)",
+                        "&7- Mata 5 Wither Mages &8(" + PlayerData.getObjective(p,"11_mage") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x14 &cPrestigio",
+                        "&7x25 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day7mission2(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"12_demon") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.NETHERITE_SWORD)
+                .setDisplayName("#8f0a00Caza de Demonios")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 10 Revenant Zombies &8(" + PlayerData.getObjective(p,"12_revzo") + "/10)",
+                        "&7- Mata 10 Revenant Skeleton &8(" + PlayerData.getObjective(p,"12_revsk") + "/10)",
+                        "&7- Mata 10 Revenant Spiders &8(" + PlayerData.getObjective(p,"12_revsp") + "/10)",
+                        "&7- Mata 10 Revenant Creepers &8(" + PlayerData.getObjective(p,"12_revcr") + "/10)",
+                        "&7- Mata 10 Revenant Enderman &8(" + PlayerData.getObjective(p,"12_reven") + "/10)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x20 &cPrestigio",
+                        "&7x40 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day7mission3(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"13_plaga") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.FERMENTED_SPIDER_EYE)
+                .setDisplayName("#17c200Invasion de Plagas")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 10 Termitas &8(" + PlayerData.getObjective(p,"13_term") + "/10)",
+                        "&7- Mata 10 Termitas de Colonia &8(" + PlayerData.getObjective(p,"13_colterm") + "/10)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x16 &cPrestigio",
+                        "&7x28 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day7mission4(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"14_phantom") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.PHANTOM_MEMBRANE)
+                .setDisplayName("#37456eAcechadores Nocturnos")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 5 Dusk Phantoms &8(" + PlayerData.getObjective(p,"14_dusk") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x12 &cPrestigio",
+                        "&7x18 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day7mission5(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"15_cheat") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.IRON_AXE)
+                .setDisplayName("#ed572dAnti-cheat")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 10 Zombis Arqueólogos &8(" + PlayerData.getObjective(p,"15_arq") + "/10)",
+                        "&7- Mata 10 Razorbacks &8(" + PlayerData.getObjective(p,"15_raz") + "/10)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x14 &cPrestigio",
+                        "&7x22 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
 
 
 

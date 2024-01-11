@@ -158,7 +158,7 @@ public class itemstats {
         }
         @Override
         public ItemProvider getItemProvider() {
-            return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.IRON_CHESTPLATE).
+            return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.FEATHER).
                     setDisplayName("&c☁ Mejoras de velocidad ☁")
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lVelocidad",
@@ -202,7 +202,7 @@ public class itemstats {
         @Override
         public ItemProvider getItemProvider() {
             return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.ENDER_EYE).
-                    setDisplayName("&c☁ Mejoras de velocidad ☁")
+                    setDisplayName("&c⊙ Mejoras de sigilo ⊙")
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lSigilo",
                             "&7El Sigilo te da beneficios para evitar los efectos de la Exposicion",
