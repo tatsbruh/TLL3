@@ -156,10 +156,10 @@ public class guiItems {
                 .setDisplayName("#474747Juegos de Rol")
                 .setLore(
                         "&6&lObjetivos:",
-                        "&7- Mata 5 Wither Swordsman &8(" + PlayerData.getObjective(p,"11_sword") + "/5)",
-                        "&7- Mata 5 Wither Juggernauts &8(" + PlayerData.getObjective(p,"11_jugger") + "/5)",
-                        "&7- Mata 5 Wither Archers &8(" + PlayerData.getObjective(p,"11_archer") + "/5)",
-                        "&7- Mata 5 Wither Mages &8(" + PlayerData.getObjective(p,"11_mage") + "/5)",
+                        "&7- Mata 5 Wither Swordsman &8(" + PlayerData.getObjective(p,"11sword") + "/5)",
+                        "&7- Mata 5 Wither Juggernauts &8(" + PlayerData.getObjective(p,"11jugger") + "/5)",
+                        "&7- Mata 5 Wither Archers &8(" + PlayerData.getObjective(p,"11archer") + "/5)",
+                        "&7- Mata 5 Wither Mages &8(" + PlayerData.getObjective(p,"11mage") + "/5)",
                         "",
                         "&6&lRecompensas:",
                         "&7x14 &cPrestigio",
@@ -175,13 +175,14 @@ public class guiItems {
         }
         return new ItemBuilder(Material.NETHERITE_SWORD)
                 .setDisplayName("#8f0a00Caza de Demonios")
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .setLore(
                         "&6&lObjetivos:",
-                        "&7- Mata 10 Revenant Zombies &8(" + PlayerData.getObjective(p,"12_revzo") + "/10)",
-                        "&7- Mata 10 Revenant Skeleton &8(" + PlayerData.getObjective(p,"12_revsk") + "/10)",
-                        "&7- Mata 10 Revenant Spiders &8(" + PlayerData.getObjective(p,"12_revsp") + "/10)",
-                        "&7- Mata 10 Revenant Creepers &8(" + PlayerData.getObjective(p,"12_revcr") + "/10)",
-                        "&7- Mata 10 Revenant Enderman &8(" + PlayerData.getObjective(p,"12_reven") + "/10)",
+                        "&7- Mata 10 Revenant Zombies &8(" + PlayerData.getObjective(p,"12revzo") + "/10)",
+                        "&7- Mata 10 Revenant Skeleton &8(" + PlayerData.getObjective(p,"12revsk") + "/10)",
+                        "&7- Mata 10 Revenant Spiders &8(" + PlayerData.getObjective(p,"12revsp") + "/10)",
+                        "&7- Mata 10 Revenant Creepers &8(" + PlayerData.getObjective(p,"12revcr") + "/10)",
+                        "&7- Mata 10 Revenant Enderman &8(" + PlayerData.getObjective(p,"12reven") + "/10)",
                         "",
                         "&6&lRecompensas:",
                         "&7x20 &cPrestigio",
@@ -199,8 +200,8 @@ public class guiItems {
                 .setDisplayName("#17c200Invasion de Plagas")
                 .setLore(
                         "&6&lObjetivos:",
-                        "&7- Mata 10 Termitas &8(" + PlayerData.getObjective(p,"13_term") + "/10)",
-                        "&7- Mata 10 Termitas de Colonia &8(" + PlayerData.getObjective(p,"13_colterm") + "/10)",
+                        "&7- Mata 10 Termitas &8(" + PlayerData.getObjective(p,"13term") + "/10)",
+                        "&7- Mata 10 Termitas de Colonia &8(" + PlayerData.getObjective(p,"13colterm") + "/10)",
                         "",
                         "&6&lRecompensas:",
                         "&7x16 &cPrestigio",
@@ -218,7 +219,7 @@ public class guiItems {
                 .setDisplayName("#37456eAcechadores Nocturnos")
                 .setLore(
                         "&6&lObjetivos:",
-                        "&7- Mata 5 Dusk Phantoms &8(" + PlayerData.getObjective(p,"14_dusk") + "/5)",
+                        "&7- Mata 5 Dusk Phantoms &8(" + PlayerData.getObjective(p,"14dusk") + "/5)",
                         "",
                         "&6&lRecompensas:",
                         "&7x12 &cPrestigio",
@@ -234,10 +235,11 @@ public class guiItems {
         }
         return new ItemBuilder(Material.IRON_AXE)
                 .setDisplayName("#ed572dAnti-cheat")
+                .addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                 .setLore(
                         "&6&lObjetivos:",
-                        "&7- Mata 10 Zombis Arqueólogos &8(" + PlayerData.getObjective(p,"15_arq") + "/10)",
-                        "&7- Mata 10 Razorbacks &8(" + PlayerData.getObjective(p,"15_raz") + "/10)",
+                        "&7- Mata 10 Zombis Arqueólogos &8(" + PlayerData.getObjective(p,"15arq") + "/10)",
+                        "&7- Mata 10 Razorbacks &8(" + PlayerData.getObjective(p,"15raz") + "/10)",
                         "",
                         "&6&lRecompensas:",
                         "&7x14 &cPrestigio",

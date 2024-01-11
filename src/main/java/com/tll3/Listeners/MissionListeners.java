@@ -1,6 +1,7 @@
 package com.tll3.Listeners;
 
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.DataManager.PlayerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -8,6 +9,8 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.persistence.PersistentDataType;
+
 import static com.tll3.Misc.GenericUtils.*;
 
 public class MissionListeners implements Listener {
@@ -204,6 +207,149 @@ public class MissionListeners implements Listener {
             //Sin Piedad fin
         }else if(getDay() >= 7 && getDay() < 14){
 
+            if(entity.getType() == EntityType.ZOMBIE && killer != null){
+                if(PlayerData.getMission(killer,"12_demon") != 1){
+                    if(Data.has(entity,"revenantzombie", PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"12revzo") < 10) {
+                            PlayerData.setObjectiveCount(killer, "12revzo", PlayerData.getObjective(killer, "12revzo") + 1);
+                        }
+                    }
+                    if(checkDemonDeath(killer)){
+                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
+                    }
+                }
+                if(PlayerData.getMission(killer,"15_cheat") != 1){
+                    if(Data.has(entity,"dead_arq",PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"15arq") < 10) {
+                            PlayerData.setObjectiveCount(killer, "15arq", PlayerData.getObjective(killer, "15arq") + 1);
+                        }
+                        if(PlayerData.getObjective(killer,"15arq") >= 10 && PlayerData.getObjective(killer,"15raz") >= 10){
+                            missionCompleted(killer,"#ed572dAnti-cheat","15_cheat",22,14);
+                        }
+                    }
+                }
+            }
+            if(entity.getType() == EntityType.SKELETON && killer != null){
+                if(PlayerData.getMission(killer,"12_demon") != 1){
+                    if(Data.has(entity,"revenantskeleton", PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"12revsk") < 10) {
+                            PlayerData.setObjectiveCount(killer, "12revsk", PlayerData.getObjective(killer, "12revsk") + 1);
+                        }
+                    }
+                    if(checkDemonDeath(killer)){
+                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
+                    }
+                }
+                if(PlayerData.getMission(killer,"15_cheat") != 1){
+                    if(Data.has(entity,"razorback",PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"15raz") < 10) {
+                            PlayerData.setObjectiveCount(killer, "15raz", PlayerData.getObjective(killer, "15raz") + 1);
+                        }
+                        if(PlayerData.getObjective(killer,"15arq") >= 10 && PlayerData.getObjective(killer,"15raz") >= 10){
+                            missionCompleted(killer,"#ed572dAnti-cheat","15_cheat",22,14);
+                        }
+                    }
+                }
+            }
+            if(entity.getType() == EntityType.SPIDER && killer != null){
+                if(PlayerData.getMission(killer,"12_demon") != 1){
+                    if(Data.has(entity,"revenantspider", PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"12revsp") < 10) {
+                            PlayerData.setObjectiveCount(killer, "12revsp", PlayerData.getObjective(killer, "12revsp") + 1);
+                        }
+                    }
+                    if(checkDemonDeath(killer)){
+                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
+                    }
+                }
+            }
+            if(entity.getType() == EntityType.CREEPER && killer != null){
+                if(PlayerData.getMission(killer,"12_demon") != 1){
+                    if(Data.has(entity,"revenantcreeper", PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"12revcr") < 10) {
+                            PlayerData.setObjectiveCount(killer, "12revcr", PlayerData.getObjective(killer, "12revcr") + 1);
+                        }
+                    }
+                    if(checkDemonDeath(killer)){
+                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
+                    }
+                }
+            }
+            if(entity.getType() == EntityType.ENDERMAN && killer != null){
+                if(PlayerData.getMission(killer,"12_demon") != 1){
+                    if(Data.has(entity,"revenantenderman", PersistentDataType.STRING)){
+                        if(PlayerData.getObjective(killer,"12reven") < 10) {
+                            PlayerData.setObjectiveCount(killer, "12reven", PlayerData.getObjective(killer, "12reven") + 1);
+                        }
+                    }
+                    if(checkDemonDeath(killer)){
+                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
+                    }
+                }
+            }
+
+
+            if(entity.getType() == EntityType.WITHER_SKELETON && killer != null && PlayerData.getMission(killer,"11_rol") != 1) {
+                if(Data.has(entity,"w_swordsman", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"11sword") < 5) {
+                        PlayerData.setObjectiveCount(killer, "11sword", PlayerData.getObjective(killer, "11sword") + 1);
+                    }
+                    if(checkRPG(killer)){
+                        missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
+                    }
+                }
+                if(Data.has(entity,"w_archer", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"11archer") < 5) {
+                        PlayerData.setObjectiveCount(killer, "11archer", PlayerData.getObjective(killer, "11archer") + 1);
+                    }
+                    if(checkRPG(killer)){
+                        missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
+                    }
+                }
+                if(Data.has(entity,"w_tank", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"11jugger") < 5) {
+                        PlayerData.setObjectiveCount(killer, "11jugger", PlayerData.getObjective(killer, "11jugger") + 1);
+                    }
+                    if(checkRPG(killer)){
+                        missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
+                    }
+                }
+                if(Data.has(entity,"w_mage", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"11mage") < 5) {
+                        PlayerData.setObjectiveCount(killer, "11mage", PlayerData.getObjective(killer, "11mage") + 1);
+                    }
+                    if(checkRPG(killer)){
+                        missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
+                    }
+                }
+            }
+            if(entity.getType() == EntityType.CAVE_SPIDER && killer != null && PlayerData.getMission(killer,"13_plaga") != 1) {
+                if(Data.has(entity,"termite", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"13term") < 10) {
+                        PlayerData.setObjectiveCount(killer, "13term", PlayerData.getObjective(killer, "13term") + 1);
+                    }
+                    if(PlayerData.getObjective(killer,"13term") >= 10 && PlayerData.getObjective(killer,"13colterm") >= 10){
+                        missionCompleted(killer,"#17c200Invasion de Plagas","13_plaga",28,16);
+                    }
+                }
+                if(Data.has(entity,"termite_ex", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"13colterm") < 10) {
+                        PlayerData.setObjectiveCount(killer, "13colterm", PlayerData.getObjective(killer, "13colterm") + 1);
+                    }
+                    if(PlayerData.getObjective(killer,"13term") >= 10 && PlayerData.getObjective(killer,"13colterm") >= 10){
+                        missionCompleted(killer,"#17c200Invasion de Plagas","13_plaga",28,16);
+                    }
+                }
+            }
+            if(entity.getType() == EntityType.PHANTOM && killer != null && PlayerData.getMission(killer,"14_phantom") != 1) {
+                if(Data.has(entity,"duskphantom", PersistentDataType.STRING)){
+                    if(PlayerData.getObjective(killer,"14dusk") < 5) {
+                        PlayerData.setObjectiveCount(killer, "14dusk", PlayerData.getObjective(killer, "14dusk") + 1);
+                    }else{
+                        missionCompleted(killer,"#37456eAcechadores Nocturnos","14_phantom",18,12);
+                    }
+                }
+            }
         }
     }
 
@@ -243,6 +389,24 @@ public class MissionListeners implements Listener {
 
         return false;
     }
+    public static boolean checkRPG(Player p){
+        if(PlayerData.getObjective(p,"11sword") >= 5 &&
+                PlayerData.getObjective(p,"11jugger") >= 5 &&
+                PlayerData.getObjective(p,"11archer") >= 5 &&
+                PlayerData.getObjective(p,"11mage") >= 5
+        )return true;
 
+        return false;
+    }
+    public static boolean checkDemonDeath(Player p){
+        if(PlayerData.getObjective(p,"12revzo") >= 10 &&
+                PlayerData.getObjective(p,"12revsk") >= 10 &&
+                PlayerData.getObjective(p,"12revsp") >= 10 &&
+                PlayerData.getObjective(p,"12revcr") >= 10 &&
+                PlayerData.getObjective(p,"12reven") >= 10
+        )return true;
+
+        return false;
+    }
 
 }

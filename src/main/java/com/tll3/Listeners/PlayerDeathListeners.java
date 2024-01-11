@@ -31,7 +31,7 @@ public class PlayerDeathListeners implements Listener {
                 doDeathAnimation2(p);
             }
             sp.sendMessage(ChatUtils.format("#63513aEl jugador &6&l" + p.getName() + " #63513aha sucumbido ante el desafió y ha perdido su ultima vida!"));
-            sp.sendMessage(ChatUtils.format("&8Coordenadas: X - " + p.getLocation().getBlockX() + " | Y - " + p.getLocation().getBlockY() + " | Z - " + p.getLocation().getBlockZ() + "("+ dimension(p.getLocation()) + ")"));
+            sp.sendMessage(ChatUtils.format("&8Coordenadas: X - " + p.getLocation().getBlockX() + " | Y - " + p.getLocation().getBlockY() + " | Z - " + p.getLocation().getBlockZ() + " ("+ dimension(p.getLocation()) + ")"));
             sp.sendMessage(getDeathMessages(p));
         }
 
