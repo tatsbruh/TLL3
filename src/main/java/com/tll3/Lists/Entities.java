@@ -310,16 +310,16 @@ public class Entities {
 
     //Wasteyard Mobs
     public static void soulVg(Ghast s){
-        setName(s,"#636363Brimstone Vagrant");
-        setMobHealth(s,55);
+        setName(s,"#636363Wandering Vagrant");
+        setMobHealth(s,25);
         setIdentifierString(s,"soulvag");
     }
     public static void scBrute(PiglinBrute c){
-        setName(c,"#a84738Scorchbeast");
+        setName(c,"#a84738Scorched Beast");
         c.setImmuneToZombification(true);
-        setMobHealth(c,75);
-        setMainHand(c,new ItemBuilder(Material.NETHERITE_AXE).addEnchant(Enchantment.DAMAGE_ALL,9).addEnchant(Enchantment.FIRE_ASPECT,4).setUnbreakable(true).build());
-        addPotionEffect(c,PotionEffectType.SPEED,0);
+        setMobHealth(c,55);
+        setMainHand(c,new ItemBuilder(Material.NETHERITE_AXE).setUnbreakable(true).build());
+        addPotionEffect(c,PotionEffectType.SPEED,1);
         setIdentifierString(c,"scorchbeast");
     }
     public static void rustwalker(Creeper c){
@@ -328,7 +328,7 @@ public class Entities {
         c.setPowered(true);
         c.setMaxFuseTicks(25);
         c.setFuseTicks(25);
-        c.setExplosionRadius(10);
+        c.setExplosionRadius(5);
         addPotionEffect(c,PotionEffectType.SPEED,0);
         setIdentifierString(c,"rustwalker");
     }
@@ -342,9 +342,9 @@ public class Entities {
         setIdentifierString(p,"lostscav");
     }
     public static void toxcrawl(MagmaCube s){
-        setName(s,"#2e2e2eToxic Crawler");
-        setMobHealth(s,60);
-        setMobDamage(s,20);
+        setName(s,"#2e2e2eBrimstone Cube");
+        setMobHealth(s,35);
+        setMobDamage(s,12);
         s.setSize(12);
         setIdentifierString(s,"toxiccrawler");
     }

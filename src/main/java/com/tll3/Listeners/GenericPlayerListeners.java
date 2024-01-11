@@ -32,6 +32,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.Objects;
 import java.util.Random;
 
+import static com.tll3.Misc.GenericUtils.getDay;
+
 public class GenericPlayerListeners implements Listener {
 
 
@@ -43,7 +45,7 @@ public class GenericPlayerListeners implements Listener {
 
         var p = e.getPlayer();
         PlayerData.addExposure(p);
-        if(GenericUtils.getDay() >= 7) {
+        if(getDay() >= 7) {
             new ExposureTask(p).runTaskTimer(TLL3.getInstance(), 0L, 1L);
         }
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
@@ -56,7 +58,7 @@ public class GenericPlayerListeners implements Listener {
     @EventHandler
     public void itemduraE(PlayerItemDamageEvent e){
         var player = e.getPlayer();
-        if(GenericUtils.getDay() >= 7){
+        if(getDay() >= 7){
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true") && player.getGameMode() == GameMode.SURVIVAL){
             Location block = player.getWorld().getHighestBlockAt(player.getLocation().clone()).getLocation();
             int highestY = block.getBlockY();
@@ -85,6 +87,7 @@ public class GenericPlayerListeners implements Listener {
             if(p.getInventory().getItemInMainHand().getType() == Material.TOTEM_OF_UNDYING || p.getInventory().getItemInOffHand().getType() == Material.TOTEM_OF_UNDYING){
                 if(e.isCancelled())return;
                 totemEvent(p,e);
+                if(getDay() >= 14)exposureJump(p,PlayerData.getTotemCount(p));
                 new BukkitRunnable(){
                     @Override
                     public void run() {totemEffects(p);}}.runTaskLater(TLL3.getInstance(),1L);
@@ -101,7 +104,8 @@ public class GenericPlayerListeners implements Listener {
                 online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado un Totem de la Inmortalidad &8(Totem #" + totem_c + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
             }
             PlayerData.setTotemCount(p,totem_c + 1);
-            PlayerData.addDataEffect(p,"curse",60,1);
+
+            if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",60,1);
         }
         if(totem_c > 29 && totem_c <= 54){
             int tot_amount = 2;
@@ -121,7 +125,7 @@ public class GenericPlayerListeners implements Listener {
                     online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
                 }
             }else{
-                PlayerData.addDataEffect(p,"curse",80,2);
+                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",80,2);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
@@ -154,7 +158,7 @@ public class GenericPlayerListeners implements Listener {
                     online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
                 }
                 }else{
-                PlayerData.addDataEffect(p,"curse",120,3);
+                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",120,3);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
@@ -195,7 +199,7 @@ public class GenericPlayerListeners implements Listener {
 
                 }
             }else{
-                PlayerData.addDataEffect(p,"curse",145,4);
+                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",145,4);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
@@ -334,4 +338,28 @@ public class GenericPlayerListeners implements Listener {
         }
     }
 
+    public static void exposureJump(Player p,int totem_c){
+        Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
+        if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE)return;
+        int r = GenericUtils.getRandomValue(100);
+        if(r < 20){
+            for(Player online : Bukkit.getOnlinePlayers()){
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl Totem de la Inmortalidad de " + p.getName() + " aplico su &4Pánico en el jugador " + randomplayer.getName() + " &8(80 < + " + r + ")"));
+            }
+            if(totem_c <= 29){
+                PlayerData.addDataEffect(randomplayer,"curse",60,1);
+            }
+            if(totem_c > 29 && totem_c <= 54){
+                PlayerData.addDataEffect(randomplayer,"curse",80,2);
+            }
+            if(totem_c >= 55 && totem_c <= 84){
+                PlayerData.addDataEffect(randomplayer,"curse",120,3);
+            }
+            if(totem_c >= 85){
+                PlayerData.addDataEffect(randomplayer,"curse",145,4);
+            }
+        }else{
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7Tu Totem de la Inmortalidad no aplico el pánico en nadie. (80 > " + r + ")"));
+        }
+    }
 }

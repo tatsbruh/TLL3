@@ -34,7 +34,7 @@ public class CustomParrot extends EntityParrot {
 
     public CustomParrot(World world) {
         super(EntityTypes.au, world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#70503eDustseeker"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#70503eBrimseeker"));
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

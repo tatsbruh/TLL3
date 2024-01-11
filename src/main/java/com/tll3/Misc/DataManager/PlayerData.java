@@ -103,6 +103,12 @@ public class PlayerData {
     public static void setExtraHealth(Player target,int i){
         Data.setPlayerData(target, "extrahealth", String.valueOf(i));
     }
+    public static double getExtraSpeed(Player target){
+        return Double.parseDouble(Data.getPlayerData(target,"extraspeed","0.0"));
+    }
+    public static void setExtraSpeed(Player target,double i){
+        Data.setPlayerData(target, "extraspeed", String.valueOf(i));
+    }
     public static int getSigile(Player target){
         return Integer.parseInt(Data.getPlayerData(target,"sigilo","0"));
     }

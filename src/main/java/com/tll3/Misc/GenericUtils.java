@@ -33,6 +33,7 @@ public class GenericUtils {
 
     private static LocalDate actualDate = LocalDate.now();
     private static LocalDate startDate = LocalDate.parse(ConfigData.getConfig("start_date",""));
+    private static @Getter int maxweatherdur = Integer.parseInt(ConfigData.getConfig("maxweatherdur","0"));
     public static @Getter String monsoon_active = ConfigData.getConfig("monsoon_active","");
 
     public static int getDay(){
@@ -87,6 +88,10 @@ public class GenericUtils {
     public static void setMonsoonActive(String args1){
         monsoon_active = args1;
         ConfigData.setConfig("monsoon_active",args1);
+    }
+    public static void setMaxWeatherDuration(int ticks){
+        maxweatherdur = ticks;
+        ConfigData.setConfig("weathermaxdur", String.valueOf(ticks));
     }
 
 

@@ -31,11 +31,10 @@ public class MonsoonListeners implements Listener {
         if (bossBar == null) {
             bossBar = Bukkit.createBossBar(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
         }
-        int stime = GenericUtils.getWorld().getWeatherDuration();
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
             int updtime = GenericUtils.getWorld().getWeatherDuration();
             bossBar.setTitle(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()));
-            bossBar.setProgress(updtime / stime);
+            bossBar.setProgress((double) updtime / GenericUtils.getMaxweatherdur());
         }, 0L, 20L);
     }
 
@@ -47,12 +46,12 @@ public class MonsoonListeners implements Listener {
         int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
         String setThunder = "weather thunder " + storm_time;
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
-        world.strikeLightning(new Location(world,0,0,0));
         for (Player sp : Bukkit.getOnlinePlayers()) {
             sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
             sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
             sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"),ChatUtils.format("#4d52d1☂ Duracion: " + GenericUtils.doTimeFormat(storm_time) + " ☂"),0,80,20);
         }
+        GenericUtils.setMaxWeatherDuration(storm_time);
         createBossBar();
         Bukkit.getOnlinePlayers().forEach(player -> {
             bossBar.setVisible(true);

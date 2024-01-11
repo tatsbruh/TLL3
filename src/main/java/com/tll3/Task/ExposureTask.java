@@ -52,7 +52,7 @@ public class ExposureTask extends BukkitRunnable {
 
         if(player.getGameMode() == GameMode.SURVIVAL){
             byte luz = player.getLocation().subtract(0,1,0).getBlock().getState().getLightLevel();
-            if(luz <= 7){
+            if(luz <= 0){
                 if(darkness < 200){
                     darkness++;
                 }else{

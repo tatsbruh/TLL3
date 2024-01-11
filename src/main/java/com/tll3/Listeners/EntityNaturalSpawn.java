@@ -30,7 +30,7 @@ import java.util.Random;
 import static com.tll3.Misc.GenericUtils.*;
 
 public class EntityNaturalSpawn implements Listener {
-    public void setCustomMobcap(LivingEntity entity, int maxPerDistance, double multiplier, int distance, int maxPerWorld, boolean withSameName) {
+    public static void setCustomMobcap(LivingEntity entity, int maxPerDistance, double multiplier, int distance, int maxPerWorld, boolean withSameName) {
         ArrayList<LivingEntity> nearbyEntities = new ArrayList<>();
         maxPerDistance *= multiplier;
         maxPerWorld *= multiplier;
@@ -392,6 +392,27 @@ public class EntityNaturalSpawn implements Listener {
             if(lol >= 85){
                 Creeper c = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
                 Entities.rustwalker(c);
+            }
+        }
+    }
+
+
+    public static void summonnewmob(Location loc,CreatureSpawnEvent e){
+        if(getDay() >= 14) {
+            if(getMonsoon_active().equalsIgnoreCase("true")){
+
+            }else{
+            Random random = new Random();
+            int chance = random.nextInt(2);
+            switch (chance) {
+                case 0 -> {
+
+                }
+                case 1 -> {
+
+                }
+
+            }
             }
         }
     }

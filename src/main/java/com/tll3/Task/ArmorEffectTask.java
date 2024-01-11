@@ -16,12 +16,16 @@ public class ArmorEffectTask extends BukkitRunnable {
     @Override
     public void run() {
         double health = 20;
+        double speed = 0.10000000149011612;
         if(getFullSet(p,69)){
-            health += 6;
+            health += 8;
             p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,100,0,true,false,true));
+            p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,100,0,true,false,true));
         }
         health += PlayerData.getExtraHealth(p);
+        speed += PlayerData.getExtraSpeed(p);
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
+        p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
     }
 
 

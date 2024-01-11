@@ -34,7 +34,7 @@ public class itemstats {
                     .setLore(
                             "&7Cada mejora de vida otorga &8+1 &ccorazon &7extra",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"health") + "/10",
-                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"health" + " de prestigio")
+                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"health") + " de prestigio"
                     ).build());
         }
         @Override
@@ -47,7 +47,7 @@ public class itemstats {
                     if(prestige >= cost){
                         PlayerData.setPrestige(player,prestige - cost);
                         PlayerData.setUpgrade(player,"health",level + 1);
-                        PlayerData.setExtraHealth(player,PlayerData.getExtraHealth(player) + 1);
+                        PlayerData.setExtraHealth(player,PlayerData.getExtraHealth(player) + 2);
                         PlayerData.setUpgradeCost(player,"health",cost + 2);
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,10.0F,2.0F);
                     }else{
@@ -76,7 +76,7 @@ public class itemstats {
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &c&lDaño",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"damage") + "/10",
-                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"damage" + " de prestigio")
+                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"damage") + " de prestigio"
                     ).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build());
         }
@@ -119,7 +119,7 @@ public class itemstats {
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lDefensa",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"defense") + "/5",
-                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"defense" + " de prestigio")
+                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"defense") + " de prestigio"
                     ).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build());
         }
@@ -163,7 +163,7 @@ public class itemstats {
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lVelocidad",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"speed") + "/5",
-                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"speed" + " de prestigio")
+                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"speed") + " de prestigio"
                     ).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build());
         }
@@ -179,7 +179,7 @@ public class itemstats {
                         PlayerData.setPrestige(player,prestige - cost);
                         PlayerData.setUpgrade(player,"speed",level + 1);
                         PlayerData.setUpgradeCost(player,"speed",cost + 4);
-                        player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(player.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).getBaseValue() + 0.02);
+                        PlayerData.setExtraSpeed(player,(PlayerData.getExtraSpeed(player) + 0.02));
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,10.0F,2.0F);
                     }else{
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-2.0F);
@@ -207,7 +207,7 @@ public class itemstats {
                             "&7Cada mejora te ofrece un pequeño bono de &b&lSigilo",
                             "&7El Sigilo te da beneficios para evitar los efectos de la Exposicion",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"stealth") + "/10",
-                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"stealth" + " de prestigio")
+                            "&c&lCosto: &7" + PlayerData.getUpgradeCost(p,"stealth") + " de prestigio"
                     ).addItemFlags(ItemFlag.HIDE_ATTRIBUTES)
                     .build());
         }

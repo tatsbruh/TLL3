@@ -345,11 +345,11 @@ public class GenericEntityListeners implements Listener {
             }
             if(Data.has(a,"rev_explosion",PersistentDataType.STRING)){
                 if (hen != null) {
-                    hen.getLocation().createExplosion((Entity) source,4,false,true);
+                    hen.getLocation().createExplosion((Entity) source,2,false,true);
                     proj.remove();
                 }
                 if (hbl != null) {
-                    hbl.getLocation().createExplosion((Entity) source,4,false,true);
+                    hbl.getLocation().createExplosion((Entity) source,2,false,true);
                     proj.remove();
                 }
             }
