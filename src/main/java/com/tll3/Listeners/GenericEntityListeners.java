@@ -79,6 +79,11 @@ public class GenericEntityListeners implements Listener {
                     p.setFoodLevel((int) amount);
                 }
             }
+            if(damager instanceof Endermite en){
+                if(Data.has(en,"tesla",PersistentDataType.STRING)){
+                    EntityHelper.teleportEnderman(p,p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ(),p.getWorld(),5000.0D);
+                }
+            }
             if(damager instanceof CustomDolphin || damager instanceof Dolphin){
                 p.setVelocity(new Vector(0, -1, 0));
             }
@@ -243,6 +248,16 @@ public class GenericEntityListeners implements Listener {
     public void moveE(EntityMoveEvent e){
         var entity = e.getEntity();
         Random random = new Random();
+        int chance = random.nextInt(3000);
+        if(entity instanceof Creeper c){
+            if(c.getTarget() == null){
+                if(chance <= 5){
+                    c.playEffect(EntityEffect.TELEPORT_ENDER);
+                    c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
+                    EntityHelper.teleportEnderman(c,c.getLocation().getBlockX(),c.getLocation().getBlockY(),c.getLocation().getBlockZ(),c.getWorld(),64.0D);
+                }
+            }
+        }
         if(getDay() >= 7){
         if(entity instanceof Enderman end){
             for (Player player : end.getWorld().getPlayers()) {

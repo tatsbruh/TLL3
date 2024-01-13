@@ -21,6 +21,8 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import static com.tll3.Misc.GenericUtils.getDay;
+
 public class CustomChicken extends EntityChicken {
     private static Field attributeMap;
     public CustomChicken(World world){
@@ -36,7 +38,11 @@ public class CustomChicken extends EntityChicken {
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(15);
         ((LivingEntity)this.getBukkitEntity()).setHealth(15);
-        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+        if(getDay() >= 14){
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(45);
+        }else{
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+        }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
     }
     @Override

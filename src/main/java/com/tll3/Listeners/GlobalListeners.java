@@ -11,10 +11,7 @@ import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.biome.BiomeBase;
 import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.RegionAccessor;
+import org.bukkit.*;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.*;
@@ -58,6 +55,11 @@ public class GlobalListeners implements Listener {
                     }
                 }
             }
+            if(getDay() >= 14){
+                switch (reason){
+                    case STARVATION,FREEZE,SUFFOCATION -> e.setDamage(e.getDamage() * 7);
+                }
+            }
         }
 
 
@@ -93,6 +95,20 @@ public class GlobalListeners implements Listener {
         if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
             switch (reason){
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
+            }
+        }
+        if(Data.has(entity,"unstablecreeper",PersistentDataType.STRING)){
+            if(reason == EntityDamageEvent.DamageCause.PROJECTILE){
+                e.setCancelled(true);
+                entity.playEffect(EntityEffect.TELEPORT_ENDER);
+                entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
+                EntityHelper.teleportEnderman(entity,entity.getLocation().getBlockX(),entity.getLocation().getBlockY(),entity.getLocation().getBlockZ(),entity.getWorld(),64.0D);
+            }else{
+                if(EntityNaturalSpawn.doRandomChance(1)){
+                    entity.playEffect(EntityEffect.TELEPORT_ENDER);
+                    entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
+                    EntityHelper.teleportEnderman(entity,entity.getLocation().getBlockX(),entity.getLocation().getBlockY(),entity.getLocation().getBlockZ(),entity.getWorld(),64.0D);
+                }
             }
         }
 
@@ -241,6 +257,10 @@ public class GlobalListeners implements Listener {
                             liv.remove();
                             SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc, EntityType.SKELETON_HORSE);
                             h.setTrapped(true);
+                        }
+                        case WOLF,CAT -> {
+                            liv.remove();
+                            Entities.unstCr((Creeper) Entities.spawnMob(loc,EntityType.CREEPER));
                         }
                     }
                 }

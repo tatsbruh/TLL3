@@ -4,12 +4,15 @@ import com.tll3.Lists.Items;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.GenericUtils;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
+
+import static com.tll3.Misc.GenericUtils.getDay;
 
 public class EntityDrops implements Listener {
     @EventHandler
@@ -18,6 +21,11 @@ public class EntityDrops implements Listener {
         var killer = e.getEntity().getKiller();
         var drops = e.getDrops();
         if(killer == null)return;
+        if(entity instanceof WitherSkeleton s){
+            if(s.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
+                drops.clear();
+            }
+        }
         if(entity instanceof Drowned d){
             if(Data.has(d,"abyssdrow",PersistentDataType.STRING)){
                 drops.clear();

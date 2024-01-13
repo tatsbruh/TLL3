@@ -156,8 +156,10 @@ public class EntityNaturalSpawn implements Listener {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
                     if(getDay() >= 7){
                         var random = getRandomValue(100);
-                        if(random <= 35){
+                        if(random <= 35) {
                             Entities.revCreeper((Creeper) entity);
+                        }else if(random > 35 && random <= 65){
+                            Entities.unstCr((Creeper) entity);
                         }else{
                             Entities.creChr((Creeper) entity);
                         }
@@ -183,10 +185,12 @@ public class EntityNaturalSpawn implements Listener {
             }
             case DROWNED -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 7){
+                    if(getDay() >= 7 && getDay() < 14){
                         if(getMonsoon_active().equalsIgnoreCase("true")){
                             Entities.drowAby((Drowned) entity);
                         }
+                    }else if(getDay() >= 14){
+                        Entities.drowAby((Drowned) entity);
                     }
                 }
             }
@@ -210,6 +214,21 @@ public class EntityNaturalSpawn implements Listener {
                         CustomBee r= new CustomBee(worldServer);
                         r.a_(loc.getX(),loc.getY(),loc.getZ());
                         worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+            case CAT,WOLF -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        Entities.unstCr((Creeper) Entities.spawnMob(loc,EntityType.CREEPER));
+                    }
+                }
+            }
+            case ENDERMITE -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.ENDER_PEARL)) {
+                    if (getDay() >= 14) {
+                        Entities.quanmite((Endermite) entity);
                     }
                 }
             }
