@@ -1,16 +1,26 @@
 package com.tll3.Task;
 
 import com.tll3.Misc.DataManager.PlayerData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Pose;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.BoundingBox;
 
-public class ArmorEffectTask extends BukkitRunnable {
+import static com.tll3.Misc.GenericUtils.getDay;
+
+public class ServerTickTask extends BukkitRunnable {
     private final Player p;
+    int cram_interval = 0;
 
-    public ArmorEffectTask(Player p){
+    public ServerTickTask(Player p){
         this.p = p;
     }
     @Override
@@ -26,6 +36,17 @@ public class ArmorEffectTask extends BukkitRunnable {
         speed += PlayerData.getExtraSpeed(p);
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
+        if(getDay() >= 14){
+            if(p.isOnGround() && !p.isUnderWater() && !p.isInWater() && p.getPose() == Pose.SWIMMING){
+                if(cram_interval < 5){
+                    cram_interval++;
+                }else{
+                    cram_interval = 0;
+                    ((CraftPlayer)p).getHandle().a(((CraftPlayer)p).getHandle().dN().f(),5.0F);
+                }
+            }
+        }
+
     }
 
 
@@ -40,5 +61,13 @@ public class ArmorEffectTask extends BukkitRunnable {
         return false;
     }
 
+    public boolean Ok(Player player) {
+        BoundingBox boundingBox = player.getBoundingBox();
+        double width = boundingBox.getWidthX();
+        double height = boundingBox.getHeight();
+        double length = boundingBox.getWidthZ();
+        double epsilon = 0.1;
+        return Math.abs(width - 1.0) < epsilon && Math.abs(height - 1.0) < epsilon && Math.abs(length - 1.0) < epsilon;
+    }
 }
 

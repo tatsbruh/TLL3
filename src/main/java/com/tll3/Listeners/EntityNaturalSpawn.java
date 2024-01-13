@@ -69,21 +69,31 @@ public class EntityNaturalSpawn implements Listener {
                     EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,1);
                     EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,1);
                 }
-
-                if(loc.getWorld().getEnvironment() == World.Environment.NORMAL){
-                if (doRandomChance(1)) {
-                    e.setCancelled(true);
-                    IronGolem ironGolem =(IronGolem)  Entities.spawnMob(loc, EntityType.IRON_GOLEM);
-                    Entities.enrIG(ironGolem);
-                    setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
-                }
-                }
                 if(loc.getWorld().getEnvironment() == World.Environment.NETHER){
                     EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,1);
                 }
 
             }
-
+        }
+        if(getDay() >= 7 && getDay() < 14){
+            if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
+                if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                    if (doRandomChance(1)) {
+                        e.setCancelled(true);
+                        IronGolem ironGolem = (IronGolem) Entities.spawnMob(loc, EntityType.IRON_GOLEM);
+                        Entities.enrIG(ironGolem);
+                        setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
+                    }
+                }
+            }
+        } if(getDay() >= 14 && getDay() < 21){
+            if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
+                if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                    if (doRandomChance(1)) {
+                        summonnewmob(loc, e);
+                    }
+                }
+            }
         }
         switch (entity.getType()){
             case ZOMBIE -> {
@@ -192,6 +202,17 @@ public class EntityNaturalSpawn implements Listener {
                     }
                 }
             }
+            case BEE -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.BEEHIVE)){
+                    if(getDay() >= 14){
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                        CustomBee r= new CustomBee(worldServer);
+                        r.a_(loc.getX(),loc.getY(),loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
             case MULE -> {
                 if(getDay() >= 7){
                 SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
@@ -199,8 +220,22 @@ public class EntityNaturalSpawn implements Listener {
                 e.setCancelled(true);
                 }
             }
+            case DONKEY,HORSE -> {
+                    if(getDay() >= 14){
+                        SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc,EntityType.SKELETON_HORSE);
+                        h.setTrapped(true);
+                        e.setCancelled(true);
+                }
+            }
             case WITHER_SKELETON -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG){
                 if(getDay() >= 7){ chooseWitherSkeletonClass1((WitherSkeleton) entity);}
+                }
+            }
+            case BLAZE -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER){
+                    if(getDay() >= 14)chooseBlazeType((Blaze) entity);
+                }
             }
             case HUSK -> { if(getDay() >= 7){
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.huStr((Husk) entity);
@@ -359,6 +394,17 @@ public class EntityNaturalSpawn implements Listener {
             }
         }
     }
+    public static void chooseBlazeType(Blaze z){
+        if(getDay() >= 14) {
+            Random random = new Random();
+            int chance = random.nextInt(2);
+            switch (chance) {
+                case 0 -> Entities.windChar(z);
+                case 1 -> Entities.armorBlaze(z);
+
+            }
+        }
+    }
 
     public static void spawnWasteyard(CreatureSpawnEvent e, Location loc){
         World w = Worlds.getWasteyard();
@@ -400,18 +446,41 @@ public class EntityNaturalSpawn implements Listener {
     public static void summonnewmob(Location loc,CreatureSpawnEvent e){
         if(getDay() >= 14) {
             if(getMonsoon_active().equalsIgnoreCase("true")){
-
+                Random random = new Random();
+                int chance = random.nextInt(3);
+                switch (chance) {
+                    case 0 -> {
+                        e.setCancelled(true);
+                        IronGolem ironGolem =(IronGolem)  Entities.spawnMob(loc, EntityType.IRON_GOLEM);
+                        Entities.enrIG(ironGolem);
+                        setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
+                    }
+                    case 1 -> {
+                        e.setCancelled(true);
+                        WitherSkeleton w = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
+                        chooseWitherSkeletonClass1(w);
+                    }
+                    case 2 -> {
+                        e.setCancelled(true);
+                        Blaze z = (Blaze) Entities.spawnMob(loc,EntityType.BLAZE);
+                        chooseBlazeType(z);
+                    }
+                }
             }else{
             Random random = new Random();
             int chance = random.nextInt(2);
             switch (chance) {
                 case 0 -> {
-
+                    e.setCancelled(true);
+                    IronGolem ironGolem =(IronGolem)  Entities.spawnMob(loc, EntityType.IRON_GOLEM);
+                    Entities.enrIG(ironGolem);
+                    setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
                 }
                 case 1 -> {
-
+                    e.setCancelled(true);
+                    WitherSkeleton w = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
+                    chooseWitherSkeletonClass1(w);
                 }
-
             }
             }
         }

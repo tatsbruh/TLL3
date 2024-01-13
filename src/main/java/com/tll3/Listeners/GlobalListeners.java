@@ -13,6 +13,7 @@ import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.biome.BiomeSettingsMobs;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.RegionAccessor;
 import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
@@ -20,6 +21,7 @@ import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -119,7 +121,23 @@ public class GlobalListeners implements Listener {
                 e.setCancelled(true);
             }
         }
+    }
 
+
+    @EventHandler
+    public void blockbreakE(BlockBreakEvent e){
+        var p = e.getPlayer();
+        var block = e.getBlock().getType();
+        var loc = e.getBlock().getLocation();
+        if(getDay() >= 14){
+        if(block == Material.BEEHIVE){
+            for(int i = 0;i < 6;i++){
+                WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                CustomBee r= new CustomBee(worldServer);
+                r.a_(loc.getX(),loc.getY(),loc.getZ());
+                worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            }
+        }}
     }
 
     @EventHandler
@@ -209,7 +227,22 @@ public class GlobalListeners implements Listener {
                         }
                         case ZOMBIFIED_PIGLIN -> Entities.enrPig((PigZombie) liv);
                     }
-
+                }
+                if(getDay() >= 14){
+                    switch (liv.getType()){
+                        case BEE -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomBee r= new CustomBee(worldServer);
+                            r.a_(loc.getX(),loc.getY(),loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case DONKEY,HORSE -> {
+                            liv.remove();
+                            SkeletonHorse h = (SkeletonHorse) Entities.spawnMob(loc, EntityType.SKELETON_HORSE);
+                            h.setTrapped(true);
+                        }
+                    }
                 }
         }
     }

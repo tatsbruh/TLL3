@@ -34,6 +34,7 @@ import java.lang.reflect.Field;
 import java.security.Guard;
 import java.util.Locale;
 import static com.tll3.Misc.EntityHelper.*;
+import static com.tll3.Misc.GenericUtils.getDay;
 
 public class Entities {
     /*
@@ -77,8 +78,12 @@ public class Entities {
         setName(s,"#024f3cSkeleton Warden");
         setHead(s,new ItemStack(Material.BLAST_FURNACE));
         setChestplate(s,new ItemStack(Material.IRON_CHESTPLATE));
-        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,9).build());
         s.setShouldBurnInDay(false);
+        if(getDay() >= 14){
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,30).build());
+        }else{
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,10).build());
+        }
     }
     public static void enrIG(IronGolem i) {
         CraftIronGolem craft = ((CraftIronGolem) i);
@@ -98,6 +103,10 @@ public class Entities {
         i.setRemoveWhenFarAway(true);
         i.setPersistent(false);
         setName(i,"&4Enraged Iron Golem");
+        if(getDay() >= 14){
+            addPotionEffect(i,PotionEffectType.INCREASE_DAMAGE,1);
+            addPotionEffect(i,PotionEffectType.SPEED,1);
+        }
     }
     public static void enrPig(PigZombie z){
         CraftPigZombie craft = ((CraftPigZombie) z);
@@ -243,14 +252,38 @@ public class Entities {
 
 
 
-
-
+    //Mobs dia 14
+    public static void windChar(Blaze z){
+        setName(z,"&f&lWind Charger");
+        z.setRemoveWhenFarAway(true);
+        setMobHealth(z,40);
+        setIdentifierString(z,"windcharger");
+    }
+    public static void armorBlaze(Blaze z){
+        setName(z,"#824205Armored Blaze");
+        z.setRemoveWhenFarAway(true);
+        setMobHealth(z,40);
+        setIdentifierString(z,"armoredblaze");
+    }
+    public static void unstCr(Creeper c){
+        setName(c,"#c991d9Unstable Creeper");
+        c.setPowered(true);
+        c.setExplosionRadius(5);
+        setIdentifierString(c,"unstablecreeper");
+    }
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);
+        setName(s,"#3e574bVoid Overseer");
         setMobRange(s,100);
         setHead(s,new ItemStack(Material.END_PORTAL_FRAME));
-        setChestplate(s,new ItemStack(Material.NETHERITE_CHESTPLATE));
         setIdentifierString(s,"void_overseer");
+    }
+    public static void livingSh(Skeleton s){
+        setMobHealth(s,35);
+        setName(s,"#0d4034Living Shrieker");
+        setMobRange(s,100);
+        setHead(s,new ItemStack(Material.SCULK_SHRIEKER));
+        setIdentifierString(s,"livshriek");
     }
 
 

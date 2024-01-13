@@ -30,7 +30,7 @@ public class itemstats {
         @Override
         public ItemProvider getItemProvider() {
             return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.ENCHANTED_GOLDEN_APPLE).
-                    setDisplayName("&c❤ Mejoras de vida ❤")
+                    setDisplayName("&c❤ ᴍᴇᴊᴏʀᴀꜱ ᴅᴇ ᴠɪᴅᴀ ❤")
                     .setLore(
                             "&7Cada mejora de vida otorga &8+1 &ccorazon &7extra",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"health") + "/10",
@@ -72,7 +72,7 @@ public class itemstats {
         @Override
         public ItemProvider getItemProvider() {
             return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.DIAMOND_SWORD).
-                    setDisplayName("&c♆ Mejoras de daño ♆")
+                    setDisplayName("&c♆ ᴍᴇᴊᴏʀᴀꜱ ᴅᴇ ᴏꜰᴇɴꜱᴀ ♆")
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &c&lDaño",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"damage") + "/10",
@@ -115,7 +115,7 @@ public class itemstats {
         @Override
         public ItemProvider getItemProvider() {
             return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.IRON_CHESTPLATE).
-                    setDisplayName("&c♕ Mejoras de defensa ♕")
+                    setDisplayName("&c♕ ᴍᴇᴊᴏʀᴀꜱ ᴅᴇ ᴅᴇꜰᴇɴꜱᴀ ♕")
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lDefensa",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"defense") + "/5",
@@ -159,7 +159,7 @@ public class itemstats {
         @Override
         public ItemProvider getItemProvider() {
             return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.FEATHER).
-                    setDisplayName("&c☁ Mejoras de velocidad ☁")
+                    setDisplayName("&c☁ ᴍᴇᴊᴏʀᴀꜱ ᴅᴇ ᴠᴇʟᴏᴄɪᴅᴀᴅ ☁")
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lVelocidad",
                             "&6Mejoras: &7" + PlayerData.getUpgrade(p,"speed") + "/5",
@@ -179,7 +179,7 @@ public class itemstats {
                         PlayerData.setPrestige(player,prestige - cost);
                         PlayerData.setUpgrade(player,"speed",level + 1);
                         PlayerData.setUpgradeCost(player,"speed",cost + 4);
-                        PlayerData.setExtraSpeed(player,(PlayerData.getExtraSpeed(player) + 0.02));
+                        PlayerData.setExtraSpeed(player,(PlayerData.getExtraSpeed(player) + 0.002));
                         player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,10.0F,2.0F);
                     }else{
                         player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-2.0F);
@@ -202,7 +202,7 @@ public class itemstats {
         @Override
         public ItemProvider getItemProvider() {
             return new ItemBuilder(new com.tll3.Misc.ItemBuilder(Material.ENDER_EYE).
-                    setDisplayName("&c⊙ Mejoras de sigilo ⊙")
+                    setDisplayName("&c⊙ ᴍᴇᴊᴏʀᴀꜱ ᴅᴇ ꜱɪɢɪʟᴏ ⊙")
                     .setLore(
                             "&7Cada mejora te ofrece un pequeño bono de &b&lSigilo",
                             "&7El Sigilo te da beneficios para evitar los efectos de la Exposicion",

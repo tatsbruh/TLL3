@@ -2,29 +2,26 @@ package com.tll3.Listeners;
 
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
-import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
 import com.tll3.Task.*;
+import net.minecraft.world.level.block.BlockTrapdoor;
 import org.bukkit.*;
-import org.bukkit.entity.ArmorStand;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Pose;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityPoseChangeEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.EntityToggleSwimEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -51,7 +48,7 @@ public class GenericPlayerListeners implements Listener {
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
         new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
-        new ArmorEffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
+        new ServerTickTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
 
     }
 
@@ -70,6 +67,8 @@ public class GenericPlayerListeners implements Listener {
     }
 
 
+
+
     @EventHandler
     public void eatitemE(PlayerItemConsumeEvent e){
         var player = e.getPlayer();
@@ -78,6 +77,8 @@ public class GenericPlayerListeners implements Listener {
             PlayerData.restExp(player,30);
         }
     }
+
+
 
 
     @EventHandler
@@ -339,12 +340,16 @@ public class GenericPlayerListeners implements Listener {
     }
 
     public static void exposureJump(Player p,int totem_c){
+        if(Bukkit.getOnlinePlayers().size() <= 1){
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eNo hay jugadores conectados"));
+            return;
+        }
         Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
         if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE)return;
         int r = GenericUtils.getRandomValue(100);
         if(r < 20){
             for(Player online : Bukkit.getOnlinePlayers()){
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl Totem de la Inmortalidad de " + p.getName() + " aplico su &4Pánico en el jugador " + randomplayer.getName() + " &8(80 < + " + r + ")"));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl Totem de la Inmortalidad de " + p.getName() + " aplico su &4Pánico en el jugador " + randomplayer.getName() + " &8(20 > " + r + ")"));
             }
             if(totem_c <= 29){
                 PlayerData.addDataEffect(randomplayer,"curse",60,1);
@@ -359,7 +364,7 @@ public class GenericPlayerListeners implements Listener {
                 PlayerData.addDataEffect(randomplayer,"curse",145,4);
             }
         }else{
-            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7Tu Totem de la Inmortalidad no aplico el pánico en nadie. (80 > " + r + ")"));
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7Tu Totem de la Inmortalidad no aplico el pánico en nadie. (20 < " + r + ")"));
         }
     }
 }

@@ -391,6 +391,54 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
+        if(source instanceof Blaze z){
+            if(Data.has(z,"windcharger",PersistentDataType.STRING)){
+                if (hen != null) {
+                    hen.getWorld().spawnParticle(
+                            Particle.EXPLOSION_HUGE,
+                            hen.getLocation(),
+                            10,
+                            0.5,
+                            0.5,
+                            0.5,
+                            1
+                    );
+                    hen.getWorld().playSound(hen.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,10.0F,2.0F);
+                    hen.getWorld().getNearbyPlayers(
+                            hen.getLocation(),5,5,5
+                    ).forEach(player -> {
+                        Vector direction = player.getLocation().toVector().subtract(hen.getLocation().toVector()).normalize();
+                        player.setVelocity(new Vector(-direction.getX(), 1.0, -direction.getZ()));
+                    });
+                }
+                if (hbl != null) {
+                    hbl.getWorld().spawnParticle(
+                            Particle.EXPLOSION_HUGE,
+                            hbl.getLocation(),
+                            10,
+                            0.5,
+                            0.5,
+                            0.5,
+                            1
+                    );
+                    hbl.getWorld().playSound(hbl.getLocation(),Sound.ENTITY_GENERIC_EXPLODE,10.0F,2.0F);
+                    hbl.getWorld().getNearbyPlayers(
+                            hbl.getLocation(),5,5,5
+                    ).forEach(player -> {
+                        Vector direction = player.getLocation().toVector().subtract(hbl.getLocation().toVector()).normalize();
+                        player.setVelocity(new Vector(-direction.getX(), 1.0, -direction.getZ()));
+                    });
+                }
+            }
+            if(Data.has(z,"armoredblaze",PersistentDataType.STRING)){
+                if (hen != null) {
+                    hen.getLocation().createExplosion((Entity) source,3,true,true);
+                }
+                if (hbl != null) {
+                    hbl.getLocation().createExplosion((Entity) source,3,true,true);
+                }
+            }
+        }
     }
 
 
