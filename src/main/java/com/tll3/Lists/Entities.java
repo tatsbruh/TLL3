@@ -326,6 +326,15 @@ public class Entities {
         setMobRange(e,95);
         setIdentifierString(e,"tesla");
     }
+    public static void piglGr(Piglin e){
+        setName(e,"#f0e811Greedy Piglin");
+        setMobRange(e,95);
+        setHead(e,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+        setChestplate(e,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+        setLeggings(e,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+        setBoots(e,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+        setIdentifierString(e,"greedypiglin");
+    }
 
 
 

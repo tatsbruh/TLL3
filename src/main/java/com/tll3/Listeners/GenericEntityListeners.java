@@ -2,6 +2,7 @@ package com.tll3.Listeners;
 
 import com.tll3.Lists.CustomEntities.CustomAllay;
 import com.tll3.Lists.CustomEntities.CustomDolphin;
+import com.tll3.Lists.CustomEntities.CustomLlama;
 import com.tll3.Lists.CustomEntities.CustomSniffer;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
@@ -81,7 +82,7 @@ public class GenericEntityListeners implements Listener {
             }
             if(damager instanceof Endermite en){
                 if(Data.has(en,"tesla",PersistentDataType.STRING)){
-                    EntityHelper.teleportEnderman(p,p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ(),p.getWorld(),5000.0D);
+                    EntityHelper.teleportEnderman(p,p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ(),p.getWorld(),100.0D);
                 }
             }
             if(damager instanceof CustomDolphin || damager instanceof Dolphin){
@@ -250,7 +251,7 @@ public class GenericEntityListeners implements Listener {
         Random random = new Random();
         int chance = random.nextInt(3000);
         if(entity instanceof Creeper c){
-            if(c.getTarget() == null){
+            if(c.getTarget() == null && Data.has(c,"unstablecreeper",PersistentDataType.STRING)){
                 if(chance <= 5){
                     c.playEffect(EntityEffect.TELEPORT_ENDER);
                     c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
@@ -303,6 +304,7 @@ public class GenericEntityListeners implements Listener {
         var proj = e.getEntity();
         var shooter = e.getEntity().getShooter();
         var loc = e.getLocation();
+
 
         if(shooter instanceof Drowned d){
             if(proj instanceof Trident t){

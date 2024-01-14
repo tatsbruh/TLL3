@@ -26,6 +26,11 @@ public class EntityDrops implements Listener {
                 drops.clear();
             }
         }
+        if(entity instanceof Blaze s){
+            if(s.getLocation().getWorld().getEnvironment() == World.Environment.NORMAL){
+                drops.clear();
+            }
+        }
         if(entity instanceof Drowned d){
             if(Data.has(d,"abyssdrow",PersistentDataType.STRING)){
                 drops.clear();

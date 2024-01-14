@@ -18,6 +18,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPoseChangeEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.EntityToggleSwimEvent;
+import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -30,6 +31,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import static com.tll3.Misc.GenericUtils.getDay;
+import static com.tll3.Misc.GenericUtils.*;
 
 public class GenericPlayerListeners implements Listener {
 
@@ -60,9 +62,20 @@ public class GenericPlayerListeners implements Listener {
             Location block = player.getWorld().getHighestBlockAt(player.getLocation().clone()).getLocation();
             int highestY = block.getBlockY();
             if (highestY < player.getLocation().getY()) {
+                if(getDay() >= 14){
+                    e.setDamage(e.getDamage() * 4);
+                }else{
                 e.setDamage(e.getDamage() * 2);
             }
+            }
         }
+        }
+    }
+
+    @EventHandler
+    public void cubetaE(PlayerBucketFillEvent e){
+        if(getMonsoon_active().equalsIgnoreCase("true") && getDay() >= 14){
+            e.setCancelled(true);
         }
     }
 
@@ -345,7 +358,7 @@ public class GenericPlayerListeners implements Listener {
             return;
         }
         Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
-        if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE)return;
+        if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE || !randomplayer.getName().equals(p.getName()))return;
         int r = GenericUtils.getRandomValue(100);
         if(r < 20){
             for(Player online : Bukkit.getOnlinePlayers()){

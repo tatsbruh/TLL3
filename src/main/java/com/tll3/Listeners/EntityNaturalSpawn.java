@@ -89,7 +89,7 @@ public class EntityNaturalSpawn implements Listener {
         } if(getDay() >= 14 && getDay() < 21){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                    if (doRandomChance(1)) {
+                    if (doRandomChance(3)) {
                         summonnewmob(loc, e);
                     }
                 }
@@ -349,6 +349,48 @@ public class EntityNaturalSpawn implements Listener {
                         CustomDolphin r = new CustomDolphin(worldServer);
                         r.a_(loc.getX(), loc.getY(), loc.getZ());
                         worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+            case LLAMA -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomLlama r = new CustomLlama(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+            case GOAT -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomGoat r = new CustomGoat(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+            case PIGLIN_BRUTE -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,3);
+                        EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,2);
+                    }
+                }
+            }
+            case HOGLIN -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,4);
+                        EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,1);
+                        PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                        EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
+                        EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
+                        entity.addPassenger(pg);
                     }
                 }
             }

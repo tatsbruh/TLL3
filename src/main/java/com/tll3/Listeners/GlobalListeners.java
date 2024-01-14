@@ -82,6 +82,18 @@ public class GlobalListeners implements Listener {
                 }
             }
         }
+        if(getDay() >= 14){
+            if(entity instanceof Enemy && getMonsoon_active().equalsIgnoreCase("true")){
+                switch (reason){
+                    case FALL,LIGHTNING -> e.setCancelled(true);
+                }
+            }
+            if(entity instanceof Blaze){
+                switch (reason){
+                    case DROWNING,SUFFOCATION -> e.setCancelled(true);
+                }
+            }
+        }
 
 
 
@@ -146,7 +158,7 @@ public class GlobalListeners implements Listener {
         var block = e.getBlock().getType();
         var loc = e.getBlock().getLocation();
         if(getDay() >= 14){
-        if(block == Material.BEEHIVE){
+        if(block == Material.BEE_NEST){
             for(int i = 0;i < 6;i++){
                 WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
                 CustomBee r= new CustomBee(worldServer);
@@ -261,6 +273,20 @@ public class GlobalListeners implements Listener {
                         case WOLF,CAT -> {
                             liv.remove();
                             Entities.unstCr((Creeper) Entities.spawnMob(loc,EntityType.CREEPER));
+                        }
+                        case GOAT -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomGoat r= new CustomGoat(worldServer);
+                            r.a_(loc.getX(),loc.getY(),loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case LLAMA -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                            CustomLlama r= new CustomLlama(worldServer);
+                            r.a_(loc.getX(),loc.getY(),loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                     }
                 }
