@@ -502,7 +502,7 @@ public class EntityNaturalSpawn implements Listener {
         World w = Worlds.getWasteyard();
         if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && loc.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
             e.setCancelled(true);
-            if(w.getLivingEntities().size() > 140)return;
+            if(w.getLivingEntities().size() > 70)return;
             Random random = new Random();
             int lol = random.nextInt(101);
             if(lol <= 45){

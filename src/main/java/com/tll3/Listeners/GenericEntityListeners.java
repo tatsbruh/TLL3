@@ -414,27 +414,6 @@ public class GenericEntityListeners implements Listener {
             }
         }
 
-        if(source instanceof Wither w){
-            if(proj instanceof WitherSkull ws){
-                if(Data.has(w,"ashenwither",PersistentDataType.STRING)){
-                    if(ws.isCharged()){
-                        if (hen != null) {
-                            hen.getLocation().createExplosion(w,4,false,true);
-                        }
-                        if (hbl != null) {
-                            hbl.getLocation().createExplosion(w,4,false,true);
-                        }
-                    }else{
-                        if (hen != null) {
-                            hen.getLocation().createExplosion(w,2,false,true);
-                        }
-                        if (hbl != null) {
-                            hbl.getLocation().createExplosion(w,2,false,true);
-                        }
-                    }
-                }
-            }
-        }
 
         if(source instanceof Blaze z){
             if(Data.has(z,"windcharger",PersistentDataType.STRING)){

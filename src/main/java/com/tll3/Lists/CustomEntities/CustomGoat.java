@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackable
 import net.minecraft.world.entity.animal.goat.Goat;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 
 public class CustomGoat extends Goat {
@@ -14,6 +15,10 @@ public class CustomGoat extends Goat {
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
+        this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
+        ((LivingEntity) this.getBukkitEntity()).setHealth(25);
+        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(75);
     }
     @Override
     protected void B() {

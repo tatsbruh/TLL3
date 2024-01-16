@@ -6,26 +6,15 @@ import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
-import net.minecraft.world.entity.projectile.WindCharge;
-import net.minecraft.world.level.LevelHeightAccessor;
-import net.minecraft.world.level.biome.BiomeBase;
-import net.minecraft.world.level.biome.BiomeManager;
-import net.minecraft.world.level.biome.BiomeSettingsMobs;
 import org.bukkit.*;
-import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.CreatureSpawnEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityPortalEnterEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.world.ChunkLoadEvent;
-import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -35,6 +24,23 @@ import java.util.stream.Collectors;
 
 import static com.tll3.Misc.GenericUtils.*;
 public class GlobalListeners implements Listener {
+
+    @EventHandler
+    public void explosionE(ExplosionPrimeEvent e){
+        if(e.getEntity() instanceof Wither){
+            if(Data.has(e.getEntity(),"ashenwither",PersistentDataType.STRING)){
+                e.setFire(true);
+                e.setRadius(12.0F);
+            }
+        }
+        if(e.getEntity() instanceof WitherSkull s){
+            if(s.getShooter() instanceof Wither w){
+                if(Data.has(w,"ashenwither",PersistentDataType.STRING)){
+                    e.setRadius(2);
+                }
+            }
+        }
+    }
 
     @EventHandler
     public void damageE(EntityDamageEvent e){
