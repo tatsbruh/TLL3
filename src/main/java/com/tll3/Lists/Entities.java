@@ -296,7 +296,7 @@ public class Entities {
         w.setCanTravelThroughPortals(false);
         w.setInvulnerableTicks(350);
         setIdentifierString(w,"ashenwither");
-        new AshenWitherTask(w).runTaskTimer(TLL3.getInstance(),0L,1L);
+        new AshenWitherTask(w).runTaskTimer(TLL3.getInstance(),0L,350L);
     }
     public static void windChar(Blaze z){
         setName(z,"&f&lWind Charger");
