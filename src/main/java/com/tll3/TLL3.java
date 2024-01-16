@@ -7,6 +7,15 @@ import com.tll3.Lists.Recipes;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.Misc.GenericUtils;
+import net.minecraft.core.IRegistry;
+import net.minecraft.core.IRegistryCustom;
+import net.minecraft.core.IRegistryWritable;
+import net.minecraft.resources.MinecraftKey;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.dedicated.DedicatedServer;
+import net.minecraft.world.level.biome.BiomeBase;
+import org.bukkit.Registry;
+import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -22,8 +31,6 @@ public final class TLL3 extends JavaPlugin {
     public static TLL3 getInstance(){return plugin;}
     @Override
     public void onEnable() {
-        // - Say the line, Mutant!
-        //*sigh*
         plugin = this;
         console(cf + "Plugin activado correctamente");
         loadListeners();

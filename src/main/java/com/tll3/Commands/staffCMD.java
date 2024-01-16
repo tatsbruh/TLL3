@@ -30,6 +30,7 @@ public class staffCMD extends BaseCommand {
     @CommandCompletion("seconds")
     @CommandPermission("staff.admin")
     @Description("you know.")
+    //hola
     public void curse(CommandSender sender,String[] args){
         if (sender instanceof Player p && args.length > 0){
             int i = Integer.parseInt(args[0]);

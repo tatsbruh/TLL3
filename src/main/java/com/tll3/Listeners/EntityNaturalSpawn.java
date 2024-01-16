@@ -3,6 +3,7 @@ package com.tll3.Listeners;
 import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
+import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
@@ -11,6 +12,7 @@ import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.SpiderLungeTask;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.level.block.InfestedRotatedPillarBlock;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -96,9 +98,20 @@ public class EntityNaturalSpawn implements Listener {
             }
         }
         switch (entity.getType()){
+            case WITHER -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.BUILD_WITHER){
+                    if(loc.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
+                        Wither w = (Wither) entity;
+                        Entities.ashenWither(w);
+                        for(Player p : Bukkit.getOnlinePlayers()){
+                            p.sendTitle(ChatUtils.format("#4a4745Ashen Wither"),ChatUtils.format("&c&l¡Buena Suerte!"),0,100,0);
+                        }
+                    }
+                }
+            }
             case ZOMBIE -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                if(getDay() >= 7) {
+                if(getDay() >= 14) {
                     var random = getRandomValue(100);
                     if (random <= 45) {
                         chooseZombieClass1((Zombie) entity);
@@ -260,6 +273,16 @@ public class EntityNaturalSpawn implements Listener {
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.huStr((Husk) entity);
             }
             }
+            case STRAY -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG){
+                    if(getDay() >= 14)Entities.strayCom((Stray) entity);
+                }
+            }
+            case SLIME -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG){
+                    if(getDay() >= 14)Entities.slimeNight((Slime) entity);
+                }
+            }
             case CAVE_SPIDER -> { if(getDay() >= 7){
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.csTerCol((CaveSpider) entity);
             }
@@ -341,6 +364,14 @@ public class EntityNaturalSpawn implements Listener {
                 }
                 }
             }
+            case PIGLIN -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    if(getDay() >= 14){
+                        Entities.piglGr((Piglin) entity);
+                    }
+                }
+            }
+
             case DOLPHIN -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
                     if (getDay() >= 7) {

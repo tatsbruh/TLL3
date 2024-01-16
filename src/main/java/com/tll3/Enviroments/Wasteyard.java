@@ -1,5 +1,6 @@
 package com.tll3.Enviroments;
 
+
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
@@ -11,7 +12,9 @@ import org.bukkit.util.noise.SimplexOctaveGenerator;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class Wasteyard extends ChunkGenerator {
     private final SplittableRandom random = new SplittableRandom();
@@ -73,7 +76,7 @@ public class Wasteyard extends ChunkGenerator {
         if (chunkData.getMinHeight() == worldInfo.getMinHeight()) {
             for (int x = 0; x < 16; x++) {
                 for (int z = 0; z < 16; z++) {
-                    chunkData.setBlock(x, chunkData.getMinHeight(), z, Material.BEDROCK);
+                    chunkData.setBlock(x, 30, z, Material.BEDROCK);
                 }
             }
         }
@@ -105,9 +108,9 @@ public class Wasteyard extends ChunkGenerator {
     protected Material getRandomMaterial2() {
         int r = random.nextInt(100);
         if(r >= 70){return Material.LIGHT_GRAY_CONCRETE_POWDER;
-        }else if(r < 70 && r >= 55){
+        }else if(r < 70 && r >= 35){
             return Material.GRAY_GLAZED_TERRACOTTA;
-        }else if(r < 55 && r >= 25){
+        }else if(r < 35 && r >= 25){
             return Material.MAGMA_BLOCK;
         }
         return Material.GRAY_CONCRETE_POWDER;

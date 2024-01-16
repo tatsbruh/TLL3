@@ -47,7 +47,13 @@ public class GlobalListeners implements Listener {
             if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
             if(getDay() >= 7){
                 switch (reason){
-                    case DROWNING -> e.setDamage(e.getDamage() * 2);
+                    case DROWNING -> {
+                        if(getDay() >= 14 && getDay() < 21){
+                           e.setDamage(e.getDamage() * 4);
+                        }else{
+                            e.setDamage(e.getDamage() * 2);
+                        }
+                    }
                     case LIGHTNING -> {
                         if(getMonsoon_active().equalsIgnoreCase("true")){
                             e.setDamage(e.getDamage() * 3);

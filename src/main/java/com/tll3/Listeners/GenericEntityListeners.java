@@ -85,6 +85,11 @@ public class GenericEntityListeners implements Listener {
                     EntityHelper.teleportEnderman(p,p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ(),p.getWorld(),100.0D);
                 }
             }
+            if(damager instanceof Stray s){
+                if(Data.has(s,"commandskeleton",PersistentDataType.STRING)){
+                    p.setFreezeTicks(200);
+                }
+            }
             if(damager instanceof CustomDolphin || damager instanceof Dolphin){
                 p.setVelocity(new Vector(0, -1, 0));
             }
@@ -408,6 +413,29 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
+
+        if(source instanceof Wither w){
+            if(proj instanceof WitherSkull ws){
+                if(Data.has(w,"ashenwither",PersistentDataType.STRING)){
+                    if(ws.isCharged()){
+                        if (hen != null) {
+                            hen.getLocation().createExplosion(w,4,false,true);
+                        }
+                        if (hbl != null) {
+                            hbl.getLocation().createExplosion(w,4,false,true);
+                        }
+                    }else{
+                        if (hen != null) {
+                            hen.getLocation().createExplosion(w,2,false,true);
+                        }
+                        if (hbl != null) {
+                            hbl.getLocation().createExplosion(w,2,false,true);
+                        }
+                    }
+                }
+            }
+        }
+
         if(source instanceof Blaze z){
             if(Data.has(z,"windcharger",PersistentDataType.STRING)){
                 if (hen != null) {

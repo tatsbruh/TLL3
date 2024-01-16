@@ -6,6 +6,7 @@ import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
 import com.tll3.Task.Mobs.ArqBlockBreak;
+import com.tll3.Task.Mobs.AshenWitherTask;
 import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
@@ -289,6 +290,14 @@ public class Entities {
 
 
     //Mobs dia 14
+    public static void ashenWither(Wither w){
+        setName(w,"#4a4745Ashen Wither");
+        setMobHealth(w,600);
+        w.setCanTravelThroughPortals(false);
+        w.setInvulnerableTicks(350);
+        setIdentifierString(w,"ashenwither");
+        new AshenWitherTask(w).runTaskTimer(TLL3.getInstance(),0L,1L);
+    }
     public static void windChar(Blaze z){
         setName(z,"&f&lWind Charger");
         z.setRemoveWhenFarAway(true);
@@ -334,6 +343,26 @@ public class Entities {
         setLeggings(e,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
         setBoots(e,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
         setIdentifierString(e,"greedypiglin");
+        addPotionEffect(e,PotionEffectType.INCREASE_DAMAGE,4);
+    }
+    public static void strayCom(Stray s){
+        setName(s,"&c&lStray Comandante");
+        setMobRange(s,120);
+        setHead(s,new ItemStack(Material.GOLDEN_HELMET));
+        setChestplate(s,new ItemStack(Material.GOLDEN_CHESTPLATE));
+        setLeggings(s,new ItemStack(Material.GOLDEN_LEGGINGS));
+        setBoots(s,new ItemStack(Material.GOLDEN_BOOTS));
+        setMainHand(s,new ItemBuilder(Material.GOLDEN_AXE).addEnchant(Enchantment.DAMAGE_ALL,20).setUnbreakable(true).build());
+        addPotionEffect(s,PotionEffectType.SPEED,3);
+        addPotionEffect(s,PotionEffectType.JUMP,3);
+        setIdentifierString(s,"commandskeleton");
+    }
+    public static void slimeNight(Slime s){
+        setName(s,"#497555Slime de Pesadilla");
+        setMobHealth(s,65);
+        setMobDamage(s,10);
+        s.setSize(14);
+        setIdentifierString(s,"slimenightmare");
     }
 
 
