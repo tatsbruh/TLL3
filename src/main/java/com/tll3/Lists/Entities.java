@@ -15,15 +15,14 @@ import net.minecraft.world.entity.animal.EntityIronGolem;
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
 import net.minecraft.world.entity.player.EntityHuman;
-import org.bukkit.EntityEffect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Particle;
+import net.minecraft.world.entity.projectile.EntityFireworks;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionData;
 import org.bukkit.potion.PotionEffect;
@@ -154,20 +153,30 @@ public class Entities {
     }
     public static void blackRev(Spider s){
         setName(s,"&0Black Tarantula");
-        setMobHealth(s,35);
-        setMobDamage(s,7);
         addPotionEffect(s, PotionEffectType.SPEED,0);
         s.setAggressive(true);
         setIdentifierString(s,"blackreaver");
+        if(getDay() >= 14){
+            setMobHealth(s,55);
+            setMobDamage(s,9);
+        }else{
+            setMobHealth(s,35);
+            setMobDamage(s,7);
+        }
     }
 
     public static void adapSp(Spider s){
         setName(s,"&cScarlet Leech");
-        setMobHealth(s,35);
-        setMobDamage(s,6);
         addPotionEffect(s, PotionEffectType.SPEED,0);
         s.setAggressive(true);
         setIdentifierString(s,"adeptmauler");
+        if(getDay() >= 14){
+            setMobHealth(s,55);
+            setMobDamage(s,9);
+        }else{
+            setMobHealth(s,35);
+            setMobDamage(s,6);
+        }
     }
 
     public static void termite(CaveSpider s){
@@ -360,9 +369,37 @@ public class Entities {
     public static void slimeNight(Slime s){
         setName(s,"#497555Slime de Pesadilla");
         setMobHealth(s,65);
-        setMobDamage(s,10);
+        setMobDamage(s,15);
         s.setSize(14);
         setIdentifierString(s,"slimenightmare");
+    }
+    public static void neonSp(Spider s){
+        setName(s,"#8cffc6Araña de Neón");
+        setMobHealth(s,45);
+        setMobDamage(s,8);
+        setMobRange(s,100);
+        addPotionEffect(s,PotionEffectType.SPEED,1);
+        setIdentifierString(s,"neonspider");
+    }
+    public static void nwPillager(Pillager p,boolean canjoinraid){
+        setName(p,"#ff1717Piromaníaco");
+        setMainHand(p,new ItemBuilder(Material.CROSSBOW).addEnchant(Enchantment.QUICK_CHARGE,3).addEnchant(Enchantment.MULTISHOT,1).setUnbreakable(true).build());
+        setOffhand(p,rocket());
+        p.setCanJoinRaid(canjoinraid);
+        setIdentifierString(p,"pillagerex");
+    }
+    public static void nwVindicator(Vindicator p,boolean canjoinraid){
+        setName(p,"#ffbb33Verdugo");
+        setMainHand(p,new ItemStack(Material.NETHERITE_AXE));
+        p.setCanJoinRaid(canjoinraid);
+        setIdentifierString(p,"vindicatorex");
+    }
+    public static void nwRavager(Ravager p,boolean canjoinraid){
+        setName(p,"#eb420eRavager Supremo");
+        setMobHealth(p,100);
+        setMobDamage(p,35);
+        p.setCanJoinRaid(canjoinraid);
+        setIdentifierString(p,"ravagerex");
     }
 
 
@@ -480,7 +517,15 @@ public class Entities {
         arrow.setAmount(128);
         return arrow;
     }
-
+    public static ItemStack rocket() {
+        ItemStack rorcket = new ItemStack(Material.FIREWORK_ROCKET);
+        FireworkMeta f = (FireworkMeta) rorcket.getItemMeta();
+        f.addEffect(FireworkEffect.builder().withColor(Color.RED).flicker(true).trail(true).build());
+        f.setPower(2);
+        rorcket.setItemMeta(f);
+        rorcket.setAmount(128);
+        return rorcket;
+    }
 
 
 

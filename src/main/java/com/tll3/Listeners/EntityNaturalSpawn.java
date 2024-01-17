@@ -2,8 +2,11 @@ package com.tll3.Listeners;
 
 import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
+import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomEvokerFangs;
+import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomLlamaSpit;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
@@ -23,6 +26,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -63,7 +67,9 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomChicken || entity instanceof CustomAllay
         || entity instanceof CustomFox || entity instanceof CustomMooshroom || entity instanceof CustomPanda
         || entity instanceof CustomPolarBear || entity instanceof CustomSniffer || entity instanceof CustomAxolotls
-        || entity instanceof CustomDolphin)return;
+        || entity instanceof CustomDolphin || entity instanceof CustomLlama || entity instanceof CustomGoat
+        || entity instanceof CustomBee || entity instanceof CustomEvoker || entity instanceof CustomEvokerFangs
+        || entity instanceof CustomLlamaSpit)return;
         spawnWasteyard(e,loc);
         if(getDay() >= 7) {
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
@@ -111,7 +117,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case ZOMBIE -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                if(getDay() >= 14) {
+                if(getDay() >= 7) {
                     var random = getRandomValue(100);
                     if (random <= 45) {
                         chooseZombieClass1((Zombie) entity);
@@ -135,6 +141,11 @@ public class EntityNaturalSpawn implements Listener {
                             }else{
                                 EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
                             }
+                        }
+                        if(getMonsoon_active().equalsIgnoreCase("true")){
+                            Spider s = (Spider) Entities.spawnMob(loc,EntityType.SPIDER);
+                            chooseRandomSpider1(s,e);
+                            s.addPassenger(entity);
                         }
                     }
                 }
@@ -242,6 +253,57 @@ public class EntityNaturalSpawn implements Listener {
                 if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.ENDER_PEARL)) {
                     if (getDay() >= 14) {
                         Entities.quanmite((Endermite) entity);
+                    }
+                }
+            }
+            case WITCH -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        if(doRandomChance(35)){
+                            chooserandomraider(loc,e);
+                        }
+                    }
+                }
+            }
+            case PILLAGER -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                       Entities.nwPillager((Pillager) entity,true);
+                    }
+                }
+            }
+            case VINDICATOR -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        Entities.nwVindicator((Vindicator) entity,true);
+                    }
+                }
+            }
+            case RAVAGER -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        Entities.nwRavager((Ravager) entity,true);
+                    }
+                }
+            }
+            case EVOKER -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomEvoker r = new CustomEvoker(worldServer,false);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+            case VEX -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.SPELL)) {
+                    Vex v = (Vex) entity;
+                    if(v.getSummoner() instanceof Evoker ev){
+                        if(Data.has(ev,"evokerex", PersistentDataType.STRING)){
+
+                        }
                     }
                 }
             }
@@ -435,7 +497,7 @@ public class EntityNaturalSpawn implements Listener {
     }
 
     public static void chooseRandomSpider1(Spider s,CreatureSpawnEvent e){
-        if(getDay() >= 7){
+        if(getDay() >= 7 && getDay() < 14){
         Random random = new Random();
         int chance = random.nextInt(3);
         switch (chance) {
@@ -451,6 +513,23 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
         }
+        }else if(getDay() >= 14){
+            Random random = new Random();
+            int chance = random.nextInt(4);
+            switch (chance) {
+                case 0 -> Entities.blackRev(s);
+                case 1 -> Entities.adapSp(s);
+                case 2 -> {
+                    e.setCancelled(true);
+                    CaveSpider cs = (CaveSpider) Entities.spawnMob(e.getLocation(), EntityType.CAVE_SPIDER);
+                    if (Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
+                        Entities.csTerCol(cs);
+                    } else {
+                        Entities.termite(cs);
+                    }
+                }
+                case 3 -> Entities.neonSp(s);
+            }
         }
     }
 
@@ -465,7 +544,7 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
     public static void chooseSkeletonClass1(Skeleton w){
-        if(getDay() >= 7){
+        if(getDay() >= 7 && getDay() < 14){
         Random random = new Random();
         int chance = random.nextInt(3);
         switch (chance){
@@ -473,6 +552,16 @@ public class EntityNaturalSpawn implements Listener {
             case 1 -> Entities.skeFi(w);
             case 2 -> Entities.skeRz(w);
         }
+        }else if(getDay() >= 14){
+                Random random = new Random();
+                int chance = random.nextInt(5);
+                switch (chance){
+                    case 0 ->{ Entities.skeAd(w);}
+                    case 1 -> {Entities.skeFi(w);}
+                    case 2 -> {Entities.skeRz(w);}
+                    case 3 -> Entities.voidOver(w);
+                    case 4 -> {Entities.livingSh(w);}
+                }
         }
     }
     public static void chooseZombieClass1(Zombie z){
@@ -534,6 +623,34 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
 
+    public static void chooserandomraider(Location loc,CreatureSpawnEvent e){
+        Random random = new Random();
+        int chance = random.nextInt(4);
+        switch (chance){
+            case 0 ->{
+                e.setCancelled(true);
+                Pillager p = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
+                Entities.nwPillager(p,false);
+            }
+            case 1 ->{
+                e.setCancelled(true);
+                Vindicator v = (Vindicator) Entities.spawnMob(loc,EntityType.VINDICATOR);
+                Entities.nwVindicator(v,false);
+            }
+            case 2 -> {
+                e.setCancelled(true);
+                Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
+                Entities.nwRavager(r,false);
+            }
+            case 3 ->{
+                e.setCancelled(true);
+                WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                CustomEvoker r = new CustomEvoker(worldServer,false);
+                r.a_(loc.getX(), loc.getY(), loc.getZ());
+                worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            }
+        }
+    }
 
     public static void summonnewmob(Location loc,CreatureSpawnEvent e){
         if(getDay() >= 14) {

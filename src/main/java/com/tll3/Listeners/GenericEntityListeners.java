@@ -93,7 +93,7 @@ public class GenericEntityListeners implements Listener {
                 }
             }
             if(damager instanceof CustomDolphin || damager instanceof Dolphin){
-                p.setVelocity(new Vector(0, -1, 0));
+                p.setVelocity(new Vector(0, -2, 0));
             }
 
             if(damager instanceof MagmaCube m){
@@ -111,6 +111,9 @@ public class GenericEntityListeners implements Listener {
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
+                }
+                if(Data.has(s,"neonspider",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,150,0,true,false,true));
                 }
                 if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
                     s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,60,2,false,false,false));
@@ -547,17 +550,30 @@ public class GenericEntityListeners implements Listener {
         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
         int r = GenericUtils.getRandomValue(11);
         switch (r){
-            case 0 -> {Zombie entity = (Zombie) Entities.spawnMob(loc,EntityType.ZOMBIE); Entities.zArqueo(entity);}
-            case 1 -> {Skeleton entity = (Skeleton) Entities.spawnMob(loc,EntityType.SKELETON); Entities.skeFi(entity);}
+            case 0 -> {Zombie entity = (Zombie) Entities.spawnMob(loc,EntityType.ZOMBIE); EntityNaturalSpawn.chooseZombieClass1(entity);}
+            case 1 -> {Skeleton entity = (Skeleton) Entities.spawnMob(loc,EntityType.SKELETON); EntityNaturalSpawn.chooseSkeletonClass1(entity);}
             case 2 -> {Spider entity = (Spider) Entities.spawnMob(loc,EntityType.SPIDER); Entities.blackRev(entity);}
             case 3 -> {Creeper entity = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER); Entities.creChr(entity);}
             case 4 -> {Enderman entity = (Enderman) Entities.spawnMob(loc,EntityType.ENDERMAN);}
-            case 5 -> {Witch entity = (Witch) Entities.spawnMob(loc,EntityType.WITCH);}
-            case 6 -> {Drowned entity = (Drowned) Entities.spawnMob(loc,EntityType.DROWNED);}
-            case 7 ->{Husk entity = (Husk) Entities.spawnMob(loc,EntityType.HUSK); Entities.huStr(entity);}
-            case 8 -> {CaveSpider entity = (CaveSpider) Entities.spawnMob(loc,EntityType.CAVE_SPIDER); Entities.csTerCol(entity);}
+            case 5 -> {
+                Witch entity = (Witch) Entities.spawnMob(loc,EntityType.WITCH);
+            }
+            case 6 -> {
+                Drowned entity = (Drowned) Entities.spawnMob(loc,EntityType.DROWNED);
+                Entities.drowAby(entity);
+            }
+            case 7 ->{
+                Husk entity = (Husk) Entities.spawnMob(loc,EntityType.HUSK); Entities.huStr(entity);
+            }
+            case 8 -> {CaveSpider entity = (CaveSpider) Entities.spawnMob(loc,EntityType.CAVE_SPIDER); Entities.csTerCol(entity);
+            }
             case 9 -> {Silverfish entity = (Silverfish) Entities.spawnMob(loc,EntityType.SILVERFISH); Entities.silverday5(entity);}
-            case 10 -> {Stray entity = (Stray) Entities.spawnMob(loc,EntityType.STRAY);}
+            case 10 -> {
+                Stray entity = (Stray) Entities.spawnMob(loc,EntityType.STRAY);
+                if(getDay() >= 14){
+                    Entities.strayCom(entity);
+                }
+            }
         }
     }
 

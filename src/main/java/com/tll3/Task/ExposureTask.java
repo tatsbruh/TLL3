@@ -12,6 +12,8 @@ public class ExposureTask extends BukkitRunnable {
 
     int darkness = 0;
     int glowing = 0;
+    int light = 0;
+    int glowingdrain = 0;
     public ExposureTask(Player p){
         this.player = p;
     }
@@ -59,9 +61,24 @@ public class ExposureTask extends BukkitRunnable {
                     darkness = 0;
                     PlayerData.setExposure(player,PlayerData.getExposure(player) + 1);
                 }
+            }else{
+                if(light < 200){
+                    light++;
+                }else{
+                    light = 0;
+                    PlayerData.setExposure(player,PlayerData.getExposure(player) - 1);
+                }
             }
             if(player.hasPotionEffect(PotionEffectType.GLOWING)){
-                if(glowing < 50){
+                switch (player.getPotionEffect(PotionEffectType.GLOWING).getAmplifier()){
+                    case 0 -> glowingdrain = 50;
+                    case 1 -> glowingdrain = 35;
+                    case 2 -> glowingdrain = 25;
+                    case 3 -> glowingdrain = 15;
+                    case 4 -> glowingdrain = 5;
+                    default -> glowingdrain = 50;
+                }
+                if(glowing < glowingdrain){
                     glowing++;
                 }else{
                     glowing = 0;

@@ -44,6 +44,15 @@ public class GlobalListeners implements Listener {
     }
 
     @EventHandler
+    public void fireworkE(FireworkExplodeEvent e){
+        if(e.getEntity().getShooter() instanceof Pillager p){
+            if(Data.has(p,"pillagerex",PersistentDataType.STRING)){
+                e.getEntity().getWorld().createExplosion(p,4,true,true);
+            }
+        }
+    }
+
+    @EventHandler
     public void damageE(EntityDamageEvent e){
         var entity = e.getEntity();
         var reason = e.getCause();
@@ -200,7 +209,8 @@ public class GlobalListeners implements Listener {
                         || liv instanceof CustomChicken || liv instanceof CustomFox
                 || liv instanceof CustomPanda || liv instanceof CustomPolarBear || liv instanceof CustomSniffer
                 || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls
-                || liv instanceof CustomDolphin) return;
+                || liv instanceof CustomDolphin || liv instanceof CustomBee || liv instanceof CustomLlama || liv instanceof CustomGoat
+                ) return;
                 Location loc = liv.getLocation();
                 if (getDay() >= 7) {
                     switch (liv.getType()){
