@@ -36,7 +36,8 @@ public class GlobalListeners implements Listener {
         if(e.getEntity() instanceof WitherSkull s){
             if(s.getShooter() instanceof Wither w){
                 if(Data.has(w,"ashenwither",PersistentDataType.STRING)){
-                    e.setRadius(2);
+                    if(s.isCharged())e.setRadius(4);
+                    else e.setRadius(2);
                 }
             }
         }

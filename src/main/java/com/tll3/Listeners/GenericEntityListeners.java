@@ -13,12 +13,14 @@ import com.tll3.TLL3;
 import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.HomingTask;
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.Fire;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -205,6 +207,30 @@ public class GenericEntityListeners implements Listener {
                         );
                     }
                 }.runTaskTimer(TLL3.getInstance(), 0L, 1L);
+            }
+            if(Data.has(s,"livshriek",PersistentDataType.STRING)){
+                s.getWorld().playSound(s.getLocation(),Sound.ENTITY_WARDEN_SONIC_BOOM,10.0F,1.0F);
+                Arrow a = (Arrow) projectile;
+                a.setDamage(40);
+                a.setGravity(false);
+                for(Player online : Bukkit.getOnlinePlayers()){
+                    PacketPlayOutEntityDestroy packed = new PacketPlayOutEntityDestroy(a.getEntityId());
+                    ((CraftPlayer)online).getHandle().c.a(packed,null);
+                }
+                new BukkitRunnable() {
+                    int i = 0;
+                    @Override
+                    public void run() {
+                        if(a.isOnGround() || !a.isValid() || a.isDead()){cancel();return;}
+                        if(i < 400){
+                            a.getWorld().spawnParticle(Particle.SONIC_BOOM,a.getLocation(),1);
+                            i++;
+                        }else{
+                            a.remove();
+                            cancel();
+                        }
+                    }
+                }.runTaskTimer(TLL3.getInstance(),0L,1L);
             }
             if(Data.has(s,"firemancer",PersistentDataType.STRING)){
                 Fireball f = s.launchProjectile(Fireball.class);
