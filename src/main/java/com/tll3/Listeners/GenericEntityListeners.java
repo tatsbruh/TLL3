@@ -5,6 +5,7 @@ import com.tll3.Lists.CustomEntities.CustomDolphin;
 import com.tll3.Lists.CustomEntities.CustomLlama;
 import com.tll3.Lists.CustomEntities.CustomSniffer;
 import com.tll3.Lists.Entities;
+import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
@@ -27,6 +28,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
@@ -107,7 +109,18 @@ public class GenericEntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,150,0,true,false,true));
                 }
             }
-
+            if(damager instanceof Vindicator v){
+                if(Data.has(v,"vindicatorex",PersistentDataType.STRING)){
+                    if(EntityNaturalSpawn.doRandomChance(20)){
+                        dropMainOrOff(p);
+                    }
+                }
+            }
+            if(damager instanceof PufferFish f){
+                if(Data.has(f,"acidfish",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,2,false,false,false));
+                }
+            }
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
@@ -176,8 +189,9 @@ public class GenericEntityListeners implements Listener {
 
         if(entity instanceof Pillager p){
             if(getDay() >= 7){
-                Arrow arrow = (Arrow) projectile;
+                if(projectile instanceof Arrow arrow){
                 arrow.setDamage(arrow.getDamage() * 3);
+            }
             }
         }
 
@@ -576,6 +590,25 @@ public class GenericEntityListeners implements Listener {
             }
         }
     }
+
+    public static void dropMainOrOff(Player p){
+        ItemStack hand = p.getInventory().getItemInMainHand();
+        ItemStack off = p.getInventory().getItemInOffHand();
+        if(Math.random() < 0.5){
+            if(hand == null && hand.getType() == Material.AIR)return;
+            var clone = hand.clone();
+            p.getWorld().dropItemNaturally(p.getLocation(),clone);
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&c&lTe han robado un item de tu mano principal!"));
+            p.getInventory().setItem(EquipmentSlot.HAND,null);
+        }else{
+            if(off == null && off.getType() == Material.AIR)return;
+            var clone = off.clone();
+            p.getWorld().dropItemNaturally(p.getLocation(),clone);
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&c&lTe han robado un item de tu mano secundaria!"));
+            p.getInventory().setItem(EquipmentSlot.OFF_HAND,null);
+        }
+    }
+
 
     public boolean getValidBlocks(Block block){
         switch (block.getType()){

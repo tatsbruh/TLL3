@@ -19,6 +19,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Biome;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
@@ -97,6 +98,13 @@ public class EntityNaturalSpawn implements Listener {
         } if(getDay() >= 14 && getDay() < 21){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                    if(loc.getWorld().getBiome(loc) == Biome.DEEP_DARK && getMonsoon_active().equalsIgnoreCase("true")){
+                        if(doRandomChance(1)){
+                            e.setCancelled(true);
+                            Warden w = (Warden) Entities.spawnMob(loc,EntityType.WARDEN);
+                            w.setRemoveWhenFarAway(true);
+                        }
+                    }
                     if (doRandomChance(3)) {
                         summonnewmob(loc, e);
                     }
@@ -297,13 +305,44 @@ public class EntityNaturalSpawn implements Listener {
                     }
                 }
             }
+            case GUARDIAN -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomGuardian r = new CustomGuardian(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+            case ELDER_GUARDIAN -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomElderGuardian r = new CustomElderGuardian(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
             case VEX -> {
                 if ((reason == CreatureSpawnEvent.SpawnReason.SPELL)) {
                     Vex v = (Vex) entity;
-                    if(v.getSummoner() instanceof Evoker ev){
-                        if(Data.has(ev,"evokerex", PersistentDataType.STRING)){
-
+                    if(v.getSummoner() instanceof Evoker || v.getSummoner() instanceof CustomEvoker){
+                        if(Data.has(v.getSummoner(),"evokerex", PersistentDataType.STRING)){
+                            Entities.nwVex(v);
                         }
+                    }
+                }
+            }
+            case SQUID,GLOW_SQUID -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 14) {
+                        e.setCancelled(true);
+                        PufferFish f = (PufferFish) Entities.spawnMob(loc,EntityType.PUFFERFISH);
+                        Entities.acidFish(f);
                     }
                 }
             }

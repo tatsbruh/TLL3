@@ -46,14 +46,13 @@ public class CustomParrot extends EntityParrot {
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(25);
         ((LivingEntity) this.getBukkitEntity()).setHealth(25);
-        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
+        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(45);
     }
 
     @Override
     protected void B() {
-        this.bO.a(0, new PathfinderGoalPanic(this, 1.25));
         this.bO.a(0, new PathfinderGoalFloat(this));
         this.bO.a(1, new PathfinderGoalMeleeAttack(this, 1.0, true));
         this.bO.a(2, new PathfinderGoalMoveTowardsTarget(this, 0.9, 32.0F));

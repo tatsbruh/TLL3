@@ -157,7 +157,7 @@ public class CustomEvoker extends EntityEvoker {
             } while(blockposition.v() >= MathHelper.a(d2) - 1);
 
             if (flag) {
-                CustomEvoker.this.dM().b(new CustomEvokerFangs(CustomEvoker.this.dM(), d0, (double)blockposition.v() + d4, d1, f, i, CustomEvoker.this,12.0F));
+                CustomEvoker.this.dM().b(new CustomEvokerFangs(CustomEvoker.this.dM(), d0, (double)blockposition.v() + d4, d1, f, i, CustomEvoker.this,40.0F));
             }
 
         }

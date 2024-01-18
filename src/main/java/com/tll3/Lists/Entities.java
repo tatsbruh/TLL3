@@ -1,5 +1,6 @@
 package com.tll3.Lists;
 
+import com.tll3.Listeners.EntityNaturalSpawn;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
@@ -401,6 +402,11 @@ public class Entities {
         p.setCanJoinRaid(canjoinraid);
         setIdentifierString(p,"ravagerex");
     }
+    public static void nwVex(Vex v){
+        setName(v,"#78d6d0Espíritu Sagrado");
+        setMainHand(v,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.FIRE_ASPECT,5).build());
+        setIdentifierString(v,"vexex");
+    }
 
 
 
@@ -451,6 +457,12 @@ public class Entities {
         addPotionEffect(z,PotionEffectType.SPEED,1);
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantenderman");
+    }
+    public static void acidFish(PufferFish f){
+        setName(f,"#5e8a46Pez de Ácido");
+        setMobHealth(f,20);
+        setIdentifierString(f,"acidfish");
+        EntityNaturalSpawn.setCustomMobcap(f, 10, 1.10, 24, 60, true);
     }
 
 
@@ -523,7 +535,7 @@ public class Entities {
         f.addEffect(FireworkEffect.builder().withColor(Color.RED).flicker(true).trail(true).build());
         f.setPower(2);
         rorcket.setItemMeta(f);
-        rorcket.setAmount(128);
+        rorcket.setAmount(120);
         return rorcket;
     }
 

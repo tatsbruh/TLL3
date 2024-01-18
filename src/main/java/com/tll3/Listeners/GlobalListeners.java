@@ -14,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryOpenEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -191,6 +193,15 @@ public class GlobalListeners implements Listener {
     }
 
     @EventHandler
+    public void tradeE(InventoryOpenEvent e){
+        if(e.getInventory().getType() == InventoryType.MERCHANT && getMonsoon_active().equalsIgnoreCase("true")){
+            if(e.getPlayer().getLocation().getWorld().getEnvironment() != World.Environment.NORMAL){
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void changeporE(EntityPortalEnterEvent e){
         var entity = e.getEntity();
         if(entity instanceof Player p){
@@ -281,6 +292,11 @@ public class GlobalListeners implements Listener {
                 }
                 if(getDay() >= 14){
                     switch (liv.getType()){
+                        case SQUID,GLOW_SQUID ->{
+                            liv.remove();
+                            PufferFish f = (PufferFish) Entities.spawnMob(loc,EntityType.PUFFERFISH);
+                            Entities.acidFish(f);
+                        }
                         case BEE -> {
                             liv.remove();
                             WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();

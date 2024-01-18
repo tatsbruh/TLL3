@@ -1,7 +1,11 @@
 package com.tll3.Lists.CustomEntities;
 
+import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
+import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityLiving;
 import net.minecraft.world.entity.EntityTypes;
@@ -19,25 +23,25 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.function.Predicate;
 
-public class CustomGuardian extends EntityGuardian {
-    public CustomGuardian(World world) {
-        super(EntityTypes.W, world);
+public class CustomElderGuardian extends EntityGuardianElder {
+    public CustomElderGuardian(World w){
+        super(EntityTypes.B,w);
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.addEffect(new MobEffect(MobEffects.a,Integer.MAX_VALUE,1), EntityPotionEffectEvent.Cause.PLUGIN);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
     }
-
-    public PathfinderGoalGuardianAttack guardianAttack;
+    public CustomGuardian.PathfinderGoalGuardianAttack guardianAttack;
 
 
     @Override
     protected void B() {
         PathfinderGoalMoveTowardsRestriction pathfindergoalmovetowardsrestriction = new PathfinderGoalMoveTowardsRestriction(this, 1.0);
         this.d = new PathfinderGoalRandomStroll(this, 1.0, 80);
-        this.bO.a(4, this.guardianAttack = new PathfinderGoalGuardianAttack(this));
+        this.bO.a(4, this.guardianAttack = new CustomGuardian.PathfinderGoalGuardianAttack(this));
         this.bO.a(5, pathfindergoalmovetowardsrestriction);
         this.bO.a(7, this.d);
         this.bO.a(8, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F));
@@ -45,9 +49,25 @@ public class CustomGuardian extends EntityGuardian {
         this.bO.a(9, new PathfinderGoalRandomLookaround(this));
         this.d.a(EnumSet.of(PathfinderGoal.Type.a, PathfinderGoal.Type.b));
         pathfindergoalmovetowardsrestriction.a(EnumSet.of(PathfinderGoal.Type.a, PathfinderGoal.Type.b));
-        this.bP.a(1, new PathfinderGoalNearestAttackableTarget(this, EntityLiving.class, 10, true, false, new EntitySelectorGuardianTargetHumanSquid(this)));
+        this.bP.a(1, new PathfinderGoalNearestAttackableTarget(this, EntityLiving.class, 10, true, false, new CustomElderGuardian.EntitySelectorGuardianTargetHumanSquid(this)));
     }
 
+    @Override
+    protected void Z() {
+        super.Z();
+        if ((this.ah + this.aj()) % 1200 == 0) {
+            MobEffect mobeffect = new MobEffect(MobEffects.d, 6000, 4);
+            List<EntityPlayer> list = MobEffectUtil.addEffectToPlayersAround((WorldServer)this.dM(), this, this.dk(), 50.0, mobeffect, 1200, EntityPotionEffectEvent.Cause.ATTACK);
+            list.forEach((entityplayer) -> {
+                entityplayer.c.b(new PacketPlayOutGameStateChange(PacketPlayOutGameStateChange.k, this.aU() ? 0.0F : 1.0F));
+            });
+        }
+
+        if (!this.fQ()) {
+            this.a(this.dm(), 16);
+        }
+
+    }
 
     private static class EntitySelectorGuardianTargetHumanSquid implements Predicate<EntityLiving> {
         private final EntityGuardian a;
@@ -125,7 +145,7 @@ public class CustomGuardian extends EntityGuardian {
                             f += 2.0F;
                         }
 
-                        entityliving.a(this.a.dN().c(this.a, this.a), 12.0F);
+                        entityliving.a(this.a.dN().c(this.a, this.a), 20.0F);
                         entityliving.a(this.a.dN().b(this.a), (float)this.a.b(GenericAttributes.c));
                         this.a.h((EntityLiving)null);
                     }
@@ -136,6 +156,4 @@ public class CustomGuardian extends EntityGuardian {
 
         }
     }
-
-
 }
