@@ -30,6 +30,16 @@ public class EffectDuration extends BukkitRunnable {
                 player.getPersistentDataContainer().remove(Data.key("curse_e"));
             }
         }
+        if(Data.has(player,"bleed", PersistentDataType.STRING)){
+            var time = Data.get(player,"bleed_d",PersistentDataType.INTEGER);
+            if(time > 0){
+                player.getPersistentDataContainer().set(Data.key("bleed_d"),PersistentDataType.INTEGER,time - 1);
+            }else{
+                player.getPersistentDataContainer().remove(Data.key("bleed"));
+                player.getPersistentDataContainer().remove(Data.key("bleed_d"));
+                player.getPersistentDataContainer().remove(Data.key("bleed_e"));
+            }
+        }
         if(Data.has(player,"invulnerable", PersistentDataType.STRING)){
             var time = Data.get(player,"invulnerable_d",PersistentDataType.INTEGER);
             if(time > 0){

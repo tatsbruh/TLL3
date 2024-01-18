@@ -7,6 +7,7 @@ import com.tll3.Lists.CustomEntities.CustomSniffer;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.Data;
+import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
@@ -119,6 +120,11 @@ public class GenericEntityListeners implements Listener {
             if(damager instanceof PufferFish f){
                 if(Data.has(f,"acidfish",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,2,false,false,false));
+                }
+            }
+            if(damager instanceof Zombie z){
+                if(EntityNaturalSpawn.doRandomChance(10)){
+                    PlayerData.addDataEffect(p,"bleed",200,0);
                 }
             }
             if(damager instanceof Spider s){

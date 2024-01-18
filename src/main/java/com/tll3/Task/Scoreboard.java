@@ -18,43 +18,10 @@ public class Scoreboard extends BukkitRunnable {
 
     @Override
     public void run() {
-        scoreHelper.setTitle(ChatUtils.format("&6&lAfterlife"));
-        checkForEffectSlot1();
-        checkForEffectSlot2();
+        scoreHelper.setTitle(ChatUtils.format("&4&l☢ ⚠ ☢"));
+        scoreHelper.setSlot(9,"&7▄██████▄");
+        scoreHelper.setSlot(8,"&7█  &c&l01: 00  &7█");
+        scoreHelper.setSlot(7,"&7▀██████▀");
 
-    }
-
-    public void checkForEffectSlot1(){
-        if(Data.has(p,"curse", PersistentDataType.STRING)){
-            var timeInSeconds = Data.get(p, "curse_d", PersistentDataType.INTEGER);
-            var minutes = timeInSeconds / 60;
-            var seconds = timeInSeconds % 60;
-            var formattedTime = String.format("%02d:%02d", minutes, seconds);
-
-            var effect = Data.get(p,"curse_e",PersistentDataType.INTEGER);
-            String lol = "";
-            switch (effect){
-                case 1 ->lol = "";
-                case 2 -> lol = " II";
-                case 3 -> lol = " III";
-                case 4 -> lol = " IV";
-                default -> lol = " I";
-            }
-
-            scoreHelper.setSlot(9, "&4&lPánico" + lol +" : &f" + formattedTime);
-        }else{
-            scoreHelper.removeSlot(9);
-        }
-    }
-    public void checkForEffectSlot2(){
-        if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
-            var timeInSeconds = Data.get(p, "invulnerable_d", PersistentDataType.INTEGER);
-            var minutes = timeInSeconds / 60;
-            var seconds = timeInSeconds % 60;
-            var formattedTime = String.format("%02d:%02d", minutes, seconds);
-            scoreHelper.setSlot(8, "&7&lInvulnerable: &f" + formattedTime);
-        }else{
-            scoreHelper.removeSlot(8);
-        }
     }
 }

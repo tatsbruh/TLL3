@@ -49,7 +49,8 @@ public class GlobalListeners implements Listener {
     public void fireworkE(FireworkExplodeEvent e){
         if(e.getEntity().getShooter() instanceof Pillager p){
             if(Data.has(p,"pillagerex",PersistentDataType.STRING)){
-                e.getEntity().getWorld().createExplosion(p,4,true,true);
+                Location c = e.getEntity().getLocation().clone();
+                c.getWorld().createExplosion(p,4,true,true);
             }
         }
     }

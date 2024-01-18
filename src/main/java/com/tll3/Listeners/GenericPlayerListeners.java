@@ -2,6 +2,7 @@ package com.tll3.Listeners;
 
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
@@ -16,6 +17,7 @@ import org.bukkit.entity.Pose;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityPoseChangeEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.EntityToggleSwimEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
@@ -23,6 +25,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -48,6 +51,7 @@ public class GenericPlayerListeners implements Listener {
             new ExposureTask(p).runTaskTimer(TLL3.getInstance(), 0L, 1L);
         }
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
+        new TabManager(p).runTaskTimer(TLL3.getInstance(),0L,1L);
         new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
         new ServerTickTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
@@ -69,6 +73,17 @@ public class GenericPlayerListeners implements Listener {
             }
             }
         }
+        }
+    }
+
+    @EventHandler
+    public void regenerateE(EntityRegainHealthEvent e){
+        if(e.getEntity() instanceof Player p){
+            if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED){
+                if(Data.has(p,"bleed", PersistentDataType.STRING)){
+                    e.setCancelled(true);
+                }
+            }
         }
     }
 

@@ -55,6 +55,20 @@ public class staffCMD extends BaseCommand {
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Se aplico el efecto Invulnerable por " + i));
         }
     }
+    @Subcommand("bleed")
+    @CommandCompletion("seconds")
+    @CommandPermission("staff.admin")
+    @Description("you know 3")
+    public void bleed(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            int i = Integer.parseInt(args[0]);
+            if(i <= 0)return;
+            int i2 = Integer.parseInt(args[1]);
+            if(i2 <= 0)return;
+            PlayerData.addDataEffect(p,"bleed",i,i2);
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Se aplico el efecto Desangrado por " + i));
+        }
+    }
 
     @Subcommand("exposure")
     @CommandCompletion("set|get")
