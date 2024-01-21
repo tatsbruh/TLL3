@@ -21,7 +21,7 @@ import java.util.EnumSet;
 public class CustomDolphin extends EntityDolphin {
     public CustomDolphin(World world){
         super(EntityTypes.w,world);
-        EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),10,1.24,30,60,true);
+        EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),3,1.24,60,30,true);
     }
     @Override
     protected void B() {

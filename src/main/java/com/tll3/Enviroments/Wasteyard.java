@@ -23,10 +23,11 @@ public class Wasteyard extends ChunkGenerator {
         this.populator = new WasteyardPopulator();
     }
 
+
     @Override
     public void generateNoise(@NotNull WorldInfo worldInfo, @NotNull Random random, int chunkX, int chunkZ, @NotNull ChunkGenerator.ChunkData chunkData) {
         SimplexOctaveGenerator generator = new SimplexOctaveGenerator(worldInfo.getSeed(), 8);
-        generator.setScale(0.012D);
+        generator.setScale(0.02D);
         for (int X = 0; X < 16; X++) {
             for (int Z = 0; Z < 16; Z++) {
                 double noise = generator.noise(chunkX * 16 + X, chunkZ * 16 + Z, 0.32D, 0.17D);
@@ -97,23 +98,23 @@ public class Wasteyard extends ChunkGenerator {
     }
     protected Material getRandomMaterial() {
         int r = random.nextInt(100);
-        if(r >= 70){return Material.LIGHT_GRAY_CONCRETE_POWDER;
+        if(r >= 70){return Material.POLISHED_BLACKSTONE_BRICKS;
         }else if(r < 70 && r >= 55){
             return Material.GRAY_GLAZED_TERRACOTTA;
         }else if(r < 55 && r >= 25){
             return Material.BLACKSTONE;
         }
-        return Material.GRAY_CONCRETE_POWDER;
+        return Material.BASALT;
     }
     protected Material getRandomMaterial2() {
         int r = random.nextInt(100);
-        if(r >= 70){return Material.LIGHT_GRAY_CONCRETE_POWDER;
+        if(r >= 70){return Material.CRACKED_POLISHED_BLACKSTONE_BRICKS;
         }else if(r < 70 && r >= 30){
             return Material.GRAY_GLAZED_TERRACOTTA;
         }else if(r < 30 && r >= 25){
             return Material.MAGMA_BLOCK;
         }
-        return Material.GRAY_CONCRETE_POWDER;
+        return Material.BASALT;
     }
 
     protected Material getUnderMaterial() {

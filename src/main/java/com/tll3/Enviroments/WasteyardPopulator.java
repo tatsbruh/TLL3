@@ -1,6 +1,7 @@
 package com.tll3.Enviroments;
 
 import org.bukkit.Material;
+import org.bukkit.TreeType;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -21,13 +22,17 @@ public class WasteyardPopulator extends BlockPopulator {
             if(limitedRegion.getType(x, y, z).isSolid()) {
                 limitedRegion.setType(x, y + 1, z, doRandomThing());
             }
+
         }
     }
 
     protected Material doRandomThing() {
         int r = random.nextInt(100);
-        if(r >= 50){return Material.WITHER_ROSE;
+        if(r >= 70){return Material.DEAD_BRAIN_CORAL;
+        }else if(r < 70 && r >= 55){
+            return Material.DEAD_FIRE_CORAL;
         }
+
         return Material.FIRE;
     }
 }

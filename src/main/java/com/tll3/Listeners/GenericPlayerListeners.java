@@ -8,8 +8,13 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
 import com.tll3.Task.*;
+import net.minecraft.server.level.EntityPlayer;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.entity.EntityLiving;
+import net.minecraft.world.entity.EnumMoveType;
+import net.minecraft.world.item.ItemTrident;
 import net.minecraft.world.level.block.BlockTrapdoor;
+import net.minecraft.world.phys.Vec3D;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
@@ -91,13 +96,15 @@ public class GenericPlayerListeners implements Listener {
             }
 
             if(checkItemId(item,"brimstonetrident")){
-                if(p.isInLava()){
-                    EntityLiving l = ((CraftPlayer)p).getHandle();
-                    l.r(40);
-                    double speed = 1.75;
+                if(p.isInLava() || (p.getWorld().getName().equals("world_nether") && getMonsoon_active().equalsIgnoreCase("true"))){
+                    if(p.hasCooldown(Material.TRIDENT))return;
+                    EntityPlayer papa = ((CraftPlayer)p).getHandle();
+                    papa.t(25);
+                    p.playSound(p.getLocation(),Sound.ITEM_TRIDENT_RIPTIDE_3,10.0F,2.0F);
+                    double speed = 6.55;
                     Vector direction = p.getLocation().getDirection().multiply(speed);
                     p.setVelocity(direction);
-                    p.playSound(p.getLocation(),Sound.ITEM_TRIDENT_RIPTIDE_1,10.0F,2.0F);
+                    p.setCooldown(Material.TRIDENT,30);
                 }
             }
 
