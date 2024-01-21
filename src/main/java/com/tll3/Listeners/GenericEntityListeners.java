@@ -124,7 +124,7 @@ public class GenericEntityListeners implements Listener {
             }
             if(damager instanceof Zombie z){
                 if(EntityNaturalSpawn.doRandomChance(10)){
-                    PlayerData.addDataEffect(p,"bleed",200,0);
+                    PlayerData.addDataEffect(p,"bleed",25,0);
                 }
             }
             if(damager instanceof Spider s){

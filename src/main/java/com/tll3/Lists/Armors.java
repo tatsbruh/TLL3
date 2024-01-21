@@ -17,7 +17,9 @@ public class Armors {
                         "&7resistentes",
                         "",
                         "&cTener el set completo te otorgara:",
-                        "&7- &63 corazones de vida extra",
+                        "&7- &64 corazones de vida extra",
+                        "&7- &8Total inmunidad a la oscuridad de la Wasteyard",
+                        "&7- &cFuerza permanente",
                         "&7- Resistencia permanente"
                         ).build();
     }
@@ -32,7 +34,9 @@ public class Armors {
                         "&7resistentes",
                         "",
                         "&cTener el set completo te otorgara:",
-                        "&7- &63 corazones de vida extra",
+                        "&7- &64 corazones de vida extra",
+                        "&7- &8Total inmunidad a la oscuridad de la Wasteyard",
+                        "&7- &cFuerza permanente",
                         "&7- Resistencia permanente"
                 ).build();
     }
@@ -47,7 +51,9 @@ public class Armors {
                         "&7resistentes",
                         "",
                         "&cTener el set completo te otorgara:",
-                        "&7- &63 corazones de vida extra",
+                        "&7- &64 corazones de vida extra",
+                        "&7- &8Total inmunidad a la oscuridad de la Wasteyard",
+                        "&7- &cFuerza permanente",
                         "&7- Resistencia permanente"
                 ).build();
     }
@@ -62,7 +68,9 @@ public class Armors {
                         "&7resistentes",
                         "",
                         "&cTener el set completo te otorgara:",
-                        "&7- &63 corazones de vida extra",
+                        "&7- &64 corazones de vida extra",
+                        "&7- &8Total inmunidad a la oscuridad de la Wasteyard",
+                        "&7- &cFuerza permanente",
                         "&7- Resistencia permanente"
                 ).build();
     }

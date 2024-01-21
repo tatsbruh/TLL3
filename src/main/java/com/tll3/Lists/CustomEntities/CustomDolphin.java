@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Listeners.EntityNaturalSpawn;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -11,6 +12,7 @@ import net.minecraft.world.entity.animal.EntityDolphin;
 import net.minecraft.world.entity.monster.EntityGuardian;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 
 import javax.annotation.Nullable;
@@ -19,6 +21,7 @@ import java.util.EnumSet;
 public class CustomDolphin extends EntityDolphin {
     public CustomDolphin(World world){
         super(EntityTypes.w,world);
+        EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),10,1.24,30,60,true);
     }
     @Override
     protected void B() {

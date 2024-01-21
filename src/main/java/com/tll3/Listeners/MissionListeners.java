@@ -350,6 +350,82 @@ public class MissionListeners implements Listener {
                     }
                 }
             }
+        }else if(getDay() >= 14 && getDay() < 21){
+            if(PlayerData.getMission(killer,"21_waste") != 1 && killer != null){
+                if(checkWasteyardKills(killer)){
+                    missionCompleted(killer,"#524843De parte del Vertedero","21_waste",45,30);
+                    return;
+                }
+                switch (entity.getType()){
+                    case PILLAGER ->{
+                        AddAndCheckKillCount(entity,"lostscav",5,killer,"21los");
+                    }
+                    case MAGMA_CUBE -> {
+                        AddAndCheckKillCount(entity,"toxiccrawler",5,killer,"21bri");
+                    }
+                    case PARROT -> {
+                        AddAndCheckKillCount(entity,"brimseeker",5,killer,"21par");
+                    }
+                    case PIGLIN_BRUTE -> {
+                        AddAndCheckKillCount(entity,"scorchbeast",5,killer,"21sco");
+                    }
+                    case GHAST -> {
+                        AddAndCheckKillCount(entity,"soulvag",5,killer,"21wan");
+                    }
+                    case CREEPER -> {
+                        AddAndCheckKillCount(entity,"rustwalker",5,killer,"21rus");
+                    }
+                }
+            }
+            if(PlayerData.getMission(killer,"22_blaze") != 1 && killer != null){
+                if(PlayerData.getObjective(killer,"22wind") >= 10 && PlayerData.getObjective(killer,"22armor") >= 10){
+                    missionCompleted(killer,"#fae3c3¡Vienen del Futuro! (y del pasado)","22_blaze",35,20);
+                    return;
+                }
+                switch (entity.getType()){
+                    case BLAZE -> {
+                        AddAndCheckKillCount(entity,"windcharger",10,killer,"22wind");
+                        AddAndCheckKillCount(entity,"armoredblaze",10,killer,"22armor");
+                    }
+                }
+            }
+            if(PlayerData.getMission(killer,"23_ash") != 1 && killer != null){
+                if(PlayerData.getObjective(killer,"23ashen") >= 1){
+                    missionCompleted(killer,"#737373Desde las Cenizas","23_ash",40,25);
+                    return;
+                }
+                if(entity.getType() == EntityType.WITHER){
+                    AddAndCheckKillCount(entity,"ashenwither",1,killer,"23ashen");
+                }
+            }
+            if(PlayerData.getMission(killer,"24_bee") != 1 && killer != null){
+                if(PlayerData.getObjective(killer,"24bee") >= 20){
+                    missionCompleted(killer,"#255c3cÉpoca de plaga","24_bee",32,20);
+                    return;
+                }
+                if(entity.getType() == EntityType.BEE){
+                    if(PlayerData.getObjective(killer,"24bee") < 20) {
+                        PlayerData.setObjectiveCount(killer, "24bee", PlayerData.getObjective(killer, "24bee") + 1);
+                    }
+                }
+            }
+            if(PlayerData.getMission(killer,"25_llama") != 1 && killer != null){
+                if(PlayerData.getObjective(killer,"25lla") >= 10 && PlayerData.getObjective(killer,"25goa") >= 10){
+                    missionCompleted(killer,"#ab789bEl pastor y su rebaño","25_llama",36,24);
+                    return;
+                }
+                if(entity.getType() == EntityType.GOAT){
+                    if(PlayerData.getObjective(killer,"25lla") < 10) {
+                        PlayerData.setObjectiveCount(killer, "25lla", PlayerData.getObjective(killer, "25lla") + 1);
+                    }
+                }
+                if(entity.getType() == EntityType.LLAMA){
+                    if(PlayerData.getObjective(killer,"25goa") < 10) {
+                        PlayerData.setObjectiveCount(killer, "25goa", PlayerData.getObjective(killer, "25goa") + 1);
+                    }
+                }
+            }
+
         }
     }
 
@@ -365,6 +441,16 @@ public class MissionListeners implements Listener {
         PlayerData.setPrestige(p,PlayerData.getPrestige(p) + prestige);
         PlayerData.setHunts(p,PlayerData.getHunts(p) + 1);
     }
+
+    public static void AddAndCheckKillCount(LivingEntity liv,String data, int maxkills,Player killer,String objective){
+        if(Data.has(liv,data,PersistentDataType.STRING)){
+        if(PlayerData.getObjective(killer,objective) < maxkills) {
+            PlayerData.setObjectiveCount(killer, objective, PlayerData.getObjective(killer, objective) + 1);
+        }
+        }
+
+    }
+
 
     public static boolean checkNoMercy(Player p){
         if(PlayerData.getObjective(p,"01zom") >= 1 &&
@@ -405,7 +491,16 @@ public class MissionListeners implements Listener {
                 PlayerData.getObjective(p,"12revcr") >= 10 &&
                 PlayerData.getObjective(p,"12reven") >= 10
         )return true;
-
+        return false;
+    }
+    public static boolean checkWasteyardKills(Player p){
+        if(PlayerData.getObjective(p,"21sco") >= 5 &&
+                PlayerData.getObjective(p,"21par") >= 5 &&
+                PlayerData.getObjective(p,"21rus") >= 5 &&
+                PlayerData.getObjective(p,"21los") >= 5 &&
+                PlayerData.getObjective(p,"21wan") >= 5 &&
+                PlayerData.getObjective(p,"21bri") >= 5
+        )return true;
         return false;
     }
 

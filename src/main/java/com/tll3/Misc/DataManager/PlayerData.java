@@ -23,6 +23,17 @@ public class PlayerData {
         }
     }
 
+
+    public static void setItemCooldown(Player target,String item,int number){
+        Data.setPlayerData(target, "cooldown_" + item, String.valueOf(number));
+    }
+    public static int getItemCooldown(Player target,String item){
+        return Integer.parseInt(Data.getPlayerData(target,"cooldown_" + item,"0"));
+    }
+
+
+
+
     public static void setExposure(Player p, int amount){
         if(Data.has(p,"exposure",PersistentDataType.INTEGER)){
             Data.set(p,"exposure",PersistentDataType.INTEGER,amount);

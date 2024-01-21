@@ -250,7 +250,118 @@ public class guiItems {
     }
 
 
+    //Dia 14 misiones
+    public static ItemStack day14mission1(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"21_waste") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.TUFF)
+                .setDisplayName("#524843De parte del Vertedero")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 5 Scorched Brutes &8(" + PlayerData.getObjective(p,"21sco") + "/5)",
+                        "&7- Mata 5 Rustwalkers &8(" + PlayerData.getObjective(p,"21rus") + "/5)",
+                        "&7- Mata 5 Wandering Vagrants &8(" + PlayerData.getObjective(p,"21wan") + "/5)",
+                        "&7- Mata 5 Brimseekers &8(" + PlayerData.getObjective(p,"21par") + "/5)",
+                        "&7- Mata 5 Lost Scavengers &8(" + PlayerData.getObjective(p,"21los") + "/5)",
+                        "&7- Mata 5 Brimstone Cubes &8(" + PlayerData.getObjective(p,"21bri") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x30 &cPrestigio",
+                        "&7x45 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day14mission2(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"22_blaze") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.FIRE_CHARGE)
+                .setDisplayName("#fae3c3¡Vienen del Futuro! (y del pasado)")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 10 Wind Chargers &8(" + PlayerData.getObjective(p,"22wind") + "/10)",
+                        "&7- Mata 10 Armored Blazes &8(" + PlayerData.getObjective(p,"22armor") + "/10)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x20 &cPrestigio",
+                        "&7x35 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day14mission3(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"23_ash") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.NETHER_STAR)
+                .setDisplayName("#737373Desde las Cenizas")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 1 Ashen Wither &8(" + PlayerData.getObjective(p,"23ashen") + "/1)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x25 &cPrestigio",
+                        "&7x40 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day14mission4(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"24_bee") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.HONEYCOMB)
+                .setDisplayName("#255c3cÉpoca de plaga")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 20 Langostas &8(" + PlayerData.getObjective(p,"24bee") + "/20)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x20 &cPrestigio",
+                        "&7x32 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day14mission5(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"25_llama") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.STICK)
+                .setDisplayName("#ab789bEl pastor y su rebaño")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 10 Llamas &8(" + PlayerData.getObjective(p,"25lla") + "/10)",
+                        "&7- Mata 10 Cabras &8(" + PlayerData.getObjective(p,"25goa") + "/10)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x24 &cPrestigio",
+                        "&7x36 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
 
+
+
+    //Almanaque
+
+    //dia 7
+
+    public static ItemStack nadaDia0(){
+        return new ItemBuilder(Material.GRAY_DYE)
+                .setDisplayName("&c&l¡Nada más que moscas!")
+                .setLore(
+                        "&7Vuelve en dias futuros para ver mas informacion!"
+                ).build();
+    }
 
 
     public static ItemStack infoNinja(){
@@ -540,4 +651,304 @@ public class guiItems {
                         "&8asi que has lo posible para evitar ser asesinado por el."
                 ).build();
     }
+
+    //Dia 14
+    public static ItemStack infoBlazeArmor(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjc4ZWYyZTRjZjJjNDFhMmQxNGJmZGU5Y2FmZjEwMjE5ZjViMWJmNWIzNWE0OWViNTFjNjQ2Nzg4MmNiNWYwIn19fQ=="))
+                .setDisplayName("&6Armored Blaze | &eDía 14")
+                .setLore(
+                        "&7El Mismísimo 'Hovering Inferno' o 'Wildfire'",
+                        "&7o simplemente 'Mob D' ha vuelto! pero con un apodo",
+                        "&7diferente, seguramente para pasar desapercibido.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Fortalezas del Nether",
+                        "&7- Cualquier lugar en el Overworld durante una Monsoon",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Sus proyectiles explotan al impactar contra una superficie o entidad.",
+                        "",
+                        "&8'Yo no se nada, yo vote por el Phantom!'"
+                ).build();
+    }
+    public static ItemStack infoWindCharger(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYjc4ZWYyZTRjZjJjNDFhMmQxNGJmZGU5Y2FmZjEwMjE5ZjViMWJmNWIzNWE0OWViNTFjNjQ2Nzg4MmNiNWYwIn19fQ=="))
+                .setDisplayName("&6Wind Charger | &eDía 14")
+                .setLore(
+                        "&7El hermano perdido del Breezer surge de los vientos",
+                        "&7para causar problemas a los sobrevivientes!",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Fortalezas del Nether",
+                        "&7- Cualquier lugar en el Overworld durante una Monsoon",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Al impactar sus proyectiles contra una superficie, crea una onda",
+                        "&7de viento que expulsa a los jugadores en su radio.",
+                        "",
+                        "&8'Te diría algo importante de este bicho pero falta aún una update más para considerarlo'"
+                ).build();
+    }
+    public static ItemStack infoUnstCreeper(){
+        return new ItemBuilder(Material.CREEPER_HEAD)
+                .setDisplayName("&6Unstable Creeper | &eDía 14")
+                .setLore(
+                        "&7Un creeper cuyos genes han sido modificados de tal manera",
+                        "&7que su propia materia es inestable y similar a la de un Enderman.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier lugar",
+                        "&7- Lugares donde solían haber gatos o perros",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Se teletransporta aleatoriamente, es inmune al daño de proyectiles",
+                        "&7y tiene una explosion de nivel 5.",
+                        "",
+                        "&8'Tener a uno de estos cerca es un tiro de moneda, o se teletransporta a un lugar lejano",
+                        "&8y te mantienes a salvo, o se teletransporta en tu cara y sufres por el resto del dia'"
+                ).build();
+    }
+    public static ItemStack infoQuantumite(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWJjN2I5ZDM2ZmI5MmI2YmYyOTJiZTczZDMyYzZjNWIwZWNjMjViNDQzMjNhNTQxZmFlMWYxZTY3ZTM5M2EzZSJ9fX0="))
+                .setDisplayName("&6Quantumite | &eDía 14")
+                .setLore(
+                        "&7Un endermite cuántico que posee cargas a niveles colosales,",
+                        "&7sus capacidades reales aun son desconocidas.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Al tirar una ender pearl con bajas chances.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Al golpear teletransporta al jugador a un radio de 200 bloques aleatorio.",
+                        "",
+                        "&8'Yo no veo a estos bichos como algo tan peligroso, capaz te pueden ayudar en alguna situación,",
+                        "&8de todas formas no te recomiendo acercate a uno, a menos que te guste aparecer en lugares que nunca viste'"
+                ).build();
+    }
+    public static ItemStack infoVoidOverseer(){
+        return new ItemBuilder(Material.SKELETON_SKULL)
+                .setDisplayName("&6Void Overseer | &eDía 14")
+                .setLore(
+                        "&7Un esqueleto proveniente de las profundidades del vació,",
+                        "&7sus flechas están imbuidas con esencia del End.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Se teletransporta donde cae sus flechas, al impactar con una entidad, cambia de posición",
+                        "&7con la entidad.",
+                        "",
+                        "&8'Estos bastardos son un dolor de cabeza, y peor cuando hay mas de una entidad junto a el, te vas a tener",
+                        "&8que inventar alguna maniobra para escapar de estos bichos'"
+                ).build();
+    }
+    public static ItemStack infoLivingShrieker(){
+        return new ItemBuilder(Material.SKELETON_SKULL)
+                .setDisplayName("&6Living Shrieker | &eDía 14")
+                .setLore(
+                        "&7Una abominación proveniente del Deep Dark, un esqueleto fusionado",
+                        "&7con un Shrieker, pero de alguna manera no invoca un Warden.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Lanza ondas supersónicas imprecisas hacia su objetivo",
+                        "",
+                        "&8'A pesar de su obvia situación, no posee ninguna propiedad del Warden mas que sus ondas",
+                        "&8supersónicas, incluso si son imprecisas, son bastante dolorosas.'"
+                ).build();
+    }
+    public static ItemStack infoStrayComan(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMmM1MDk3OTE2YmMwNTY1ZDMwNjAxYzBlZWJmZWIyODcyNzdhMzRlODY3YjRlYTQzYzYzODE5ZDUzZTg5ZWRlNyJ9fX0="))
+                .setDisplayName("&6Stray Commando | &eDía 14")
+                .setLore(
+                        "&7Este stray regresa de una pesadilla con el único objetivo de",
+                        "&7asesinar a todos los sobrevivientes restantes.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Lugares nevados.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Posee un hacha con filo 20, es bastante ágil y sus golpes congelan",
+                        "&7a su objetivo",
+                        "",
+                        "&8'Estoy seguro que varios de ustedes ya han visto a este bicho mas de una vez,",
+                        "&8realmente tengo que decir algo al respecto?'"
+                ).build();
+    }
+    public static ItemStack infoSlimePes(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvY2M1YjM4MDU3Zjg5OTY0MjUyMzI1NDM4MjNlMGU0YTRmYzhiZGJiNDg1OTE0YWMwNGFjYTkyMzFjMmU0YzhhMSJ9fX0="))
+                .setDisplayName("&6Slime de Pesadilla | &eDía 14")
+                .setLore(
+                        "&7Un conjunto de Slimes combinados que acechan los",
+                        "&7pantanos en busca de su siguiente victima.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Slime chunks",
+                        "&7- Pantanos",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Saltan hacia su objetivo haciendo 35 de daño base",
+                        "",
+                        "&8'Ten cuidado con estas criaturas, si te atrapan de alguna manera, recuperarse",
+                        "&8va a ser muy difícil'"
+                ).build();
+    }
+    public static ItemStack infoNeonSpider(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzVlMjQ4ZGEyZTEwOGYwOTgxM2E2Yjg0OGEwZmNlZjExMTMwMDk3ODE4MGVkYTQxZDNkMWE3YThlNGRiYTNjMyJ9fX0="))
+                .setDisplayName("&6Araña de Neón | &eDía 14")
+                .setLore(
+                        "&7Una araña cuyas fauces poseen capacidades extrañas",
+                        "&7que le permiten inyectar sustancias brillantes.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier lugar.",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Sus picaduras infligen Glowing, el cual aumenta tu exposición.",
+                        "",
+                        "&8'Vigila tu exposición y no dejes que este bicho te arruine tu sigilo'"
+                ).build();
+    }
+    public static ItemStack infoLangosta(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDQyMGM5YzQzZTA5NTg4MGRjZDJlMjgxYzgxZjQ3YjE2M2I0NzhmNThhNTg0YmI2MWY5M2U2ZTEwYTE1NWYzMSJ9fX0="))
+                .setDisplayName("&6Langosta | &eDía 14")
+                .setLore(
+                        "&7Un bicho volador que tiene propiedades muy",
+                        "&7dañinas para una persona, usa su aguijón para atacar.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Algunos partes.",
+                        "&7- Rompiendo panales de abeja",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Sus picaduras infligen debilidad y lentitud, aparte que no mueren",
+                        "&7al perder su aguijón.",
+                        "",
+                        "&8'No tengo idea de donde surgieron estos bichos, son una plaga molesta y ya'"
+                ).build();
+    }
+    public static ItemStack infoAshenWither(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODg2ZGMwY2ZjYWVlY2ZlMWFiNjkxNDZlNGQ0ZjExOTA4MzcwNzZhNjdkZWMxMzVmYWJkYTYyNzFmMzc1ZDAxZiJ9fX0="))
+                .setDisplayName("&6Ashen Wither | &eDía 14")
+                .setLore(
+                        "&7Un misterioso ente proveniente de la Wasteyard, posee la fuerza para",
+                        "&7acabar con sus oponentes con facilidad.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Invocando a un Wither Boss en la Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Sus calaveras tienen explosion de nivel 2 y si están cargadas de nivel 4",
+                        "&7tiene 3 ataques diferentes y tiene el doble de vida que un Wither Boss normal",
+                        "",
+                        "&8'Este va a ser la primera criatura fuerte que te enfrentes, preparate bien!'"
+                ).build();
+    }
+    public static ItemStack infoScorchbeast(){
+        return new ItemBuilder(Material.PIGLIN_HEAD)
+                .setDisplayName("&6Scorched Brute | &eDía 14")
+                .setLore(
+                        "&7Un Piglin que se perdio dentro de la Wasteyard, ahora preparado",
+                        "&7con la fuerza de la dimensión, busca un objetivo para atacar.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- La Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Tiene velocidad 2 y posee un hacha de netherite",
+                        "",
+                        "&8'Un cerdo mas dentro de un vertedero infernal, acaso vi esto en otra parte?'"
+                ).build();
+    }
+    public static ItemStack infoLostScav(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGFlZTZiYjM3Y2JmYzkyYjBkODZkYjVhZGE0NzkwYzY0ZmY0NDY4ZDY4Yjg0OTQyZmRlMDQ0MDVlOGVmNTMzMyJ9fX0="))
+                .setDisplayName("&6Lost Scavenger | &eDía 14")
+                .setLore(
+                        "&7Un Pillager que se perdio dentro de la Wasteyard, ahora buscando la manera",
+                        "&7de escapar, lleva consigo flechas especiales.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- La Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Tiene una ballesta poderosa con flechas de Fatiga, Glowing, Wither y Slowness.",
+                        "",
+                        "&8'Mas que un peligro real, estos vagabundos son mas una gran molestia por sus flechas",
+                        "&8especiales, mantente lejos de ellos!'"
+                ).build();
+    }
+    public static ItemStack infoRustwalker(){
+        return new ItemBuilder(Material.CREEPER_HEAD)
+                .setDisplayName("&6Rustwalker | &eDía 14")
+                .setLore(
+                        "&7Creaciones mecánicas con un propósito desconocido, vagan por la Wasteyard",
+                        "&7buscando un objetivo para explotar.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- La Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Tiene explosion de nivel 6 y tiene un fuse de 1.25 segundos",
+                        "",
+                        "&8'Estos robots casi no te dan tiempo a reaccionar, mantente al tanto de estas",
+                        "&8chatarras!'"
+                ).build();
+    }
+    public static ItemStack infoBrimseeker(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWRmNGIzNDAxYTRkMDZhZDY2YWM4YjVjNGQxODk2MThhZTYxN2Y5YzE0MzA3MWM4YWMzOWE1NjNjZjRlNDIwOCJ9fX0="))
+                .setDisplayName("&6Brimseeker | &eDía 14")
+                .setLore(
+                        "&7Loros esqueléticos que rondan por la Wasteyard buscando a",
+                        "&7alguien a quien picotear.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- La Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Vuelan hacia el jugador y atacan con 40 de daño base.",
+                        "",
+                        "&8'Quien dejo a sus mascotas por la Wasteyard? no pueden ir llamando al control",
+                        "&8de animales?, Pensándolo bien, porfavor no hagas eso'"
+                ).build();
+    }
+    public static ItemStack infoBrimstoneCube(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTFjOTdhMDZlZmRlMDRkMDAyODdiZjIwNDE2NDA0YWIyMTAzZTEwZjA4NjIzMDg3ZTFiMGMxMjY0YTFjMGYwYyJ9fX0="))
+                .setDisplayName("&6Brimstone Cube | &eDía 14")
+                .setLore(
+                        "&7Cubos de azufre que merodean por la Wasteyard sin algún propósito,",
+                        "&7sin embargo, son hostiles ante alguna presencia humana.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- La Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Saltan hacia su objetivo teniendo 20 de daño base e infligen Wither",
+                        "",
+                        "&8'No entiendo porque los Magma Cubes decidieron combinarse con los restos de Azufre, pero no",
+                        "&8se puede juzgar entidades sin cerebro'"
+                ).build();
+    }
+    public static ItemStack infoWanderingVagrant(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2E4YjcxNGQzMmQ3ZjZjZjhiMzdlMjIxYjc1OGI5YzU5OWZmNzY2NjdjN2NkNDViYmM0OWM1ZWYxOTg1ODY0NiJ9fX0="))
+                .setDisplayName("&6Wandering Vagrant | &eDía 14")
+                .setLore(
+                        "&7Son criaturas que rodean los cielos oscuros de la Wasteyard,",
+                        "&7nadie sabe realmente que son, ni como llegaron ahi.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- La Wasteyard",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Lanza bolas de fuego con explosion de nivel 8",
+                        "",
+                        "&8'Si uno te llega a ver, preparate para correr, sus explosiones no son algo",
+                        "&8de lo que te gustara afrontar'"
+                ).build();
+    }
+
+
+
 }

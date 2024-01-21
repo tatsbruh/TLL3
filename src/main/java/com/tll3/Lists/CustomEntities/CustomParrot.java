@@ -1,6 +1,7 @@
 package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.EntityHelper;
 import net.minecraft.core.BlockPosition;
 import net.minecraft.core.EnumDirection;
 import net.minecraft.tags.TagsBlock;
@@ -35,6 +36,7 @@ public class CustomParrot extends EntityParrot {
     public CustomParrot(World world) {
         super(EntityTypes.au, world);
         this.getBukkitEntity().setCustomName(ChatUtils.format("#70503eBrimseeker"));
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"brimseeker");
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

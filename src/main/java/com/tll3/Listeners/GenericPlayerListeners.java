@@ -8,27 +8,28 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
 import com.tll3.Task.*;
+import net.minecraft.world.entity.EntityLiving;
 import net.minecraft.world.level.block.BlockTrapdoor;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
+import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityPoseChangeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.EntityToggleSwimEvent;
-import org.bukkit.event.player.PlayerBucketFillEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.Objects;
 import java.util.Random;
@@ -44,8 +45,11 @@ public class GenericPlayerListeners implements Listener {
 
     @EventHandler
     public void joinL(PlayerJoinEvent e){
-
         var p = e.getPlayer();
+        if(PlayerData.getItemCooldown(p,"inv_tome") > 0){
+            p.setCooldown(Material.BOOK,PlayerData.getItemCooldown(p,"inv_tome"));
+        }
+
         PlayerData.addExposure(p);
         if(getDay() >= 7) {
             new ExposureTask(p).runTaskTimer(TLL3.getInstance(), 0L, 1L);
@@ -57,6 +61,51 @@ public class GenericPlayerListeners implements Listener {
         new ServerTickTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
 
     }
+
+    @EventHandler
+    public void quitE(PlayerQuitEvent e){
+        var p = e.getPlayer();
+        if(p.hasCooldown(Material.BOOK)){
+            PlayerData.setItemCooldown(p,"inv_tome",p.getCooldown(Material.BOOK));
+        }
+    }
+
+
+    @EventHandler
+    public void rightclickE(PlayerInteractEvent e){
+        var p = e.getPlayer();
+        var item = e.getItem();
+        if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
+            if(item == null)return;
+            if(!item.hasItemMeta())return;
+            if(checkItemId(item,"invulnerable_tome")){
+                if(p.hasCooldown(Material.BOOK)){
+                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&c¡No puedes usar este item aun!"));
+                    p.getWorld().playSound(p.getLocation(),Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-1.0F);
+                }else{
+                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eHas usado tu &8&lTomo de la Inmortalidad"));
+                    p.getWorld().playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE,10.0F,2.0F);
+                    p.setCooldown(Material.BOOK,6000);
+                    PlayerData.addDataEffect(p,"invulnerable",15,1);
+                }
+            }
+
+            if(checkItemId(item,"brimstonetrident")){
+                if(p.isInLava()){
+                    EntityLiving l = ((CraftPlayer)p).getHandle();
+                    l.r(40);
+                    double speed = 1.75;
+                    Vector direction = p.getLocation().getDirection().multiply(speed);
+                    p.setVelocity(direction);
+                    p.playSound(p.getLocation(),Sound.ITEM_TRIDENT_RIPTIDE_1,10.0F,2.0F);
+                }
+            }
+
+        }
+    }
+
+
+
 
     @EventHandler
     public void itemduraE(PlayerItemDamageEvent e){
@@ -395,4 +444,17 @@ public class GenericPlayerListeners implements Listener {
             p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7Tu Totem de la Inmortalidad no aplico el pánico en nadie. (20 < " + r + ")"));
         }
     }
+
+
+    public static boolean checkItemId(ItemStack item,String id){
+        if(item.hasItemMeta()){
+            if (item.getItemMeta().getPersistentDataContainer().has(new NamespacedKey(TLL3.getInstance(),"id"),PersistentDataType.STRING)){
+                if(item.getItemMeta().getPersistentDataContainer().get(new NamespacedKey(TLL3.getInstance(),"id"),PersistentDataType.STRING).equalsIgnoreCase(id)){
+                  return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

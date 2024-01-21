@@ -356,7 +356,7 @@ public class Entities {
         addPotionEffect(e,PotionEffectType.INCREASE_DAMAGE,4);
     }
     public static void strayCom(Stray s){
-        setName(s,"&c&lStray Comandante");
+        setName(s,"&6&lStray Commando");
         setMobRange(s,120);
         setHead(s,new ItemStack(Material.GOLDEN_HELMET));
         setChestplate(s,new ItemStack(Material.GOLDEN_CHESTPLATE));
@@ -370,7 +370,7 @@ public class Entities {
     public static void slimeNight(Slime s){
         setName(s,"#497555Slime de Pesadilla");
         setMobHealth(s,65);
-        setMobDamage(s,15);
+        setMobDamage(s,35);
         s.setSize(14);
         setIdentifierString(s,"slimenightmare");
     }
@@ -476,7 +476,7 @@ public class Entities {
         setIdentifierString(s,"soulvag");
     }
     public static void scBrute(PiglinBrute c){
-        setName(c,"#a84738Scorched Beast");
+        setName(c,"#a84738Scorched Brute");
         c.setImmuneToZombification(true);
         setMobHealth(c,55);
         setMainHand(c,new ItemBuilder(Material.NETHERITE_AXE).setUnbreakable(true).build());
@@ -505,7 +505,7 @@ public class Entities {
     public static void toxcrawl(MagmaCube s){
         setName(s,"#2e2e2eBrimstone Cube");
         setMobHealth(s,35);
-        setMobDamage(s,12);
+        setMobDamage(s,20);
         s.setSize(12);
         setIdentifierString(s,"toxiccrawler");
     }

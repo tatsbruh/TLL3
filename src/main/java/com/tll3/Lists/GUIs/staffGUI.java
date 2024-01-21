@@ -22,7 +22,7 @@ public class staffGUI {
                         "# # # # # # # # #",
                         "# 1 2 3 4 5 6 7 #",
                         "# 8 9 0 a b c d #",
-                        "# . . . . . . . #",
+                        "# e f g h i j k #",
                         "# . . . . . . . #",
                         "# # # # # # # # #")
                 .addIngredient('#',guiItems.filler())
@@ -38,6 +38,12 @@ public class staffGUI {
                 .addIngredient('0',new giveItem(Armors.drChest()))
                 .addIngredient('a',new giveItem(Armors.drLegs()))
                 .addIngredient('b',new giveItem(Armors.drBoots()))
+                .addIngredient('c',new giveItem(Items.invultome()))
+                .addIngredient('d',new giveItem(Items.brimstoneTrident()))
+                .addIngredient('e',new giveItem(Items.vulcanitePickaxe()))
+                .addIngredient('f',new giveItem(Items.vulcaniteAxe()))
+                .addIngredient('g',new giveItem(Items.vulcaniteShovel()))
+                .addIngredient('h',new giveItem(Items.vulcaniteHoe()))
                 .build();
         var window = Window.single()
                 .setViewer(player)

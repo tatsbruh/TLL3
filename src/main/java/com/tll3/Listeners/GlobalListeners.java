@@ -8,6 +8,7 @@ import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,6 +18,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.world.ChunkLoadEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -91,7 +93,7 @@ public class GlobalListeners implements Listener {
         if(entity instanceof Creature enemy){
             if(enemy.hasPotionEffect(PotionEffectType.BLINDNESS)){
                 switch (reason){
-                    case FIRE,FIRE_TICK,LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 3);
+                    case FIRE,FIRE_TICK,LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 5);
                 }
             }
         }
@@ -182,6 +184,34 @@ public class GlobalListeners implements Listener {
         var p = e.getPlayer();
         var block = e.getBlock().getType();
         var loc = e.getBlock().getLocation();
+        var item = p.getInventory().getItemInMainHand();
+
+        if(item != null){
+            if(item.hasItemMeta()){
+               if (GenericPlayerListeners.checkItemId(item,"vulcanpickaxe")){
+                   if(item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH))return;
+                   switch (block){
+                       case IRON_ORE,DEEPSLATE_IRON_ORE ->{
+                           e.getBlock().getDrops().clear();
+                           e.getBlock().getLocation().getWorld().dropItemNaturally(loc,new ItemStack(Material.IRON_INGOT));
+                       }
+                       case GOLD_ORE,DEEPSLATE_GOLD_ORE ->{
+                           e.getBlock().getDrops().clear();
+                           e.getBlock().getLocation().getWorld().dropItemNaturally(loc,new ItemStack(Material.GOLD_INGOT));
+                       }
+                       case COPPER_ORE,DEEPSLATE_COPPER_ORE ->{
+                           e.getBlock().getDrops().clear();
+                           e.getBlock().getLocation().getWorld().dropItemNaturally(loc,new ItemStack(Material.COPPER_INGOT));
+                       }
+                       case ANCIENT_DEBRIS ->{
+                           e.getBlock().getDrops().clear();
+                           e.getBlock().getLocation().getWorld().dropItemNaturally(loc,new ItemStack(Material.NETHERITE_SCRAP));
+                       }
+                   }
+               }
+            }
+        }
+
         if(getDay() >= 14){
         if(block == Material.BEE_NEST){
             for(int i = 0;i < 6;i++){
