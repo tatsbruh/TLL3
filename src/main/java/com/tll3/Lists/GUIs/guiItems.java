@@ -197,7 +197,7 @@ public class guiItems {
             cosa = ChatUtils.format("&a&l¡Completado!");
         }
         return new ItemBuilder(Material.FERMENTED_SPIDER_EYE)
-                .setDisplayName("#17c200Invasion de Plagas")
+                .setDisplayName("#17c200Epidemia Explosiva")
                 .setLore(
                         "&6&lObjetivos:",
                         "&7- Mata 10 Termitas &8(" + PlayerData.getObjective(p,"13term") + "/10)",

@@ -7,6 +7,7 @@ import com.tll3.Lists.Recipes;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.Misc.GenericUtils;
+import com.tll3.Task.MobRain;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryCustom;
 import net.minecraft.core.IRegistryWritable;
@@ -36,6 +37,9 @@ public final class TLL3 extends JavaPlugin {
         loadListeners();
         loadCommands();
         Recipes.registerAllRecipes();
+        if(GenericUtils.getDay() >= 21){
+            new MobRain().runTaskTimer(this,0L,1L);
+        }
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
             MonsoonListeners.createBossBar();
         }

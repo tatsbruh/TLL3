@@ -329,7 +329,7 @@ public class MissionListeners implements Listener {
                         PlayerData.setObjectiveCount(killer, "13term", PlayerData.getObjective(killer, "13term") + 1);
                     }
                     if(PlayerData.getObjective(killer,"13term") >= 10 && PlayerData.getObjective(killer,"13colterm") >= 10){
-                        missionCompleted(killer,"#17c200Invasion de Plagas","13_plaga",28,16);
+                        missionCompleted(killer,"#17c200Epidemia Explosiva","13_plaga",28,16);
                     }
                 }
                 if(Data.has(entity,"termite_ex", PersistentDataType.STRING)){
@@ -337,7 +337,7 @@ public class MissionListeners implements Listener {
                         PlayerData.setObjectiveCount(killer, "13colterm", PlayerData.getObjective(killer, "13colterm") + 1);
                     }
                     if(PlayerData.getObjective(killer,"13term") >= 10 && PlayerData.getObjective(killer,"13colterm") >= 10){
-                        missionCompleted(killer,"#17c200Invasion de Plagas","13_plaga",28,16);
+                        missionCompleted(killer,"#17c200Epidemia Explosiva","13_plaga",28,16);
                     }
                 }
             }

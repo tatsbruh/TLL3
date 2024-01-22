@@ -60,7 +60,7 @@ public class Wasteyard extends ChunkGenerator {
             for (int z = 0; z < 16; z++) {
                 double noise = generator.noise(worldX + x, worldZ + z, 1, 1, true);
                 int height = (int) (noise * 40);
-                height += 84;
+                height += 85;
                 if (height > chunkData.getMaxHeight()) {
                     height = chunkData.getMaxHeight();
                 }

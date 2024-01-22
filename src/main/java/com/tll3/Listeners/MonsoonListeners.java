@@ -29,36 +29,68 @@ public class MonsoonListeners implements Listener {
     private static Integer TaskBossBarID = 0;
     public static void createBossBar() {
         if (bossBar == null) {
-            bossBar = Bukkit.createBossBar(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
+            if(GenericUtils.getTyphoonactive().equalsIgnoreCase("true")){
+                bossBar = Bukkit.createBossBar(ChatUtils.format("#259c9a☀ #77f7f6Vortex Typhoon #259c9a☀ &7| #008a8a" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
+            }else {
+                bossBar = Bukkit.createBossBar(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
+            }
         }
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
             int updtime = GenericUtils.getWorld().getWeatherDuration();
-            bossBar.setTitle(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()));
+            if(GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
+                bossBar.setTitle(ChatUtils.format("#259c9a☀ #77f7f6Vortex Typhoon #259c9a☀ &7| #008a8a" + getTime()));
+            }else{
+                bossBar.setTitle(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()));
+            }
             bossBar.setProgress((double) updtime / GenericUtils.getMaxweatherdur());
         }, 0L, 20L);
     }
 
     @EventHandler
     public void monstartE(Monsoon.StartMonsoon e){
-        GenericUtils.setMonsoonActive("true");
-        World world = GenericUtils.getWorld();
-        int stormDurationInTicks = 18000; // 15 minutos en ticks
-        int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
-        String setThunder = "weather thunder " + storm_time;
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
-        for (Player sp : Bukkit.getOnlinePlayers()) {
-            sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
-            sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
-            sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"),ChatUtils.format("#4d52d1☂ Duracion: " + GenericUtils.doTimeFormat(storm_time) + " ☂"),0,80,20);
+        if(EntityNaturalSpawn.doRandomChance(20) && GenericUtils.getDay() >= 21){
+            GenericUtils.setMonsoonActive("true");
+            GenericUtils.setVortexTyphoonActive("true");
+            World world = GenericUtils.getWorld();
+            int stormDurationInTicks = 18000; // 15 minutos en ticks
+            int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
+            String setThunder = "weather thunder " + storm_time;
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+            for (Player sp : Bukkit.getOnlinePlayers()) {
+                sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
+                sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
+                sp.sendTitle(ChatUtils.format("#305bab☀ #5acce8¡VORTEX TYPHOON! #305bab☀"),ChatUtils.format("#4c717a☁ Duración: " + GenericUtils.doTimeFormat(storm_time) + " ☁"),0,80,20);
+            }
+            GenericUtils.setMaxWeatherDuration(storm_time);
+            createBossBar();
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                bossBar.setVisible(true);
+                bossBar.addFlag(BarFlag.CREATE_FOG);
+                bossBar.addFlag(BarFlag.DARKEN_SKY);
+                bossBar.addPlayer(player);
+            });
+        }else {
+            GenericUtils.setMonsoonActive("true");
+            GenericUtils.setVortexTyphoonActive("false");
+            World world = GenericUtils.getWorld();
+            int stormDurationInTicks = 18000; // 15 minutos en ticks
+            int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
+            String setThunder = "weather thunder " + storm_time;
+            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+            for (Player sp : Bukkit.getOnlinePlayers()) {
+                sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 60, 0, false, false, false));
+                sp.getLocation().getWorld().playSound(sp.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F); //Placeholder
+                sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"), ChatUtils.format("#4d52d1☂ Duración: " + GenericUtils.doTimeFormat(storm_time) + " ☂"), 0, 80, 20);
+            }
+            GenericUtils.setMaxWeatherDuration(storm_time);
+            createBossBar();
+            Bukkit.getOnlinePlayers().forEach(player -> {
+                bossBar.setVisible(true);
+                bossBar.addFlag(BarFlag.CREATE_FOG);
+                bossBar.addFlag(BarFlag.DARKEN_SKY);
+                bossBar.addPlayer(player);
+            });
         }
-        GenericUtils.setMaxWeatherDuration(storm_time);
-        createBossBar();
-        Bukkit.getOnlinePlayers().forEach(player -> {
-            bossBar.setVisible(true);
-            bossBar.addFlag(BarFlag.CREATE_FOG);
-            bossBar.addFlag(BarFlag.DARKEN_SKY);
-            bossBar.addPlayer(player);
-        });
     }
     @EventHandler
     public void monendE(Monsoon.StopMonsoon e){
@@ -69,9 +101,10 @@ public class MonsoonListeners implements Listener {
         }
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999");
         GenericUtils.setMonsoonActive("false");
+        GenericUtils.setVortexTyphoonActive("false");
         for(Player players : Bukkit.getOnlinePlayers()) {
             bossBar.removePlayer(players);
-            players.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aLos cielos se despejan de la Monsoon..."));
+            players.sendMessage(ChatUtils.format(ChatUtils.prefix + "&aParece que el lamento del mundo ha llegado a su fin..."));
             players.getLocation().getWorld().playSound(players.getLocation(), Sound.ENTITY_PLAYER_LEVELUP,10.0F,2.0F);
         }
         bossBar.setVisible(false);

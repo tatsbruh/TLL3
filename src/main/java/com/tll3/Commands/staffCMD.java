@@ -15,6 +15,7 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.Monsoon;
 import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
+import com.tll3.Task.MobRain;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -201,16 +202,14 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("debug")
-    @CommandCompletion("timeformat|diary|missions|stats|get_stats|reset_stats_to_default")
+    @CommandCompletion("natural|diary|missions|stats|get_stats|reset_stats_to_default")
     @CommandPermission("staff.admin")
     @Description("debugs a ton of shit")
     public void debug(CommandSender sender,String[] args){
         if (sender instanceof Player p && args.length > 0){
             switch (args[0].toLowerCase()){
-                case "timeformat" -> {
-                    int ticks = Integer.parseInt(args[1]);
-                    if(ticks < 0)return;
-                    sender.sendMessage("Hola " + GenericUtils.doTimeFormat(ticks));
+                case "natural" -> {
+                    MobRain.initMobs(p.getLocation());
                 }
                 case "diary" -> HunterJournal.hunterDiary((Player) sender);
                 case "missions" -> HunterJournal.hunterHuntsXDLOLLMAO((Player) sender);
