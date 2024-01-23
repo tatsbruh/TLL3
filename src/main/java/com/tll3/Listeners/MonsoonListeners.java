@@ -48,7 +48,7 @@ public class MonsoonListeners implements Listener {
 
     @EventHandler
     public void monstartE(Monsoon.StartMonsoon e){
-        if(EntityNaturalSpawn.doRandomChance(20) && GenericUtils.getDay() >= 21){
+        if((EntityNaturalSpawn.doRandomChance(20) || GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) && GenericUtils.getDay() >= 21){
             GenericUtils.setMonsoonActive("true");
             GenericUtils.setVortexTyphoonActive("true");
             World world = GenericUtils.getWorld();

@@ -74,12 +74,34 @@ public class ServerTickTask extends BukkitRunnable {
                     ((CraftPlayer)p).getHandle().a(((CraftPlayer)p).getHandle().dN().f(),5.0F);
                 }
             }
-            if(getMonsoon_active().equalsIgnoreCase("true") && p.getWorld().getEnvironment() == World.Environment.NORMAL){
-            Location block = p.getWorld().getHighestBlockAt(p.getLocation().clone()).getLocation();
-            int highestY = block.getBlockY();
-            if (highestY < p.getLocation().getY() && chance <= 5) {
-                p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,200,0,false,false,false));
-            }
+            if(p.getWorld().getEnvironment() == World.Environment.NORMAL){
+                if(getMonsoon_active().equalsIgnoreCase("true") && !getTyphoonactive().equalsIgnoreCase("true")) {
+                    Location block = p.getWorld().getHighestBlockAt(p.getLocation().clone()).getLocation();
+                    int highestY = block.getBlockY();
+                    if (highestY < p.getLocation().getY() && chance <= 5) {
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200, 0, false, false, false));
+                    }
+                }else if(getMonsoon_active().equalsIgnoreCase("true") && getTyphoonactive().equalsIgnoreCase("true")){
+                    Location block = p.getWorld().getHighestBlockAt(p.getLocation().clone()).getLocation();
+                    int highestY = block.getBlockY();
+                    if (highestY < p.getLocation().getY() && chance <= 5) {
+                        int effect = getRandomValue(4);
+                        switch (effect){
+                            case 0 ->{
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, false, false, false));
+                            }
+                            case 1 ->{
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 2, false, false, false));
+                            }
+                            case 2 ->{
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 0, false, false, false));
+                            }
+                            case 3 ->{
+                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 4, false, false, false));
+                            }
+                        }
+                    }
+                }
             }
         }
         }

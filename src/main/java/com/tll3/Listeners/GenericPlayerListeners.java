@@ -431,9 +431,10 @@ public class GenericPlayerListeners implements Listener {
         Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
         if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE || !randomplayer.getName().equals(p.getName()))return;
         int r = GenericUtils.getRandomValue(100);
-        if(r < 20){
+        int maxchance = getDay() >= 21 ? 35 : 20;
+        if(r < maxchance){
             for(Player online : Bukkit.getOnlinePlayers()){
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl Totem de la Inmortalidad de " + p.getName() + " aplico su &4Pánico en el jugador " + randomplayer.getName() + " &8(20 > " + r + ")"));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl Totem de la Inmortalidad de " + p.getName() + " aplico su &4Pánico en el jugador " + randomplayer.getName() + " &8(" + maxchance + " > " + r + ")"));
             }
             if(totem_c <= 29){
                 PlayerData.addDataEffect(randomplayer,"curse",60,1);
@@ -448,7 +449,7 @@ public class GenericPlayerListeners implements Listener {
                 PlayerData.addDataEffect(randomplayer,"curse",145,4);
             }
         }else{
-            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7Tu Totem de la Inmortalidad no aplico el pánico en nadie. (20 < " + r + ")"));
+            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7Tu Totem de la Inmortalidad no aplico el pánico en nadie. (" + maxchance +" < " + r + ")"));
         }
     }
 

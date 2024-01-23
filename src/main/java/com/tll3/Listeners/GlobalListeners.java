@@ -4,6 +4,7 @@ import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
@@ -47,15 +48,6 @@ public class GlobalListeners implements Listener {
         }
     }
 
-    @EventHandler
-    public void fireworkE(FireworkExplodeEvent e){
-        if(e.getEntity().getShooter() instanceof Pillager p){
-            if(Data.has(p,"pillagerex",PersistentDataType.STRING)){
-                Location c = e.getEntity().getLocation().clone();
-                c.getWorld().createExplosion(p,4,true,true);
-            }
-        }
-    }
 
     @EventHandler
     public void damageE(EntityDamageEvent e){
@@ -69,7 +61,7 @@ public class GlobalListeners implements Listener {
             if(getDay() >= 7){
                 switch (reason){
                     case DROWNING -> {
-                        if(getDay() >= 14 && getDay() < 21){
+                        if(getDay() >= 14 && getDay() < 28){
                            e.setDamage(e.getDamage() * 4);
                         }else{
                             e.setDamage(e.getDamage() * 2);
@@ -85,6 +77,12 @@ public class GlobalListeners implements Listener {
             if(getDay() >= 14){
                 switch (reason){
                     case STARVATION,FREEZE,SUFFOCATION -> e.setDamage(e.getDamage() * 7);
+                }
+            }
+            if(getDay() >= 21 && !p.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
+                switch (reason){
+                    case LAVA,FIRE,FIRE_TICK: e.setDamage(e.getDamage() * 6);
+                    case HOT_FLOOR: e.setDamage(e.getDamage() * 10);
                 }
             }
         }
@@ -121,6 +119,13 @@ public class GlobalListeners implements Listener {
                 }
             }
         }
+        if(getDay() >= 21){
+            if(entity instanceof Enemy && entity.getWorld().getEnvironment() == World.Environment.NETHER){
+                switch (reason){
+                    case FIRE,FIRE_TICK,LAVA,HOT_FLOOR,WITHER,SUFFOCATION: e.setCancelled(true);
+                }
+            }
+        }
 
 
 
@@ -130,6 +135,9 @@ public class GlobalListeners implements Listener {
         }
         if(entity instanceof Skeleton s){
             if(Data.has(s,"firemancer",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
+        }
+        if(entity instanceof Pillager p){
+            if(Data.has(p,"pillagerex",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
         if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
             switch (reason){
@@ -225,6 +233,9 @@ public class GlobalListeners implements Listener {
 
     @EventHandler
     public void tradeE(InventoryOpenEvent e){
+        if(e.getInventory().getType() == InventoryType.ENDER_CHEST && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")){
+            e.setCancelled(true);
+        }
         if(e.getInventory().getType() == InventoryType.MERCHANT && getMonsoon_active().equalsIgnoreCase("true")){
             if(e.getPlayer().getLocation().getWorld().getEnvironment() != World.Environment.NORMAL){
                 e.setCancelled(true);
@@ -252,7 +263,7 @@ public class GlobalListeners implements Listener {
                 || liv instanceof CustomPanda || liv instanceof CustomPolarBear || liv instanceof CustomSniffer
                 || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls
                 || liv instanceof CustomDolphin || liv instanceof CustomBee || liv instanceof CustomLlama || liv instanceof CustomGoat
-                ) return;
+                || liv instanceof CustomPig) return;
                 Location loc = liv.getLocation();
                 if (getDay() >= 7) {
                     switch (liv.getType()){

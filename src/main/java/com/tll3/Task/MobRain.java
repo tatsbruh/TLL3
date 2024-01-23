@@ -7,10 +7,7 @@ import com.tll3.Misc.GenericUtils;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityLiving;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
@@ -28,17 +25,33 @@ public class MobRain extends BukkitRunnable {
     public void run() {
         World w = GenericUtils.getWorld();
         for(Player online : Bukkit.getOnlinePlayers()){
-            if(online.getWorld().getEnvironment() == World.Environment.NORMAL && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")){
-                int random = GenericUtils.getRandomValue(1500) + 1;
-                if (random <= 10 /*&& online.getWorld().getLivingEntities().size() < 200*/) {
-                    Bukkit.getServer().getLogger().info("HOLAAAAAAAAAAAAAAAA    " + random);
-                    Location ploc = online.getLocation().clone();
-                    ArrayList<Location> spawns = new ArrayList<>();
-                    spawns.add(ploc.clone().add(10, 25, -5));
-                    spawns.add(ploc.clone().add(5, 25, 5));
-                    for(Location l : spawns){
-                        if(w.getBlockAt(l).getType() == Material.AIR && w.getBlockAt(l.clone().add(0,1,0)).getType() == Material.AIR){
-                            initMobs(l);
+            if(online.getWorld().getEnvironment() == World.Environment.NORMAL && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
+                if (online.getGameMode() == GameMode.SURVIVAL) {
+                    int random = GenericUtils.getRandomValue(3000) + 1;
+                    if (random <= 10) {
+                        Bukkit.getServer().getLogger().info("HOLAAAAAAAAAAAAAAAA    " + random);
+                        Location ploc = online.getLocation().clone();
+                        ArrayList<Location> spawns = new ArrayList<>();
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(10), 45, GenericUtils.getRandomValue(-5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(5), 45, GenericUtils.getRandomValue(5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(-5), 45, GenericUtils.getRandomValue(5)));
+                        for (Location l : spawns) {
+                            if (w.getBlockAt(l).getType() == Material.AIR && w.getBlockAt(l.clone().add(0, 1, 0)).getType() == Material.AIR) {
+                                initMobs(l);
+                            }
+                        }
+                    }
+                    int random2 = GenericUtils.getRandomValue(4500) + 1;
+                    if (random2 <= 10) {
+                        Location ploc = online.getLocation().clone();
+                        ArrayList<Location> spawns = new ArrayList<>();
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(10), ploc.getBlockY(), GenericUtils.getRandomValue(-5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(5), ploc.getBlockY(), GenericUtils.getRandomValue(5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(-5), ploc.getBlockY(), GenericUtils.getRandomValue(5)));
+                        for (Location l : spawns) {
+                            if (w.getBlockAt(l).getType() == Material.AIR && w.getBlockAt(l.clone().add(0, 1, 0)).getType() == Material.AIR) {
+                                w.strikeLightning(l);
+                            }
                         }
                     }
                 }

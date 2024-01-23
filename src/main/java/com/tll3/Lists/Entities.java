@@ -1,13 +1,17 @@
 package com.tll3.Lists;
 
 import com.tll3.Listeners.EntityNaturalSpawn;
+import com.tll3.Lists.CustomEntities.CustomAxolotls;
+import com.tll3.Lists.CustomEntities.CustomPig;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
+import com.tll3.Task.Mobs.AlqPotionThrow;
 import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.AshenWitherTask;
+import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
@@ -18,10 +22,12 @@ import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.entity.projectile.EntityFireworks;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPigZombie;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
+import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.inventory.meta.PotionMeta;
@@ -465,6 +471,42 @@ public class Entities {
         EntityNaturalSpawn.setCustomMobcap(f, 10, 1.10, 24, 60, true);
     }
 
+    //dia 21
+    public static void entropicDem(Ghast g){
+        setName(g,"&4&lñEntropic Demon");
+        setMobHealth(g,55);
+        setIdentifierString(g,"entropicdemon");
+    }
+    public static void zombpigRider(PigZombie z){
+        injectHostileBehaviorToPig(z);
+        setName(z,"#7a3d5bJinete Cerdo-pocalíptico");
+        setMobHealth(z,10);
+        setMainHand(z,new ItemStack(Material.CARROT_ON_A_STICK));
+        WorldServer worldServer = ((CraftWorld) z.getLocation().getWorld()).getHandle();
+        CustomPig r = new CustomPig(worldServer);
+        r.a_(z.getLocation().getX(), z.getLocation().getY(), z.getLocation().getZ());
+        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        ((LivingEntity)r.getBukkitEntity()).addPassenger(z);
+        setIdentifierString(z,"pigrider");
+    }
+    public static void zombpigShinobi(PigZombie z){
+        injectHostileBehaviorToPig(z);
+        setName(z,"#6c5f85Piglin Shinobi");
+        setMobHealth(z,38);
+        setMainHand(z,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,30).addEnchant(Enchantment.FIRE_ASPECT,30).build());
+        addPotionEffect(z,PotionEffectType.SPEED,2);
+        setIdentifierString(z,"shinobipig");
+    }
+    public static void zombpigAlchemist(PigZombie z){
+        injectHostileBehaviorToPig(z);
+        setName(z,"#857c5fAlquimista Porcino");
+        setMobHealth(z,48);
+        setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,30).build());
+        setIdentifierString(z,"alchpig");
+        new AlqPotionThrow(z).runTaskTimer(TLL3.getInstance(),0L,1L);
+    }
+
+
 
 
 
@@ -537,6 +579,22 @@ public class Entities {
         rorcket.setItemMeta(f);
         rorcket.setAmount(120);
         return rorcket;
+    }
+    public static void injectHostileBehaviorToPig(PigZombie z){
+        CraftPigZombie craft = ((CraftPigZombie) z);
+        EntityPigZombie entityPigZombie = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {}
     }
 
 

@@ -117,6 +117,11 @@ public class GenericEntityListeners implements Listener {
                     }
                 }
             }
+            if(damager instanceof PigZombie z){
+                if(Data.has(z,"shinobipig",PersistentDataType.STRING)){
+                    z.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,60,0,false,false,false));
+                }
+            }
             if(damager instanceof PufferFish f){
                 if(Data.has(f,"acidfish",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,2,false,false,false));
@@ -198,6 +203,18 @@ public class GenericEntityListeners implements Listener {
                 if(projectile instanceof Arrow arrow){
                 arrow.setDamage(arrow.getDamage() * 3);
             }
+            }
+            if(Data.has(p,"pillagerex",PersistentDataType.STRING)){
+                if(projectile instanceof Firework f){
+                    EntityHelper.setIdentifierString(f,"pillagerex");
+                }
+            }
+        }
+        if(entity instanceof Piglin p){
+            if(getDay() >= 21){
+                if(projectile instanceof Arrow arrow){
+                    arrow.setDamage(arrow.getDamage() * 6);
+                }
             }
         }
 
@@ -388,6 +405,10 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(g,"soulvag",PersistentDataType.STRING)){
                     s.setYield(8);
                 }
+                if(Data.has(g,"entropicdemon",PersistentDataType.STRING)){
+                    s.setYield(7);
+                    EntityHelper.setIdentifierString(s,"entropicfireball");
+                }
             }
         }
     }
@@ -404,6 +425,38 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(enderPearl,"rev_pearl",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,100,1,true,false,true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,100,0,true,false,true));
+                }
+            }
+        }
+
+        if(proj instanceof Firework f){
+            if(Data.has(f,"pillagerex",PersistentDataType.STRING)){
+                if (hen != null) {
+                    hen.getLocation().createExplosion((Entity) source,4,true,true);
+                }
+                if (hbl != null) {
+                    hbl.getLocation().createExplosion((Entity) source,4,true,true);
+                }
+            }
+        }
+
+        if(proj instanceof Fireball f){
+            if(Data.has(f,"entropicfireball",PersistentDataType.STRING)){
+                if (hen != null) {
+                    AreaEffectCloud r = (AreaEffectCloud) Entities.spawnMob(hen.getLocation(),EntityType.AREA_EFFECT_CLOUD);
+                    r.setDuration(200);
+                    r.setParticle(Particle.END_ROD);
+                    r.setRadius(3);
+                    r.setSource(source);
+                    r.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION,100,4,true,false,true),true);
+                }
+                if (hbl != null) {
+                    AreaEffectCloud r = (AreaEffectCloud) Entities.spawnMob(hbl.getLocation(),EntityType.AREA_EFFECT_CLOUD);
+                    r.setDuration(200);
+                    r.setParticle(Particle.END_ROD);
+                    r.setRadius(3);
+                    r.setSource(source);
+                    r.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION,100,4,true,false,true),true);;
                 }
             }
         }
@@ -543,6 +596,15 @@ public class GenericEntityListeners implements Listener {
                    }
                }
 
+           }
+           if(origin.getType() == EntityType.ZOMBIFIED_PIGLIN){
+               if(Data.has(origin,"shinobipig",PersistentDataType.STRING)){
+                   PigZombie z = (PigZombie) origin;
+                   if(!z.hasPotionEffect(PotionEffectType.INVISIBILITY)){
+                       EntityHelper.addPotionEffect(z,PotionEffectType.INVISIBILITY,0);
+                       z.setSilent(true);
+                   }
+               }
            }
            if(origin instanceof Skeleton s){
                if(Data.has(s,"bruteskeleton",PersistentDataType.STRING)) {
