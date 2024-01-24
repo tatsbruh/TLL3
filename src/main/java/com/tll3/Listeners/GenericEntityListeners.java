@@ -33,6 +33,7 @@ import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.potion.PotionType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -419,7 +420,8 @@ public class GenericEntityListeners implements Listener {
                 AreaEffectCloud a = (AreaEffectCloud) Entities.spawnMob(loc,EntityType.AREA_EFFECT_CLOUD);
                 a.setRadius(7);
                 a.setDuration(200);
-                a.setParticle(Particle.END_ROD);
+                a.setParticle(Particle.DAMAGE_INDICATOR);
+                a.setBasePotionType(PotionType.SLOWNESS);
                 a.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,true,false,true),true);
                 a.addCustomEffect(new PotionEffect(PotionEffectType.GLOWING,200,4,true,false,true),true);
             }
@@ -531,6 +533,7 @@ public class GenericEntityListeners implements Listener {
                     r.setParticle(Particle.END_ROD);
                     r.setRadius(3);
                     r.setSource(source);
+                    r.setBasePotionType(PotionType.SLOWNESS);
                     r.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION,100,4,true,false,true),true);
                 }
                 if (hbl != null) {
@@ -539,6 +542,7 @@ public class GenericEntityListeners implements Listener {
                     r.setParticle(Particle.END_ROD);
                     r.setRadius(3);
                     r.setSource(source);
+                    r.setBasePotionType(PotionType.SLOWNESS);
                     r.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION,100,4,true,false,true),true);;
                 }
             }

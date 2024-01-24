@@ -480,7 +480,7 @@ public class Entities {
 
     //dia 21
     public static void entropicDem(Ghast g){
-        setName(g,"&4&lñEntropic Demon");
+        setName(g,"&4&lEntropic Demon");
         setMobHealth(g,55);
         setIdentifierString(g,"entropicdemon");
     }

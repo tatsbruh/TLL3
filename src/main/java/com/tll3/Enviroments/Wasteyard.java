@@ -98,23 +98,22 @@ public class Wasteyard extends ChunkGenerator {
     }
     protected Material getRandomMaterial() {
         int r = random.nextInt(100);
-        if(r >= 70){return Material.POLISHED_BLACKSTONE_BRICKS;
-        }else if(r < 70 && r >= 55){
-            return Material.GRAY_GLAZED_TERRACOTTA;
-        }else if(r < 55 && r >= 25){
-            return Material.BLACKSTONE;
+        if(r >= 60){
+            return Material.GRAY_CONCRETE_POWDER;
+        }else if(r < 60 && r >= 40){
+            return Material.LIGHT_GRAY_CONCRETE;
         }
-        return Material.BASALT;
+        return Material.GRAY_GLAZED_TERRACOTTA;
     }
     protected Material getRandomMaterial2() {
         int r = random.nextInt(100);
-        if(r >= 70){return Material.CRACKED_POLISHED_BLACKSTONE_BRICKS;
+        if(r >= 70){return Material.GRAY_CONCRETE_POWDER;
         }else if(r < 70 && r >= 30){
-            return Material.GRAY_GLAZED_TERRACOTTA;
+            return Material.LIGHT_GRAY_CONCRETE;
         }else if(r < 30 && r >= 25){
             return Material.MAGMA_BLOCK;
         }
-        return Material.BASALT;
+        return Material.GRAY_GLAZED_TERRACOTTA;
     }
 
     protected Material getUnderMaterial() {

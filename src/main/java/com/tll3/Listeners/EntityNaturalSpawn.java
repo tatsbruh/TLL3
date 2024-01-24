@@ -178,9 +178,6 @@ public class EntityNaturalSpawn implements Listener {
                             chooseRandomSpider1(s,e);
                             s.addPassenger(entity);
                         }
-                        if(getDay() >= 21){
-                            EntityHelper.setOffhand(entity,harmArrow());
-                        }
                     }else if(getDay() >= 21){
                         var random = getRandomValue(100);
                         if (random <= 45) {
@@ -189,7 +186,6 @@ public class EntityNaturalSpawn implements Listener {
                             Entities.revSkeleton((Skeleton) entity);
                         }else if(random > 65 && random <= 80){
                             Entities.steelrailgunner((Skeleton) entity);
-                        }
                         }else{
                             EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,30).build());
                         }
@@ -200,6 +196,7 @@ public class EntityNaturalSpawn implements Listener {
                         }
                         EntityHelper.setOffhand(entity,harmArrow());
                     }
+                }
                 if(reason == CreatureSpawnEvent.SpawnReason.JOCKEY || reason == CreatureSpawnEvent.SpawnReason.TRAP) {
                     if (getDay() >= 7) {
                         Entities.skeW((Skeleton) entity);

@@ -27,31 +27,27 @@ public class MobRain extends BukkitRunnable {
         for(Player online : Bukkit.getOnlinePlayers()){
             if(online.getWorld().getEnvironment() == World.Environment.NORMAL && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
                 if (online.getGameMode() == GameMode.SURVIVAL) {
-                    int random = GenericUtils.getRandomValue(3000) + 1;
+                    int random = GenericUtils.getRandomValue(4500) + 1;
                     if (random <= 10) {
-                        Bukkit.getServer().getLogger().info("HOLAAAAAAAAAAAAAAAA    " + random);
                         Location ploc = online.getLocation().clone();
                         ArrayList<Location> spawns = new ArrayList<>();
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(10), 45, GenericUtils.getRandomValue(-5)));
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(5), 45, GenericUtils.getRandomValue(5)));
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(-5), 45, GenericUtils.getRandomValue(5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(30) + 5, 55, GenericUtils.getRandomValue(-25) - 5));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(25) + 5, 55, GenericUtils.getRandomValue(25) + 5));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(-25) - 5, 55, GenericUtils.getRandomValue(30) + 5));
                         for (Location l : spawns) {
                             if (w.getBlockAt(l).getType() == Material.AIR && w.getBlockAt(l.clone().add(0, 1, 0)).getType() == Material.AIR) {
                                 initMobs(l);
                             }
                         }
                     }
-                    int random2 = GenericUtils.getRandomValue(4500) + 1;
+                    int random2 = GenericUtils.getRandomValue(2000) + 1;
                     if (random2 <= 10) {
                         Location ploc = online.getLocation().clone();
                         ArrayList<Location> spawns = new ArrayList<>();
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(10), ploc.getBlockY(), GenericUtils.getRandomValue(-5)));
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(5), ploc.getBlockY(), GenericUtils.getRandomValue(5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(5), ploc.getBlockY(), GenericUtils.getRandomValue(-5)));
                         spawns.add(ploc.clone().add(GenericUtils.getRandomValue(-5), ploc.getBlockY(), GenericUtils.getRandomValue(5)));
                         for (Location l : spawns) {
-                            if (w.getBlockAt(l).getType() == Material.AIR && w.getBlockAt(l.clone().add(0, 1, 0)).getType() == Material.AIR) {
                                 w.strikeLightning(l);
-                            }
                         }
                     }
                 }
