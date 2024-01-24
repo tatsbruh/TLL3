@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.core.particles.Particles;
 import net.minecraft.sounds.SoundCategory;
 import net.minecraft.sounds.SoundEffect;
@@ -54,7 +55,11 @@ public class CustomMooshroom extends EntityMushroomCow {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
+        if(GenericUtils.getDay() >= 21){
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        }else{
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
     }
     @Override

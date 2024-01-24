@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalHurtByTarget;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.animal.EntityFox;
 import net.minecraft.world.entity.animal.EntityPolarBear;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 
 import java.util.function.Predicate;
@@ -19,6 +21,9 @@ public class CustomPolarBear extends EntityPolarBear {
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
+        if(GenericUtils.getDay() >= 21){
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        }
     }
 
     @Override

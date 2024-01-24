@@ -27,6 +27,9 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import static com.tll3.Listeners.EntityNaturalSpawn.doRandomChance;
+import static com.tll3.Misc.EntityHelper.*;
+import static com.tll3.Misc.EntityHelper.setBoots;
 import static com.tll3.Misc.GenericUtils.*;
 public class GlobalListeners implements Listener {
 
@@ -81,8 +84,9 @@ public class GlobalListeners implements Listener {
             }
             if(getDay() >= 21 && !p.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
                 switch (reason){
-                    case LAVA,FIRE,FIRE_TICK: e.setDamage(e.getDamage() * 6);
+                    case LAVA: e.setDamage(e.getDamage() * 6);
                     case HOT_FLOOR: e.setDamage(e.getDamage() * 10);
+                    case FALL: e.setDamage(e.getDamage() * 3);
                 }
             }
         }
@@ -151,7 +155,7 @@ public class GlobalListeners implements Listener {
                 entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
                 EntityHelper.teleportEnderman(entity,entity.getLocation().getBlockX(),entity.getLocation().getBlockY(),entity.getLocation().getBlockZ(),entity.getWorld(),64.0D);
             }else{
-                if(EntityNaturalSpawn.doRandomChance(1)){
+                if(doRandomChance(1)){
                     entity.playEffect(EntityEffect.TELEPORT_ENDER);
                     entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
                     EntityHelper.teleportEnderman(entity,entity.getLocation().getBlockX(),entity.getLocation().getBlockY(),entity.getLocation().getBlockZ(),entity.getWorld(),64.0D);
@@ -368,6 +372,33 @@ public class GlobalListeners implements Listener {
                             CustomLlama r= new CustomLlama(worldServer);
                             r.a_(loc.getX(),loc.getY(),loc.getZ());
                             worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                    }
+                }
+                if(getDay() >= 21){
+                    switch (liv.getType()){
+                        case STRIDER -> {
+                            liv.remove();
+                            Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
+                            if(doRandomChance(35)){
+                                Entities.entropicDem(g);
+                            }else{
+                                Entities.gPower(g);
+                            }
+                        }
+                        case PIG -> {
+                            liv.remove();
+                            PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                            EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
+                            EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
+                            setHead(pg,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                            setChestplate(pg,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                            setLeggings(pg,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                            setBoots(pg,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                        }
+                        case ALLAY -> {
+                            liv.remove();
+                            Entities.nwVex((Vex) Entities.spawnMob(loc,EntityType.VEX));
                         }
                     }
                 }

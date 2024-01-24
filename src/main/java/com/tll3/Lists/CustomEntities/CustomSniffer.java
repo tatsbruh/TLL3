@@ -2,6 +2,7 @@ package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeBase;
 import net.minecraft.world.entity.ai.attributes.AttributeMapBase;
@@ -35,7 +36,11 @@ public class CustomSniffer extends Sniffer {
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(35);
         ((LivingEntity) this.getBukkitEntity()).setHealth(35);
-        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(2);
+        if(GenericUtils.getDay() >= 21){
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        }else{
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(4);
+        }
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(1.5);
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.6);
     }

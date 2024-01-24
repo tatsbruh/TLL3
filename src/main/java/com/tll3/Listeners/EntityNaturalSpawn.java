@@ -27,7 +27,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
@@ -157,7 +160,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case SKELETON -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
-                    if(getDay() >= 7){
+                    if(getDay() >= 7 && getDay() < 21){
                         var random = getRandomValue(100);
                         if (random <= 45) {
                             chooseSkeletonClass1((Skeleton) entity);
@@ -175,12 +178,32 @@ public class EntityNaturalSpawn implements Listener {
                             chooseRandomSpider1(s,e);
                             s.addPassenger(entity);
                         }
+                        if(getDay() >= 21){
+                            EntityHelper.setOffhand(entity,harmArrow());
+                        }
+                    }else if(getDay() >= 21){
+                        var random = getRandomValue(100);
+                        if (random <= 45) {
+                            chooseSkeletonClass1((Skeleton) entity);
+                        } else if (random > 45 && random <= 65) {
+                            Entities.revSkeleton((Skeleton) entity);
+                        }else if(random > 65 && random <= 80){
+                            Entities.steelrailgunner((Skeleton) entity);
+                        }
+                        }else{
+                            EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,30).build());
+                        }
+                        if(getMonsoon_active().equalsIgnoreCase("true")){
+                            Spider s = (Spider) Entities.spawnMob(loc,EntityType.SPIDER);
+                            chooseRandomSpider1(s,e);
+                            s.addPassenger(entity);
+                        }
+                        EntityHelper.setOffhand(entity,harmArrow());
                     }
-                }
-                if(reason == CreatureSpawnEvent.SpawnReason.JOCKEY || reason == CreatureSpawnEvent.SpawnReason.TRAP){
-                    if(getDay() >= 7){
-                    Entities.skeW((Skeleton) entity);
-                }
+                if(reason == CreatureSpawnEvent.SpawnReason.JOCKEY || reason == CreatureSpawnEvent.SpawnReason.TRAP) {
+                    if (getDay() >= 7) {
+                        Entities.skeW((Skeleton) entity);
+                    }
                 }
             }
             case SILVERFISH -> {
@@ -210,8 +233,10 @@ public class EntityNaturalSpawn implements Listener {
                         var random = getRandomValue(100);
                         if(random <= 35) {
                             Entities.revCreeper((Creeper) entity);
-                        }else if(random > 35 && random <= 65){
+                        }else if(random > 35 && random <= 65 && getDay() >= 14) {
                             Entities.unstCr((Creeper) entity);
+                        }else if(random > 65 && random <= 85 && getDay() >= 21){
+                            Entities.titaniumCreeper((Creeper) entity);
                         }else{
                             Entities.creChr((Creeper) entity);
                         }
@@ -224,6 +249,8 @@ public class EntityNaturalSpawn implements Listener {
                         var random = getRandomValue(100);
                         if(random <= 35){
                             Entities.revEnderman((Enderman) entity);
+                        }else if(random > 35 && random <= 55 && getDay() >= 21){
+                            Entities.cyberpunk((Enderman) entity);
                         }
                     }
                 }
@@ -274,6 +301,14 @@ public class EntityNaturalSpawn implements Listener {
                     if (getDay() >= 14) {
                         e.setCancelled(true);
                         Entities.unstCr((Creeper) Entities.spawnMob(loc,EntityType.CREEPER));
+                    }
+                }
+            }
+            case ALLAY -> {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                    if (getDay() >= 21) {
+                        e.setCancelled(true);
+                        Entities.nwVex((Vex) Entities.spawnMob(loc,EntityType.VEX));
                     }
                 }
             }
@@ -453,6 +488,20 @@ public class EntityNaturalSpawn implements Listener {
                     r.a_(loc.getX(),loc.getY(),loc.getZ());
                     worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
+                }
+            }
+            case PIG -> {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)){
+                    if(getDay() >= 21){
+                        e.setCancelled(true);
+                        PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                        EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
+                        EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
+                        setHead(pg,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                        setChestplate(pg,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                        setLeggings(pg,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                        setBoots(pg,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                    }
                 }
             }
             case POLAR_BEAR -> {
@@ -902,6 +951,14 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
         }
+    }
+    public static ItemStack harmArrow() {
+        ItemStack arrow = new ItemStack(Material.TIPPED_ARROW);
+        PotionMeta meta = (PotionMeta) arrow.getItemMeta();
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.WITHER,1,1),false);
+        arrow.setItemMeta(meta);
+        arrow.setAmount(127);
+        return arrow;
     }
 
  }

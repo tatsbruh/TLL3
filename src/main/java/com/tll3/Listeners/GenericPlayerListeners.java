@@ -117,7 +117,7 @@ public class GenericPlayerListeners implements Listener {
     @EventHandler
     public void itemduraE(PlayerItemDamageEvent e){
         var player = e.getPlayer();
-        if(getDay() >= 7){
+        if(getDay() >= 7 && getDay() < 21){
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true") && player.getGameMode() == GameMode.SURVIVAL){
             Location block = player.getWorld().getHighestBlockAt(player.getLocation().clone()).getLocation();
             int highestY = block.getBlockY();
@@ -129,6 +129,8 @@ public class GenericPlayerListeners implements Listener {
             }
             }
         }
+        }else if(getDay() >= 21){
+            e.setDamage(e.getDamage() * 999);
         }
     }
 

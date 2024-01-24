@@ -2,7 +2,6 @@ package com.tll3.Task.Mobs;
 
 import com.tll3.Misc.GenericUtils;
 import org.bukkit.Material;
-import org.bukkit.entity.LingeringPotion;
 import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.ThrownPotion;
@@ -23,11 +22,13 @@ public class AlqPotionThrow extends BukkitRunnable {
         if(pigZombie.isDead() || !pigZombie.isValid()){cancel();return;}
         if(pigZombie.getTarget() != null){
             Player p = (Player) pigZombie.getTarget();
-            if(potioninterval < 140){
-                potioninterval++;
-            }else{
-                chooserandomPotion(pigZombie);
-                potioninterval = 0;
+            if(p.getLocation().distanceSquared(pigZombie.getLocation()) <= Math.pow(6, 2)) {
+                if (potioninterval < 100) {
+                    potioninterval++;
+                } else {
+                    chooserandomPotion(pigZombie);
+                    potioninterval = 0;
+                }
             }
         }
     }

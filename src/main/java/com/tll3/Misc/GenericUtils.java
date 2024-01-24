@@ -15,6 +15,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_20_R3.attribute.CraftAttribute;
 import org.bukkit.craftbukkit.v1_20_R3.attribute.CraftAttributeMap;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -172,5 +173,8 @@ public class GenericUtils {
             default:
                 return "Desconocida";
         }
+    }
+    public static boolean isHostileMob(EntityType type) {
+        return type == EntityType.ENDER_DRAGON || type == EntityType.WITHER || type == EntityType.BLAZE || type == EntityType.CREEPER || type == EntityType.GHAST || type == EntityType.MAGMA_CUBE || type == EntityType.SILVERFISH || type == EntityType.SKELETON || type == EntityType.SLIME || type == EntityType.ZOMBIE || type == EntityType.ZOMBIE_VILLAGER || type == EntityType.DROWNED || type == EntityType.WITHER_SKELETON || type == EntityType.WITCH || type == EntityType.PILLAGER || type == EntityType.EVOKER || type == EntityType.VINDICATOR || type == EntityType.RAVAGER || type == EntityType.VEX || type == EntityType.GUARDIAN || type == EntityType.ELDER_GUARDIAN || type == EntityType.SHULKER || type == EntityType.HUSK || type == EntityType.STRAY || type == EntityType.PHANTOM || type == EntityType.WARDEN;
     }
 }

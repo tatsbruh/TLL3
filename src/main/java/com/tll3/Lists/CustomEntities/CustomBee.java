@@ -1,6 +1,7 @@
 package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.core.particles.Particles;
 import net.minecraft.sounds.SoundEffects;
 import net.minecraft.tags.TagsItem;
@@ -33,7 +34,11 @@ public class CustomBee extends EntityBee {
         this.persist = false;
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
         ((LivingEntity) this.getBukkitEntity()).setHealth(20);
-        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        if(GenericUtils.getDay() >= 21){
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        }else{
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+        }
     }
 
     @Override

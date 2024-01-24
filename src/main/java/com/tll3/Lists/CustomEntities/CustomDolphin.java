@@ -1,6 +1,7 @@
 package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Listeners.EntityNaturalSpawn;
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.animal.EntityDolphin;
 import net.minecraft.world.entity.monster.EntityGuardian;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
 
@@ -22,6 +24,9 @@ public class CustomDolphin extends EntityDolphin {
     public CustomDolphin(World world){
         super(EntityTypes.w,world);
         EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),3,1.24,60,30,true);
+        if(GenericUtils.getDay() >= 21){
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+        }
     }
     @Override
     protected void B() {

@@ -86,8 +86,10 @@ public class Entities {
         setHead(s,new ItemStack(Material.BLAST_FURNACE));
         setChestplate(s,new ItemStack(Material.IRON_CHESTPLATE));
         s.setShouldBurnInDay(false);
-        if(getDay() >= 14){
-            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,30).build());
+        if(getDay() >= 14 && getDay() < 21) {
+            setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 30).build());
+        }else if(getDay() >= 21){
+            setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 50).build());
         }else{
             setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,10).build());
         }
@@ -285,8 +287,13 @@ public class Entities {
     }
     public static void phanD(Phantom phantom){
         setName(phantom,"&7Dusk Phantom");
-        setMobDamage(phantom,4);
-        phantom.setSize(15);
+        if(getDay() >= 21) {
+            setMobDamage(phantom, 9);
+            phantom.setSize(19);
+        }else{
+            setMobDamage(phantom,4);
+            phantom.setSize(15);
+        }
         setIdentifierString(phantom,"duskphantom");
     }
     public static void silverday5(Silverfish silverfish){
@@ -492,7 +499,7 @@ public class Entities {
     public static void zombpigShinobi(PigZombie z){
         injectHostileBehaviorToPig(z);
         setName(z,"#6c5f85Piglin Shinobi");
-        setMobHealth(z,38);
+        setMobHealth(z,15);
         setMainHand(z,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,30).addEnchant(Enchantment.FIRE_ASPECT,30).build());
         addPotionEffect(z,PotionEffectType.SPEED,2);
         setIdentifierString(z,"shinobipig");
@@ -500,10 +507,37 @@ public class Entities {
     public static void zombpigAlchemist(PigZombie z){
         injectHostileBehaviorToPig(z);
         setName(z,"#857c5fAlquimista Porcino");
-        setMobHealth(z,48);
-        setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,30).build());
+        setMobHealth(z,25);
+        setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,15).build());
         setIdentifierString(z,"alchpig");
         new AlqPotionThrow(z).runTaskTimer(TLL3.getInstance(),0L,1L);
+    }
+    public static void titaniumCreeper(Creeper c){
+        setName(c,"#403e3eTitanium Creeper");
+        setMobHealth(c,20);
+        addPotionEffect(c,PotionEffectType.SPEED,1);
+        c.setPowered(true);
+        c.setMaxFuseTicks(17);
+        c.setFuseTicks(17);
+        setIdentifierString(c,"titaniumcreeper");
+        setIdentifierString(c,"metal_enemy");
+        setKnockresist(c,1000);
+    }
+    public static void steelrailgunner(Skeleton s){
+        setName(s,"#403e3eSteel Rail-gunner");
+        setMobHealth(s,10);
+        setIdentifierString(s,"steelrailgunner");
+        setIdentifierString(s,"metal_enemy");
+        setKnockresist(s,1000);
+    }
+    public static void cyberpunk(Enderman e){
+        setName(e,"#403e3eCyberpunk");
+        setMobHealth(e,20);
+        setMobDamage(e,10);
+        addPotionEffect(e,PotionEffectType.SPEED,3);
+        setIdentifierString(e,"cyberpunk");
+        setIdentifierString(e,"metal_enemy");
+        setKnockresist(e,1000);
     }
 
 
