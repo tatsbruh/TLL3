@@ -79,9 +79,15 @@ public class EntityNaturalSpawn implements Listener {
         spawnWasteyard(e,loc);
         if(getDay() >= 7) {
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
-                if(doRandomChance(50) && getMonsoon_active().equalsIgnoreCase("true")){
-                    EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,1);
-                    EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,1);
+                if(doRandomChance(35) &&  getMonsoon_active().equalsIgnoreCase("true")){
+                    if(getDay() >= 7 && getDay() < 21){
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,1);
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,0);
+                    }else if (getDay() >= 21 && getDay() < 28){
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,2);
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.INCREASE_DAMAGE,3);
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,1);
+                    }
                 }
                 if(getTyphoonactive().equalsIgnoreCase("true")){
                     EntityHelper.addPotionEffect(entity,PotionEffectType.REGENERATION,1);
@@ -106,13 +112,6 @@ public class EntityNaturalSpawn implements Listener {
         }else if(getDay() >= 14 && getDay() < 21){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                    if(loc.getWorld().getBiome(loc) == Biome.DEEP_DARK && getMonsoon_active().equalsIgnoreCase("true")){
-                        if(doRandomChance(1)){
-                            e.setCancelled(true);
-                            Warden w = (Warden) Entities.spawnMob(loc,EntityType.WARDEN);
-                            w.setRemoveWhenFarAway(true);
-                        }
-                    }
                     if (doRandomChance(3)) {
                         summonnewmob(loc, e);
                     }
@@ -121,15 +120,15 @@ public class EntityNaturalSpawn implements Listener {
         }else if(getDay() >= 21 && getDay() < 28){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
-                    if(loc.getWorld().getBiome(loc) == Biome.DEEP_DARK && getMonsoon_active().equalsIgnoreCase("true")){
-                        if(doRandomChance(1)){
-                            e.setCancelled(true);
-                            Warden w = (Warden) Entities.spawnMob(loc,EntityType.WARDEN);
-                            w.setRemoveWhenFarAway(true);
-                        }
-                    }
                     if (doRandomChance(4)) {
                         summonnewmob(loc, e);
+                    }
+                }
+                if(loc.getWorld().getName().equalsIgnoreCase("world_nether")){
+                    if(getTyphoonactive().equalsIgnoreCase("true")){
+                        if(doRandomChance(5)){
+                            spawnNetherWasteyard(e,loc);
+                        }
                     }
                 }
             }
@@ -140,9 +139,6 @@ public class EntityNaturalSpawn implements Listener {
                     if(loc.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
                         Wither w = (Wither) entity;
                         Entities.ashenWither(w);
-                        for(Player p : Bukkit.getOnlinePlayers()){
-                            p.sendTitle(ChatUtils.format("#4a4745Ashen Wither"),ChatUtils.format("&c&l¡Buena Suerte!"),0,100,0);
-                        }
                     }
                 }
             }
@@ -232,8 +228,10 @@ public class EntityNaturalSpawn implements Listener {
                             Entities.revCreeper((Creeper) entity);
                         }else if(random > 35 && random <= 65 && getDay() >= 14) {
                             Entities.unstCr((Creeper) entity);
-                        }else if(random > 65 && random <= 85 && getDay() >= 21){
+                        }else if(random > 65 && random <= 86 && getDay() >= 21) {
                             Entities.titaniumCreeper((Creeper) entity);
+                        }else if(random > 86 && random <= 90){
+                            Entities.creeperTower((Creeper) entity);
                         }else{
                             Entities.creChr((Creeper) entity);
                         }
@@ -757,6 +755,41 @@ public class EntityNaturalSpawn implements Listener {
         if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && loc.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
             e.setCancelled(true);
             if(w.getLivingEntities().size() > 70)return;
+            Random random = new Random();
+            int lol = random.nextInt(101);
+            if(lol <= 45){
+                PiglinBrute s = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                Entities.scBrute(s);
+            }
+            if (lol > 45 && lol <= 50) {
+                WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                CustomParrot c = new CustomParrot(worldServer);
+                c.a_(loc.getX(),loc.getY(),loc.getZ());
+                worldServer.addFreshEntity(c, CreatureSpawnEvent.SpawnReason.CUSTOM);
+            }
+            if(lol > 50 && lol <= 65){
+                Pillager p = (Pillager)Entities.spawnMob(loc,EntityType.PILLAGER);
+                Entities.lostScav(p);
+            }
+            if(lol > 65 && lol <= 80){
+                MagmaCube c = (MagmaCube) Entities.spawnMob(loc,EntityType.MAGMA_CUBE);
+                Entities.toxcrawl(c);
+            }
+            if(lol > 80 && lol <= 84){
+                Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
+                Entities.soulVg(g);
+            }
+            if(lol >= 85){
+                Creeper c = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
+                Entities.rustwalker(c);
+            }
+        }
+    }
+
+    public static void spawnNetherWasteyard(CreatureSpawnEvent e, Location loc){
+        World w = Worlds.getWasteyard();
+        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
+            e.setCancelled(true);
             Random random = new Random();
             int lol = random.nextInt(101);
             if(lol <= 45){

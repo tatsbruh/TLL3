@@ -134,6 +134,17 @@ public class Items {
     }
 
 
+    //dia 21
+    public static ItemStack vortexExtinction(){
+        return new ItemBuilder(Material.LIGHT_GRAY_DYE)
+                .setDisplayName("#801212V#871b13o#8d2315r#942c16t#9a3518i#a13d19c#a7461bé #ae4e1cd#b5571de #bb601fl#c26820a #c87122E#cf7a23x#d68224t#dc8b26i#e39327n#e99c29c#f0a52ai#f6ad2có#fdb62dn")
+                .setID("vortex_extinction")
+                .setLore(
+                        "#2e3123\"#333423E#373623l #3c3922f#403c22i#453e22n #4a4122e#4e4421s#534621t#574921a #5c4c21c#614e20a#655120d#6a5420a #6e5720v#73591fe#785c1fz #7c5f1fm#81611fa#85641es #8a671ec#8f691ee#936c1er#986f1dc#9c711da#a1741d\"",
+                        "&6&lConsume este item para anular el bloqueo de slots por los cambios del Dia 21."
+                ).build();
+    }
+
 
 
 

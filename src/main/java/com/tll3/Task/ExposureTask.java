@@ -2,6 +2,8 @@ package com.tll3.Task;
 
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
+import com.tll3.Misc.GenericUtils;
+import net.minecraft.world.entity.animal.EntityPanda;
 import org.bukkit.GameMode;
 import org.bukkit.entity.*;
 import org.bukkit.potion.PotionEffectType;
@@ -23,6 +25,16 @@ public class ExposureTask extends BukkitRunnable {
         if(player.getGameMode() == GameMode.SPECTATOR)return;
         var exp = PlayerData.getExposure(player);
         double range = 0;
+        int newexpdrain;
+        if(GenericUtils.getDay() >= 21){
+            if(GenericUtils.getMonsoon_active().equalsIgnoreCase("true")){
+                newexpdrain = 2;
+            }else{
+                newexpdrain = 1;
+            }
+        }else{
+            newexpdrain = 1;
+        }
         String exposure;
 
         if(exp >= 155 && exp <= 200){
@@ -59,14 +71,14 @@ public class ExposureTask extends BukkitRunnable {
                     darkness++;
                 }else{
                     darkness = 0;
-                    PlayerData.setExposure(player,PlayerData.getExposure(player) + 1);
+                    PlayerData.sumExp(player,newexpdrain);
                 }
             }else{
                 if(light < 200){
                     light++;
                 }else{
                     light = 0;
-                    PlayerData.setExposure(player,PlayerData.getExposure(player) - 1);
+                    PlayerData.restExp(player,1);
                 }
             }
             if(player.hasPotionEffect(PotionEffectType.GLOWING)){
@@ -82,7 +94,7 @@ public class ExposureTask extends BukkitRunnable {
                     glowing++;
                 }else{
                     glowing = 0;
-                    PlayerData.setExposure(player,PlayerData.getExposure(player) + 1);
+                    PlayerData.sumExp(player,1);
                 }
             }
         }

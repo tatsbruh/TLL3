@@ -40,14 +40,13 @@ public class MobRain extends BukkitRunnable {
                             }
                         }
                     }
-                    int random2 = GenericUtils.getRandomValue(2000) + 1;
+                    int random2 = GenericUtils.getRandomValue(3000) + 1;
                     if (random2 <= 10) {
                         Location ploc = online.getLocation().clone();
                         ArrayList<Location> spawns = new ArrayList<>();
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(5), ploc.getBlockY(), GenericUtils.getRandomValue(-5)));
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(-5), ploc.getBlockY(), GenericUtils.getRandomValue(5)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(25), ploc.getBlockY(), GenericUtils.getRandomValue(-25)));
                         for (Location l : spawns) {
-                                w.strikeLightning(l);
+                            w.strikeLightning(l);
                         }
                     }
                 }

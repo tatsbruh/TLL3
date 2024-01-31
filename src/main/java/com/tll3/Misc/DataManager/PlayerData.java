@@ -24,6 +24,15 @@ public class PlayerData {
     }
 
 
+
+    public static void setItemConsumed(Player target,String item,int number){
+        Data.setPlayerData(target, "consumed_" + item, String.valueOf(number));
+    }
+    public static int getItemConsumed(Player target,String item){
+        return Integer.parseInt(Data.getPlayerData(target,"consumed_" + item,"0"));
+    }
+
+
     public static void setItemCooldown(Player target,String item,int number){
         Data.setPlayerData(target, "cooldown_" + item, String.valueOf(number));
     }

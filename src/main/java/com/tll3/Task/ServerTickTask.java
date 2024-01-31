@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
@@ -47,6 +48,7 @@ public class ServerTickTask extends BukkitRunnable {
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
         if(p.getGameMode() == GameMode.SURVIVAL){
+            InventoryUtils.lockPlayerSlots(p);
         if(getDay() >= 14){
 
             if(p.getWorld().getName().equals("world_wasteyard")){
@@ -102,6 +104,14 @@ public class ServerTickTask extends BukkitRunnable {
                         }
                     }
                 }
+            }
+        }
+        if(getDay() >= 21){
+            if (p.getLocation().subtract(0,1,0).getBlock().getType() == Material.SOUL_SAND || p.getLocation().subtract(0,1,0).getBlock().getType() == Material.SOUL_SOIL) {
+                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 0));
+            }
+            if(p.getLocation().subtract(0,1,0).getBlock().getType().name().contains("leaves")){
+                p.addPotionEffect(new PotionEffect(PotionEffectType.POISON,100,2));
             }
         }
         }

@@ -44,6 +44,7 @@ public class staffGUI {
                 .addIngredient('f',new giveItem(Items.vulcaniteAxe()))
                 .addIngredient('g',new giveItem(Items.vulcaniteShovel()))
                 .addIngredient('h',new giveItem(Items.vulcaniteHoe()))
+                .addIngredient('i',new giveItem(Items.vortexExtinction()))
                 .build();
         var window = Window.single()
                 .setViewer(player)

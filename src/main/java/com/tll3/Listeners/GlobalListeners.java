@@ -16,6 +16,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.FurnaceSmeltEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.world.ChunkLoadEvent;
@@ -84,9 +85,9 @@ public class GlobalListeners implements Listener {
             }
             if(getDay() >= 21 && !p.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
                 switch (reason){
-                    case LAVA: e.setDamage(e.getDamage() * 6);
+                    case LAVA: e.setDamage(e.getDamage() * 2);
                     case HOT_FLOOR: e.setDamage(e.getDamage() * 10);
-                    case FALL: e.setDamage(e.getDamage() * 3);
+                    case FALL: e.setDamage(e.getDamage() * 2);
                 }
             }
         }
@@ -129,6 +130,11 @@ public class GlobalListeners implements Listener {
                     case FIRE,FIRE_TICK,LAVA,HOT_FLOOR,WITHER,SUFFOCATION: e.setCancelled(true);
                 }
             }
+            if(entity instanceof Enemy){
+                switch (reason){
+                    case FALL -> e.setCancelled(true);
+                }
+            }
         }
 
 
@@ -149,16 +155,18 @@ public class GlobalListeners implements Listener {
             }
         }
         if(Data.has(entity,"unstablecreeper",PersistentDataType.STRING)){
-            if(reason == EntityDamageEvent.DamageCause.PROJECTILE){
-                e.setCancelled(true);
-                entity.playEffect(EntityEffect.TELEPORT_ENDER);
-                entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
-                EntityHelper.teleportEnderman(entity,entity.getLocation().getBlockX(),entity.getLocation().getBlockY(),entity.getLocation().getBlockZ(),entity.getWorld(),64.0D);
-            }else{
-                if(doRandomChance(1)){
+            if(entity.getVehicle() == null) {
+                if (reason == EntityDamageEvent.DamageCause.PROJECTILE) {
+                    e.setCancelled(true);
                     entity.playEffect(EntityEffect.TELEPORT_ENDER);
-                    entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
-                    EntityHelper.teleportEnderman(entity,entity.getLocation().getBlockX(),entity.getLocation().getBlockY(),entity.getLocation().getBlockZ(),entity.getWorld(),64.0D);
+                    entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10.0F, 1.0F);
+                    EntityHelper.teleportEnderman(entity, entity.getLocation().getBlockX(), entity.getLocation().getBlockY(), entity.getLocation().getBlockZ(), entity.getWorld(), 64.0D);
+                } else {
+                    if (doRandomChance(1)) {
+                        entity.playEffect(EntityEffect.TELEPORT_ENDER);
+                        entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10.0F, 1.0F);
+                        EntityHelper.teleportEnderman(entity, entity.getLocation().getBlockX(), entity.getLocation().getBlockY(), entity.getLocation().getBlockZ(), entity.getWorld(), 64.0D);
+                    }
                 }
             }
         }
@@ -186,6 +194,23 @@ public class GlobalListeners implements Listener {
         if(item != null){
             if(new ItemBuilder(item).hasID("unplaceable")){
                 e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
+    public void furnaceE(FurnaceSmeltEvent e){
+        var item = e.getSource();
+        var result = e.getResult();
+        if(getDay() >= 21){
+            if(result != null){
+                switch (result.getType()){
+                    case IRON_INGOT,GOLD_INGOT,NETHERITE_SCRAP ->{
+                        ItemStack newr = result;
+                        newr.setType(Material.AIR);
+                        e.setResult(newr);
+                    }
+                }
             }
         }
     }
@@ -233,6 +258,11 @@ public class GlobalListeners implements Listener {
                 worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
             }
         }}
+        if(getDay() >= 21){
+            if(block.name().toLowerCase().contains("bamboo")){
+                e.getBlock().getLocation().createExplosion(10,true,true);
+            }
+        }
     }
 
     @EventHandler

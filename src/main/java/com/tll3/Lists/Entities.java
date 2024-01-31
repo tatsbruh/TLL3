@@ -42,6 +42,7 @@ import java.security.Guard;
 import java.util.Locale;
 import static com.tll3.Misc.EntityHelper.*;
 import static com.tll3.Misc.GenericUtils.getDay;
+import static com.tll3.Misc.GenericUtils.getRandomValue;
 
 public class Entities {
     /*
@@ -51,6 +52,10 @@ public class Entities {
     public static void creChr(Creeper c){
         setName(c,"&bSupercharged Creeper");
         c.setPowered(true);
+        if(getDay() >= 21){
+            c.setMaxFuseTicks(20);
+            c.setFuseTicks(20);
+        }
     }
 
     public static void skeAd(Skeleton s){
@@ -58,7 +63,11 @@ public class Entities {
         setMobHealth(s,30);
         setMobDamage(s,4);
         s.setShouldBurnInDay(false);
-        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).addEnchant(Enchantment.ARROW_FIRE,4).build());
+        if(getDay() >= 21){
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,30).addEnchant(Enchantment.ARROW_FIRE,5).build());
+        }else{
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).addEnchant(Enchantment.ARROW_FIRE,5).build());
+        }
         addPotionEffect(s,PotionEffectType.SPEED,1);
         setIdentifierString(s,"bruteskeleton");
     }
@@ -74,7 +83,11 @@ public class Entities {
     public static void skeRz(Skeleton s){
         setName(s,"&0Razorback");
         setMobHealth(s,25);
-        setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
+        if(getDay() >= 21){
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,15).build());
+        }else{
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).build());
+        }
         setHead(s,new ItemStack(Material.TARGET));
         setIdentifierString(s,"razorback");
         s.setShouldBurnInDay(false);
@@ -539,10 +552,61 @@ public class Entities {
         setIdentifierString(e,"metal_enemy");
         setKnockresist(e,1000);
     }
+    public static void creeperTower(Creeper c){
+        int quantity = getRandomValue(5);
+        chooseCreeperType(c);
+        Creeper c1 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+        Creeper c2 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+        chooseCreeperType(c1);
+        chooseCreeperType(c2);
+        c.addPassenger(c1);
+        c1.addPassenger(c2);
+        switch (quantity){
+            case 0 ->{
+                Creeper c3 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+                chooseCreeperType(c3);
+                c2.addPassenger(c3);
+            }
+            case 1 ->{
+                Creeper c3 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+                chooseCreeperType(c3);
+                Creeper c4 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+                chooseCreeperType(c4);
+                c2.addPassenger(c3);
+                c3.addPassenger(c4);
+            }
+            case 2 ->{
+                Creeper c3 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+                chooseCreeperType(c3);
+                Creeper c4 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+                chooseCreeperType(c4);
+                Creeper c5 = (Creeper) spawnMob(c.getLocation(),EntityType.CREEPER);
+                chooseCreeperType(c5);
+                c2.addPassenger(c3);
+                c3.addPassenger(c4);
+                c4.addPassenger(c5);
+            }
+        }
 
 
 
 
+    }
+
+
+
+    public static void chooseCreeperType(Creeper e){
+        if(getDay() >= 21 && getDay() < 28){
+            int type = getRandomValue(5);
+            switch (type){
+                case 0 -> Entities.creChr(e);
+                case 1 -> Entities.revCreeper(e);
+                case 2 -> Entities.rustwalker(e);
+                case 3 -> Entities.unstCr(e);
+                case 4 -> Entities.titaniumCreeper(e);
+            }
+        }
+    }
 
 
     //Wasteyard Mobs

@@ -40,7 +40,7 @@ import org.bukkit.util.Vector;
 import java.util.Objects;
 import java.util.Random;
 
-import static com.tll3.Misc.GenericUtils.getDay;
+import static com.tll3.Misc.GenericUtils.*;
 
 public class GenericEntityListeners implements Listener {
 
@@ -174,6 +174,11 @@ public class GenericEntityListeners implements Listener {
                     }
                 }
             }
+            if(damager instanceof Fireball f){
+                if(Data.has(f,"entropicfireball",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,100,5,true,false,true));
+                }
+            }
             if(damager instanceof Spider s){
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
@@ -293,7 +298,11 @@ public class GenericEntityListeners implements Listener {
             if(Data.has(s,"livshriek",PersistentDataType.STRING)){
                 s.getWorld().playSound(s.getLocation(),Sound.ENTITY_WARDEN_SONIC_BOOM,10.0F,1.0F);
                 Arrow a = (Arrow) projectile;
-                a.setDamage(40);
+                if(getDay() >= 21){
+                   a.setDamage(60);
+                }else{
+                   a.setDamage(40);
+                }
                 a.setGravity(false);
                 for(Player online : Bukkit.getOnlinePlayers()){
                     PacketPlayOutEntityDestroy packed = new PacketPlayOutEntityDestroy(a.getEntityId());
@@ -335,7 +344,11 @@ public class GenericEntityListeners implements Listener {
             }
             if(Data.has(s,"firemancer",PersistentDataType.STRING)){
                 Fireball f = s.launchProjectile(Fireball.class);
-                f.setYield(4);
+                if(getDay() >= 21) {
+                    f.setYield(6);
+                }else {
+                    f.setYield(4);
+                }
                 e.setProjectile(f);
             }
             if(Data.has(s,"razorback",PersistentDataType.STRING)){
@@ -344,11 +357,15 @@ public class GenericEntityListeners implements Listener {
             }
             if(Data.has(s,"revenantskeleton",PersistentDataType.STRING)){
                 int g = Data.get(s,"revske_amount",PersistentDataType.INTEGER);
-                if(g < 5){
-                    Data.set(s,"revske_amount",PersistentDataType.INTEGER,g + 1);
+                if(getDay() >= 21){
+                    EntityHelper.setIdentifierString(projectile, "rev_explosion");
                 }else{
-                    EntityHelper.setIdentifierString(projectile,"rev_explosion");
-                    Data.set(s,"revske_amount",PersistentDataType.INTEGER,0);
+                    if (g < 5) {
+                        Data.set(s, "revske_amount", PersistentDataType.INTEGER, g + 1);
+                    } else {
+                        EntityHelper.setIdentifierString(projectile, "rev_explosion");
+                        Data.set(s, "revske_amount", PersistentDataType.INTEGER, 0);
+                    }
                 }
             }
 
@@ -384,7 +401,7 @@ public class GenericEntityListeners implements Listener {
         int chance = random.nextInt(3000);
         if(entity instanceof Creeper c){
             if(c.getTarget() == null && Data.has(c,"unstablecreeper",PersistentDataType.STRING)){
-                if(chance <= 5){
+                if(chance <= 5 && c.getVehicle() == null){
                     c.playEffect(EntityEffect.TELEPORT_ENDER);
                     c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
                     EntityHelper.teleportEnderman(c,c.getLocation().getBlockX(),c.getLocation().getBlockY(),c.getLocation().getBlockZ(),c.getWorld(),64.0D);
@@ -416,14 +433,9 @@ public class GenericEntityListeners implements Listener {
                 });
             }
             if(Data.has(c,"titaniumcreeper",PersistentDataType.STRING)) {
-                e.setYield(0);
-                AreaEffectCloud a = (AreaEffectCloud) Entities.spawnMob(loc,EntityType.AREA_EFFECT_CLOUD);
-                a.setRadius(7);
-                a.setDuration(200);
-                a.setParticle(Particle.DAMAGE_INDICATOR);
-                a.setBasePotionType(PotionType.SLOWNESS);
-                a.addCustomEffect(new PotionEffect(PotionEffectType.BLINDNESS,200,0,true,false,true),true);
-                a.addCustomEffect(new PotionEffect(PotionEffectType.GLOWING,200,4,true,false,true),true);
+                loc.getNearbyPlayers(6).forEach(player -> {
+                    player.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,200,4,true,false,true));
+                });
             }
         }
     }
@@ -444,6 +456,11 @@ public class GenericEntityListeners implements Listener {
                 } else {
                     returnMob(loc);
                 }
+            }
+        }
+        if(entity instanceof Bat b){
+            if(getDay() >= 21 && getMonsoon_active().equalsIgnoreCase("true")){
+                b.getWorld().createExplosion(b.getLocation(),7,true,true);
             }
         }
         if(entity instanceof Witch w){
@@ -525,28 +542,6 @@ public class GenericEntityListeners implements Listener {
             }
         }
 
-        if(proj instanceof Fireball f){
-            if(Data.has(f,"entropicfireball",PersistentDataType.STRING)){
-                if (hen != null) {
-                    AreaEffectCloud r = (AreaEffectCloud) Entities.spawnMob(hen.getLocation(),EntityType.AREA_EFFECT_CLOUD);
-                    r.setDuration(200);
-                    r.setParticle(Particle.END_ROD);
-                    r.setRadius(3);
-                    r.setSource(source);
-                    r.setBasePotionType(PotionType.SLOWNESS);
-                    r.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION,100,4,true,false,true),true);
-                }
-                if (hbl != null) {
-                    AreaEffectCloud r = (AreaEffectCloud) Entities.spawnMob(hbl.getLocation(),EntityType.AREA_EFFECT_CLOUD);
-                    r.setDuration(200);
-                    r.setParticle(Particle.END_ROD);
-                    r.setRadius(3);
-                    r.setSource(source);
-                    r.setBasePotionType(PotionType.SLOWNESS);
-                    r.addCustomEffect(new PotionEffect(PotionEffectType.LEVITATION,100,4,true,false,true),true);;
-                }
-            }
-        }
 
         if(proj instanceof Arrow a){
             if(Data.has(a,"lol",PersistentDataType.STRING)){
@@ -714,10 +709,18 @@ public class GenericEntityListeners implements Listener {
                    double distance = s.getLocation().distance(p.getLocation());
                    if (distance < 10.0) {
                        s.getWorld().playSound(s.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, 10.0F, 1.0F);
-                       EntityHelper.setMainHand(s, new ItemBuilder(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 4).build());
+                       if(getDay() >= 21){
+                           EntityHelper.setMainHand(s, new ItemBuilder(Material.NETHERITE_AXE).addEnchant(Enchantment.DAMAGE_ALL, 30).build());
+                       }else {
+                           EntityHelper.setMainHand(s, new ItemBuilder(Material.IRON_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 5).build());
+                       }
                    } else {
                        s.getWorld().playSound(s.getLocation(), Sound.ITEM_ARMOR_EQUIP_GENERIC, 10.0F, 1.0F);
-                       EntityHelper.setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 5).addEnchant(Enchantment.ARROW_FIRE, 5).build());
+                       if (getDay() >= 21) {
+                           EntityHelper.setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 30).addEnchant(Enchantment.ARROW_FIRE, 5).build());
+                       }else{
+                           EntityHelper.setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 5).addEnchant(Enchantment.ARROW_FIRE, 5).build());
+                       }
                    }
                }
            }
