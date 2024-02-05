@@ -1,5 +1,6 @@
 package com.tll3.Enviroments;
 
+import com.tll3.Enviroments.Wasteyard.Wasteyard;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;

@@ -1,7 +1,8 @@
-package com.tll3.Enviroments;
+package com.tll3.Enviroments.Wasteyard;
 
 import org.bukkit.Material;
 import org.bukkit.TreeType;
+import org.bukkit.block.Biome;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.LimitedRegion;
 import org.bukkit.generator.WorldInfo;
@@ -22,7 +23,6 @@ public class WasteyardPopulator extends BlockPopulator {
             if(limitedRegion.getType(x, y, z).isSolid() && limitedRegion.getType(x,y + 1,z).isAir()) {
                 limitedRegion.setType(x, y + 1, z, doRandomThing());
             }
-
         }
     }
 

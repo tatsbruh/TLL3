@@ -61,7 +61,7 @@ public class GenericPlayerListeners implements Listener {
         }
         new EffectDuration(p).runTaskTimer(TLL3.getInstance(),20L,20L); //starts the duration of the effects
         new TabManager(p).runTaskTimer(TLL3.getInstance(),0L,1L);
-        new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
+        //new Scoreboard(p).runTaskTimer(TLL3.getInstance(),0L,1L); //starts the scorebard task
         new EffectTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
         new ServerTickTask(p).runTaskTimer(TLL3.getInstance(),0L,1L);
 
@@ -133,14 +133,12 @@ public class GenericPlayerListeners implements Listener {
             int highestY = block.getBlockY();
             if (highestY < player.getLocation().getY()) {
                 if(getDay() >= 14){
-                    e.setDamage(e.getDamage() * 4);
+                    e.setDamage(e.getDamage() * 2);
                 }else{
-                e.setDamage(e.getDamage() * 2);
+                e.setDamage((int) (e.getDamage() * 1.25));
             }
             }
         }
-        }else if(getDay() >= 21){
-            e.setDamage(e.getDamage() * 999);
         }
     }
 
@@ -149,7 +147,16 @@ public class GenericPlayerListeners implements Listener {
         if(e.getEntity() instanceof Player p){
             if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.SATIATED){
                 if(Data.has(p,"bleed", PersistentDataType.STRING)){
-                    e.setCancelled(true);
+                    if(GenericUtils.getWorld().getGameRuleValue(GameRule.NATURAL_REGENERATION)){
+                        e.setCancelled(true);
+                    }
+                }
+            }
+            if(e.getRegainReason() == EntityRegainHealthEvent.RegainReason.MAGIC_REGEN || e.getRegainReason() == EntityRegainHealthEvent.RegainReason.MAGIC){
+                if(Data.has(p,"bleed", PersistentDataType.STRING)){
+                    if(!GenericUtils.getWorld().getGameRuleValue(GameRule.NATURAL_REGENERATION)){
+                        e.setAmount(e.getAmount() - 0.5);
+                    }
                 }
             }
         }

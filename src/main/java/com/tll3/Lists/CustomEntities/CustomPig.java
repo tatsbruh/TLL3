@@ -39,7 +39,7 @@ public class CustomPig extends EntityPig {
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(35);
         ((LivingEntity)this.getBukkitEntity()).setHealth(35);
-        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(50);
+        this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
     }
     @Override

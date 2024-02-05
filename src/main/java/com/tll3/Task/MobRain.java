@@ -27,7 +27,7 @@ public class MobRain extends BukkitRunnable {
         for(Player online : Bukkit.getOnlinePlayers()){
             if(online.getWorld().getEnvironment() == World.Environment.NORMAL && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
                 if (online.getGameMode() == GameMode.SURVIVAL) {
-                    int random = GenericUtils.getRandomValue(4500) + 1;
+                    int random = GenericUtils.getRandomValue(5500) + 1;
                     if (random <= 10) {
                         Location ploc = online.getLocation().clone();
                         ArrayList<Location> spawns = new ArrayList<>();
@@ -44,7 +44,7 @@ public class MobRain extends BukkitRunnable {
                     if (random2 <= 10) {
                         Location ploc = online.getLocation().clone();
                         ArrayList<Location> spawns = new ArrayList<>();
-                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(25), ploc.getBlockY(), GenericUtils.getRandomValue(-25)));
+                        spawns.add(ploc.clone().add(GenericUtils.getRandomValue(35), ploc.getBlockY(), GenericUtils.getRandomValue(-35)));
                         for (Location l : spawns) {
                             w.strikeLightning(l);
                         }

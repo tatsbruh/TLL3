@@ -35,9 +35,9 @@ public class CustomBee extends EntityBee {
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(20);
         ((LivingEntity) this.getBukkitEntity()).setHealth(20);
         if(GenericUtils.getDay() >= 21){
-            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(40);
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         }else{
-            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(8);
+            this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(5);
         }
     }
 

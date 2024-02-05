@@ -72,7 +72,7 @@ public class staffCMD extends BaseCommand {
     }
 
     @Subcommand("exposure")
-    @CommandCompletion("set|get")
+    @CommandCompletion("@players set|get")
     @CommandPermission("staff.admin")
     @Description("Sets or gets the exposure of someone")
     public void exposure(CommandSender sender, String[] args){
@@ -91,6 +91,52 @@ public class staffCMD extends BaseCommand {
                     Player target = Bukkit.getPlayer(args[1]);
                     if(target != null){
                         p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eLa exposicion de  " + target.getName() + " es " + PlayerData.getExposure(target)));
+                    }
+                }
+            }
+        }else{
+            TLL3.getInstance().console("LOL LMAO XD");
+        }
+    }
+
+    @Subcommand("manager")
+    @CommandCompletion("@players credits|prestige get|set ")
+    @CommandPermission("staff.admin")
+    @Description("Sets or gets the exposure of someone")
+    public void manager(CommandSender sender, String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            Player target = Bukkit.getPlayer(args[0]);
+            if(target == null){
+                p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eEse jugador no esta conectado o no se encuentra."));
+                return;
+            }
+            switch (args[1].toLowerCase()){
+                case "prestige" ->{
+                    switch (args[2].toLowerCase()){
+                        case "get" ->{
+                            int i = Integer.parseInt(String.valueOf(PlayerData.getPrestige(target)));
+                            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&ePrestigio de " + target.getName() + ": " + i));
+                        }
+                        case "set" ->{
+                            int i = Integer.parseInt(args[3]);
+                            if(i < 0)return;
+                            PlayerData.setPrestige(target,i);
+                            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eSe ha cambiado el prestigio de " + target.getName() + " a " + i));
+                        }
+                    }
+                }
+                case "credits" ->{
+                    switch (args[2].toLowerCase()){
+                        case "get" ->{
+                            int i = Integer.parseInt(String.valueOf(PlayerData.getCredits(target)));
+                            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eCreditos de " + target.getName() + ": " + i));
+                        }
+                        case "set" ->{
+                            int i = Integer.parseInt(args[3]);
+                            if(i < 0)return;
+                            PlayerData.setCredits(target,i);
+                            p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eSe ha cambiado los creditos de " + target.getName() + " a " + i));
+                        }
                     }
                 }
             }
@@ -185,6 +231,7 @@ public class staffCMD extends BaseCommand {
 
     @Subcommand("totems")
     @CommandPermission("staff.admin")
+    @CommandCompletion("@players numero")
     @Description("does the fucking totem count ok")
     public void settotems(CommandSender sender,String[] args){
         if (sender instanceof Player p && args.length > 0){

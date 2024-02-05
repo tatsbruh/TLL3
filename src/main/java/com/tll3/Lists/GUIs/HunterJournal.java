@@ -222,6 +222,19 @@ public class HunterJournal {
             }
         }
 
+        @Override
+        public void handleClick(@NotNull ClickType clickType, @NotNull Player player, @NotNull InventoryClickEvent event) {
+            if (clickType == ClickType.LEFT) {
+                if(GenericUtils.getDay() < dia) {
+                    player.closeInventory();
+                    event.setCancelled(true);
+                    player.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eTienes que esperar al día indicado para poder acceder a esto."));
+                }else{
+                   ((TabGui)this.getGui()).setTab(this.tab);
+               }
+            }
+        }
+
     }
 
 }

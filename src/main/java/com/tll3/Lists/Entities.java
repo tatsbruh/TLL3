@@ -152,7 +152,6 @@ public class Entities {
     public static void zNinka(Zombie z){
         setName(z,"&7Ninja Zombie");
         setMobHealth(z,25);
-        setMobDamage(z,5);
         addPotionEffect(z, PotionEffectType.INVISIBILITY,0);
         addPotionEffect(z, PotionEffectType.SPEED,2);
         addPotionEffect(z,PotionEffectType.JUMP,2);
@@ -318,7 +317,7 @@ public class Entities {
         setName(drowned,"&bAbyssal Drowned");
         setMobDamage(drowned,6);
         setMobHealth(drowned,25);
-        setMainHand(drowned,new ItemBuilder(Material.TRIDENT).addEnchant(Enchantment.IMPALING,9).addEnchant(Enchantment.CHANNELING,0).build());
+        setMainHand(drowned,new ItemBuilder(Material.TRIDENT).addEnchant(Enchantment.IMPALING,5).addEnchant(Enchantment.CHANNELING,0).build());
         setIdentifierString(drowned,"abyssdrow");
     }
 
@@ -424,7 +423,7 @@ public class Entities {
     public static void nwRavager(Ravager p,boolean canjoinraid){
         setName(p,"#eb420eRavager Supremo");
         setMobHealth(p,100);
-        setMobDamage(p,35);
+        setMobDamage(p,20);
         p.setCanJoinRaid(canjoinraid);
         setIdentifierString(p,"ravagerex");
     }
@@ -458,8 +457,7 @@ public class Entities {
     }
     public static void revSpider(Spider z){
         setName(z,"#592929Revenant Spider");
-        setMobHealth(z,35);
-        setMobDamage(z,8);
+        setMobHealth(z,15);
         setMobRange(z,96);
         addPotionEffect(z,PotionEffectType.SPEED,1);
         setIdentifierString(z,"revenant_class");
@@ -467,7 +465,6 @@ public class Entities {
     }
     public static void revCreeper(Creeper z){
         setName(z,"#592929Revenant Creeper");
-        setMobHealth(z,35);
         z.setExplosionRadius(8);
         z.setPowered(true);
         setMobRange(z,96);
@@ -513,7 +510,7 @@ public class Entities {
         injectHostileBehaviorToPig(z);
         setName(z,"#6c5f85Piglin Shinobi");
         setMobHealth(z,15);
-        setMainHand(z,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,30).addEnchant(Enchantment.FIRE_ASPECT,30).build());
+        setMainHand(z,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,15).addEnchant(Enchantment.FIRE_ASPECT,30).build());
         addPotionEffect(z,PotionEffectType.SPEED,2);
         setIdentifierString(z,"shinobipig");
     }
@@ -521,13 +518,13 @@ public class Entities {
         injectHostileBehaviorToPig(z);
         setName(z,"#857c5fAlquimista Porcino");
         setMobHealth(z,25);
-        setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,15).build());
+        setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,10).build());
         setIdentifierString(z,"alchpig");
         new AlqPotionThrow(z).runTaskTimer(TLL3.getInstance(),0L,1L);
     }
     public static void titaniumCreeper(Creeper c){
         setName(c,"#403e3eTitanium Creeper");
-        setMobHealth(c,20);
+        setMobHealth(c,10);
         addPotionEffect(c,PotionEffectType.SPEED,1);
         c.setPowered(true);
         c.setMaxFuseTicks(17);
@@ -545,7 +542,7 @@ public class Entities {
     }
     public static void cyberpunk(Enderman e){
         setName(e,"#403e3eCyberpunk");
-        setMobHealth(e,20);
+        setMobHealth(e,10);
         setMobDamage(e,10);
         addPotionEffect(e,PotionEffectType.SPEED,3);
         setIdentifierString(e,"cyberpunk");
@@ -625,7 +622,6 @@ public class Entities {
     }
     public static void rustwalker(Creeper c){
         setName(c,"#ffab4aRustwalker");
-        setMobHealth(c,35);
         c.setPowered(true);
         c.setMaxFuseTicks(25);
         c.setFuseTicks(25);

@@ -482,7 +482,7 @@ public class GenericEntityListeners implements Listener {
         if(shooter instanceof Drowned d){
             if(proj instanceof Trident t){
                 if(Data.has(d,"abyssdrow",PersistentDataType.STRING)){
-                    t.setDamage(t.getDamage() * 5);
+                    t.setDamage(t.getDamage() * 3);
                     EntityHelper.setIdentifierString(t,"lolxd");
                 }
             }

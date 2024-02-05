@@ -21,6 +21,7 @@ public class statsGUI {
                 .addIngredient('C',new itemstats.stealthupgrade(player))
                 .addIngredient('D',new itemstats.defenseupgrade(player))
                 .addIngredient('E',new itemstats.speedupgrades(player))
+                .addIngredient('R',guiItems.playerheadStats(player))
                 .build();
         var window = Window.single()
                 .setViewer(player)

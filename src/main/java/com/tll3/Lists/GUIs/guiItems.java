@@ -31,6 +31,17 @@ public class guiItems {
                         "&b☀ &b&lMisiones Completadas: &7" + PlayerData.getHunts(p)
                 ).build();
     }
+    public static ItemStack playerheadStats(Player p){
+        return new ItemBuilder(SkullCreator.itemFromUuid(p.getUniqueId()))
+                .setDisplayName("#c9124c" + p.getName())
+                .setLore(
+                        "&e☠ ¡Bienvenido a las Mejoras! ☠",
+                        "&7Aquí puedes ver y comprar mejoras de estadísticas para ser aun mas",
+                        "&7fuerte de lo normal!",
+                        "",
+                        "&c✪ &c&lPrestigio: &7" + PlayerData.getPrestige(p)
+                ).build();
+    }
 
     //Misiones del dia 0 - dia 6
     public static ItemStack day0mission5(Player p){
@@ -344,6 +355,109 @@ public class guiItems {
                         "&6&lRecompensas:",
                         "&7x24 &cPrestigio",
                         "&7x36 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+
+    //Day 21
+    public static ItemStack day21mission1(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"31_metal") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.IRON_BLOCK)
+                .setDisplayName("#737373D#717171e#707070s#6e6e6eo#6c6c6cx#6b6b6bi#696969d#686868a#666666c#646464i#636363ó#616161n")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 5 Steel Railgunners &8(" + PlayerData.getObjective(p,"31ste") + "/5)",
+                        "&7- Mata 5 Titanium Creepers &8(" + PlayerData.getObjective(p,"31tit") + "/5)",
+                        "&7- Mata 5 Cyberpunks &8(" + PlayerData.getObjective(p,"31cyb") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x30 &cPrestigio",
+                        "&7x45 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day21mission2(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"32_mcleg") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.PORKCHOP)
+                .setDisplayName("#34cbfbM#3ccefbi#44d0fbn#4cd3fbe#54d6fcc#5cd8fcr#64dbfca#6cdefcf#75e0fct #7de3fcL#85e6fce#8de8fcg#95ebfde#9deefdn#a5f0fdd#adf3fds")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 10 Piglin Shinobi &8(" + PlayerData.getObjective(p,"32pig1") + "/10)",
+                        "&7- Mata 10 Alquimistas Porcinos &8(" + PlayerData.getObjective(p,"32pig2") + "/10)",
+                        "&7- Mata 10 Jinetes Cerdo-pocalípticos &8(" + PlayerData.getObjective(p,"32pig3") + "/10)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x36 &cPrestigio",
+                        "&7x54 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day21mission3(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"33_blas") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.GHAST_TEAR)
+                .setDisplayName("#fbf8aa¡#fbf9b2B#fbf9bbl#fcfac3a#fcfacbs#fcfbd4f#fcfbdce#fcfce4m#fdfceci#fdfdf5a#fdfdfd!")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 5 Entropic Demons &8(" + PlayerData.getObjective(p,"33gas") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x28 &cPrestigio",
+                        "&7x42 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day21mission4(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"34_prop") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.CROSSBOW)
+                .setDisplayName("#572424I#592929n#5b2d2dv#5d3232a#5e3737s#603b3bi#624040ó#644545n #664949d#684e4ee #695353P#6b5757r#6d5c5co#6f6161p#716565i#736a6ae#746f6fd#767373a#787878d")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata 5 Piromaníacos &8(" + PlayerData.getObjective(p,"34ill1") + "/5)",
+                        "&7- Mata 5 Verdugos &8(" + PlayerData.getObjective(p,"34ill2") + "/5)",
+                        "&7- Mata 5 Ultravokers &8(" + PlayerData.getObjective(p,"34ill3") + "/5)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x34 &cPrestigio",
+                        "&7x50 &eCreditos",
+                        "",
+                        cosa
+                ).build();
+    }
+    public static ItemStack day21mission5(Player p){
+        var cosa = ChatUtils.format("&c&lNo Completado");
+        if(PlayerData.getMission(p,"35_lap") >= 1){
+            cosa = ChatUtils.format("&a&l¡Completado!");
+        }
+        return new ItemBuilder(Material.CROSSBOW)
+                .setDisplayName("#9428ffS#8f28ffe#8a29ffg#8429ffu#7f29ffn#7a29ffd#752affa #6f2affV#6a2affu#652affe#602bffl#5a2bfft#552bffa")
+                .setLore(
+                        "&6&lObjetivos:",
+                        "&7- Mata un Revenant Skeleton &8(" + PlayerData.getObjective(p,"35ske1") + "/1)",
+                        "&7- Mata un Firemancer &8(" + PlayerData.getObjective(p,"35ske2") + "/1)",
+                        "&7- Mata un Rogue Skeleton &8(" + PlayerData.getObjective(p,"35ske3") + "/1)",
+                        "&7- Mata un Razorback &8(" + PlayerData.getObjective(p,"35ske4") + "/1)",
+                        "&7- Mata un Void Overseer &8(" + PlayerData.getObjective(p,"35ske5") + "/1)",
+                        "&7- Mata un Living Shrieker &8(" + PlayerData.getObjective(p,"35ske6") + "/1)",
+                        "",
+                        "&6&lRecompensas:",
+                        "&7x44 &cPrestigio",
+                        "&7x60 &eCreditos",
                         "",
                         cosa
                 ).build();
