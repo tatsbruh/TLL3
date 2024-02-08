@@ -13,6 +13,7 @@ import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.PlayerData;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.Monsoon;
+import com.tll3.Misc.World.Fawe;
 import com.tll3.TLL3;
 import com.tll3.Task.BossTask;
 import com.tll3.Task.MobRain;
@@ -249,7 +250,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("debug")
-    @CommandCompletion("natural|diary|missions|stats|get_stats|reset_stats_to_default")
+    @CommandCompletion("natural|diary|missions|stats|get_stats|reset_stats_to_default|schem")
     @CommandPermission("staff.admin")
     @Description("debugs a ton of shit")
     public void debug(CommandSender sender,String[] args){
@@ -272,8 +273,13 @@ public class staffCMD extends BaseCommand {
                     p.getAttribute(Attribute.GENERIC_ARMOR).setBaseValue(0.0);
                     p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.10000000149011612);
                 }
+                case "schem" ->{
+                    Fawe.pasteSchematic("prueba",p.getLocation());
+                }
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Tienes que ingresar un comando debug valido"));
             }
         }
     }
+
+
 }

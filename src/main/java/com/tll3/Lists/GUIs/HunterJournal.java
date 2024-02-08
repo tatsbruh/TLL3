@@ -179,6 +179,34 @@ public class HunterJournal {
                     .addIngredient('n',guiItems.day14mission4(player))
                     .addIngredient('ñ',guiItems.day14mission5(player))
                     .build();
+        }else if(getDay() >= 21 && getDay() < 28){
+            gui = Gui.normal()
+                    .setStructure(
+                            "# # # # R # # # #",
+                            "# # a b c d e # #",
+                            "# # f g h i j # #",
+                            "# # k l m n ñ # #",
+                            "# # o p q r s # #",
+                            "# # . . . . . # #")
+                    .addIngredient('#',guiItems.filler2())
+                    .addIngredient('R',guiItems.playerheadMission(player))
+                    .addIngredient('a',guiItems.day0mission1(player))
+                    .addIngredient('b',guiItems.day0mission2(player))
+                    .addIngredient('c',guiItems.day0mission3(player))
+                    .addIngredient('d',guiItems.day0mission4(player))
+                    .addIngredient('e',guiItems.day0mission5(player))
+                    .addIngredient('f',guiItems.day7mission1(player))
+                    .addIngredient('g',guiItems.day7mission2(player))
+                    .addIngredient('h',guiItems.day7mission3(player))
+                    .addIngredient('i',guiItems.day7mission4(player))
+                    .addIngredient('j',guiItems.day7mission5(player))
+                    .addIngredient('k',guiItems.day14mission1(player))
+                    .addIngredient('l',guiItems.day14mission2(player))
+                    .addIngredient('m',guiItems.day14mission3(player))
+                    .addIngredient('n',guiItems.day14mission4(player))
+                    .addIngredient('ñ',guiItems.day14mission5(player))
+                    .addIngredient('o',guiItems.day21mission1(player))
+                    .build();
         }else{
             gui = Gui.normal()
                     .setStructure(

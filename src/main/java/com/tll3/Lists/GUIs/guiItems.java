@@ -444,7 +444,7 @@ public class guiItems {
         if(PlayerData.getMission(p,"35_lap") >= 1){
             cosa = ChatUtils.format("&a&l¡Completado!");
         }
-        return new ItemBuilder(Material.CROSSBOW)
+        return new ItemBuilder(Material.SKELETON_SKULL)
                 .setDisplayName("#9428ffS#8f28ffe#8a29ffg#8429ffu#7f29ffn#7a29ffd#752affa #6f2affV#6a2affu#652affe#602bffl#5a2bfft#552bffa")
                 .setLore(
                         "&6&lObjetivos:",
@@ -456,8 +456,8 @@ public class guiItems {
                         "&7- Mata un Living Shrieker &8(" + PlayerData.getObjective(p,"35ske6") + "/1)",
                         "",
                         "&6&lRecompensas:",
-                        "&7x44 &cPrestigio",
-                        "&7x60 &eCreditos",
+                        "&7x36 &cPrestigio",
+                        "&7x48 &eCreditos",
                         "",
                         cosa
                 ).build();

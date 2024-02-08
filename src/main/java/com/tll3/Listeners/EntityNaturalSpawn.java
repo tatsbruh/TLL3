@@ -164,14 +164,14 @@ public class EntityNaturalSpawn implements Listener {
                             Entities.revSkeleton((Skeleton) entity);
                         }else{
                             if(getMonsoon_active().equalsIgnoreCase("true")){
-                                EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,9).build());
+                                EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,10).build());
                             }else{
-                                EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,4).build());
+                                EntityHelper.setMainHand(entity,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,5).build());
                             }
                         }
-                        if(getMonsoon_active().equalsIgnoreCase("true")){
+                        if(getMonsoon_active().equalsIgnoreCase("true") && getDay() >= 14){
                             Spider s = (Spider) Entities.spawnMob(loc,EntityType.SPIDER);
-                            chooseRandomSpider1(s,e);
+                            spiderMount(s);
                             s.addPassenger(entity);
                         }
                     }else if(getDay() >= 21){
@@ -187,7 +187,7 @@ public class EntityNaturalSpawn implements Listener {
                         }
                         if(getMonsoon_active().equalsIgnoreCase("true")){
                             Spider s = (Spider) Entities.spawnMob(loc,EntityType.SPIDER);
-                            chooseRandomSpider1(s,e);
+                            spiderMount(s);
                             s.addPassenger(entity);
                         }
                         EntityHelper.setOffhand(entity,harmArrow());
@@ -490,6 +490,7 @@ public class EntityNaturalSpawn implements Listener {
                     if(getDay() >= 21){
                         e.setCancelled(true);
                         PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                        pg.setImmuneToZombification(true);
                         EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
                         EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
                         setHead(pg,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
@@ -684,6 +685,19 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
 
+    public static void spiderMount(Spider s){
+        if(getDay() >= 14){
+            Random random = new Random();
+            int chance = random.nextInt(4);
+            switch (chance) {
+                case 0 -> Entities.blackRev(s);
+                case 1 -> Entities.adapSp(s);
+                case 2 -> Entities.neonSp(s);
+                case 3 -> Entities.revSpider(s);
+            }
+        }
+    }
+
     public static void chooseWitherSkeletonClass1(WitherSkeleton w){
         Random random = new Random();
         int chance = random.nextInt(4);
@@ -775,11 +789,11 @@ public class EntityNaturalSpawn implements Listener {
                 Pillager p = (Pillager)Entities.spawnMob(loc,EntityType.PILLAGER);
                 Entities.lostScav(p);
             }
-            if(lol > 65 && lol <= 80){
+            if(lol > 65 && lol <= 81){
                 MagmaCube c = (MagmaCube) Entities.spawnMob(loc,EntityType.MAGMA_CUBE);
                 Entities.toxcrawl(c);
             }
-            if(lol > 80 && lol <= 84){
+            if(lol > 81 && lol <= 84){
                 Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
                 Entities.soulVg(g);
             }
