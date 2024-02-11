@@ -475,11 +475,14 @@ public class MissionListeners implements Listener {
                 if (PlayerData.getMission(killer, "35_lap") != 1 && killer != null) {
                     if (entity.getType() == EntityType.SKELETON) {
                         if (checkLap2(killer)) {
-                            missionCompleted(killer, "#9428ffS#8f28ffe#8a29ffg#8429ffu#7f29ffn#7a29ffd#752affa #6f2affV#6a2affu#652affe#602bffl#5a2bfft#552bffa", "34_prop", 50, 34);
+                            missionCompleted(killer, "#9428ffS#8f28ffe#8a29ffg#8429ffu#7f29ffn#7a29ffd#752affa #6f2affV#6a2affu#652affe#602bffl#5a2bfft#552bffa", "35_lap", 54, 36);
                         } else {
                             AddAndCheckKillCount(entity, "revenantskeleton", 1, killer, "35ske1");
                             AddAndCheckKillCount(entity, "firemancer", 1, killer, "35ske2"); //Firemancer
-                            AddAndCheckKillCount(entity, "revenantskeleton", 1, killer, "35ske3");
+                            AddAndCheckKillCount(entity, "bruteskeleton", 1, killer, "35ske3"); //Rogue Skeleton
+                            AddAndCheckKillCount(entity, "razorback", 1, killer, "35ske4");
+                            AddAndCheckKillCount(entity, "void_overseer", 1, killer, "35ske5");
+                            AddAndCheckKillCount(entity, "livshriek", 1, killer, "35ske6");
                         }
                     }
                 }

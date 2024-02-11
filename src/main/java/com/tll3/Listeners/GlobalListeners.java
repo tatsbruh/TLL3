@@ -6,12 +6,17 @@ import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
+import me.outspending.biomesapi.biome.BiomeHandler;
+import me.outspending.biomesapi.biome.CustomBiome;
+import me.outspending.biomesapi.registry.BiomeResourceKey;
+import me.outspending.biomesapi.setter.BiomeSetter;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -33,6 +38,16 @@ import static com.tll3.Misc.EntityHelper.*;
 import static com.tll3.Misc.EntityHelper.setBoots;
 import static com.tll3.Misc.GenericUtils.*;
 public class GlobalListeners implements Listener {
+
+    @EventHandler
+    public void loadBiome(ChunkLoadEvent e){
+        CustomBiome biome = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "primeval_woods"));
+        if (biome == null) return;
+        if(e.getChunk().getWorld().getName().equals("world_primeval")){
+           Chunk chunk = e.getChunk();
+           BiomeSetter.of().setChunkBiome(chunk,biome,true);
+        }
+    }
 
     @EventHandler
     public void explosionE(ExplosionPrimeEvent e){

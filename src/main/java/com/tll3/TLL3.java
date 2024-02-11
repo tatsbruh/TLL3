@@ -7,7 +7,9 @@ import com.tll3.Lists.Recipes;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.Misc.GenericUtils;
+import com.tll3.Misc.World.Biomes;
 import com.tll3.Task.MobRain;
+import me.outspending.biomesapi.nms.NMSHandler;
 import net.minecraft.core.IRegistry;
 import net.minecraft.core.IRegistryCustom;
 import net.minecraft.core.IRegistryWritable;
@@ -34,6 +36,7 @@ public final class TLL3 extends JavaPlugin {
     @Override
     public void onEnable() {
         plugin = this;
+        Biomes.registerAllBiomes();
         console(cf + "Plugin activado correctamente");
         loadListeners();
         loadCommands();

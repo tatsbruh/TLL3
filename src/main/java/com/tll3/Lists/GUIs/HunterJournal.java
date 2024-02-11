@@ -206,6 +206,10 @@ public class HunterJournal {
                     .addIngredient('n',guiItems.day14mission4(player))
                     .addIngredient('ñ',guiItems.day14mission5(player))
                     .addIngredient('o',guiItems.day21mission1(player))
+                    .addIngredient('p',guiItems.day21mission2(player))
+                    .addIngredient('q',guiItems.day21mission3(player))
+                    .addIngredient('r',guiItems.day21mission4(player))
+                    .addIngredient('s',guiItems.day21mission5(player))
                     .build();
         }else{
             gui = Gui.normal()

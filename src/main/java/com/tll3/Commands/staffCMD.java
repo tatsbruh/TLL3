@@ -169,7 +169,7 @@ public class staffCMD extends BaseCommand {
     }
 
     @Subcommand("dimension")
-    @CommandCompletion("overworld|nether|end|wasteyard")
+    @CommandCompletion("overworld|nether|end|primeval|wasteyard")
     @CommandPermission("staff.admin")
     @Description("teleports you to the dimension given do you understand")
     public void teleport(CommandSender sender,String[] args){
@@ -178,6 +178,7 @@ public class staffCMD extends BaseCommand {
                 case "overworld" -> p.teleport(Worlds.getOverworld().getSpawnLocation());
                 case "nether" -> p.teleport(Worlds.getNether().getSpawnLocation());
                 case "end" -> p.teleport(Worlds.getEnd().getSpawnLocation());
+                case "primeval" -> p.teleport(Worlds.getPrimeval().getSpawnLocation());
                 case "wasteyard" -> p.teleport(Worlds.getWasteyard().getSpawnLocation());
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Ingresa una Dimension valida"));
             }

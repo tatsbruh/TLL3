@@ -457,7 +457,7 @@ public class guiItems {
                         "",
                         "&6&lRecompensas:",
                         "&7x36 &cPrestigio",
-                        "&7x48 &eCreditos",
+                        "&7x54 &eCreditos",
                         "",
                         cosa
                 ).build();
@@ -934,7 +934,7 @@ public class guiItems {
                         "&7dañinas para una persona, usa su aguijón para atacar.",
                         "",
                         "&6&lAparece en:",
-                        "&7- Algunos partes.",
+                        "&7- Algunas partes.",
                         "&7- Rompiendo panales de abeja",
                         "",
                         "&6&lComportamiento:",
@@ -952,7 +952,7 @@ public class guiItems {
                         "&7acabar con sus oponentes con facilidad.",
                         "",
                         "&6&lAparece en:",
-                        "&7- Invocando a un Wither Boss en la Wasteyard",
+                        "&7- Invocando a un Wither Boss en Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Sus calaveras tienen explosion de nivel 2 y si están cargadas de nivel 4",
@@ -969,7 +969,7 @@ public class guiItems {
                         "&7con la fuerza de la dimensión, busca un objetivo para atacar.",
                         "",
                         "&6&lAparece en:",
-                        "&7- La Wasteyard",
+                        "&7- Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Tiene velocidad 2 y posee un hacha de netherite",
@@ -985,7 +985,7 @@ public class guiItems {
                         "&7de escapar, lleva consigo flechas especiales.",
                         "",
                         "&6&lAparece en:",
-                        "&7- La Wasteyard",
+                        "&7- Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Tiene una ballesta poderosa con flechas de Fatiga, Glowing, Wither y Slowness.",
@@ -1002,7 +1002,7 @@ public class guiItems {
                         "&7buscando un objetivo para explotar.",
                         "",
                         "&6&lAparece en:",
-                        "&7- La Wasteyard",
+                        "&7- Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Tiene explosion de nivel 6 y tiene un fuse de 1.25 segundos",
@@ -1019,7 +1019,7 @@ public class guiItems {
                         "&7alguien a quien picotear.",
                         "",
                         "&6&lAparece en:",
-                        "&7- La Wasteyard",
+                        "&7- Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Vuelan hacia el jugador y atacan con 40 de daño base.",
@@ -1036,7 +1036,7 @@ public class guiItems {
                         "&7sin embargo, son hostiles ante alguna presencia humana.",
                         "",
                         "&6&lAparece en:",
-                        "&7- La Wasteyard",
+                        "&7- Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Saltan hacia su objetivo teniendo 20 de daño base e infligen Wither",
@@ -1053,7 +1053,7 @@ public class guiItems {
                         "&7nadie sabe realmente que son, ni como llegaron ahi.",
                         "",
                         "&6&lAparece en:",
-                        "&7- La Wasteyard",
+                        "&7- Wasteyard",
                         "",
                         "&6&lComportamiento:",
                         "&7Lanza bolas de fuego con explosion de nivel 8",
@@ -1063,6 +1063,136 @@ public class guiItems {
                 ).build();
     }
 
+    //Dia 21
+    public static ItemStack infoJineteCerdo(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2VhYmFlY2M1ZmFlNWE4YTQ5Yzg4NjNmZjQ4MzFhYWEyODQxOThmMWEyMzk4ODkwYzc2NWUwYThkZTE4ZGE4YyJ9fX0="))
+                .setDisplayName("&6Jinete Cerdo-pocalíptico| &eDía 21")
+                .setLore(
+                        "&7Zombi Piglin que por métodos desconocidos logro domesticar",
+                        "&7a un cerdo del Overworld, no se sabe como llegaron ahi, o como",
+                        "&7fueron domesticado, lo cierto es que pegan duro.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Nether",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Avanza rápidamente hacia su objetivo y ataca.",
+                        "",
+                        "&8'Deberías priorizar matar al cerdo primero, te lo digo por experiencia'"
+                ).build();
+    }
+    public static ItemStack infoPiglinShinobi(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2VhYmFlY2M1ZmFlNWE4YTQ5Yzg4NjNmZjQ4MzFhYWEyODQxOThmMWEyMzk4ODkwYzc2NWUwYThkZTE4ZGE4YyJ9fX0="))
+                .setDisplayName("&6Piglin Shinobi| &eDía 21")
+                .setLore(
+                        "&7Zombi Piglin que al igual que el Zombi Ninja, tiene capacidades",
+                        "&7sobrenaturales en el sigilo, sin embargo, este parece haberlo",
+                        "&7aprendido de otra manera.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Nether",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Al enfocarse en un objetivo se vuelve invisible y silencioso, sus",
+                        "&7ataques lo dejaran al descubierto por unos momentos.",
+                        "",
+                        "&8'Te podría decir algo util contra este cerdo, pero una vez lo pierdas de",
+                        "&8vista te olvidaras'"
+                ).build();
+    }
+    public static ItemStack infoPiglinAlquimista(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2VhYmFlY2M1ZmFlNWE4YTQ5Yzg4NjNmZjQ4MzFhYWEyODQxOThmMWEyMzk4ODkwYzc2NWUwYThkZTE4ZGE4YyJ9fX0="))
+                .setDisplayName("&6Alquimista Porcino | &eDía 21")
+                .setLore(
+                        "&7Un Zombi Piglin con una gran maestría en disciplinas científicas,",
+                        "&7capaz de crear combinaciones de otro mundo, lastimosamente en el Nether",
+                        "&7no hay interesados, asi que se desquita tirando pociones a lo loco.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Nether",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Al tener un objetivo cercano lanza pociones de area, con efectos de",
+                        "&7Wither, Instant Damage o Glowing.",
+                        "",
+                        "&8'Cuidado con las pociones de Glowing!, son de nivel 5 y eso hará que",
+                        "&8tu exposición aumente colosalmente'"
+                ).build();
+    }
+    public static ItemStack infoEntropicDemons(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvN2E4YjcxNGQzMmQ3ZjZjZjhiMzdlMjIxYjc1OGI5YzU5OWZmNzY2NjdjN2NkNDViYmM0OWM1ZWYxOTg1ODY0NiJ9fX0="))
+                .setDisplayName("&6Entropic Demons | &eDía 21")
+                .setLore(
+                        "&7Demonios flotantes que viajaron desde lo mas profundo del nether para acabar",
+                        "&7aquí, grande fue su decepción cuando no notaron la minima diferencia de su",
+                        "&7lugar de origen con el actual.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Nether",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Tiene explosion de nivel 7, sus impactos dan Levitación.",
+                        "",
+                        "&8'Es un Ghast, actua como Ghast, tiene las mismas debilidades que un Ghast,",
+                        "&8no necesito decirte más'"
+                ).build();
+    }
+    public static ItemStack infoSteelRailgunner(){
+        return new ItemBuilder(Material.SKELETON_SKULL)
+                .setDisplayName("&6Steel Railgunner | &eDía 21")
+                .setLore(
+                        "&7Robot consiente que tiene una sola misión:",
+                        "&7Erradicar a cualquier sobreviviente restante.",
+                        "&7No dice ni dirá ninguna frase icónica",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier Lugar",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Sus proyectiles dejan TNT cargada al impactar, la TNT tiene explosion",
+                        "&7explosion nivel 5, todo el daño no-critico recibido es reducido en un 99%.",
+                        "",
+                        "&8'No es un Terminator, de hecho tiene una puntería terrible, aprovecha",
+                        "&8esto para hacerle frente'"
+                ).build();
+    }
+    public static ItemStack infoTitaniumCreeper(){
+        return new ItemBuilder(Material.CREEPER_HEAD)
+                .setDisplayName("&6Titanium Creeper | &eDía 21")
+                .setLore(
+                        "&7Creeper acorazado con fuertes soportes de titanio, hecho",
+                        "&7exclusivamente para protegerlo de cualquier fuente de daño,",
+                        "&7esto indirectamente afecto su habilidad de explosion.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier Lugar",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Su explosion es de nivel 5, y pone Glowing 5 a jugadores cercanos al explotar",
+                        "&7todo el daño no-critico recibido es reducido en un 99%.",
+                        "",
+                        "&8'Me aterra mucho cualquier bicho que aplique Glowing 5 en un toque, y este creeper",
+                        "&8no es una excepción, cuida tus alrededores al momento de enfrentártelo'"
+                ).build();
+    }
+    public static ItemStack infoCyberpunk(){
+        return new ItemBuilder(SkullCreator.itemFromBase64("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvOTZjMGIzNmQ1M2ZmZjY5YTQ5YzdkNmYzOTMyZjJiMGZlOTQ4ZTAzMjIyNmQ1ZTgwNDVlYzU4NDA4YTM2ZTk1MSJ9fX0="))
+                .setDisplayName("&6Cyberpunk | &eDía 21")
+                .setLore(
+                        "&7Cyborg altamente reforzado con una velocidad sobrenatural,",
+                        "&7super dotado en acabar con su objetivo indicado.",
+                        "",
+                        "&6&lAparece en:",
+                        "&7- Cualquier Lugar",
+                        "",
+                        "&6&lComportamiento:",
+                        "&7Posee habilidades de un Enderman normal, pero su velocidad es mucho mas alta",
+                        "&7todo el daño no-critico recibido es reducido en un 99%.",
+                        "",
+                        "&8'El mas fácil de los 3, que su velocidad no te intimide! con un critico basta",
+                        "&8para acabar con el'"
+                ).build();
+    }
 
 
 }

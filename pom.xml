@@ -70,6 +70,10 @@
             <id>xenondevs</id>
             <url>https://repo.xenondevs.xyz/releases</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -83,6 +87,11 @@
             <groupId>co.aikar</groupId>
             <artifactId>acf-paper</artifactId>
             <version>0.5.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.Outspending</groupId>
+            <artifactId>BiomesAPI</artifactId>
+            <version>0.0.5</version>
         </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
