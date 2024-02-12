@@ -645,7 +645,10 @@ public class Entities {
         s.setSize(12);
         setIdentifierString(s,"toxiccrawler");
     }
+    //Cosmic Mobs
 
+
+    //Primordial Mobs
 
 
 

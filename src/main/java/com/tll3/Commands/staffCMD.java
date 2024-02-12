@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
+import com.tll3.Lists.CustomEntities.Others.MiniCyclone;
 import com.tll3.Lists.Entities;
 import com.tll3.Lists.GUIs.HunterJournal;
 import com.tll3.Lists.GUIs.staffGUI;
@@ -210,6 +211,12 @@ public class staffCMD extends BaseCommand {
                 case "rev_spider" -> Entities.revSpider((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
                 case "rev_creeper" -> Entities.revCreeper((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
                 case "rev_enderman" -> Entities.revEnderman((Enderman) Entities.spawnMob(p.getLocation(),EntityType.ENDERMAN));
+                case "test" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    MiniCyclone r = new MiniCyclone(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
 
 
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));

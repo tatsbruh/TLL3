@@ -4,6 +4,7 @@ import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomEvokerFangs;
 import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomLlamaSpit;
+import com.tll3.Lists.CustomEntities.Others.MiniCyclone;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.Data;
@@ -75,7 +76,8 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomPolarBear || entity instanceof CustomSniffer || entity instanceof CustomAxolotls
         || entity instanceof CustomDolphin || entity instanceof CustomLlama || entity instanceof CustomGoat
         || entity instanceof CustomBee || entity instanceof CustomEvoker || entity instanceof CustomEvokerFangs
-        || entity instanceof CustomLlamaSpit || entity instanceof CustomPig)return;
+        || entity instanceof CustomLlamaSpit || entity instanceof CustomPig
+        || entity instanceof MiniCyclone)return;
         spawnWasteyard(e,loc);
         if(getDay() >= 7) {
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
