@@ -1,5 +1,6 @@
 package com.tll3.Enviroments;
 
+import com.tll3.Enviroments.Dunes.SavageDunes;
 import com.tll3.Enviroments.Forest.PrimevalWoods;
 import com.tll3.Enviroments.Wasteyard.Wasteyard;
 import org.bukkit.Bukkit;
@@ -12,6 +13,7 @@ public class Worlds {
     protected static final World nether;
     protected static final World end;
     protected static final World primeval;
+    protected static final World dunes;
     protected static final World wasteyard;
     static {
         overworld = getWorld("world");
@@ -19,6 +21,7 @@ public class Worlds {
         end = getWorld("world_the_end");
         wasteyard = funcWasteyard();
         primeval = funcPrimeval();
+        dunes = funcDunes();
     }
     private static World funcWasteyard(){
         WorldCreator creator = new WorldCreator("world_wasteyard");
@@ -39,6 +42,17 @@ public class Worlds {
         }
         return getWorld("world_primeval");
     }
+    private static World funcDunes(){
+        WorldCreator creator = new WorldCreator("world_dunes");
+        creator.environment(World.Environment.NORMAL);
+        creator.generator(new SavageDunes());
+        creator.generateStructures(false);
+        creator.type(WorldType.AMPLIFIED);
+        if(getWorld("world_dunes") == null) {
+            return creator.createWorld();
+        }
+        return getWorld("world_dunes");
+    }
     public static World getWorld(String name) {
         return Bukkit.getWorld(name);
     }
@@ -53,5 +67,6 @@ public class Worlds {
     }
     public static World getWasteyard(){return wasteyard;}
     public static World getPrimeval(){return primeval;}
+    public static World getDunes(){return dunes;}
 
 }

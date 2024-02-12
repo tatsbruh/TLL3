@@ -41,11 +41,17 @@ public class GlobalListeners implements Listener {
 
     @EventHandler
     public void loadBiome(ChunkLoadEvent e){
-        CustomBiome biome = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "primeval_woods"));
-        if (biome == null) return;
+        CustomBiome biome1 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "primeval_woods"));
+        CustomBiome biome2 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "savage_dunes"));
+        if (biome1 == null) return;
+        if (biome2 == null) return;
         if(e.getChunk().getWorld().getName().equals("world_primeval")){
            Chunk chunk = e.getChunk();
-           BiomeSetter.of().setChunkBiome(chunk,biome,true);
+           BiomeSetter.of().setChunkBiome(chunk,biome1,true);
+        }
+        if(e.getChunk().getWorld().getName().equals("world_dunes")){
+            Chunk chunk = e.getChunk();
+            BiomeSetter.of().setChunkBiome(chunk,biome2,true);
         }
     }
 

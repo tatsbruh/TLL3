@@ -7,10 +7,13 @@ import me.outspending.biomesapi.registry.BiomeRegistry;
 import me.outspending.biomesapi.registry.BiomeResourceKey;
 import me.outspending.biomesapi.renderer.AmbientParticle;
 import me.outspending.biomesapi.renderer.ParticleRenderer;
+import net.minecraft.world.level.biome.BiomeSettingsMobs;
+import org.bukkit.block.Biome;
 
 public class Biomes {
-    public static void registerAllBiomes(){
+    public static void registerAllBiomes() {
         BiomeRegistry.newRegistry().register(primeval_woods);
+        BiomeRegistry.newRegistry().register(savage_dunes);
     }
 
     static CustomBiome primeval_woods = CustomBiome.builder() // Creates a new biome builder
@@ -30,4 +33,21 @@ public class Biomes {
             .grassColor("#045929") // Grass color of the biome (Not Required)
             .build();
 
+    static CustomBiome savage_dunes = CustomBiome.builder() // Creates a new biome builder
+            .resourceKey(BiomeResourceKey.of("afterlife", "savage_dunes")) // Resource key for the biome aka "test:custombiome" (These cannot be registered twice, the resource keys MUST be different than other biomes.)
+            .settings(BiomeSettings.builder() // Biome settings (Required, default settings are used if not provided)
+                    .depth(0.1F) // Depth of the biome (Required, default is 0.1F)
+                    .scale(0.2F) // Scale of the biome (Required, default is 0.2F)
+                    .temperature(1F) // Temperature of the biome (Required, default of 0.3F)
+                    .downfall(0.4F) // Downfall of the biome (Required, default is 0.4F)
+                    .modifier(BiomeTempModifier.NONE) // Temperature modifier of the biome (Required, default is NONE)
+                    .build())
+            .fogColor("#fcc96f") // Fog color of the biome (Required)
+            .foliageColor("#0f402a") // Foliage color of the biome (Not Required)
+            .skyColor("#f7e2bc") // Sky color of the biome (Required)
+            .waterColor("#7384c9") // Water color of the biome (Required)
+            .waterFogColor("#aab8f2") // Water fog color of the biome (Required)
+            .grassColor("#045929") // Grass color of the biome (Not Required)
+            .build();
 }
+

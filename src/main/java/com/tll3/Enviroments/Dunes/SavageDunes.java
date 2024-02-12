@@ -1,31 +1,30 @@
-package com.tll3.Enviroments.Forest;
+package com.tll3.Enviroments.Dunes;
 
+import com.tll3.Enviroments.Forest.PWPopulator;
 import com.tll3.Misc.World.FastNoiseLite;
 import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
-public class PrimevalWoods extends ChunkGenerator {
+public class SavageDunes extends ChunkGenerator {
     private final FastNoiseLite terrainNoise = new FastNoiseLite();
     private final FastNoiseLite detailNoise = new FastNoiseLite();
-    private PWPopulator populator;
     private final HashMap<Integer, List<Material>> layers = new HashMap<Integer, List<Material>>() {{
-        put(0, Arrays.asList(Material.GRASS_BLOCK));
-        put(1, Arrays.asList(Material.DIRT));
+        put(0, Arrays.asList(Material.RED_SANDSTONE));
+        put(1, Arrays.asList(Material.RED_SAND));
         put(2, Arrays.asList(Material.COAL_ORE, Material.IRON_ORE, Material.REDSTONE_ORE, Material.LAPIS_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE));
         put(3, Arrays.asList(Material.BEDROCK));
     }};
-    public PrimevalWoods() {
-        terrainNoise.SetFrequency(0.002f);
-        detailNoise.SetFrequency(0.006f);
+    public SavageDunes() {
+        terrainNoise.SetFrequency(0.001f);
+        detailNoise.SetFrequency(0.01f);
         terrainNoise.SetFractalType(FastNoiseLite.FractalType.FBm);
         terrainNoise.SetFractalOctaves(8);
-        this.populator = new PWPopulator();
     }
 
     @Override
@@ -41,26 +40,19 @@ public class PrimevalWoods extends ChunkGenerator {
                     }
                     else if(y < currentY) {
                         float distanceToSurface = Math.abs(y - currentY); // The absolute y distance to the world surface.
-                            // Set grass if the block closest to the surface.
-                            if(distanceToSurface < 1 && y > 63) {
-                                chunkData.setBlock(x, y, z, layers.get(0).get(0));
-                            }
-                            else if(distanceToSurface < 5) {
-                                chunkData.setBlock(x, y, z, layers.get(1).get(random.nextInt(layers.get(1).size())));
-                            }
-                            else {
-                                chunkData.setBlock(x, y, z, Material.STONE);
-                            }
+                        // Set grass if the block closest to the surface.
+                        if(distanceToSurface < 1 && y > 63) {
+                            chunkData.setBlock(x, y, z, layers.get(0).get(0));
                         }
-                    else if(y < 65) {
-                        chunkData.setBlock(x, y, z, Material.WATER);
+                        else if(distanceToSurface < 5) {
+                            chunkData.setBlock(x, y, z, layers.get(1).get(random.nextInt(layers.get(1).size())));
+                        }
+                        else {
+                            chunkData.setBlock(x, y, z, Material.SMOOTH_RED_SANDSTONE);
+                        }
                     }
                 }
             }
         }
-    }
-    @Override
-    public @NotNull List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
-        return List.of(populator);
     }
 }
