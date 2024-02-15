@@ -170,7 +170,7 @@ public class staffCMD extends BaseCommand {
     }
 
     @Subcommand("dimension")
-    @CommandCompletion("overworld|nether|end|primeval|dunes|wasteyard")
+    @CommandCompletion("overworld|nether|end|primeval|dunes|scorched|wasteyard")
     @CommandPermission("staff.admin")
     @Description("teleports you to the dimension given do you understand")
     public void teleport(CommandSender sender,String[] args){
@@ -181,6 +181,7 @@ public class staffCMD extends BaseCommand {
                 case "end" -> p.teleport(Worlds.getEnd().getSpawnLocation());
                 case "primeval" -> p.teleport(Worlds.getPrimeval().getSpawnLocation());
                 case "dunes" -> p.teleport(Worlds.getDunes().getSpawnLocation());
+                case "scorched" -> p.teleport(Worlds.getScorched().getSpawnLocation());
                 case "wasteyard" -> p.teleport(Worlds.getWasteyard().getSpawnLocation());
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Ingresa una Dimension valida"));
             }
@@ -189,7 +190,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("summon")
-    @CommandCompletion("zombie_ninja|zombie_arq|black_reaver|scarlet_leech|termite|colony_termite|rogue_skeleton|firemancer|razorback|rev_zombie|rev_skeleton|rev_creeper|rev_spider|rev_enderman")
+    @CommandCompletion("prim_zombie|prim_skeleton|prim_creeper|prim_spider|prim_enderman|zombie_ninja|zombie_arq|black_reaver|scarlet_leech|termite|colony_termite|rogue_skeleton|firemancer|razorback|rev_zombie|rev_skeleton|rev_creeper|rev_spider|rev_enderman")
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
@@ -197,6 +198,11 @@ public class staffCMD extends BaseCommand {
         if (sender instanceof Player p && args.length > 0){
             var loc = p.getLocation();
             switch (args[0].toLowerCase()){
+                case "prim_zombie" -> Entities.primZomb((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
+                case "prim_skeleton" -> Entities.primSke((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
+                case "prim_creeper" -> Entities.primCre((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
+                case "prim_spider" -> Entities.primSpider((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
+                case "prim_enderman" -> Entities.primEnd((Enderman) Entities.spawnMob(p.getLocation(),EntityType.ENDERMAN));
                 case "zombie_ninja" -> Entities.zNinka((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "zombie_arq" -> Entities.zArqueo((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "black_reaver" -> Entities.blackRev((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));

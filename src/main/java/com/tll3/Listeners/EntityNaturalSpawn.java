@@ -145,7 +145,7 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case ZOMBIE -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                 if(getDay() >= 7) {
                     var random = getRandomValue(100);
                     if (random <= 45) {
@@ -157,7 +157,7 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case SKELETON -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7 && getDay() < 21){
                         var random = getRandomValue(100);
                         if (random <= 45) {
@@ -203,19 +203,19 @@ public class EntityNaturalSpawn implements Listener {
             }
             case SILVERFISH -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND ||
-                        reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK)) {
+                        reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SILVERFISH_BLOCK || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if (getDay() >= 7) {
                         Entities.silverday5((Silverfish) entity);
                     }
                 }
             }
             case SPIDER -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if (random <= 45) {
                             Entities.revSpider((Spider) entity);
-                            new SpiderLungeTask((Spider) entity).runTaskTimer(TLL3.getInstance(),0L,1L);
+                            new SpiderLungeTask((Spider) entity,false).runTaskTimer(TLL3.getInstance(),0L,1L);
                         } else {
                             chooseRandomSpider1((Spider) entity,e);
                         }
@@ -223,7 +223,7 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case CREEPER -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if(random <= 35) {
@@ -241,7 +241,7 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case ENDERMAN -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG|| reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7){
                         var random = getRandomValue(100);
                         if(random <= 35){
@@ -253,14 +253,14 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case PHANTOM -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG|| reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7){
                         Entities.phanD((Phantom) entity);
                     }
                 }
             }
             case DROWNED -> {
-                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG|| reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7 && getDay() < 14){
                         if(getMonsoon_active().equalsIgnoreCase("true")){
                             Entities.drowAby((Drowned) entity);
@@ -317,7 +317,7 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case WITCH -> {
-                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if ((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if (getDay() >= 14) {
                         if(doRandomChance(35)){
                             chooserandomraider(loc,e);
@@ -326,28 +326,28 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case PILLAGER -> {
-                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if (getDay() >= 14) {
                        Entities.nwPillager((Pillager) entity,true);
                     }
                 }
             }
             case VINDICATOR -> {
-                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if (getDay() >= 14) {
                         Entities.nwVindicator((Vindicator) entity,true);
                     }
                 }
             }
             case RAVAGER -> {
-                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if (getDay() >= 14) {
                         Entities.nwRavager((Ravager) entity,true);
                     }
                 }
             }
             case EVOKER -> {
-                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
+                if ((reason == CreatureSpawnEvent.SpawnReason.RAID || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if (getDay() >= 14) {
                         e.setCancelled(true);
                         WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
@@ -423,16 +423,16 @@ public class EntityNaturalSpawn implements Listener {
                 }
             }
             case HUSK -> { if(getDay() >= 7){
-                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)Entities.huStr((Husk) entity);
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)Entities.huStr((Husk) entity);
             }
             }
             case STRAY -> {
-                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG){
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER){
                     if(getDay() >= 14)Entities.strayCom((Stray) entity);
                 }
             }
             case SLIME -> {
-                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG){
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER){
                     if(getDay() >= 14)Entities.slimeNight((Slime) entity);
                 }
             }
@@ -441,7 +441,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             }
             case GHAST -> { if(getDay() >= 7){
-                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG){
+                if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER){
                     if(getDay() >= 21){
                         if(doRandomChance(35)){
                             Entities.entropicDem((Ghast) entity);
@@ -638,6 +638,13 @@ public class EntityNaturalSpawn implements Listener {
                             setBoots(pg,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                         }
                         entity.addPassenger(pg);
+                    }
+                }
+            }
+            case BREEZE -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.COMMAND){
+                    if(getDay() >= 14){
+                        Entities.windTyphoon((Breeze) entity);
                     }
                 }
             }
@@ -874,7 +881,7 @@ public class EntityNaturalSpawn implements Listener {
         if(getDay() >= 14 && getDay() < 21) {
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 Random random = new Random();
-                int chance = random.nextInt(3);
+                int chance = random.nextInt(4);
                 switch (chance) {
                     case 0 -> {
                         e.setCancelled(true);
@@ -892,10 +899,15 @@ public class EntityNaturalSpawn implements Listener {
                         Blaze z = (Blaze) Entities.spawnMob(loc,EntityType.BLAZE);
                         chooseBlazeType(z);
                     }
+                    case 3 -> {
+                        e.setCancelled(true);
+                        Breeze z = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                        Entities.windTyphoon(z);
+                    }
                 }
             }else{
             Random random = new Random();
-            int chance = random.nextInt(2);
+            int chance = random.nextInt(3);
             switch (chance) {
                 case 0 -> {
                     e.setCancelled(true);
@@ -908,12 +920,17 @@ public class EntityNaturalSpawn implements Listener {
                     WitherSkeleton w = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
                     chooseWitherSkeletonClass1(w);
                 }
+                case 2 -> {
+                    e.setCancelled(true);
+                    Breeze z = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                    Entities.windTyphoon(z);
+                }
             }
             }
         }else if(getDay() >= 21){
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 Random random = new Random();
-                int chance = random.nextInt(8);
+                int chance = random.nextInt(9);
                 switch (chance) {
                     case 0 -> {
                         e.setCancelled(true);
@@ -960,10 +977,15 @@ public class EntityNaturalSpawn implements Listener {
                         r.a_(loc.getX(), loc.getY(), loc.getZ());
                         worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                     }
+                    case 8 -> {
+                        e.setCancelled(true);
+                        Breeze z = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                        Entities.windTyphoon(z);
+                    }
                 }
             }else{
                 Random random = new Random();
-                int chance = random.nextInt(6);
+                int chance = random.nextInt(7);
                 switch (chance) {
                     case 0 -> {
                         e.setCancelled(true);
@@ -997,6 +1019,11 @@ public class EntityNaturalSpawn implements Listener {
                         e.setCancelled(true);
                         Pillager p = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
                         Entities.nwPillager(p,false);
+                    }
+                    case 6 -> {
+                        e.setCancelled(true);
+                        Breeze z = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                        Entities.windTyphoon(z);
                     }
                 }
             }

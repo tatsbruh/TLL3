@@ -8,9 +8,7 @@ import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
-import com.tll3.Task.Mobs.AlqPotionThrow;
-import com.tll3.Task.Mobs.ArqBlockBreak;
-import com.tll3.Task.Mobs.AshenWitherTask;
+import com.tll3.Task.Mobs.*;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.EntityInsentient;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
@@ -18,6 +16,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntityIronGolem;
 import net.minecraft.world.entity.monster.EntityPigZombie;
+import net.minecraft.world.entity.monster.EntitySpider;
 import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.entity.projectile.EntityFireworks;
@@ -25,6 +24,7 @@ import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPigZombie;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftSpider;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent;
@@ -334,7 +334,7 @@ public class Entities {
         new AshenWitherTask(w).runTaskTimer(TLL3.getInstance(),20L,450L);
     }
     public static void windChar(Blaze z){
-        setName(z,"&f&lWind Charger");
+        setName(z,"&9&lDischarger");
         z.setRemoveWhenFarAway(true);
         setMobHealth(z,40);
         setIdentifierString(z,"windcharger");
@@ -431,6 +431,11 @@ public class Entities {
         setName(v,"#78d6d0Espíritu Sagrado");
         setMainHand(v,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.FIRE_ASPECT,5).build());
         setIdentifierString(v,"vexex");
+    }
+    public static void windTyphoon(Breeze b){
+        setName(b,"#fbfbfbW#f3fafbi#ebf9fbn#e4f9fcd #dcf8fcT#d4f7fcy#ccf6fcp#c4f5fch#bdf5fdo#b5f4fdo#adf3fdn");
+        setMobHealth(b,35);
+        setIdentifierString(b,"windtyphoon");
     }
 
 
@@ -649,6 +654,58 @@ public class Entities {
 
 
     //Primordial Mobs
+    public static void primZomb(Zombie z){
+        setName(z,"#672500W#6c2706i#71280dl#752a13d #7a2c19G#7f2d1fh#842f26o#88302cu#8d3232l");
+        setMobHealth(z,25);
+        setMobDamage(z,4);
+        setIdentifierString(z,"primordialzombie");
+        setIdentifierInt(z,"primordialzombiestate",0);
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primSke(Skeleton z){
+        setName(z,"#ffffffO#fff8f8s#fff0f0s#ffe9e9e#ffe1e1o#ffdadau#ffd2d2s #ffcbcbT#ffc3c3y#ffbcbcr#ffb4b4a#ffadadn#ffa5a5t");
+        setMobHealth(z,45);
+        setMobDamage(z,5);
+        setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,12).addEnchant(Enchantment.ARROW_FIRE,7).build());
+        setIdentifierString(z,"primordialskeleton");
+        setIdentifierInt(z,"primordialskeletonstate",0);
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primCre(Creeper z){
+        setName(z,"#2bffa6A#32f5adg#38ebb5i#3fe1bcl#45d7c4e#4ccdcbx #53c3d3P#59b9dar#60afe1o#66a5e9w#6d9bf0l#7391f8e#7a87ffr");
+        setMobHealth(z,10);
+        z.setPowered(true);
+        z.setExplosionRadius(4);
+        new CreeperLungeTask(z).runTaskTimer(TLL3.getInstance(),0L,1L);
+        setIdentifierString(z,"primordialcreeper");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primSpider(Spider z){
+        setName(z,"#beff8cP#befb91e#bdf796s#bdf49ct#bdf0a1i#bceca6l#bce8abe#bbe4b1n#bbe0b6s#bbddbbi#bad9c0l#bad5c6k #bad1cbB#b9cdd0r#b9cad5o#b9c6dao#b8c2e0d#b8bee5m#b7baeaa#b7b6efn#b7b3f5c#b6affae#b6abffr");
+        setMobHealth(z,45);
+        setMobDamage(z,7);
+        new SpiderLungeTask(z,true).runTaskTimer(TLL3.getInstance(),0L,1L);
+        setIdentifierString(z,"primordialspider");
+        setIdentifierString(z,"behemoth");
+        injectHostileBehaviorToSpider(z);
+    }
+    public static void primEnd(Enderman z){
+        setName(z,"#a430ffA#a936fan#ae3cf5c#b242f0i#b748ece#bc4ee7n#c154e2t #c65addE#ca60d8n#cf66d3d#d46dcfe#d973car#dd79c5g#e27fc0u#e785bba#ec8bb6r#f191b2d#f597adi#fa9da8a#ffa3a3n");
+        setMobHealth(z,55);
+        setMobDamage(z,10);
+        setIdentifierString(z,"primordialenderman");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primSilv(Silverfish z){
+        setName(z,"#696969S#717171i#7a7a7al#828282v#8a8a8ae#939393r#9b9b9bs#a3a3a3h#acacace#b4b4b4l#bcbcbcl #c5c5c5S#cdcdcdc#d5d5d5u#dededet#e6e6e6t#eeeeeel#f7f7f7e#ffffffr");
+        setMobHealth(z,5);
+        setMobDamage(z,4);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        setIdentifierString(z,"primordialsilverfish");
+        setIdentifierString(z,"behemoth");
+    }
+
+
 
 
 
@@ -680,6 +737,22 @@ public class Entities {
     public static void injectHostileBehaviorToPig(PigZombie z){
         CraftPigZombie craft = ((CraftPigZombie) z);
         EntityPigZombie entityPigZombie = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {}
+    }
+    public static void injectHostileBehaviorToSpider(Spider z){
+        CraftSpider craft = ((CraftSpider) z);
+        EntitySpider entityPigZombie = craft.getHandle();
         try {
             Class<? extends EntityInsentient> cl = EntityInsentient.class;
             Field gf = cl.getDeclaredField("bO");

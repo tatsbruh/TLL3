@@ -2,6 +2,7 @@ package com.tll3.Enviroments;
 
 import com.tll3.Enviroments.Dunes.SavageDunes;
 import com.tll3.Enviroments.Forest.PrimevalWoods;
+import com.tll3.Enviroments.Volcano.ScorchedPlateau;
 import com.tll3.Enviroments.Wasteyard.Wasteyard;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -14,6 +15,7 @@ public class Worlds {
     protected static final World end;
     protected static final World primeval;
     protected static final World dunes;
+    protected static final World scorched;
     protected static final World wasteyard;
     static {
         overworld = getWorld("world");
@@ -22,6 +24,7 @@ public class Worlds {
         wasteyard = funcWasteyard();
         primeval = funcPrimeval();
         dunes = funcDunes();
+        scorched = funcScorched();
     }
     private static World funcWasteyard(){
         WorldCreator creator = new WorldCreator("world_wasteyard");
@@ -53,6 +56,17 @@ public class Worlds {
         }
         return getWorld("world_dunes");
     }
+    private static World funcScorched(){
+        WorldCreator creator = new WorldCreator("world_plateau");
+        creator.environment(World.Environment.NETHER);
+        creator.generator(new ScorchedPlateau());
+        creator.generateStructures(false);
+        creator.type(WorldType.AMPLIFIED);
+        if(getWorld("world_plateau") == null) {
+            return creator.createWorld();
+        }
+        return getWorld("world_plateau");
+    }
     public static World getWorld(String name) {
         return Bukkit.getWorld(name);
     }
@@ -68,5 +82,6 @@ public class Worlds {
     public static World getWasteyard(){return wasteyard;}
     public static World getPrimeval(){return primeval;}
     public static World getDunes(){return dunes;}
+    public static World getScorched(){return scorched;}
 
 }

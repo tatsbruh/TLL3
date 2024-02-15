@@ -43,15 +43,19 @@ public class GlobalListeners implements Listener {
     public void loadBiome(ChunkLoadEvent e){
         CustomBiome biome1 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "primeval_woods"));
         CustomBiome biome2 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "savage_dunes"));
+        CustomBiome biome3 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "scorched_plateau"));
         if (biome1 == null) return;
         if (biome2 == null) return;
+        if (biome3 == null) return;
         if(e.getChunk().getWorld().getName().equals("world_primeval")){
            Chunk chunk = e.getChunk();
            BiomeSetter.of().setChunkBiome(chunk,biome1,true);
-        }
-        if(e.getChunk().getWorld().getName().equals("world_dunes")){
+        }else if(e.getChunk().getWorld().getName().equals("world_dunes")){
             Chunk chunk = e.getChunk();
             BiomeSetter.of().setChunkBiome(chunk,biome2,true);
+        }else if(e.getChunk().getWorld().getName().equals("world_plateau")){
+            Chunk chunk = e.getChunk();
+            BiomeSetter.of().setChunkBiome(chunk,biome3,true);
         }
     }
 
@@ -171,6 +175,11 @@ public class GlobalListeners implements Listener {
             if(Data.has(p,"pillagerex",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
         if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
+            switch (reason){
+                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE -> e.setCancelled(true);
+            }
+        }
+        if(Data.has(entity,"behemoth",PersistentDataType.STRING)){
             switch (reason){
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
             }
