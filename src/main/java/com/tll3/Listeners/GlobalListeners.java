@@ -301,8 +301,10 @@ public class GlobalListeners implements Listener {
             e.setCancelled(true);
         }
         if(e.getInventory().getType() == InventoryType.MERCHANT && getMonsoon_active().equalsIgnoreCase("true")){
-            if(e.getPlayer().getLocation().getWorld().getEnvironment() != World.Environment.NORMAL){
-                e.setCancelled(true);
+            if(getDay() >= 14) {
+                if (e.getPlayer().getLocation().getWorld().getEnvironment() != World.Environment.NORMAL) {
+                    e.setCancelled(true);
+                }
             }
         }
     }
@@ -451,6 +453,7 @@ public class GlobalListeners implements Listener {
                             PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
                             EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
                             EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
+                            pg.setImmuneToZombification(true);
                             setHead(pg,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                             setChestplate(pg,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                             setLeggings(pg,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());

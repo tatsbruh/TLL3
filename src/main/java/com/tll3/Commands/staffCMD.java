@@ -219,7 +219,7 @@ public class staffCMD extends BaseCommand {
                 case "rev_enderman" -> Entities.revEnderman((Enderman) Entities.spawnMob(p.getLocation(),EntityType.ENDERMAN));
                 case "test" -> {
                     WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
-                    MiniCyclone r = new MiniCyclone(worldServer);
+                    MiniCyclone r = new MiniCyclone(worldServer, MiniCyclone.CycloneClass.SPACE);
                     r.a_(loc.getX(), loc.getY(), loc.getZ());
                     worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }

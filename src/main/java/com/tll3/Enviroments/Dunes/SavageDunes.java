@@ -3,8 +3,11 @@ package com.tll3.Enviroments.Dunes;
 import com.tll3.Enviroments.Forest.PWPopulator;
 import com.tll3.Misc.World.FastNoiseLite;
 import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.generator.BlockPopulator;
 import org.bukkit.generator.ChunkGenerator;
 import org.bukkit.generator.WorldInfo;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,6 +17,7 @@ import java.util.Random;
 public class SavageDunes extends ChunkGenerator {
     private final FastNoiseLite terrainNoise = new FastNoiseLite();
     private final FastNoiseLite detailNoise = new FastNoiseLite();
+    private SDPopulator populator;
     private final HashMap<Integer, List<Material>> layers = new HashMap<Integer, List<Material>>() {{
         put(0, Arrays.asList(Material.RED_SANDSTONE));
         put(1, Arrays.asList(Material.RED_SAND));
@@ -25,6 +29,7 @@ public class SavageDunes extends ChunkGenerator {
         detailNoise.SetFrequency(0.01f);
         terrainNoise.SetFractalType(FastNoiseLite.FractalType.FBm);
         terrainNoise.SetFractalOctaves(8);
+        this.populator = new SDPopulator();
     }
 
     @Override
@@ -54,5 +59,9 @@ public class SavageDunes extends ChunkGenerator {
                 }
             }
         }
+    }
+    @Override
+    public @NotNull List<BlockPopulator> getDefaultPopulators(@NotNull World world) {
+        return List.of(populator);
     }
 }

@@ -110,7 +110,7 @@ public class ServerTickTask extends BukkitRunnable {
             if (p.getLocation().subtract(0,1,0).getBlock().getType() == Material.SOUL_SAND || p.getLocation().subtract(0,1,0).getBlock().getType() == Material.SOUL_SOIL) {
                 p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 0));
             }
-            if(p.getLocation().subtract(0,1,0).getBlock().getType().name().contains("leaves")){
+            if(p.getLocation().subtract(0,1,0).getBlock().getType().name().toLowerCase().contains("leaves")){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.POISON,100,2));
             }
         }

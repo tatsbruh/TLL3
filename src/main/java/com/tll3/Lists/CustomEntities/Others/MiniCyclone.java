@@ -28,14 +28,24 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 public class MiniCyclone extends EntitySkeleton {
-    public MiniCyclone(World world){
+    private final CycloneClass clase;
+    public enum CycloneClass{
+        SPACE,
+        METAL,
+        NORMAL
+    }
+    public MiniCyclone(World world,CycloneClass clas){
         super(EntityTypes.aK,world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#c552fbM#be5dfbe#b767fbs#b072fbo#a97dfcc#a288fco#9b92fcs#949dfcm#8ca8fco#85b3fcc#7ebdfcy#77c8fcc#70d3fdl#69defdo#62e8fdn#5bf3fde"));
+        clase = clas;
+        if(clase == CycloneClass.SPACE) {
+            this.getBukkitEntity().setCustomName(ChatUtils.format("#c552fbM#be5dfbe#b767fbs#b072fbo#a97dfcc#a288fco#9b92fcs#949dfcm#8ca8fco#85b3fcc#7ebdfcy#77c8fcc#70d3fdl#69defdo#62e8fdn#5bf3fde"));
+            EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
+            EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 45);
+            EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_space");
+            EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 2);
+        }
         EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(),new ItemStack(Material.AIR));
         new MiniCycloneTask((Skeleton) this.getBukkitEntity()).runTaskTimer(TLL3.getInstance(),0L,1L);
-        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(),45);
-        EntityHelper.setIdentifierString(this.getBukkitEntity(),"minicyclone");
-        EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED,2);
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(0);
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);

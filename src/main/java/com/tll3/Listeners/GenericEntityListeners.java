@@ -53,7 +53,6 @@ public class GenericEntityListeners implements Listener {
         if(damager instanceof Player p){
             var item = p.getInventory().getItemInMainHand();
             if(target instanceof LivingEntity l){
-
                 if(Data.has(l,"metal_enemy",PersistentDataType.STRING)){
                     if(e.isCritical()){
                         l.getWorld().playSound(l.getLocation(),Sound.ENTITY_IRON_GOLEM_HURT,10.0F,2.0F);
@@ -118,6 +117,8 @@ public class GenericEntityListeners implements Listener {
         }
 
         if(target instanceof Player p){
+            if(p.isBlocking())return;
+            if(Data.has(p,"invulnerable",PersistentDataType.STRING))return;
             if(damager instanceof Husk s){
                 if(Data.has(s,"starved_husk",PersistentDataType.STRING)){
                     var amount = p.getFoodLevel() - e.getFinalDamage();

@@ -705,8 +705,96 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
 
+    public static void primHusk(Husk z){
+        setName(z,"#fba72aS#f9ad2ct#f8b22ea#f6b830g#f5be32n#f3c434a#f1c936n#f0cf38t #eed539M#eddb3ba#ebe03dr#e9e63fa#e8ec41u#e6f243d#e5f745e#e3fd47r");
+        setMobHealth(z,25);
+        setMobDamage(z,4);
+        setIdentifierString(z,"primordialhusk");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primSlime(Slime z){
+        setName(z,"#cffb1dB#c6fb22o#bcfb26o#b3fb2bm#aafc2fj#a1fc34e#97fc39l#8efc3dl#85fc42y #7cfc46M#72fc4bo#69fc50n#60fd54a#57fd59r#4dfd5dc#44fd62h");
+        setMobHealth(z,20);
+        z.setSize(10);
+        setIdentifierString(z,"primordialslime");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primBlaze(Blaze z){
+        setName(z,"#fb5c5cP#fb6157y#fb6652r#fb6b4do#fb7048c#fc7542l#fc7a3da#fc7f38s#fc8433t#fc892ei#fc8e29c #fc9324B#fc981fe#fc9d1ah#fda214e#fda70fm#fdac0ao#fdb105t#fdb600h");
+        setMobHealth(z,35);
+        setMobDamage(z,5);
+        setIdentifierString(z,"primordialblaze");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primCave(CaveSpider z){
+        setName(z,"#345c8aO#335f89b#336288s#326587c#326886u#316b85r#306e84e#307183s#2f7482i#2f7781l#2e7a80k #2d7d7fA#2d807em#2c837db#2b867cu#2b897bs#2a8c7ah#2a8f79e#299278r");
+        setMobHealth(z,20);
+        setMobDamage(z,6);
+        setIdentifierString(z,"primordialcave");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primRavager(Ravager z){
+        setName(z,"#fff96dS#fff468t#ffef63r#ffea5ei#ffe559k#ffdf54e#ffda4fc#ffd54al#ffd045a#ffcb3fw #ffc63aR#ffc135a#ffbc30m#ffb62bp#ffb126a#ffac21g#ffa71ce#ffa217r");
+        setMobHealth(z,55);
+        setMobDamage(z,35);
+        z.setCanJoinRaid(false);
+        setIdentifierString(z,"primordialravager");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primBrute(PiglinBrute z){
+        setName(z,"#900000Q#8f0809u#8e1012a#8d181ar#8c2023r#8b272cy#8a2f35g#89373eu#893f47a#88474fr#874f58d #865761W#855f6aa#846673r#836e7bd#827684e#817e8dn");
+        setMobHealth(z,25);
+        setMobDamage(z,4);
+        z.setImmuneToZombification(true);
+        setIdentifierString(z,"primordialbrute");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primZoglin(Zoglin z){
+        setName(z,"#bb5586D#bf5e7fi#c36679g#c76f72g#cb786bi#cf8064n#d3895eg #d79257D#db9a50r#dfa34ae#e3ab43a#e7b43cd#ebbd36n#efc52fo#f3ce28u#f7d721g#fbdf1bh#ffe814t");
+        setMobHealth(z,30);
+        setMobDamage(z,4);
+        setIdentifierString(z,"primordialzoglin");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primWither(WitherSkeleton z){
+        setName(z,"#2a2a2aD#373434a#433e3er#504949k#5c5353f#695d5di#756767r#827272e #8e7c7cH#9b8686a#a79090r#b49b9bb#c0a5a5r#cdafafi#d9b9b9n#e6c4c4g#f2cecee#ffd8d8r");
+        setMobHealth(z,40);
+        setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,25).addEnchant(Enchantment.ARROW_FIRE,2).build());
+        setIdentifierString(z,"primordialwither");
+        setIdentifierString(z,"behemoth");
+    }
+    public static void primShulk(Shulker z){
+        setName(z,"#d22929C#ce2a37u#c92b46r#c52c54s#c02d62e#bc2e70c#b72f7fl#b3308do#ae319ba#aa32a9k #a533b8S#a134c6e#9c35d4n#9836e2t#9337f1r#8f38ffy");
+        z.setColor(DyeColor.RED);
+        setMobHealth(z,20);
+        setIdentifierString(z,"primordialshulker");
+        setIdentifierString(z,"behemoth");
+        z.setRemoveWhenFarAway(true);
+        z.setPersistent(false);
+    }
+    public static void primGolem(IronGolem z){
+        CraftIronGolem craft = ((CraftIronGolem) z);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10, true, false, null));
 
-
+        } catch (Exception e) {}
+        z.setRemoveWhenFarAway(true);
+        z.setPersistent(false);
+        setName(z,"#8d8787S#958989t#9c8a8ae#a48c8ce#ab8d8dl#b38f8fc#bb9090l#c29292a#ca9393d #d19595C#d99696r#e19898u#e89999s#f09b9bh#f79c9ce#ff9e9er");
+        setMobHealth(z,40);
+        setMobDamage(z,6);
+        setIdentifierString(z,"primordialgolem");
+        setIdentifierString(z,"behemoth");
+    }
 
 
 
