@@ -190,7 +190,7 @@ public class staffCMD extends BaseCommand {
 
 
     @Subcommand("summon")
-    @CommandCompletion("prim_zombie|prim_skeleton|prim_creeper|prim_spider|prim_enderman|zombie_ninja|zombie_arq|black_reaver|scarlet_leech|termite|colony_termite|rogue_skeleton|firemancer|razorback|rev_zombie|rev_skeleton|rev_creeper|rev_spider|rev_enderman")
+    @CommandCompletion("prim_zombie|prim_skeleton|prim_creeper|prim_spider|prim_enderman|prim_husk|prim_slime|prim_blaze|prim_cave|prim_ravager|prim_brute|prim_zoglin|prim_wither|prim_shulker|prim_golem|zombie_ninja|zombie_arq|black_reaver|scarlet_leech|termite|colony_termite|rogue_skeleton|firemancer|razorback|rev_zombie|rev_skeleton|rev_creeper|rev_spider|rev_enderman")
     @CommandPermission("staff.admin")
     @Description("summons any mob the plugin has to offer")
     public void summon(CommandSender sender,String[] args){
@@ -201,8 +201,18 @@ public class staffCMD extends BaseCommand {
                 case "prim_zombie" -> Entities.primZomb((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "prim_skeleton" -> Entities.primSke((Skeleton) Entities.spawnMob(p.getLocation(),EntityType.SKELETON));
                 case "prim_creeper" -> Entities.primCre((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
+                case "prim_husk" -> Entities.primHusk((Husk) Entities.spawnMob(p.getLocation(),EntityType.HUSK));
                 case "prim_spider" -> Entities.primSpider((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
                 case "prim_enderman" -> Entities.primEnd((Enderman) Entities.spawnMob(p.getLocation(),EntityType.ENDERMAN));
+                case "prim_cave" -> Entities.primCave((CaveSpider) Entities.spawnMob(p.getLocation(),EntityType.CAVE_SPIDER));
+                case "prim_slime" -> Entities.primSlime((Slime) Entities.spawnMob(p.getLocation(),EntityType.SLIME));
+                case "prim_blaze" -> Entities.primBlaze((Blaze) Entities.spawnMob(p.getLocation(),EntityType.BLAZE));
+                case "prim_ravager" -> Entities.primRavager((Ravager) Entities.spawnMob(p.getLocation(),EntityType.RAVAGER));
+                case "prim_brute" -> Entities.primBrute((PiglinBrute) Entities.spawnMob(p.getLocation(),EntityType.PIGLIN_BRUTE));
+                case "prim_zoglin" -> Entities.primZoglin((Zoglin) Entities.spawnMob(p.getLocation(),EntityType.ZOGLIN));
+                case "prim_wither" -> Entities.primWither((WitherSkeleton) Entities.spawnMob(p.getLocation(),EntityType.WITHER_SKELETON));
+                case "prim_shulker" -> Entities.primShulk((Shulker) Entities.spawnMob(p.getLocation(),EntityType.SHULKER));
+                case "prim_golem" -> Entities.primGolem((IronGolem) Entities.spawnMob(p.getLocation(),EntityType.IRON_GOLEM));
                 case "zombie_ninja" -> Entities.zNinka((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "zombie_arq" -> Entities.zArqueo((Zombie) Entities.spawnMob(p.getLocation(),EntityType.ZOMBIE));
                 case "black_reaver" -> Entities.blackRev((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));

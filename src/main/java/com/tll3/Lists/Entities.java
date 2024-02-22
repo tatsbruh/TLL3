@@ -722,7 +722,7 @@ public class Entities {
     public static void primBlaze(Blaze z){
         setName(z,"#fb5c5cP#fb6157y#fb6652r#fb6b4do#fb7048c#fc7542l#fc7a3da#fc7f38s#fc8433t#fc892ei#fc8e29c #fc9324B#fc981fe#fc9d1ah#fda214e#fda70fm#fdac0ao#fdb105t#fdb600h");
         setMobHealth(z,35);
-        setMobDamage(z,5);
+        setMobDamage(z,20);
         setIdentifierString(z,"primordialblaze");
         setIdentifierString(z,"behemoth");
     }
@@ -731,13 +731,15 @@ public class Entities {
         setMobHealth(z,20);
         setMobDamage(z,6);
         setIdentifierString(z,"primordialcave");
+        setIdentifierInt(z,"burrowstate",0);
         setIdentifierString(z,"behemoth");
     }
     public static void primRavager(Ravager z){
         setName(z,"#fff96dS#fff468t#ffef63r#ffea5ei#ffe559k#ffdf54e#ffda4fc#ffd54al#ffd045a#ffcb3fw #ffc63aR#ffc135a#ffbc30m#ffb62bp#ffb126a#ffac21g#ffa71ce#ffa217r");
         setMobHealth(z,55);
-        setMobDamage(z,35);
+        setMobDamage(z,10);
         z.setCanJoinRaid(false);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
         setIdentifierString(z,"primordialravager");
         setIdentifierString(z,"behemoth");
     }
@@ -747,6 +749,7 @@ public class Entities {
         setMobDamage(z,4);
         z.setImmuneToZombification(true);
         setIdentifierString(z,"primordialbrute");
+        setIdentifierInt(z,"burrowstate",0);
         setIdentifierString(z,"behemoth");
     }
     public static void primZoglin(Zoglin z){
@@ -754,6 +757,8 @@ public class Entities {
         setMobHealth(z,30);
         setMobDamage(z,4);
         setIdentifierString(z,"primordialzoglin");
+        setIdentifierInt(z,"burrowstate",0);
+        setIdentifierInt(z,"primordialzoglinstate",0);
         setIdentifierString(z,"behemoth");
     }
     public static void primWither(WitherSkeleton z){

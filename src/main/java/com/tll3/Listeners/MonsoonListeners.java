@@ -17,6 +17,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
+import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -53,6 +54,7 @@ public class MonsoonListeners implements Listener {
             GenericUtils.setVortexTyphoonActive("true");
             World world = GenericUtils.getWorld();
             int stormDurationInTicks = 18000; // 15 minutos en ticks
+            world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,true);
             int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
             String setThunder = "weather thunder " + storm_time;
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
@@ -73,6 +75,7 @@ public class MonsoonListeners implements Listener {
             GenericUtils.setMonsoonActive("true");
             GenericUtils.setVortexTyphoonActive("false");
             World world = GenericUtils.getWorld();
+            world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,true);
             int stormDurationInTicks = 18000; // 15 minutos en ticks
             int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
             String setThunder = "weather thunder " + storm_time;
@@ -94,6 +97,7 @@ public class MonsoonListeners implements Listener {
     }
     @EventHandler
     public void monendE(Monsoon.StopMonsoon e){
+        Bukkit.getLogger().info("MONSOON ACABADA, CAUSA " + e.getCause());
         Bukkit.getOnlinePlayers().forEach(bossBar::removePlayer);
         if(TaskBossBarID != null) {
             Bukkit.getScheduler().cancelTask(TaskBossBarID);
@@ -128,11 +132,17 @@ public class MonsoonListeners implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onThunderChange(ThunderChangeEvent e){
         if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")){
-            Monsoon.StopMonsoon event = new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL);
-            Bukkit.getPluginManager().callEvent(event);
+            Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
         }
     }
 
+    @EventHandler
+    public void onWeatherChange(WeatherChangeEvent e){
+        if(e.toWeatherState() && Objects.equals(GenericUtils.getMonsoon_active(), "false")) {
+            Bukkit.getScheduler().runTask(TLL3.getInstance(), () -> e.setCancelled(true));
+            Bukkit.getLogger().info("No Tormenta natural");
+        }
+    }
     private static String getTime(){
         if(GenericUtils.getWorld().getWeatherDuration() > 0){
             long segundos = (GenericUtils.getWorld().getWeatherDuration());

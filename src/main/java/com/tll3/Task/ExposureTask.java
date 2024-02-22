@@ -54,7 +54,7 @@ public class ExposureTask extends BukkitRunnable {
         if(exp >= 35){
             if(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)return;
             player.getNearbyEntities(range, range, range).forEach(entity -> {
-                if (entity instanceof Enemy e) {
+                if (entity instanceof Enemy e ) {
                     if(e instanceof Enderman || e instanceof PigZombie)return;
                     Mob m = (Mob)e;
                     if(m.getTarget() == null){

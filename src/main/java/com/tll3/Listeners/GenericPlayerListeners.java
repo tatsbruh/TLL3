@@ -81,6 +81,7 @@ public class GenericPlayerListeners implements Listener {
         var p = e.getPlayer();
         var item = e.getItem();
         if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
+            if(p.hasPotionEffect(PotionEffectType.LUCK))return;
             if(item == null)return;
             if(!item.hasItemMeta())return;
             if(checkItemId(item,"invulnerable_tome")){
@@ -177,6 +178,7 @@ public class GenericPlayerListeners implements Listener {
         var player = e.getPlayer();
         var item = e.getItem();
         if(new ItemBuilder(item).hasID("miraclefruit")){
+            if(player.hasPotionEffect(PotionEffectType.LUCK))return;
             PlayerData.restExp(player,30);
         }
     }

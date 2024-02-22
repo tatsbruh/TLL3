@@ -1,7 +1,6 @@
 package com.tll3.Misc;
 
 import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
 
@@ -46,6 +45,9 @@ public class Monsoon {
         @Override
         public @NotNull HandlerList getHandlers() {
             return HANDLERS_LIST;
+        }
+        public Cause getCause() {
+            return cause;
         }
 
         public static HandlerList getHandlerList() {
