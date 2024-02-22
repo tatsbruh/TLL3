@@ -144,8 +144,10 @@ public class PlayerDeathListeners implements Listener {
             case "world_nether" -> "Nether";
             case "world_the_end" -> "The End";
             case "world_wasteyard" -> "Wasteyard";
-            case "world_cosmic" -> "Oceano Cosmico";
-            case "world_warzone" -> "Zona de Guerra";
+            case "world_zero" -> "Horizon Zero";
+            case "world_primeval" -> "Primeval Forest";
+            case "world_dunes" -> "Savage Dunes";
+            case "world_plateau" -> "Scorched Plateau";
             default -> "Desconocido";
         };
     }

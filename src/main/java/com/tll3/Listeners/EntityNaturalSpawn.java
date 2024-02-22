@@ -79,6 +79,7 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomLlamaSpit || entity instanceof CustomPig
         || entity instanceof MiniCyclone)return;
         spawnWasteyard(e,loc);
+        spawnZero(e,loc);
         if(getDay() >= 7) {
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if(doRandomChance(35) &&  getMonsoon_active().equalsIgnoreCase("true")){
@@ -102,7 +103,7 @@ public class EntityNaturalSpawn implements Listener {
         }
         if(getDay() >= 7 && getDay() < 14){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
-                if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                if (loc.getWorld().getName().equalsIgnoreCase("world")) {
                     if (doRandomChance(1)) {
                         e.setCancelled(true);
                         IronGolem ironGolem = (IronGolem) Entities.spawnMob(loc, EntityType.IRON_GOLEM);
@@ -113,7 +114,7 @@ public class EntityNaturalSpawn implements Listener {
             }
         }else if(getDay() >= 14 && getDay() < 21){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
-                if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                if (loc.getWorld().getName().equalsIgnoreCase("world")) {
                     if (doRandomChance(3)) {
                         summonnewmob(loc, e);
                     }
@@ -121,7 +122,7 @@ public class EntityNaturalSpawn implements Listener {
             }
         }else if(getDay() >= 21 && getDay() < 28){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
-                if (loc.getWorld().getEnvironment() == World.Environment.NORMAL) {
+                if (loc.getWorld().getName().equalsIgnoreCase("world")) {
                     if (doRandomChance(4)) {
                         summonnewmob(loc, e);
                     }
@@ -809,6 +810,43 @@ public class EntityNaturalSpawn implements Listener {
             if(lol >= 85){
                 Creeper c = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
                 Entities.rustwalker(c);
+            }
+        }
+    }
+    public static void spawnZero(CreatureSpawnEvent e, Location loc){
+        World w = Worlds.getZero();
+        if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL && loc.getWorld().getName().equalsIgnoreCase("world_zero")){
+            e.setCancelled(true);
+            if(w.getLivingEntities().size() > 90)return;
+            Random random = new Random();
+            int lol = random.nextInt(101);
+            if(lol <= 45){
+                Spider s = (Spider) Entities.spawnMob(loc,EntityType.SPIDER);
+                Entities.agileTarantula(s);
+            }
+            if (lol > 45 && lol <= 57) {
+                IronGolem s = (IronGolem) Entities.spawnMob(loc,EntityType.IRON_GOLEM);
+                Entities.zombieDestroyer(s);
+            }
+            if(lol > 57 && lol <= 75){
+                Vindicator s = (Vindicator) Entities.spawnMob(loc,EntityType.VINDICATOR);
+                Entities.killerscream(s);
+            }
+            if(lol > 75 && lol <= 88){
+                Enderman s = (Enderman) Entities.spawnMob(loc,EntityType.ENDERMAN);
+                Entities.blightedEnderman(s);
+            }
+            if(lol > 88 && lol <= 94){
+                Skeleton s = (Skeleton) Entities.spawnMob(loc,EntityType.SKELETON);
+                Entities.blightedSkeleton(s);
+            }
+            if(lol >= 94 && lol < 97){
+                Ghast s = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
+                Entities.blightedGhast(s);
+            }
+            if(lol >= 97){
+                Creeper s = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
+                Entities.vortice(s);
             }
         }
     }

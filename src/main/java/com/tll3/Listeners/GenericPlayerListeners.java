@@ -207,7 +207,7 @@ public class GenericPlayerListeners implements Listener {
         int totem_c = PlayerData.getTotemCount(p);
         if(totem_c <= 29){
             for(Player online : Bukkit.getOnlinePlayers()) {
-                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado un Totem de la Inmortalidad &8(Totem #" + totem_c + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
+                online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado un Totem de la Inmortalidad &8(Totem #" + totem_c + ") " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
             }
             PlayerData.setTotemCount(p,totem_c + 1);
 
@@ -240,7 +240,7 @@ public class GenericPlayerListeners implements Listener {
                 }.runTaskLater(TLL3.getInstance(),20L);
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 1));
                 for(Player online : Bukkit.getOnlinePlayers()) {
-                    online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado 2 Totems de la Inmortalidad &8(Totem #" + totem_c + " y #" + (totem_c + 1) + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
+                    online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado 2 Totems de la Inmortalidad &8(Totem #" + totem_c + " y #" + (totem_c + 1) + ") " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
                 }
                 PlayerData.setTotemCount(p,totem_c + 2);
             }
@@ -280,7 +280,7 @@ public class GenericPlayerListeners implements Listener {
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 2));
                 for(Player online : Bukkit.getOnlinePlayers()) {
 
-                    online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado 3 Totems de la Inmortalidad &8(Totem #" + totem_c + ", #" + (totem_c + 1) + " y " + (totem_c + 2) + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
+                    online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado 3 Totems de la Inmortalidad &8(Totem #" + totem_c + ", #" + (totem_c + 1) + " y " + (totem_c + 2) + ") " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
                 }
                 PlayerData.setTotemCount(p,totem_c + 3);
             }
@@ -333,7 +333,7 @@ public class GenericPlayerListeners implements Listener {
                 p.getInventory().removeItem(new ItemStack(Material.TOTEM_OF_UNDYING, 4));
                 for(Player online : Bukkit.getOnlinePlayers()) {
 
-                    online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado 5 Totems de la Inmortalidad &8(Totem #" + totem_c + ", #" + (totem_c + 1) + ", " + (totem_c + 2) + ", #" + (totem_c + 3) + " y #" + (totem_c + 4) + ") &7&lCausa: " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
+                    online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&7El jugador &c&l" + p.getName() + " &7ha usado 5 Totems de la Inmortalidad &8(Totem #" + totem_c + ", #" + (totem_c + 1) + ", " + (totem_c + 2) + ", #" + (totem_c + 3) + " y #" + (totem_c + 4) + ") " + GenericUtils.damageCause(Objects.requireNonNull(p.getLastDamageCause()))));
 
                 }
                 PlayerData.setTotemCount(p,totem_c + 5);

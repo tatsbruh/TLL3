@@ -116,62 +116,62 @@ public class GenericUtils {
 
         switch (e.getCause()) {
             case FALL:
-                return format("&8Caída");
+                return format("&8[Caída]");
             case FIRE:
-                return format("&8Fuego");
+                return format("&8[Fuego]");
             case FREEZE:
-                return format("&8Congelado");
+                return format("&8[Congelado]");
             case LAVA:
-                return format("&8Lava");
+                return format("&8[Lava]");
             case VOID:
-                return format("&8Vacío");
+                return format("&8[Vacío]");
             case MAGIC:
-                return format("&8Magia");
+                return format("&8[Magia]");
             case BLOCK_EXPLOSION:
-                return format("&8Explosion");
+                return format("&8[Explosion]");
             case POISON:
-                return format("&8Veneno");
+                return format("&8[Veneno]");
             case THORNS:
-                return format("&8Espinas");
+                return format("&8[Espinas]");
             case WITHER:
-                return format("&8Wither");
+                return format("&8[Wither]");
             case CONTACT:
-                return format("&8Contacto");
+                return format("&8[Contacto]");
             case CRAMMING:
-                return format("&8Cramming");
+                return format("&8[Cramming]");
             case DRAGON_BREATH:
-                return format("&8Aliento de Dragon");
+                return format("&8[Aliento de Dragon]");
             case DROWNING:
-                return format("&8Ahogado");
+                return format("&8[Ahogado]");
             case FIRE_TICK:
-                return format("&8Tick de Fuego");
+                return format("&8[Tick de Fuego]");
             case HOT_FLOOR:
-                return format("&8Piso Ardiente");
+                return format("&8[Piso Ardiente]");
             case LIGHTNING:
-                return format("&8Rayo");
+                return format("&8[Rayo]");
             case PROJECTILE:
-                return format("&8Proyectil");
+                return format("&8[Proyectil]");
             case STARVATION:
-                return format("&8Hambre");
+                return format("&8[Hambre]");
             case SUFFOCATION:
-                return format("&8Sofocación");
+                return format("&8[Sofocación]");
             case SONIC_BOOM:
-                return format("&8Onda supersónica");
+                return format("&8[Onda supersónica]");
             case ENTITY_SWEEP_ATTACK:
             case ENTITY_ATTACK:
                 if (e instanceof EntityDamageByEntityEvent) {
-                    return "&8Entidad [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&8]";
+                    return "&8[Entidad: " + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&8]";
                 }
             case FALLING_BLOCK:
-                return format("&8Bloque Cayendo");
+                return format("&8[Bloque Cayendo]");
             case FLY_INTO_WALL:
-                return format("&8Estrellarse contra la Pared");
+                return format("&8[Energía cinética]");
             case ENTITY_EXPLOSION:
                 if (e instanceof EntityDamageByEntityEvent) {
-                    return "&8Explosión [" + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&8]";
+                    return "&8[Explosión: " + ((EntityDamageByEntityEvent) e).getDamager().getName() + "&8]";
                 }
             default:
-                return "Desconocida";
+                return "&8[Desconocida]";
         }
     }
     public static boolean isHostileMob(EntityType type) {

@@ -202,6 +202,9 @@ public class GenericEntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,150,1,true,false,true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,150,0,true,false,true));
                 }
+                if(Data.has(enderman,"blightedenderman",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 0, true, true, true));
+                }
                 if(Data.has(enderman,"primordialenderman",PersistentDataType.STRING)){
                     p.setFreezeTicks(p.getFreezeTicks() + 100);
                 }
@@ -211,6 +214,9 @@ public class GenericEntityListeners implements Listener {
                     if(EntityNaturalSpawn.doRandomChance(20)){
                         dropMainOrOff(p);
                     }
+                }
+                if(Data.has(v,"killerscream",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,200,0,true,false,true));
                 }
             }
             if(damager instanceof PigZombie z){
@@ -543,25 +549,13 @@ public class GenericEntityListeners implements Listener {
         Random random = new Random();
         int chance = random.nextInt(3000);
         if(entity instanceof Creeper c){
-            if(c.getTarget() == null && Data.has(c,"unstablecreeper",PersistentDataType.STRING)){
+            if(c.getTarget() == null && (Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING))){
                 if(chance <= 5 && c.getVehicle() == null){
                     c.playEffect(EntityEffect.TELEPORT_ENDER);
                     c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
                     EntityHelper.teleportEnderman(c,c.getLocation().getBlockX(),c.getLocation().getBlockY(),c.getLocation().getBlockZ(),c.getWorld(),64.0D);
                 }
             }
-        }
-        if(getDay() >= 7){
-        if(entity instanceof Enderman end){
-            for (Player player : end.getWorld().getPlayers()) {
-                int range = getDay() >= 21 ? 8 : 4;
-                if (player.getLocation().distanceSquared(end.getLocation()) <= Math.pow(range, 2)) {
-                    if(player.getGameMode() == GameMode.SURVIVAL){
-                        end.setTarget(player);
-                    }
-                }
-            }
-        }
         }
     }
 
@@ -653,6 +647,9 @@ public class GenericEntityListeners implements Listener {
             if(proj instanceof Fireball s){
                 if(Data.has(g,"cata_ghast",PersistentDataType.STRING)){
                     s.setYield(4);
+                }
+                if(Data.has(g,"blightedghast",PersistentDataType.STRING)){
+                    s.setYield(9);
                 }
                 if(Data.has(g,"soulvag",PersistentDataType.STRING)){
                     s.setYield(8);
@@ -764,6 +761,18 @@ public class GenericEntityListeners implements Listener {
                     Location lol = hbl.getLocation().add(0, 1, 0);
                     s.playEffect(EntityEffect.TELEPORT_ENDER);
                     s.teleport(lol);
+                }
+            }
+            if (Data.has(s, "blightedskeleton", PersistentDataType.STRING)) {
+                if (hen != null) {
+                    hen.getLocation().createExplosion(s,3,true,true);
+                    hen.getWorld().strikeLightning(hen.getLocation());
+                    proj.remove();
+                }
+                if (hbl != null) {
+                    hbl.getLocation().createExplosion(s,3,true,true);
+                    hbl.getWorld().strikeLightning(hbl.getLocation());
+                    proj.remove();;
                 }
             }
             if(Data.has(s,"primordialskeleton",PersistentDataType.STRING)){
@@ -1111,6 +1120,8 @@ public class GenericEntityListeners implements Listener {
         Location surgeloc = new Location(p.getWorld(),rXP,ye,rZP);
         surgeloc.getWorld().playSound(surgeloc,Sound.ENTITY_BLAZE_SHOOT,10.0F,2.0F);
         ArmorStand ar = (ArmorStand) Entities.spawnMob(surgeloc,EntityType.ARMOR_STAND);
+        ar.setCustomNameVisible(false);
+        ar.setCustomName(ChatUtils.format("&b&lSurge"));
         ar.setInvulnerable(true);
         ar.setCollidable(false);
         ar.setInvisible(true);
@@ -1144,7 +1155,7 @@ public class GenericEntityListeners implements Listener {
                         .map(entitys -> (LivingEntity) entitys)
                         .forEach(around -> {
                             if (around instanceof Player) {
-                                ((Player) around).damage(damage);
+                                ((Player) around).damage(damage,ar);
                             }
                         });
             }

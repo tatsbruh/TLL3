@@ -650,6 +650,83 @@ public class Entities {
         s.setSize(12);
         setIdentifierString(s,"toxiccrawler");
     }
+
+    //TLL 2 Mobs
+    public static void blightedSkeleton(Skeleton s){
+        setName(s,"#FEAE00B#FDAB00l#FCA900i#FBA700g#FBA400h#FAA200t#F9A000e#F89D00d #F79B00S#F69800k#F59600e#F49400l#F49100e#F38F00t#F28D00o#F18A00n");
+        setMobHealth(s,40);
+        setIdentifierString(s,"blightedskeleton");
+        setIdentifierString(s,"tllt2");
+    }
+    public static void blightedEnderman(Enderman s){
+        setName(s,"#D97BF7B#CF77EEl#C574E6i#BB70DEg#B26DD5h#A869CDt#9E66C5e#9462BCd #8A5FB4E#805BABn#7658A3d#6C549Be#635192r#594D8Am#4F4A82a#454679n");
+        setMobHealth(s,40);
+        setMobDamage(s,16);
+        setIdentifierString(s,"blightedenderman");
+        setIdentifierString(s,"tllt2");
+    }
+    public static void blightedGhast(Ghast s){
+        setName(s,"#CB2D3E⋘ #CE2F3EB#D0313Dl#D3333Di#D5343Dg#D8363Dh#DA383Ct#DD3A3Ce#E03C3Cd #E23E3BG#E5403Bh#E7413Ba#EA433Bs#EC453At #EF473A⋙");
+        setMobHealth(s,45);
+        setIdentifierString(s,"blightedghast");
+        setIdentifierString(s,"tllt2");
+    }
+    public static void zombieDestroyer(IronGolem s){
+        CraftIronGolem craft = ((CraftIronGolem) s);
+        EntityIronGolem entityIronGolem = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityIronGolem);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityIronGolem, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityIronGolem);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityIronGolem, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {}
+        setName(s,"#427C13Z#3E7F12o#398210m#35850Fb#31880Ei #2D8B0DD#288E0Be#24920As#209509t#1C9808r#179B06u#139E05c#0FA104t#0BA403o#06A701r");
+        setMobHealth(s,45);
+        setMobDamage(s,25);
+        s.setRemoveWhenFarAway(true);
+        s.setPersistent(false);
+        s.setSilent(true);
+        addPotionEffect(s,PotionEffectType.SPEED,0);
+        setIdentifierString(s,"zombiedestroyer");
+        setIdentifierString(s,"tllt2");
+    }
+    public static void killerscream(Vindicator s){
+        setName(s,"#494949⋘ #48464AK#48434Bi#47414Cl#473E4El#463B4Fe#453850r#453651s#443352c#433053r#432D55e#422B56a#422857m #412558⋙");
+        setMobHealth(s,25);
+        setMobDamage(s,20);
+        addPotionEffect(s,PotionEffectType.SPEED,1);
+        s.setCanJoinRaid(false);
+        setMainHand(s,new ItemStack(Material.NETHERITE_AXE));
+        setIdentifierString(s,"killerscream");
+        setIdentifierString(s,"tllt2");
+    }
+    public static void agileTarantula(Spider s){
+        injectHostileBehaviorToSpider(s);
+        setName(s,"#3797E6T#3B99E6a#3E9CE6r#419FE6á#45A1E6n#48A4E5t#4CA7E5u#4FA9E5l#52ACE5a #56AFE5R#59B2E5o#5CB4E5m#60B7E5p#63BAE5e#66BCE5v#6ABFE5i#6DC2E4e#71C4E4n#74C7E4t#77CAE4o#7BCCE4s");
+        setMobHealth(s,45);
+        setMobDamage(s,20);
+        addPotionEffect(s,PotionEffectType.SPEED,3);
+        setIdentifierString(s,"agilespider");
+        setIdentifierString(s,"tllt2");
+    }
+    public static void vortice(Creeper s){
+        setName(s,"#3494E6⋘ #3D9BE6V#47A3E6ó#50AAE5r#59B2E5t#62B9E5i#6CC0E5c#75C8E4e #7ECFE4⋙");
+        setMobHealth(s,45);
+        addPotionEffect(s,PotionEffectType.SPEED,3);
+        addPotionEffect(s,PotionEffectType.INVISIBILITY,0);
+        s.setExplosionRadius(50);
+        s.setPowered(true);
+        s.setMaxFuseTicks(10);
+        s.setFuseTicks(10);
+        setIdentifierString(s,"vortex");
+        setIdentifierString(s,"tllt2");
+    }
     //Cosmic Mobs
 
 
@@ -746,7 +823,7 @@ public class Entities {
     public static void primBrute(PiglinBrute z){
         setName(z,"#900000Q#8f0809u#8e1012a#8d181ar#8c2023r#8b272cy#8a2f35g#89373eu#893f47a#88474fr#874f58d #865761W#855f6aa#846673r#836e7bd#827684e#817e8dn");
         setMobHealth(z,25);
-        setMobDamage(z,4);
+        setMobDamage(z,9);
         z.setImmuneToZombification(true);
         setIdentifierString(z,"primordialbrute");
         setIdentifierInt(z,"burrowstate",0);
@@ -755,7 +832,7 @@ public class Entities {
     public static void primZoglin(Zoglin z){
         setName(z,"#bb5586D#bf5e7fi#c36679g#c76f72g#cb786bi#cf8064n#d3895eg #d79257D#db9a50r#dfa34ae#e3ab43a#e7b43cd#ebbd36n#efc52fo#f3ce28u#f7d721g#fbdf1bh#ffe814t");
         setMobHealth(z,30);
-        setMobDamage(z,4);
+        setMobDamage(z,12);
         setIdentifierString(z,"primordialzoglin");
         setIdentifierInt(z,"burrowstate",0);
         setIdentifierInt(z,"primordialzoglinstate",0);
@@ -796,7 +873,7 @@ public class Entities {
         z.setPersistent(false);
         setName(z,"#8d8787S#958989t#9c8a8ae#a48c8ce#ab8d8dl#b38f8fc#bb9090l#c29292a#ca9393d #d19595C#d99696r#e19898u#e89999s#f09b9bh#f79c9ce#ff9e9er");
         setMobHealth(z,40);
-        setMobDamage(z,6);
+        setMobDamage(z,16);
         setIdentifierString(z,"primordialgolem");
         setIdentifierString(z,"behemoth");
     }

@@ -13,6 +13,8 @@ import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+import org.bukkit.entity.Enderman;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Pose;
 import org.bukkit.potion.PotionEffect;
@@ -49,15 +51,31 @@ public class ServerTickTask extends BukkitRunnable {
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
         if(p.getGameMode() == GameMode.SURVIVAL) {
             InventoryUtils.lockPlayerSlots(p);
+            if(getDay() >= 7) {
+                int radius = 0;
+                if(getDay() >= 7 && getDay() < 21){
+                    radius = 3;
+                }else if(getDay() >= 21 && getDay() < 28){
+                    radius = 6;
+                }else if(getDay() >= 28 && getDay() < 42){
+                    radius = 9;
+                }else if(getDay() >= 42){
+                    radius = 14;
+                }
+                for (Entity entity : p.getNearbyEntities(radius, radius, radius)) {
+                    if (entity instanceof Enderman e) {
+                        e.setTarget(p);
+                    }
+                }
+            }
             if (getDay() >= 14) {
-
                 if (p.getWorld().getName().equals("world_wasteyard")) {
                     if (getFullSet(p, 69)) return;
                     if (wast_darkness < 2500) {
                         wast_darkness++;
                     } else {
                         if (wast_caution > 0) {
-                            p.sendMessage(ChatUtils.format(ChatUtils.prefix + " &cLas nieblas oscuras cubriran la wasteyard en " + wast_caution));
+                            p.sendMessage(ChatUtils.format(ChatUtils.prefix + " &cLas nieblas oscuras cubriran la Wasteyard en " + wast_caution));
                             wast_caution--;
                             wast_darkness = 2400;
                         } else {

@@ -183,6 +183,7 @@ public class staffCMD extends BaseCommand {
                 case "dunes" -> p.teleport(Worlds.getDunes().getSpawnLocation());
                 case "scorched" -> p.teleport(Worlds.getScorched().getSpawnLocation());
                 case "wasteyard" -> p.teleport(Worlds.getWasteyard().getSpawnLocation());
+                case "zero" -> p.teleport(Worlds.getZero().getSpawnLocation());
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Ingresa una Dimension valida"));
             }
         }
