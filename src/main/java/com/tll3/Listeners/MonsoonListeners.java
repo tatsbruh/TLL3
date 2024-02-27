@@ -131,8 +131,10 @@ public class MonsoonListeners implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onThunderChange(ThunderChangeEvent e){
-        if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")){
-            Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
+        if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
+            if (e.getWorld().getThunderDuration() <= 0) {
+                Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
+            }
         }
     }
 

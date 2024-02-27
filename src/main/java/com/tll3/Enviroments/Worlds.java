@@ -72,7 +72,7 @@ public class Worlds {
     }
     private static World funcZero(){
         WorldCreator creator = new WorldCreator("world_zero");
-        creator.environment(World.Environment.NORMAL);
+        creator.environment(World.Environment.THE_END);
         creator.generator(new ZeroHorizon());
         creator.generateStructures(false);
         creator.type(WorldType.AMPLIFIED);

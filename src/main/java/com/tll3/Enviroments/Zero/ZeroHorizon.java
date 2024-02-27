@@ -24,7 +24,7 @@ public class ZeroHorizon extends ChunkGenerator{
         generator.setScale(0.02D);
         for (int X = 0; X < 16; X++) {
             for (int Z = 0; Z < 16; Z++) {
-                double noise = generator.noise(chunkX * 16 + X, chunkZ * 16 + Z, 0.32D, 0.17D);
+                double noise = (generator.noise(chunkX * 16 + X, chunkZ * 16 + Z, 0.5D, 0.5D));
                 int height = (int) (noise * 38);
                 int y = 85;
                 for (int i = 0; i < height / 2; i++) {
@@ -49,27 +49,19 @@ public class ZeroHorizon extends ChunkGenerator{
     }
 
     protected Material getUnderMaterial() {
-        return Material.STONE;
+        return Material.DIRT;
     }
     public static class ZeroBiome extends BiomeProvider{
         @NotNull
         @Override
         public Biome getBiome(@NotNull WorldInfo worldInfo, int x, int y, int z) {
-            SimplexOctaveGenerator generator = new SimplexOctaveGenerator(new Random(worldInfo.getSeed()), 8);
-            generator.setScale(0.02D);
-
-
-            if (generator.noise(x, z, 1, 1, true) < 0) {
-                return Biome.PLAINS;
-            } else {
-                return Biome.SUNFLOWER_PLAINS;
-            }
+            return Biome.END_BARRENS;
         }
 
         @NotNull
         @Override
         public List<Biome> getBiomes(@NotNull WorldInfo worldInfo) {
-            return Lists.newArrayList(Biome.PLAINS, Biome.SUNFLOWER_PLAINS);
+            return Lists.newArrayList(Biome.END_BARRENS);
         }
     }
 }

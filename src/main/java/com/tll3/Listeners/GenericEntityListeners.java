@@ -64,6 +64,18 @@ public class GenericEntityListeners implements Listener {
                         e.setDamage(0.01);
                     }
                 }
+                if(Data.has(l,"barrier",PersistentDataType.STRING)){
+                    var state = Data.get(l,"barrier_state",PersistentDataType.INTEGER);
+                    if(state == 0){
+                        if(e.getDamage() <= 10){
+                            e.setCancelled(true);
+                            var loc = l.getLocation();
+                            createBarrierEffect(loc);
+                        }else{
+                            XParticle.cage(l.getLocation(),l.getLocation().subtract(2,0,0),20,20, ParticleDisplay.display(l.getLocation(),Particle.END_ROD));
+                        }
+                    }
+                }
 
                 if(item.hasItemMeta()) {
                     if (p.hasPotionEffect(PotionEffectType.LUCK)) return; //Efecto de maldicion en jugadores
@@ -1161,6 +1173,10 @@ public class GenericEntityListeners implements Listener {
             }
         };
         br2.runTaskTimer(TLL3.getInstance(),0L,5L);
-
+    }
+    private static void createBarrierEffect(Location loc){
+        XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,2,0),Particle.END_ROD));
+        XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,1,0),Particle.END_ROD));
+        XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.clone(),Particle.END_ROD));
     }
 }

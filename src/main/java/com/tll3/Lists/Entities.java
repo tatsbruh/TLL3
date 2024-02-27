@@ -589,11 +589,48 @@ public class Entities {
                 c4.addPassenger(c5);
             }
         }
-
-
-
-
     }
+
+    //Dia 28
+    public static void starEnderman(Enderman e){
+        setName(e,"&bStarred Enderman &e&l★");
+        setMobHealth(e,55);
+        setMobDamage(e,15);
+        setIdentifierString(e,"starredenderman");
+    }
+    public static void starWither(WitherSkeleton e){
+        setName(e,"&bSpace Overseer &e&l★");
+        setMobHealth(e,45);
+        setMobDamage(e,6);
+        setMainHand(e,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,20).build());
+        setIdentifierString(e,"starredwither");
+        setIdentifierString(e,"barrier");
+        setIdentifierInt(e,"barrier_state",0);
+    }
+    public static void starPillager(Pillager e){
+        setName(e,"&bInterestellar Scavenger &e&l★");
+        setMobHealth(e,40);
+        setMobDamage(e,6);
+        setMainHand(e,new ItemBuilder(Material.CROSSBOW).addEnchant(Enchantment.QUICK_CHARGE,5).addEnchant(Enchantment.PIERCING,3).build());
+        setIdentifierString(e,"starredpillager");
+    }
+    public static void starCreeper(Creeper e){
+        setName(e,"&bProject C &e&l★");
+        setMobHealth(e,45);
+        e.setExplosionRadius(3);
+        setIdentifierString(e,"starredcreeper");
+    }
+    public static void starPhantom(Phantom e){
+        setName(e,"&bGeneral PrePhantom &e&l★");
+        setMobHealth(e,45);
+        setMobDamage(e,20);
+        e.setSilent(true);
+        e.setSize(5);
+        setIdentifierString(e,"starredphantom");
+        setIdentifierString(e,"barrier");
+        setIdentifierInt(e,"barrier_state",0);
+    }
+
 
 
 
@@ -708,7 +745,7 @@ public class Entities {
     }
     public static void agileTarantula(Spider s){
         injectHostileBehaviorToSpider(s);
-        setName(s,"#3797E6T#3B99E6a#3E9CE6r#419FE6á#45A1E6n#48A4E5t#4CA7E5u#4FA9E5l#52ACE5a #56AFE5R#59B2E5o#5CB4E5m#60B7E5p#63BAE5e#66BCE5v#6ABFE5i#6DC2E4e#71C4E4n#74C7E4t#77CAE4o#7BCCE4s");
+        setName(s,"&bTárantula Rompevientos");
         setMobHealth(s,45);
         setMobDamage(s,20);
         addPotionEffect(s,PotionEffectType.SPEED,3);
