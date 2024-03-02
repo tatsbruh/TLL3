@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.network.protocol.game.PacketPlayOutGameStateChange;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.server.level.WorldServer;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntitySquid;
 import net.minecraft.world.entity.animal.axolotl.Axolotl;
+import net.minecraft.world.entity.monster.EntityEnderman;
 import net.minecraft.world.entity.monster.EntityGuardian;
 import net.minecraft.world.entity.monster.EntityGuardianElder;
 import net.minecraft.world.entity.player.EntityHuman;
@@ -145,7 +147,11 @@ public class CustomElderGuardian extends EntityGuardianElder {
                             f += 2.0F;
                         }
 
-                        entityliving.a(this.a.dN().c(this.a, this.a), 20.0F);
+                        if(GenericUtils.getDay() >= 28){
+                            entityliving.a(this.a.dN().c(this.a, this.a), 28.0F);
+                        }else{
+                            entityliving.a(this.a.dN().c(this.a, this.a), 20.0F);
+                        }
                         entityliving.a(this.a.dN().b(this.a), (float)this.a.b(GenericAttributes.c));
                         this.a.h((EntityLiving)null);
                     }

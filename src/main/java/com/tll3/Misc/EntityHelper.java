@@ -88,6 +88,7 @@ public class EntityHelper {
         Objects.requireNonNull(entity.getAttribute(Attribute.GENERIC_KNOCKBACK_RESISTANCE)).setBaseValue(amount);
     }
 
+
     public static void teleportEnderman(Entity e, int locX, int locY, int locZ, World world, double range) {
         for (int i = 0; i < 64; ++i) {
             if (eq(e, locX, locY, locZ, world,range)) {
@@ -110,6 +111,5 @@ public class EntityHelper {
         if(b.isSolid()) return false;
         return e.teleport(new Location(world, x, b.getY() + 1, z));
     }
-
 
 }

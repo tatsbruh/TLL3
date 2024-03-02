@@ -201,7 +201,7 @@ public class Entities {
     }
 
     public static void termite(CaveSpider s){
-        setName(s,"&6Termita");
+        setName(s,"&6Termite");
         setMobHealth(s,15);
         addPotionEffect(s, PotionEffectType.SPEED,1);
         s.setAggressive(true);
@@ -280,12 +280,16 @@ public class Entities {
     public static void huStr(Husk s){
         setName(s,"&eStarved Husk");
         setMobHealth(s,25);
-        setMobDamage(s,6);
+        if(getDay() >= 28){
+            setMobDamage(s,18);
+        }else{
+            setMobDamage(s,6);
+        }
         addPotionEffect(s,PotionEffectType.SPEED,1);
         setIdentifierString(s,"starved_husk");
     }
     public static void csTerCol(CaveSpider s){
-        setName(s,"&6&lTermita de Colonia");
+        setName(s,"&6&lColony Termite");
         setMobHealth(s,25);
         addPotionEffect(s, PotionEffectType.SPEED,0);
         s.setAggressive(true);
@@ -309,7 +313,7 @@ public class Entities {
         setIdentifierString(phantom,"duskphantom");
     }
     public static void silverday5(Silverfish silverfish){
-        setName(silverfish,"&cSilverfish Poderoso");
+        setName(silverfish,"&cPowerful Silverfish");
         addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,14);
         addPotionEffect(silverfish,PotionEffectType.SPEED,1);
     }
@@ -393,14 +397,14 @@ public class Entities {
         setIdentifierString(s,"commandskeleton");
     }
     public static void slimeNight(Slime s){
-        setName(s,"#497555Slime de Pesadilla");
+        setName(s,"#497555Nightmare Slime");
         setMobHealth(s,65);
         setMobDamage(s,35);
         s.setSize(14);
         setIdentifierString(s,"slimenightmare");
     }
     public static void neonSp(Spider s){
-        setName(s,"#8cffc6Araña de Neón");
+        setName(s,"#8cffc6Neon Mauler");
         setMobHealth(s,45);
         setMobDamage(s,8);
         setMobRange(s,100);
@@ -408,27 +412,27 @@ public class Entities {
         setIdentifierString(s,"neonspider");
     }
     public static void nwPillager(Pillager p,boolean canjoinraid){
-        setName(p,"#ff1717Piromaníaco");
+        setName(p,"#ff1717PyroIllager");
         setMainHand(p,new ItemBuilder(Material.CROSSBOW).addEnchant(Enchantment.QUICK_CHARGE,3).addEnchant(Enchantment.MULTISHOT,1).setUnbreakable(true).build());
         setOffhand(p,rocket());
         p.setCanJoinRaid(canjoinraid);
         setIdentifierString(p,"pillagerex");
     }
     public static void nwVindicator(Vindicator p,boolean canjoinraid){
-        setName(p,"#ffbb33Verdugo");
+        setName(p,"#ffbb33Executioner");
         setMainHand(p,new ItemStack(Material.NETHERITE_AXE));
         p.setCanJoinRaid(canjoinraid);
         setIdentifierString(p,"vindicatorex");
     }
     public static void nwRavager(Ravager p,boolean canjoinraid){
-        setName(p,"#eb420eRavager Supremo");
+        setName(p,"#eb420eSupreme Ravager");
         setMobHealth(p,100);
         setMobDamage(p,20);
         p.setCanJoinRaid(canjoinraid);
         setIdentifierString(p,"ravagerex");
     }
     public static void nwVex(Vex v){
-        setName(v,"#78d6d0Espíritu Sagrado");
+        setName(v,"#78d6d0Sacred Spirit");
         setMainHand(v,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.FIRE_ASPECT,5).build());
         setIdentifierString(v,"vexex");
     }
@@ -446,6 +450,7 @@ public class Entities {
         setMobDamage(z,6);
         setMobHealth(z,28);
         setMobRange(z,96);
+        z.setAdult();
         addPotionEffect(z,PotionEffectType.SPEED,0);
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantzombie");
@@ -487,7 +492,7 @@ public class Entities {
         setIdentifierString(z,"revenantenderman");
     }
     public static void acidFish(PufferFish f){
-        setName(f,"#5e8a46Pez de Ácido");
+        setName(f,"#5e8a46Acid Pufferfish");
         setMobHealth(f,20);
         setIdentifierString(f,"acidfish");
         EntityNaturalSpawn.setCustomMobcap(f, 10, 1.10, 24, 60, true);
@@ -501,7 +506,7 @@ public class Entities {
     }
     public static void zombpigRider(PigZombie z){
         injectHostileBehaviorToPig(z);
-        setName(z,"#7a3d5bJinete Cerdo-pocalíptico");
+        setName(z,"#7a3d5bApocalyptic Hog-Rider");
         setMobHealth(z,10);
         setMainHand(z,new ItemStack(Material.CARROT_ON_A_STICK));
         WorldServer worldServer = ((CraftWorld) z.getLocation().getWorld()).getHandle();
@@ -513,7 +518,7 @@ public class Entities {
     }
     public static void zombpigShinobi(PigZombie z){
         injectHostileBehaviorToPig(z);
-        setName(z,"#6c5f85Piglin Shinobi");
+        setName(z,"#6c5f85Samurai Piglin");
         setMobHealth(z,15);
         setMainHand(z,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,15).addEnchant(Enchantment.FIRE_ASPECT,30).build());
         addPotionEffect(z,PotionEffectType.SPEED,2);
@@ -521,7 +526,7 @@ public class Entities {
     }
     public static void zombpigAlchemist(PigZombie z){
         injectHostileBehaviorToPig(z);
-        setName(z,"#857c5fAlquimista Porcino");
+        setName(z,"#857c5fAlchemist Pig");
         setMobHealth(z,25);
         setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,10).build());
         setIdentifierString(z,"alchpig");
@@ -617,7 +622,8 @@ public class Entities {
     public static void starCreeper(Creeper e){
         setName(e,"&bProject C &e&l★");
         setMobHealth(e,45);
-        e.setExplosionRadius(3);
+        e.setExplosionRadius(6);
+        e.setPowered(true);
         setIdentifierString(e,"starredcreeper");
     }
     public static void starPhantom(Phantom e){
@@ -630,7 +636,34 @@ public class Entities {
         setIdentifierString(e,"barrier");
         setIdentifierInt(e,"barrier_state",0);
     }
-
+    public static void lilGhoul(Zombie z){
+        setName(z,"&cLi'l Ghoul");
+        setMobHealth(z,35);
+        setMobDamage(z,10);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        z.setBaby();
+        setIdentifierString(z,"lilghoul");
+    }
+    public static void blazephim(Blaze z){
+        setName(z,"&f&lBlazephim");
+        setMobHealth(z,50);
+        setMobDamage(z,50);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        setIdentifierString(z,"blazephim");
+    }
+    public static void hellSymbiote(Blaze z){
+        setName(z,"&b&lHellfire Symbiote");
+        setMobHealth(z,50);
+        setMobDamage(z,50);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        setIdentifierString(z,"symbiote");
+    }
+    public static void rabbitKiller(Rabbit r){
+        setMobHealth(r,55);
+        addPotionEffect(r,PotionEffectType.INCREASE_DAMAGE,9);
+        r.setRabbitType(Rabbit.Type.THE_KILLER_BUNNY);
+        setIdentifierString(r,"killerbunny");
+    }
 
 
 
@@ -772,6 +805,7 @@ public class Entities {
         setName(z,"#672500W#6c2706i#71280dl#752a13d #7a2c19G#7f2d1fh#842f26o#88302cu#8d3232l");
         setMobHealth(z,25);
         setMobDamage(z,4);
+        z.setAdult();
         setIdentifierString(z,"primordialzombie");
         setIdentifierInt(z,"primordialzombiestate",0);
         setIdentifierString(z,"behemoth");

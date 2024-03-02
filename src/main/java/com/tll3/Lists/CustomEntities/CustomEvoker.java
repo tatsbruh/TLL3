@@ -3,6 +3,7 @@ package com.tll3.Lists.CustomEntities;
 import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomEvokerFangs;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.core.BlockPosition;
 import net.minecraft.core.EnumDirection;
 import net.minecraft.nbt.NBTTagCompound;
@@ -96,11 +97,17 @@ public class CustomEvoker extends EntityEvoker {
 
         @Override
         protected int h() {
+            if(GenericUtils.getDay() >= 28){
+                return 5;
+            }
             return 20;
         }
 
         @Override
         protected int i() {
+            if(GenericUtils.getDay() >= 28){
+                return 50;
+            }
             return 85;
         }
 
@@ -189,11 +196,17 @@ public class CustomEvoker extends EntityEvoker {
 
         @Override
         protected int h() {
+            if(GenericUtils.getDay() >= 28){
+                return 55;
+            }
             return 80;
         }
 
         @Override
         protected int i() {
+            if(GenericUtils.getDay() >= 28){
+                return 200;
+            }
             return 350;
         }
 

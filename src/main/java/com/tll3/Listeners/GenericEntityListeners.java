@@ -71,8 +71,14 @@ public class GenericEntityListeners implements Listener {
                             e.setCancelled(true);
                             var loc = l.getLocation();
                             createBarrierEffect(loc);
+                            loc.getWorld().playSound(loc,Sound.ITEM_SHIELD_BLOCK,10.0F,2.0F);
                         }else{
-                            XParticle.cage(l.getLocation(),l.getLocation().subtract(2,0,0),20,20, ParticleDisplay.display(l.getLocation(),Particle.END_ROD));
+                            e.setCancelled(true);
+                            var loc = l.getLocation();
+                            loc.getWorld().playSound(loc,Sound.ITEM_SHIELD_BREAK,10.0F,2.0F);
+                            loc.getWorld().playSound(loc,Sound.BLOCK_GLASS_BREAK,10.0F,2.0F);
+                            p.getLocation().getWorld().spawnParticle(Particle.END_ROD,p.getLocation(),25,0,0,0,1);
+                            Data.set(l,"barrier_state",PersistentDataType.INTEGER,1);
                         }
                     }
                 }
@@ -155,6 +161,9 @@ public class GenericEntityListeners implements Listener {
                     var amount = p.getFoodLevel() - e.getFinalDamage();
                     if(amount < 0){p.setFoodLevel(0);return;}
                     p.setFoodLevel((int) amount);
+                    if(getDay() >= 28){
+                        s.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,0,false,false,false));
+                    }
                 }
                 if(Data.has(s,"primordialhusk",PersistentDataType.STRING)){
                     if(EntityNaturalSpawn.doRandomChance(20)){
@@ -169,7 +178,11 @@ public class GenericEntityListeners implements Listener {
             }
             if(damager instanceof Stray s){
                 if(Data.has(s,"commandskeleton",PersistentDataType.STRING)){
-                    p.setFreezeTicks(200);
+                    if(getDay() >= 28){
+                        p.setFreezeTicks(400);
+                    }else{
+                        p.setFreezeTicks(200);
+                    }
                 }
             }
             if(damager instanceof CustomDolphin || damager instanceof Dolphin){
@@ -191,7 +204,15 @@ public class GenericEntityListeners implements Listener {
             }
             if(damager instanceof Enderman enderman){
                 if(getDay() >= 21){
-                if(EntityNaturalSpawn.doRandomChance(20)) {
+                    int tpchance = 20;
+                    if(getDay() >= 28 && getDay() < 42){
+                        tpchance = 40;
+                    }else if(getDay() >= 42){
+                        tpchance = 65;
+                    }else{
+                        tpchance = 20;
+                    }
+                if(EntityNaturalSpawn.doRandomChance(tpchance)) {
                     var list = enderman.getNearbyEntities(15, 15, 15);
                     var mob = list.get(new Random().nextInt(list.size()));
                     if (GenericUtils.isHostileMob(mob.getType())) {
@@ -219,6 +240,18 @@ public class GenericEntityListeners implements Listener {
                 }
                 if(Data.has(enderman,"primordialenderman",PersistentDataType.STRING)){
                     p.setFreezeTicks(p.getFreezeTicks() + 100);
+                }
+            }
+            if(damager instanceof WitherSkeleton s){
+                if(Data.has(s,"starredwither",PersistentDataType.STRING)) {
+                    if (EntityNaturalSpawn.doRandomChance(20)) {
+                        EntityHelper.teleportEnderman(p, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ(), p.getWorld(), 10.0D);
+                    }
+                }
+            }
+            if(damager instanceof Creeper s){
+                if(Data.has(s,"starredcreeper",PersistentDataType.STRING)){
+                    EntityHelper.teleportEnderman(p,p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ(),p.getWorld(),42.0D);
                 }
             }
             if(damager instanceof Vindicator v){
@@ -255,7 +288,12 @@ public class GenericEntityListeners implements Listener {
                 }
             }
             if(damager instanceof Zombie z){
-
+                int critchance = 10;
+                if(getDay() >= 28){
+                    if(getMonsoon_active().equalsIgnoreCase("true")){
+                        critchance = 20;
+                    }
+                }
                 if(EntityNaturalSpawn.doRandomChance(10)){
                     if(getDay() >= 21){
                       PlayerData.addDataEffect(p,"bleed",40,0);
@@ -264,7 +302,7 @@ public class GenericEntityListeners implements Listener {
                     }
                 }
                 if(getDay() >= 21){
-                    if(EntityNaturalSpawn.doRandomChance(10)){
+                    if(EntityNaturalSpawn.doRandomChance(critchance)){
                         p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT,10.0F,1.0F);
                         p.getLocation().getWorld().spawnParticle(Particle.CRIT,p.getLocation(),50,1,1,1,0.5);
                         e.setDamage(e.getDamage() * 2);
@@ -292,6 +330,14 @@ public class GenericEntityListeners implements Listener {
                         p.getLocation().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR,p.getLocation(),25,1,1,1,0.3);
                         e.setDamage(e.getDamage() * 3);
                     }
+                }else{
+                    if(getDay() >= 28){
+                        if(EntityNaturalSpawn.doRandomChance(20)){
+                            p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT,10.0F,1.0F);
+                            p.getLocation().getWorld().spawnParticle(Particle.CRIT,p.getLocation(),50,1,1,1,0.5);
+                            e.setDamage(e.getDamage() * 2);
+                        }
+                    }
                 }
             }
             if(damager instanceof Ravager r){
@@ -305,8 +351,12 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"blackreaver",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,9));
                 }
-                if(Data.has(s,"neonspider",PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,150,0,true,false,true));
+                if(Data.has(s,"neonspider",PersistentDataType.STRING)) {
+                    if (getDay() >= 28) {
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING, 150, 2, true, false, true));
+                    }else{
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,150,0,true,false,true));
+                    }
                 }
                 if(Data.has(s,"adeptmauler",PersistentDataType.STRING)){
                     s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION,60,2,false,false,false));
@@ -331,31 +381,57 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"termite",PersistentDataType.STRING)){
                     var state = Data.get(s,"t_state",PersistentDataType.INTEGER);
                     if(state == 0){
-                        s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
-                        Data.set(s,"t_state",PersistentDataType.INTEGER,1);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                if(s.isDead() || !s.isValid()){cancel();return;}
-                                s.getLocation().getWorld().createExplosion(s,3,false,true);
-                                s.remove();
-                            }
-                        }.runTaskLater(TLL3.getInstance(),60L);
+                        if(getDay() >= 28){
+                            s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
+                            Data.set(s,"t_state",PersistentDataType.INTEGER,1);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if(s.isDead() || !s.isValid()){cancel();return;}
+                                    s.getLocation().getWorld().createExplosion(s,6,false,true);
+                                    s.remove();
+                                }
+                            }.runTaskLater(TLL3.getInstance(),30L);
+                        }else{
+                            s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
+                            Data.set(s,"t_state",PersistentDataType.INTEGER,1);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if(s.isDead() || !s.isValid()){cancel();return;}
+                                    s.getLocation().getWorld().createExplosion(s,3,false,true);
+                                    s.remove();
+                                }
+                            }.runTaskLater(TLL3.getInstance(),60L);
+                        }
                     }
                 }
                 if(Data.has(s,"termite_ex",PersistentDataType.STRING)){
                     var state = Data.get(s,"tex_state",PersistentDataType.INTEGER);
                     if(state == 0){
-                        Data.set(s,"tex_state",PersistentDataType.INTEGER,1);
-                        s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
-                        new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                if(s.isDead() || !s.isValid()){cancel();return;}
-                                s.getLocation().getWorld().createExplosion(s,6,false,true);
-                                s.remove();
-                            }
-                        }.runTaskLater(TLL3.getInstance(),60L);
+                        if(getDay() >= 28){
+                            Data.set(s,"tex_state",PersistentDataType.INTEGER,1);
+                            s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if(s.isDead() || !s.isValid()){cancel();return;}
+                                    s.getLocation().getWorld().createExplosion(s,9,false,true);
+                                    s.remove();
+                                }
+                            }.runTaskLater(TLL3.getInstance(),30L);
+                        }else{
+                            Data.set(s,"tex_state",PersistentDataType.INTEGER,1);
+                            s.getLocation().getWorld().playSound(s.getLocation(),Sound.ENTITY_CREEPER_PRIMED,10.0F,2.0F);
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    if(s.isDead() || !s.isValid()){cancel();return;}
+                                    s.getLocation().getWorld().createExplosion(s,6,false,true);
+                                    s.remove();
+                                }
+                            }.runTaskLater(TLL3.getInstance(),60L);
+                        }
                     }
                 }
                 if(Data.has(s,"primordialcave",PersistentDataType.STRING)){
@@ -396,6 +472,57 @@ public class GenericEntityListeners implements Listener {
         var bow = e.getBow();
         var projectile = e.getProjectile();
         if(entity.hasPotionEffect(PotionEffectType.LUCK))return;
+
+        if(entity instanceof Illusioner || entity instanceof CustomIllusioner){
+            if (Data.has(entity, "illusionerex", PersistentDataType.STRING)) {
+                int random = GenericUtils.getRandomValue(5);
+                switch (random){
+                    case 0 ->EntityHelper.setIdentifierString(projectile, "rev_explosion");
+                    case 1 ->{
+                        Fireball f = entity.launchProjectile(Fireball.class);
+                        f.setYield(6);
+                        e.setProjectile(f);
+                    }
+                    case 2 ->{
+                        entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_WARDEN_SONIC_BOOM,10.0F,1.0F);
+                        Arrow a = (Arrow) projectile;
+                        if(getDay() >= 21){
+                            a.setDamage(40);
+                        }else{
+                            a.setDamage(20);
+                        }
+                        for(Player online : Bukkit.getOnlinePlayers()){
+                            online.hideEntity(TLL3.getInstance(),a);
+                        }
+                        new BukkitRunnable(){
+                            @Override
+                            public void run() {
+                                a.setGravity(false);
+                            }
+                        }.runTaskLater(TLL3.getInstance(),2L);
+                        new BukkitRunnable() {
+                            int i = 0;
+                            @Override
+                            public void run() {
+                                if(a.isOnGround() || !a.isValid() || a.isDead() ){a.remove(); cancel(); return;}
+                                if(i < 400){
+                                    a.getWorld().spawnParticle(Particle.SONIC_BOOM,a.getLocation(),1);
+                                    i++;
+                                }else{
+                                    a.remove();
+                                    cancel();
+                                }
+                            }
+                        }.runTaskTimer(TLL3.getInstance(),0L,1L);
+                    }
+                    case 3 ->EntityHelper.setIdentifierString(projectile,"steeltnt");
+                    case 4 ->{
+                        EntityHelper.setIdentifierString(projectile,"lol");
+                        new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
+                    }
+                }
+            }
+        }
 
         if(entity instanceof Pillager p){
             if(getDay() >= 7){
@@ -561,7 +688,7 @@ public class GenericEntityListeners implements Listener {
         Random random = new Random();
         int chance = random.nextInt(3000);
         if(entity instanceof Creeper c){
-            if(c.getTarget() == null && (Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING))){
+            if(c.getTarget() == null && (Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING) || Data.has(c,"starredcreeper",PersistentDataType.STRING))){
                 if(chance <= 5 && c.getVehicle() == null){
                     c.playEffect(EntityEffect.TELEPORT_ENDER);
                     c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
@@ -638,7 +765,11 @@ public class GenericEntityListeners implements Listener {
         if(shooter instanceof Drowned d){
             if(proj instanceof Trident t){
                 if(Data.has(d,"abyssdrow",PersistentDataType.STRING)){
-                    t.setDamage(t.getDamage() * 3);
+                    if(getDay() >= 28){
+                        t.setDamage(t.getDamage() * 5);
+                    }else{
+                        t.setDamage(t.getDamage() * 3);
+                    }
                     EntityHelper.setIdentifierString(t,"lolxd");
                 }
             }
@@ -687,6 +818,13 @@ public class GenericEntityListeners implements Listener {
 
         if(source instanceof Player p){
             if(proj instanceof EnderPearl enderPearl){
+                if(getDay() >= 28) {
+                    if (!Data.has(enderPearl, "worm_pearl", PersistentDataType.STRING)) {
+                        if(EntityNaturalSpawn.doRandomChance(20)){
+                            Entities.quanmite((Endermite) Entities.spawnMob(p.getLocation(),EntityType.ENDERMITE));
+                        }
+                    }
+                }
                 if(Data.has(enderPearl,"rev_pearl",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SPEED,100,0,true,false,true));
                     p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,100,0,true,false,true));
@@ -810,6 +948,7 @@ public class GenericEntityListeners implements Listener {
             }
         }
 
+
         if(source instanceof WitherSkeleton s){
             if (Data.has(s, "primordialwither", PersistentDataType.STRING)) {
                 if (hen != null) {
@@ -827,6 +966,8 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
+
+
 
         if(source instanceof Blaze z){
             if(Data.has(z,"windcharger",PersistentDataType.STRING)){
@@ -865,6 +1006,16 @@ public class GenericEntityListeners implements Listener {
                 if (hen != null) {
                     if(hen instanceof LivingEntity l){
                         l.damage(20,z);
+                    }
+                }
+            }
+        }
+        if(source instanceof Pillager p){
+            if(Data.has(p,"starredpillager",PersistentDataType.STRING)){
+                if (hen != null) {
+                    if(hen instanceof Player ene){
+                        Vector direction = p.getLocation().toVector().subtract(ene.getLocation().toVector()).normalize();
+                        ene.setVelocity(direction.multiply(2));
                     }
                 }
             }
@@ -1175,8 +1326,11 @@ public class GenericEntityListeners implements Listener {
         br2.runTaskTimer(TLL3.getInstance(),0L,5L);
     }
     private static void createBarrierEffect(Location loc){
+        XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,2.5,0),Particle.END_ROD));
         XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,2,0),Particle.END_ROD));
+        XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,1.5,0),Particle.END_ROD));
         XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,1,0),Particle.END_ROD));
+        XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.add(0,0.5,0),Particle.END_ROD));
         XParticle.circle(2, 3, 1, 30, 0, ParticleDisplay.display(loc.clone(),Particle.END_ROD));
     }
 }

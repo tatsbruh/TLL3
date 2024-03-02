@@ -2,6 +2,7 @@ package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomLlamaSpit;
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.sounds.SoundEffects;
 import net.minecraft.world.entity.EntityLiving;
 import net.minecraft.world.entity.EntityTypes;
@@ -54,7 +55,11 @@ public class CustomLlama extends EntityLlama {
         }
     }
     public void caca(EntityLiving entityliving) throws IllegalAccessException {
-        CustomLlamaSpit customLlamaSpit = new CustomLlamaSpit(this.dM(),this,45.0F);
+        float dmg = 45.0F;
+        if(GenericUtils.getDay() >= 28){
+            dmg = 125.0F;
+        }
+        CustomLlamaSpit customLlamaSpit = new CustomLlamaSpit(this.dM(),this,dmg);
         double d0 = entityliving.dr() - this.dr();
         double d1 = entityliving.e(0.3333333333333333) - customLlamaSpit.dt();
         double d2 = entityliving.dx() - this.dx();

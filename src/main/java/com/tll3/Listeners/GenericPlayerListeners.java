@@ -28,6 +28,7 @@ import org.bukkit.event.entity.EntityPoseChangeEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.EntityToggleSwimEvent;
+import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
@@ -122,6 +123,15 @@ public class GenericPlayerListeners implements Listener {
         }
     }
 
+    @EventHandler
+    public void onCraft(CraftItemEvent e){
+        if(getDay() >= 28) {
+            if (e.getRecipe().getResult().getType().name().toLowerCase().contains("torch")) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
 
 
 
@@ -177,13 +187,24 @@ public class GenericPlayerListeners implements Listener {
     public void eatitemE(PlayerItemConsumeEvent e){
         var player = e.getPlayer();
         var item = e.getItem();
+        if(getDay() >= 28){
+            if(checkNonMeatFood(item)){
+                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,200,2,true,false,true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0,true,false,true));
+            }
+        }
         if(new ItemBuilder(item).hasID("miraclefruit")){
             if(player.hasPotionEffect(PotionEffectType.LUCK))return;
             PlayerData.restExp(player,30);
         }
     }
 
-
+    public static boolean checkNonMeatFood(ItemStack i){
+        switch (i.getType()){
+            case CARROT,BAKED_POTATO,BEETROOT,BEETROOT_SOUP,BREAD,MUSHROOM_STEW,RABBIT_STEW,APPLE,CHORUS_FRUIT,DRIED_KELP,MELON_SLICE,POTATO,PUMPKIN_PIE,SWEET_BERRIES,HONEY_BOTTLE,COOKIE,GLOW_BERRIES: return true;
+        }
+        return false;
+    }
 
 
     @EventHandler

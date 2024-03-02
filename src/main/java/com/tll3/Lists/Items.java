@@ -10,14 +10,14 @@ import org.bukkit.inventory.ItemStack;
 public class Items {
     public static ItemStack miracleFruit(){
         return new ItemBuilder(Material.GOLDEN_APPLE)
-                .setDisplayName("&aFruta Milagrosa")
+                .setDisplayName("&aMiracle Apple")
                 .setLore(
                         "&8Reduce tu exposición por 30 y posee las","&8mismas cualidades que una Manzana Dorada")
                 .setID("miraclefruit").build();
     }
     public static ItemStack invultome(){
         return new ItemBuilder(Material.BOOK)
-                .setDisplayName("&8Tomo de la Inmortalidad")
+                .setDisplayName("&8Tome of Invulnerability")
                 .setLore(
                         "&7Dentro de estas paginas se encuentra un hechizo",
                         "&7que te permite obtener el efecto de &8&lInvulnerable&7,",
@@ -38,7 +38,7 @@ public class Items {
 
     public static ItemStack dreadClaymore(){
         return new ItemBuilder(Material.NETHERITE_SWORD)
-                .setDisplayName("&cClaymore de la Perdición")
+                .setDisplayName("&cClaymore of the Depths")
                 .setID("dread_claymore")
                 .setUnbreakable(true)
                 .addEnchant(Enchantment.FIRE_ASPECT,2)
@@ -53,7 +53,7 @@ public class Items {
 
     public static ItemStack dreadBow(){
         return new ItemBuilder(Material.BOW)
-                .setDisplayName("&cArco de la Perdición")
+                .setDisplayName("&cLongbow of the Depths")
                 .setID("dread_bow")
                 .setUnbreakable(true)
                 .addEnchant(Enchantment.ARROW_FIRE,1)
@@ -70,7 +70,7 @@ public class Items {
     //Dia 14 items
     public static ItemStack brimstoneTrident(){
         return new ItemBuilder(Material.TRIDENT).
-                setDisplayName("#6b1e34Tridente de Azufre")
+                setDisplayName("#6b1e34Brimstone Trident")
                 .setID("brimstonetrident")
                 .setUnbreakable(true)
                 .addEnchant(Enchantment.RIPTIDE,5)
@@ -83,7 +83,7 @@ public class Items {
     }
     public static ItemStack vulcanitePickaxe(){
         return new ItemBuilder(Material.NETHERITE_PICKAXE)
-                .setDisplayName("#6b1e34Pico de Vulcanite")
+                .setDisplayName("#6b1e34Vulcanite Pickaxe")
                 .setUnbreakable(true)
                 .setID("vulcanpickaxe")
                 .addEnchant(Enchantment.DIG_SPEED,7)
@@ -97,7 +97,7 @@ public class Items {
     }
     public static ItemStack vulcaniteAxe(){
         return new ItemBuilder(Material.NETHERITE_AXE)
-                .setDisplayName("#6b1e34Hacha de Vulcanite")
+                .setDisplayName("#6b1e34Vulcanite Axe")
                 .setUnbreakable(true)
                 .setID("vulcanaxe")
                 .addEnchant(Enchantment.DIG_SPEED,7)
@@ -109,7 +109,7 @@ public class Items {
     }
     public static ItemStack vulcaniteShovel(){
         return new ItemBuilder(Material.NETHERITE_SHOVEL)
-                .setDisplayName("#6b1e34Pala de Vulcanite")
+                .setDisplayName("#6b1e34Vulcanite Shovel")
                 .setUnbreakable(true)
                 .setID("vulcanshovel")
                 .addEnchant(Enchantment.DIG_SPEED,7)
@@ -121,7 +121,7 @@ public class Items {
     }
     public static ItemStack vulcaniteHoe(){
         return new ItemBuilder(Material.NETHERITE_HOE)
-                .setDisplayName("#6b1e34Azada de Vulcanite")
+                .setDisplayName("#6b1e34Vulcanite Hoe")
                 .setUnbreakable(true)
                 .setID("vulcanhoe")
                 .addEnchant(Enchantment.DIG_SPEED,7)
@@ -137,7 +137,7 @@ public class Items {
     //dia 21
     public static ItemStack vortexExtinction(){
         return new ItemBuilder(Material.LIGHT_GRAY_DYE)
-                .setDisplayName("#801212V#871b13o#8d2315r#942c16t#9a3518i#a13d19c#a7461bé #ae4e1cd#b5571de #bb601fl#c26820a #c87122E#cf7a23x#d68224t#dc8b26i#e39327n#e99c29c#f0a52ai#f6ad2có#fdb62dn")
+                .setDisplayName("#B134E6P#AC35E8u#A737EAr#A138EBi#9C3AEDt#973BEFy #923DF1o#8D3EF3f #873FF4t#8241F6h#7D42F8e #7844FAV#7245FBo#6D47FDi#6848FFd")
                 .setID("vortex_extinction")
                 .setLore(
                         "#2e3123\"#333423E#373623l #3c3922f#403c22i#453e22n #4a4122e#4e4421s#534621t#574921a #5c4c21c#614e20a#655120d#6a5420a #6e5720v#73591fe#785c1fz #7c5f1fm#81611fa#85641es #8a671ec#8f691ee#936c1er#986f1dc#9c711da#a1741d\"",

@@ -30,6 +30,7 @@ public class ServerTickTask extends BukkitRunnable {
     int cram_interval = 0;
     int wast_darkness = 0;
     int wast_caution = 5;
+    int temperature = 0;
 
     public ServerTickTask(Player p){
         this.p = p;
@@ -91,7 +92,11 @@ public class ServerTickTask extends BukkitRunnable {
                         cram_interval++;
                     } else {
                         cram_interval = 0;
-                        ((CraftPlayer) p).getHandle().a(((CraftPlayer) p).getHandle().dN().f(), 5.0F);
+                        if (getDay() >= 28) {
+                            ((CraftPlayer) p).getHandle().a(((CraftPlayer) p).getHandle().dN().f(), 99.0F);
+                        }else{
+                            ((CraftPlayer) p).getHandle().a(((CraftPlayer) p).getHandle().dN().f(), 5.0F);
+                        }
                     }
                 }
                 if (p.getWorld().getEnvironment() == World.Environment.NORMAL) {
@@ -134,8 +139,35 @@ public class ServerTickTask extends BukkitRunnable {
                     }
                 }
             }
+            if(getDay() >= 28){
+                if (getMonsoon_active().equalsIgnoreCase("true")) {
+                    if (p.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.BEDROCK) {
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION, 100, 9));
+                    }
+                    if(p.getWorld().getName().equalsIgnoreCase("world_nether")){
+                        int gag = GenericUtils.getRandomValue(10000);
+                        if(gag == 1){
+                            p.setFireTicks(200);
+                        }
+                    }
+                }
+                if(p.getLocation().getBlock().getTemperature() >= 0.9){
+                    if(temperature < 800){
+                        temperature++;
+                    }else{
+                        p.setFireTicks(100);
+                    }
+                }else if(p.getLocation().getBlock().getTemperature() <= 0.05){
+                    if(temperature > -800){
+                        temperature--;
+                    }else{
+                        p.setFreezeTicks(200);
+                    }
+                }else{
+                    temperature = 0;
+                }
+            }
         }
-
     }
 
 

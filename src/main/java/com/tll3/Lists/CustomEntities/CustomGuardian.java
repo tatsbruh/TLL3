@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Misc.GenericUtils;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -125,7 +126,11 @@ public class CustomGuardian extends EntityGuardian {
                             f += 2.0F;
                         }
 
-                        entityliving.a(this.a.dN().c(this.a, this.a), 12.0F);
+                        if(GenericUtils.getDay() >= 28){
+                            entityliving.a(this.a.dN().c(this.a, this.a), 20.0F);
+                        }else{
+                            entityliving.a(this.a.dN().c(this.a, this.a), 12.0F);
+                        }
                         entityliving.a(this.a.dN().b(this.a), (float)this.a.b(GenericAttributes.c));
                         this.a.h((EntityLiving)null);
                     }

@@ -86,12 +86,32 @@ public class GlobalListeners implements Listener {
             if(Data.has(p,"invulnerable", PersistentDataType.STRING)){
                 e.setCancelled(true);
             }
+            if(getDay() >= 28){
+                if(p.isBlocking()) {
+                    if (EntityNaturalSpawn.doRandomChance(5)) {
+                        if (reason == EntityDamageEvent.DamageCause.ENTITY_ATTACK || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.PROJECTILE || reason == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
+                            if (p.getEquipment().getItemInMainHand().getType().equals(Material.SHIELD)) {
+                                ItemStack shield = p.getEquipment().getItemInMainHand().clone();
+                                p.getEquipment().getItemInMainHand().setAmount(0);
+                                p.getEquipment().setItemInMainHand(shield);
+
+                            } else if (p.getEquipment().getItemInOffHand().getType().equals(Material.SHIELD)) {
+                                ItemStack shield = p.getEquipment().getItemInOffHand().clone();
+                                p.getEquipment().getItemInOffHand().setAmount(0);
+                                p.getEquipment().setItemInOffHand(shield);
+                            }
+                        p.setCooldown(Material.SHIELD, 100);
+                    }
+                }
+            }
             if(p.getGameMode() == GameMode.SPECTATOR && reason == EntityDamageEvent.DamageCause.VOID)e.setCancelled(true);
             if(getDay() >= 7){
                 switch (reason){
                     case DROWNING -> {
-                        if(getDay() >= 14 && getDay() < 28){
-                           e.setDamage(e.getDamage() * 4);
+                        if(getDay() >= 14 && getDay() < 28) {
+                            e.setDamage(e.getDamage() * 4);
+                        }else if(getDay() >= 28){
+                            e.setDamage(e.getDamage() * 6);
                         }else{
                             e.setDamage(e.getDamage() * 2);
                         }
@@ -174,6 +194,9 @@ public class GlobalListeners implements Listener {
         if(entity instanceof Pillager p){
             if(Data.has(p,"pillagerex",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
+        if(entity instanceof Slime p){
+            if(Data.has(p,"primordialslime",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
+        }
         if(Data.has(entity,"revenant_class",PersistentDataType.STRING)){
             switch (reason){
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE -> e.setCancelled(true);
@@ -184,7 +207,7 @@ public class GlobalListeners implements Listener {
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
             }
         }
-        if((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING))){
+        if((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING) || Data.has(entity,"starredcreeper",PersistentDataType.STRING))){
             if(entity.getVehicle() == null) {
                 if (reason == EntityDamageEvent.DamageCause.PROJECTILE) {
                     e.setCancelled(true);
@@ -192,7 +215,7 @@ public class GlobalListeners implements Listener {
                     entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10.0F, 1.0F);
                     EntityHelper.teleportEnderman(entity, entity.getLocation().getBlockX(), entity.getLocation().getBlockY(), entity.getLocation().getBlockZ(), entity.getWorld(), 64.0D);
                 } else {
-                    if (doRandomChance(1)) {
+                    if (doRandomChance(3)) {
                         entity.playEffect(EntityEffect.TELEPORT_ENDER);
                         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10.0F, 1.0F);
                         EntityHelper.teleportEnderman(entity, entity.getLocation().getBlockX(), entity.getLocation().getBlockY(), entity.getLocation().getBlockZ(), entity.getWorld(), 64.0D);
@@ -317,6 +340,14 @@ public class GlobalListeners implements Listener {
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,100,0,false,false,false));
             }
+            }
+        }
+    }
+    @EventHandler
+    public void cancelplaceE(EntityPlaceEvent e){
+        if(getDay() >= 28){
+            if(e.getEntityType().name().toLowerCase().contains("boat") || e.getEntityType().name().toLowerCase().contains("cart")){
+                e.setCancelled(true);
             }
         }
     }
@@ -462,6 +493,34 @@ public class GlobalListeners implements Listener {
                         case ALLAY -> {
                             liv.remove();
                             Entities.nwVex((Vex) Entities.spawnMob(loc,EntityType.VEX));
+                        }
+                    }
+                }
+                if(getDay() >= 28){
+                    switch (liv.getType()){
+                        case FROG,TURTLE ->{
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomAxolotls r = new CustomAxolotls(worldServer);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case WANDERING_TRADER ->{
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomEvoker r = new CustomEvoker(worldServer,false);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case TRADER_LLAMA -> {
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomLlama r = new CustomLlama(worldServer);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case RABBIT -> {
+                            Entities.rabbitKiller((Rabbit) liv);
                         }
                     }
                 }
