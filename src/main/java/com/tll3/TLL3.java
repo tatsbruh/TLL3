@@ -31,13 +31,12 @@ public final class TLL3 extends JavaPlugin {
 
 
     private static TLL3 plugin;
-    public static String cf = "[Afterlife] "; //console format
     public static TLL3 getInstance(){return plugin;}
     @Override
     public void onEnable() {
         plugin = this;
         Biomes.registerAllBiomes();
-        console(cf + "Plugin activado correctamente");
+        console("Plugin activado correctamente");
         loadListeners();
         loadCommands();
         Recipes.registerAllRecipes();
@@ -52,7 +51,7 @@ public final class TLL3 extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        console(cf + "Plugin desactivado correctamente");
+        console("Plugin desactivado correctamente");
     }
 
 
