@@ -93,6 +93,10 @@ public class EntityNaturalSpawn implements Listener {
                         EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,2);
                         EntityHelper.addPotionEffect(entity, PotionEffectType.INCREASE_DAMAGE,3);
                         EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,1);
+                    }else if (getDay() >= 28 && getDay() < 35){
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.SPEED,2);
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.INCREASE_DAMAGE,4);
+                        EntityHelper.addPotionEffect(entity, PotionEffectType.DAMAGE_RESISTANCE,1);
                     }
                 }
                 if(getMonsoon_active().equalsIgnoreCase("true")){
@@ -737,6 +741,27 @@ public class EntityNaturalSpawn implements Listener {
             return chancemax <= chance;
     }
 
+    public static void spawnHuskDrownedStray(CreatureSpawnEvent e, Location loc){
+        int random = GenericUtils.getRandomValue(3);
+        switch (random){
+            case 0 ->{
+                e.setCancelled(true);
+                Drowned d = (Drowned) Entities.spawnMob(loc,EntityType.DROWNED);
+                Entities.drowAby(d);
+            }
+            case 1 ->{
+                e.setCancelled(true);
+                Husk h = (Husk) Entities.spawnMob(loc,EntityType.HUSK);
+                Entities.huStr(h);
+            }
+            case 2 ->{
+                e.setCancelled(true);
+                Stray s = (Stray) Entities.spawnMob(loc,EntityType.STRAY);
+                Entities.strayCom(s);
+            }
+        }
+    }
+
     public static void chooseRandomSpider1(Spider s,CreatureSpawnEvent e){
         if(getDay() >= 7 && getDay() < 14){
         Random random = new Random();
@@ -1176,7 +1201,7 @@ public class EntityNaturalSpawn implements Listener {
         }else if(getDay() >= 28 && getDay() < 35){
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 Random random = new Random();
-                int chance = random.nextInt(10);
+                int chance = random.nextInt(11);
                 switch (chance) {
                     case 0 -> {
                         e.setCancelled(true);
@@ -1230,6 +1255,9 @@ public class EntityNaturalSpawn implements Listener {
                     }
                     case 9 ->{
                         spawnNetherWasteyard(e,loc);
+                    }
+                    case 10 ->{
+                        spawnHuskDrownedStray(e,loc);
                     }
                 }
             }else{

@@ -244,6 +244,16 @@ public class GlobalListeners implements Listener {
     @EventHandler
     public void blockplaceE(BlockPlaceEvent e){
         var item = e.getItemInHand();
+        var block = e.getBlock().getType();
+
+        if(getDay() >= 28) {
+            if(getMonsoon_active().contains("true")) {
+                if (block.name().toLowerCase().contains("slab")) {
+                    e.setCancelled(true);
+                }
+            }
+        }
+
         if(item != null){
             if(new ItemBuilder(item).hasID("unplaceable")){
                 e.setCancelled(true);
@@ -316,10 +326,18 @@ public class GlobalListeners implements Listener {
                 e.getBlock().getLocation().createExplosion(10,true,true);
             }
         }
+        if(getDay() >= 28){
+            if(getMonsoon_active().equalsIgnoreCase("true")){
+                if(block.name().toLowerCase().contains("ore") || block == Material.ANCIENT_DEBRIS){
+                    e.getBlock().getDrops().clear();
+                }
+            }
+        }
     }
 
     @EventHandler
     public void tradeE(InventoryOpenEvent e){
+        if(e.isCancelled())return;
         if(e.getInventory().getType() == InventoryType.ENDER_CHEST && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")){
             e.setCancelled(true);
         }
@@ -328,6 +346,11 @@ public class GlobalListeners implements Listener {
                 if (e.getPlayer().getLocation().getWorld().getEnvironment() != World.Environment.NORMAL) {
                     e.setCancelled(true);
                 }
+            }
+        }
+        if(getDay() >= 28){
+            if(e.getInventory().getType() == InventoryType.MERCHANT && getTyphoonactive().equalsIgnoreCase("true")){
+                e.setCancelled(true);
             }
         }
     }

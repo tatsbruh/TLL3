@@ -677,6 +677,17 @@ public class Entities {
                 case 3 -> Entities.unstCr(e);
                 case 4 -> Entities.titaniumCreeper(e);
             }
+        }else if(getDay() >= 28 && getDay() < 35){
+            int type = getRandomValue(7);
+            switch (type) {
+                case 0 -> Entities.creChr(e);
+                case 1 -> Entities.revCreeper(e);
+                case 2 -> Entities.rustwalker(e);
+                case 3 -> Entities.unstCr(e);
+                case 4 -> Entities.titaniumCreeper(e);
+                case 5 -> Entities.vortice(e);
+                case 6 -> Entities.starCreeper(e);
+            }
         }
     }
 
