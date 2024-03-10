@@ -122,6 +122,13 @@ public class GenericEntityListeners implements Listener {
                         }
                     }
                 }
+                if(Data.has(z,"lilghoul",PersistentDataType.STRING)){
+                    if(EntityNaturalSpawn.doRandomChance(20) && z.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
+                        e.setCancelled(true);
+                        p.getLocation().getWorld().spawnParticle(Particle.GUST_EMITTER,p.getLocation(),1,0,0,0,0);
+                        z.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,60,4,false,false,false));
+                    }
+                }
             }
             if(target instanceof Zoglin z){
                 if(Data.has(z,"primordialzoglin",PersistentDataType.STRING)){
@@ -985,6 +992,21 @@ public class GenericEntityListeners implements Listener {
                 if (hbl != null) {
                     hbl.getLocation().createExplosion((Entity) source,3,true,true);
                 }
+            }
+            if(Data.has(z,"blazephim",PersistentDataType.STRING)){
+                if (hen != null) {
+                    if(hen instanceof Player p){
+                        p.damage(6 * p.getHealth(),z);
+                    }
+                }
+            }
+            if(Data.has(z,"symbiote",PersistentDataType.STRING)){
+                if (hen != null) {
+                    if(hen instanceof Player p){
+                        EntityHelper.teleportEnderman(p, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ(), p.getWorld(), 128.0D);
+                    }
+                }
+
             }
             if(Data.has(z,"primordialblaze",PersistentDataType.STRING)){
                 if (hen != null) {

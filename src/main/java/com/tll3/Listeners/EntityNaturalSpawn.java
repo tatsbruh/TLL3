@@ -226,7 +226,7 @@ public class EntityNaturalSpawn implements Listener {
                             spiderMount(s);
                             s.addPassenger(entity);
                         }
-                        EntityHelper.setOffhand(entity,harmArrow());
+                        //EntityHelper.setOffhand(entity,harmArrow());
                     }
                 }
                 if(reason == CreatureSpawnEvent.SpawnReason.JOCKEY || reason == CreatureSpawnEvent.SpawnReason.TRAP) {
@@ -855,12 +855,22 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
     public static void chooseBlazeType(Blaze z){
-        if(getDay() >= 14) {
+        if(getDay() >= 14 && getDay() < 28) {
             Random random = new Random();
             int chance = random.nextInt(2);
             switch (chance) {
                 case 0 -> Entities.windChar(z);
                 case 1 -> Entities.armorBlaze(z);
+
+            }
+        }else if(getDay() >= 28){
+            Random random = new Random();
+            int chance = random.nextInt(4);
+            switch (chance) {
+                case 0 -> Entities.windChar(z);
+                case 1 -> Entities.armorBlaze(z);
+                case 2 -> Entities.blazephim(z);
+                case 3 -> Entities.hellSymbiote(z);
 
             }
         }
@@ -985,7 +995,6 @@ public class EntityNaturalSpawn implements Listener {
     }
 
     public static void spawnNetherWasteyard(CreatureSpawnEvent e, Location loc){
-        World w = Worlds.getWasteyard();
         if(e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.NATURAL){
             e.setCancelled(true);
             Random random = new Random();
@@ -1201,7 +1210,7 @@ public class EntityNaturalSpawn implements Listener {
         }else if(getDay() >= 28 && getDay() < 35){
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 Random random = new Random();
-                int chance = random.nextInt(11);
+                int chance = random.nextInt(12);
                 switch (chance) {
                     case 0 -> {
                         e.setCancelled(true);
@@ -1259,6 +1268,13 @@ public class EntityNaturalSpawn implements Listener {
                     case 10 ->{
                         spawnHuskDrownedStray(e,loc);
                     }
+                    case 11 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomIllusioner r = new CustomIllusioner(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }else{
                 Random random = new Random();
@@ -1302,7 +1318,13 @@ public class EntityNaturalSpawn implements Listener {
                         Breeze z = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
                         Entities.windTyphoon(z);
                     }
-
+                    case 7 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomIllusioner r = new CustomIllusioner(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
                 }
             }
         }

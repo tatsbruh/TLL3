@@ -822,7 +822,7 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primSke(Skeleton z){
-        setName(z,"#ffffffO#fff8f8s#fff0f0s#ffe9e9e#ffe1e1o#ffdadau#ffd2d2s #ffcbcbT#ffc3c3y#ffbcbcr#ffb4b4a#ffadadn#ffa5a5t");
+        setName(z,"&cOsteodracon Swordmaster");
         setMobHealth(z,45);
         setMobDamage(z,5);
         setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,12).addEnchant(Enchantment.ARROW_FIRE,7).build());
@@ -831,7 +831,7 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primCre(Creeper z){
-        setName(z,"#2bffa6A#32f5adg#38ebb5i#3fe1bcl#45d7c4e#4ccdcbx #53c3d3P#59b9dar#60afe1o#66a5e9w#6d9bf0l#7391f8e#7a87ffr");
+        setName(z,"&cPterodex Exodermis");
         setMobHealth(z,10);
         z.setPowered(true);
         z.setExplosionRadius(4);
@@ -840,7 +840,7 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primSpider(Spider z){
-        setName(z,"#beff8cP#befb91e#bdf796s#bdf49ct#bdf0a1i#bceca6l#bce8abe#bbe4b1n#bbe0b6s#bbddbbi#bad9c0l#bad5c6k #bad1cbB#b9cdd0r#b9cad5o#b9c6dao#b8c2e0d#b8bee5m#b7baeaa#b7b6efn#b7b3f5c#b6affae#b6abffr");
+        setName(z,"&cArachnoskelin Venomancer");
         setMobHealth(z,45);
         setMobDamage(z,7);
         new SpiderLungeTask(z,true).runTaskTimer(TLL3.getInstance(),0L,1L);
@@ -849,14 +849,14 @@ public class Entities {
         injectHostileBehaviorToSpider(z);
     }
     public static void primEnd(Enderman z){
-        setName(z,"#a430ffA#a936fan#ae3cf5c#b242f0i#b748ece#bc4ee7n#c154e2t #c65addE#ca60d8n#cf66d3d#d46dcfe#d973car#dd79c5g#e27fc0u#e785bba#ec8bb6r#f191b2d#f597adi#fa9da8a#ffa3a3n");
+        setName(z,"&cCryptomorph Enderward");
         setMobHealth(z,55);
         setMobDamage(z,10);
         setIdentifierString(z,"primordialenderman");
         setIdentifierString(z,"behemoth");
     }
     public static void primSilv(Silverfish z){
-        setName(z,"#696969S#717171i#7a7a7al#828282v#8a8a8ae#939393r#9b9b9bs#a3a3a3h#acacace#b4b4b4l#bcbcbcl #c5c5c5S#cdcdcdc#d5d5d5u#dededet#e6e6e6t#eeeeeel#f7f7f7e#ffffffr");
+        setName(z,"&cMega-fish");
         setMobHealth(z,5);
         setMobDamage(z,4);
         addPotionEffect(z,PotionEffectType.SPEED,1);
@@ -865,28 +865,28 @@ public class Entities {
     }
 
     public static void primHusk(Husk z){
-        setName(z,"#fba72aS#f9ad2ct#f8b22ea#f6b830g#f5be32n#f3c434a#f1c936n#f0cf38t #eed539M#eddb3ba#ebe03dr#e9e63fa#e8ec41u#e6f243d#e5f745e#e3fd47r");
+        setName(z,"&eSandreaper");
         setMobHealth(z,25);
         setMobDamage(z,4);
         setIdentifierString(z,"primordialhusk");
         setIdentifierString(z,"behemoth");
     }
     public static void primSlime(Slime z){
-        setName(z,"#cffb1dB#c6fb22o#bcfb26o#b3fb2bm#aafc2fj#a1fc34e#97fc39l#8efc3dl#85fc42y #7cfc46M#72fc4bo#69fc50n#60fd54a#57fd59r#4dfd5dc#44fd62h");
+        setName(z,"&ePyroclastic Monarch");
         setMobHealth(z,20);
         z.setSize(10);
         setIdentifierString(z,"primordialslime");
         setIdentifierString(z,"behemoth");
     }
     public static void primBlaze(Blaze z){
-        setName(z,"#fb5c5cP#fb6157y#fb6652r#fb6b4do#fb7048c#fc7542l#fc7a3da#fc7f38s#fc8433t#fc892ei#fc8e29c #fc9324B#fc981fe#fc9d1ah#fda214e#fda70fm#fdac0ao#fdb105t#fdb600h");
+        setName(z,"&eIncinder Inferno");
         setMobHealth(z,35);
         setMobDamage(z,20);
         setIdentifierString(z,"primordialblaze");
         setIdentifierString(z,"behemoth");
     }
     public static void primCave(CaveSpider z){
-        setName(z,"#345c8aO#335f89b#336288s#326587c#326886u#316b85r#306e84e#307183s#2f7482i#2f7781l#2e7a80k #2d7d7fA#2d807em#2c837db#2b867cu#2b897bs#2a8c7ah#2a8f79e#299278r");
+        setName(z,"&eSubterranean Ariant");
         setMobHealth(z,20);
         setMobDamage(z,6);
         setIdentifierString(z,"primordialcave");
@@ -894,7 +894,7 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primRavager(Ravager z){
-        setName(z,"#fff96dS#fff468t#ffef63r#ffea5ei#ffe559k#ffdf54e#ffda4fc#ffd54al#ffd045a#ffcb3fw #ffc63aR#ffc135a#ffbc30m#ffb62bp#ffb126a#ffac21g#ffa71ce#ffa217r");
+        setName(z,"&eCrazed Rangemaster Maraud");
         setMobHealth(z,55);
         setMobDamage(z,10);
         z.setCanJoinRaid(false);
@@ -903,7 +903,7 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primBrute(PiglinBrute z){
-        setName(z,"#900000Q#8f0809u#8e1012a#8d181ar#8c2023r#8b272cy#8a2f35g#89373eu#893f47a#88474fr#874f58d #865761W#855f6aa#846673r#836e7bd#827684e#817e8dn");
+        setName(z,"&6The Enforcer");
         setMobHealth(z,25);
         setMobDamage(z,9);
         z.setImmuneToZombification(true);
@@ -912,7 +912,7 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primZoglin(Zoglin z){
-        setName(z,"#bb5586D#bf5e7fi#c36679g#c76f72g#cb786bi#cf8064n#d3895eg #d79257D#db9a50r#dfa34ae#e3ab43a#e7b43cd#ebbd36n#efc52fo#f3ce28u#f7d721g#fbdf1bh#ffe814t");
+        setName(z,"&6Siltusk Rampager");
         setMobHealth(z,30);
         setMobDamage(z,12);
         setIdentifierString(z,"primordialzoglin");
@@ -921,14 +921,14 @@ public class Entities {
         setIdentifierString(z,"behemoth");
     }
     public static void primWither(WitherSkeleton z){
-        setName(z,"#2a2a2aD#373434a#433e3er#504949k#5c5353f#695d5di#756767r#827272e #8e7c7cH#9b8686a#a79090r#b49b9bb#c0a5a5r#cdafafi#d9b9b9n#e6c4c4g#f2cecee#ffd8d8r");
+        setName(z,"&6THE DREADREAVER");
         setMobHealth(z,40);
         setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,25).addEnchant(Enchantment.ARROW_FIRE,2).build());
         setIdentifierString(z,"primordialwither");
         setIdentifierString(z,"behemoth");
     }
     public static void primShulk(Shulker z){
-        setName(z,"#d22929C#ce2a37u#c92b46r#c52c54s#c02d62e#bc2e70c#b72f7fl#b3308do#ae319ba#aa32a9k #a533b8S#a134c6e#9c35d4n#9836e2t#9337f1r#8f38ffy");
+        setName(z,"&6Riftshell the Wicked");
         z.setColor(DyeColor.RED);
         setMobHealth(z,20);
         setIdentifierString(z,"primordialshulker");
@@ -953,7 +953,7 @@ public class Entities {
         } catch (Exception e) {}
         z.setRemoveWhenFarAway(true);
         z.setPersistent(false);
-        setName(z,"#8d8787S#958989t#9c8a8ae#a48c8ce#ab8d8dl#b38f8fc#bb9090l#c29292a#ca9393d #d19595C#d99696r#e19898u#e89999s#f09b9bh#f79c9ce#ff9e9er");
+        setName(z,"&6Elder Colossus");
         setMobHealth(z,40);
         setMobDamage(z,16);
         setIdentifierString(z,"primordialgolem");

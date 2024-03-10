@@ -25,6 +25,8 @@ import java.util.*;
 import static com.tll3.Misc.EntityHelper.*;
 import static com.tll3.Misc.EntityHelper.setBoots;
 
+
+//Vortex Outbreak task, IDK why i called it MobRain but deal with it
 public class MobRain extends BukkitRunnable {
 
     @Override
@@ -33,7 +35,7 @@ public class MobRain extends BukkitRunnable {
         for(Player online : Bukkit.getOnlinePlayers()){
             if(online.getWorld().getEnvironment() == World.Environment.NORMAL && GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
                 if (online.getGameMode() == GameMode.SURVIVAL) {
-                    int random = GenericUtils.getRandomValue(5500) + 1;
+                    int random = GenericUtils.getRandomValue(5000) + 1;
                     if (random <= 10) {
                         Location ploc = online.getLocation().clone();
                         ArrayList<Location> spawns = new ArrayList<>();
