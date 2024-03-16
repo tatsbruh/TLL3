@@ -640,9 +640,9 @@ public class GenericEntityListeners implements Listener {
             if(Data.has(s,"firemancer",PersistentDataType.STRING)){
                 Fireball f = s.launchProjectile(Fireball.class);
                 if(getDay() >= 21) {
-                    f.setYield(6);
+                    f.setYield(5);
                 }else {
-                    f.setYield(4);
+                    f.setYield(3);
                 }
                 e.setProjectile(f);
             }

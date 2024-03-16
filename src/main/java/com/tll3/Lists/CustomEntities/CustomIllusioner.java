@@ -17,6 +17,7 @@ import net.minecraft.world.entity.npc.EntityVillagerAbstract;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.entity.raid.EntityRaider;
 import net.minecraft.world.level.World;
+import net.minecraft.world.level.pathfinder.PathType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Evoker;
 import org.bukkit.entity.Illusioner;
@@ -33,11 +34,16 @@ public class CustomIllusioner extends EntityIllagerIllusioner {
         ((Illusioner)this.getBukkitEntity()).setCanJoinRaid(false);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
+        //No longer avoids water, fire, lava, magmablocks
+        this.a(PathType.j, 0.0F);
+        this.a(PathType.i, 0.0F);
+        this.a(PathType.n, 0.0F);
+        this.a(PathType.o, 0.0F);
     }
 
     @Override
     protected void B() {
-        super.B();
+        this.bO.a(1, new EntityRaider.b<>(this));
         this.bO.a(0, new PathfinderGoalFloat(this));
         this.bO.a(6, new PathfinderGoalBowShoot<>(this, 0.5, 20, 15.0F));
         this.bO.a(8, new PathfinderGoalRandomStroll(this, 0.6));

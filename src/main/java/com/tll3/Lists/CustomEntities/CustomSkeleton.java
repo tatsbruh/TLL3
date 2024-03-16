@@ -16,6 +16,7 @@ import net.minecraft.world.entity.animal.EntityWolf;
 import net.minecraft.world.entity.monster.EntitySkeleton;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import net.minecraft.world.level.pathfinder.PathType;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
@@ -30,7 +31,10 @@ public class CustomSkeleton extends EntitySkeleton {
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
-
+        this.a(PathType.j, 0.0F);
+        this.a(PathType.i, 0.0F);
+        this.a(PathType.n, 0.0F);
+        this.a(PathType.o, 0.0F);
     }
 
     @Override

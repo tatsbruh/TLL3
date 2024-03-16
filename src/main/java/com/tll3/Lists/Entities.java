@@ -41,8 +41,7 @@ import java.lang.reflect.Field;
 import java.security.Guard;
 import java.util.Locale;
 import static com.tll3.Misc.EntityHelper.*;
-import static com.tll3.Misc.GenericUtils.getDay;
-import static com.tll3.Misc.GenericUtils.getRandomValue;
+import static com.tll3.Misc.GenericUtils.*;
 
 public class Entities {
     /*
@@ -666,6 +665,43 @@ public class Entities {
     }
 
 
+    //Dia 35
+    public static void relicZombie(Zombie z){
+        setName(z,"&2&lRelic Juggernaut");
+        setMobHealth(z,35);
+        setMobDamage(z,16);
+        addPotionEffect(z,PotionEffectType.SPEED,1);
+        z.setAdult();
+        setIdentifierString(z,"reliczombie");
+        setIdentifierString(z,"relicmob");
+    }
+    public static void relicSkeleton(Skeleton z){
+        setName(z,"&2&lAncient Sharpshooter");
+        setMobHealth(z,35);
+        setMobDamage(z,16);
+        setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,45).build());
+        setKnockresist(z,1000);
+        setIdentifierString(z,"relicskeleton");
+        setIdentifierString(z,"relicmob");
+    }
+    public static void relicCreeper(Creeper z){
+        setName(z,"&2&lElder Vortex");
+        setMobHealth(z,45);
+        z.setPowered(true);
+        z.setExplosionRadius(5);
+        setIdentifierString(z,"reliccreeper");
+        setIdentifierString(z,"relicmob");
+    }
+    public static void relicVex(Vex z){
+        setName(z,"&2&lXero");
+        setMobHealth(z,15);
+        setMainHand(z,new ItemBuilder(Material.GOLDEN_AXE).addEnchant(Enchantment.DAMAGE_ALL,35).build());
+        setIdentifierString(z,"relicvex");
+        setIdentifierString(z,"relicmob");
+    }
+
+
+
 
     public static void chooseCreeperType(Creeper e){
         if(getDay() >= 21 && getDay() < 28){
@@ -808,7 +844,6 @@ public class Entities {
         setIdentifierString(s,"vortex");
         setIdentifierString(s,"tllt2");
     }
-    //Cosmic Mobs
 
 
     //Primordial Mobs

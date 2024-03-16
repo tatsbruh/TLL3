@@ -844,13 +844,21 @@ public class EntityNaturalSpawn implements Listener {
         }
     }
     public static void chooseZombieClass1(Zombie z){
-        if(getDay() >= 7) {
+        if(getDay() >= 7 && getDay() < 28) {
             Random random = new Random();
             int chance = random.nextInt(2);
             switch (chance) {
                 case 0 -> Entities.zNinka(z);
                 case 1 -> Entities.zArqueo(z);
 
+            }
+        }else if(getDay() >= 28) {
+            Random random = new Random();
+            int chance = random.nextInt(2);
+            switch (chance) {
+                case 0 -> Entities.zNinka(z);
+                case 1 -> Entities.zArqueo(z);
+                case 2 -> Entities.lilGhoul(z);
             }
         }
     }
@@ -979,17 +987,13 @@ public class EntityNaturalSpawn implements Listener {
                 WitherSkeleton mob = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
                 Entities.starWither(mob);
             }
-            if(lol > 65 && lol <= 80){
+            if(lol > 65 && lol <= 85){
                 Pillager mob = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
                 Entities.starPillager(mob);
             }
-            if(lol > 80 && lol <= 95){
+            if(lol >= 85){
                 Creeper mob = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
                 Entities.starCreeper(mob);
-            }
-            if(lol >= 95){
-                Phantom mob = (Phantom) Entities.spawnMob(loc,EntityType.PHANTOM);
-                Entities.starPhantom(mob);
             }
         }
     }

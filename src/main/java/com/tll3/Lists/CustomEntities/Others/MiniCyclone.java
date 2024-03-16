@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackable
 import net.minecraft.world.entity.monster.EntitySkeleton;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import net.minecraft.world.level.pathfinder.PathType;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
@@ -32,7 +33,8 @@ public class MiniCyclone extends EntitySkeleton {
     public enum CycloneClass{
         SPACE,
         METAL,
-        NORMAL
+        NORMAL,
+        ZOMBIE
     }
     public MiniCyclone(World world,CycloneClass clas){
         super(EntityTypes.aK,world);
@@ -50,6 +52,10 @@ public class MiniCyclone extends EntitySkeleton {
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
+        this.a(PathType.j, 0.0F);
+        this.a(PathType.i, 0.0F);
+        this.a(PathType.n, 0.0F);
+        this.a(PathType.o, 0.0F);
     }
     @Override
     protected void B() {

@@ -19,6 +19,7 @@ import net.minecraft.world.entity.animal.EntityOcelot;
 import net.minecraft.world.entity.monster.EntityCreeper;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
+import net.minecraft.world.level.pathfinder.PathType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_20_R3.attribute.CraftAttribute;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
@@ -46,6 +47,10 @@ public class CustomCreeper extends EntityCreeper {
             e.printStackTrace();
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_FOLLOW_RANGE).setBaseValue(120);
+        this.a(PathType.j, 0.0F);
+        this.a(PathType.i, 0.0F);
+        this.a(PathType.n, 0.0F);
+        this.a(PathType.o, 0.0F);
     }
 
     @Override

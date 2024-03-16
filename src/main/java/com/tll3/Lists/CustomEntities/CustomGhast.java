@@ -12,6 +12,7 @@ import net.minecraft.world.entity.monster.EntityGhast;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.entity.projectile.EntityLargeFireball;
 import net.minecraft.world.level.World;
+import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3D;
 import org.bukkit.entity.LivingEntity;
 
@@ -24,7 +25,10 @@ public class CustomGhast extends EntityGhast {
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
-
+        this.a(PathType.j, 0.0F);
+        this.a(PathType.i, 0.0F);
+        this.a(PathType.n, 0.0F);
+        this.a(PathType.o, 0.0F);
     }
 
     @Override
