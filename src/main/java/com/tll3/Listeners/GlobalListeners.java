@@ -207,7 +207,7 @@ public class GlobalListeners implements Listener {
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
             }
         }
-        if((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING) || Data.has(entity,"starredcreeper",PersistentDataType.STRING))){
+        if((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING))){
             if(entity.getVehicle() == null) {
                 if (reason == EntityDamageEvent.DamageCause.PROJECTILE) {
                     e.setCancelled(true);

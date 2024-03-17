@@ -4,8 +4,10 @@ import com.tll3.Listeners.EntityNaturalSpawn;
 import com.tll3.Lists.CustomEntities.Others.MiniCyclone;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.TLL3;
 import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
@@ -13,6 +15,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
 
 public class MiniCycloneTask extends BukkitRunnable {
     private final Skeleton l;
@@ -41,8 +45,15 @@ public class MiniCycloneTask extends BukkitRunnable {
                     }, 2L);
                     DAMAGE_COOLDOWN = 5;
                     if(Data.has(l,"minicyclone_space", PersistentDataType.STRING)){
-                        if(EntityNaturalSpawn.doRandomChance(5)){
-                            EntityHelper.teleportEnderman(nearby,nearby.getLocation().getBlockX(),nearby.getLocation().getBlockY(),nearby.getLocation().getBlockZ(),nearby.getWorld(),40.0D);
+                        if(EntityNaturalSpawn.doRandomChance(3)){
+                            var list = l.getNearbyEntities(15, 15, 15);
+                            var mob = list.get(new Random().nextInt(list.size()));
+                            if (GenericUtils.isHostileMob(mob.getType())) {
+                                var le = l.getLocation().clone();
+                                nearby.playSound(nearby.getLocation(), Sound.ENTITY_SHULKER_TELEPORT, 10.0F, -1.0F);
+                                mob.teleport(le);
+                                mob.playEffect(EntityEffect.TELEPORT_ENDER);
+                            }
                         }
                     }
                 }

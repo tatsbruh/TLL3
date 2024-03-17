@@ -691,6 +691,17 @@ public class EntityNaturalSpawn implements Listener {
                     }
                 }
             }
+            case ILLUSIONER -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.RAID){
+                    if(getDay() >= 28){
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomIllusioner r = new CustomIllusioner(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
             case FROG,TURTLE -> {
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND) {
                     if (getDay() >= 28) {
@@ -854,7 +865,7 @@ public class EntityNaturalSpawn implements Listener {
             }
         }else if(getDay() >= 28) {
             Random random = new Random();
-            int chance = random.nextInt(2);
+            int chance = random.nextInt(3);
             switch (chance) {
                 case 0 -> Entities.zNinka(z);
                 case 1 -> Entities.zArqueo(z);
@@ -979,21 +990,27 @@ public class EntityNaturalSpawn implements Listener {
             if(w.getLivingEntities().size() > 70)return;
             Random random = new Random();
             int lol = random.nextInt(101);
-            if(lol <= 50){
+            if(lol <= 45){
                 Enderman mob = (Enderman) Entities.spawnMob(loc,EntityType.ENDERMAN);
                 Entities.starEnderman(mob);
             }
-            if (lol > 50 && lol <= 65) {
+            if (lol > 45 && lol <= 60) {
                 WitherSkeleton mob = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
                 Entities.starWither(mob);
             }
-            if(lol > 65 && lol <= 85){
+            if(lol > 60 && lol <= 80){
                 Pillager mob = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
                 Entities.starPillager(mob);
             }
-            if(lol >= 85){
+            if(lol > 80 && lol <= 90){
                 Creeper mob = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
                 Entities.starCreeper(mob);
+            }
+            if(lol > 90){
+                WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                MiniCyclone r = new MiniCyclone(worldServer, MiniCyclone.CycloneClass.SPACE);
+                r.a_(loc.getX(), loc.getY(), loc.getZ());
+                worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
             }
         }
     }
@@ -1033,30 +1050,66 @@ public class EntityNaturalSpawn implements Listener {
     }
 
     public static void chooserandomraider(Location loc,CreatureSpawnEvent e){
-        Random random = new Random();
-        int chance = random.nextInt(4);
-        switch (chance){
-            case 0 ->{
-                e.setCancelled(true);
-                Pillager p = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
-                Entities.nwPillager(p,false);
+        if(getDay() < 28) {
+            Random random = new Random();
+            int chance = random.nextInt(4);
+            switch (chance) {
+                case 0 -> {
+                    e.setCancelled(true);
+                    Pillager p = (Pillager) Entities.spawnMob(loc, EntityType.PILLAGER);
+                    Entities.nwPillager(p, false);
+                }
+                case 1 -> {
+                    e.setCancelled(true);
+                    Vindicator v = (Vindicator) Entities.spawnMob(loc, EntityType.VINDICATOR);
+                    Entities.nwVindicator(v, false);
+                }
+                case 2 -> {
+                    e.setCancelled(true);
+                    Ravager r = (Ravager) Entities.spawnMob(loc, EntityType.RAVAGER);
+                    Entities.nwRavager(r, false);
+                }
+                case 3 -> {
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomEvoker r = new CustomEvoker(worldServer, false);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
             }
-            case 1 ->{
-                e.setCancelled(true);
-                Vindicator v = (Vindicator) Entities.spawnMob(loc,EntityType.VINDICATOR);
-                Entities.nwVindicator(v,false);
-            }
-            case 2 -> {
-                e.setCancelled(true);
-                Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
-                Entities.nwRavager(r,false);
-            }
-            case 3 ->{
-                e.setCancelled(true);
-                WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
-                CustomEvoker r = new CustomEvoker(worldServer,false);
-                r.a_(loc.getX(), loc.getY(), loc.getZ());
-                worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+        }else if(getDay() >= 28){
+            Random random = new Random();
+            int chance = random.nextInt(5);
+            switch (chance) {
+                case 0 -> {
+                    e.setCancelled(true);
+                    Pillager p = (Pillager) Entities.spawnMob(loc, EntityType.PILLAGER);
+                    Entities.nwPillager(p, false);
+                }
+                case 1 -> {
+                    e.setCancelled(true);
+                    Vindicator v = (Vindicator) Entities.spawnMob(loc, EntityType.VINDICATOR);
+                    Entities.nwVindicator(v, false);
+                }
+                case 2 -> {
+                    e.setCancelled(true);
+                    Ravager r = (Ravager) Entities.spawnMob(loc, EntityType.RAVAGER);
+                    Entities.nwRavager(r, false);
+                }
+                case 3 -> {
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomEvoker r = new CustomEvoker(worldServer, false);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case 4 ->{
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomIllusioner r = new CustomIllusioner(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
             }
         }
     }

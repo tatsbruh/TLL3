@@ -610,6 +610,7 @@ public class Entities {
         setIdentifierString(e,"starredwither");
         setIdentifierString(e,"barrier");
         setIdentifierInt(e,"barrier_state",0);
+        new WSkeletonJetpack(e).runTaskTimer(TLL3.getInstance(),0L,1L);
     }
     public static void starPillager(Pillager e){
         setName(e,"&bInterestellar Scavenger &e&l★");
@@ -620,7 +621,7 @@ public class Entities {
     }
     public static void starCreeper(Creeper e){
         setName(e,"&bProject C &e&l★");
-        setMobHealth(e,45);
+        setMobHealth(e,25);
         e.setExplosionRadius(6);
         e.setPowered(true);
         setIdentifierString(e,"starredcreeper");

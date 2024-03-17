@@ -123,7 +123,7 @@ public class GenericEntityListeners implements Listener {
                     }
                 }
                 if(Data.has(z,"lilghoul",PersistentDataType.STRING)){
-                    if(EntityNaturalSpawn.doRandomChance(20) && z.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
+                    if(EntityNaturalSpawn.doRandomChance(35) && !z.hasPotionEffect(PotionEffectType.DAMAGE_RESISTANCE)){
                         e.setCancelled(true);
                         p.getLocation().getWorld().spawnParticle(Particle.GUST_EMITTER,p.getLocation(),1,0,0,0,0);
                         z.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,60,4,false,false,false));
@@ -250,15 +250,11 @@ public class GenericEntityListeners implements Listener {
                 }
             }
             if(damager instanceof WitherSkeleton s){
-                if(Data.has(s,"starredwither",PersistentDataType.STRING)) {
-                    if (EntityNaturalSpawn.doRandomChance(20)) {
-                        EntityHelper.teleportEnderman(p, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ(), p.getWorld(), 10.0D);
-                    }
-                }
+                //nothing yet
             }
             if(damager instanceof Creeper s){
                 if(Data.has(s,"starredcreeper",PersistentDataType.STRING)){
-                    EntityHelper.teleportEnderman(p,p.getLocation().getBlockX(),p.getLocation().getBlockY(),p.getLocation().getBlockZ(),p.getWorld(),42.0D);
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,60,9,true,false,true));
                 }
             }
             if(damager instanceof Vindicator v){
@@ -695,7 +691,7 @@ public class GenericEntityListeners implements Listener {
         Random random = new Random();
         int chance = random.nextInt(3000);
         if(entity instanceof Creeper c){
-            if(c.getTarget() == null && (Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING) || Data.has(c,"starredcreeper",PersistentDataType.STRING))){
+            if(c.getTarget() == null && (Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING))){
                 if(chance <= 5 && c.getVehicle() == null){
                     c.playEffect(EntityEffect.TELEPORT_ENDER);
                     c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);
