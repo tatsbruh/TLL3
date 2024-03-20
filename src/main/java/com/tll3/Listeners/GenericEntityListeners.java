@@ -248,13 +248,26 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(enderman,"primordialenderman",PersistentDataType.STRING)){
                     p.setFreezeTicks(p.getFreezeTicks() + 100);
                 }
+                if(Data.has(enderman,"relicenderman",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,200,0,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,100,1,true,false,true));
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS,100,0,true,false,true));
+                }
             }
             if(damager instanceof WitherSkeleton s){
                 //nothing yet
             }
+            if(damager instanceof Vex s){
+                if(Data.has(s,"relicvex",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,40,0,true,false,true));
+                }
+            }
             if(damager instanceof Creeper s){
                 if(Data.has(s,"starredcreeper",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,60,9,true,false,true));
+                }
+                if(Data.has(s,"reliccreeper",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,120,0,true,false,true));
                 }
             }
             if(damager instanceof Vindicator v){
@@ -293,8 +306,12 @@ public class GenericEntityListeners implements Listener {
             if(damager instanceof Zombie z){
                 int critchance = 10;
                 if(getDay() >= 28){
-                    if(getMonsoon_active().equalsIgnoreCase("true")){
-                        critchance = 20;
+                    if(getDay() < 35) {
+                        if (getMonsoon_active().equalsIgnoreCase("true")) {
+                            critchance = 20;
+                        }
+                    }else if(getDay() >= 35){
+                        critchance = 50;
                     }
                 }
                 if(EntityNaturalSpawn.doRandomChance(10)){
@@ -490,7 +507,7 @@ public class GenericEntityListeners implements Listener {
                         e.setProjectile(f);
                     }
                     case 2 ->{
-                        entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_WARDEN_SONIC_BOOM,10.0F,1.0F);
+                        entity.getWorld().playSound(entity.getLocation(),Sound.ENTITY_WARDEN_SONIC_BOOM,5.0F,1.0F);
                         Arrow a = (Arrow) projectile;
                         if(getDay() >= 21){
                             a.setDamage(40);
@@ -694,7 +711,7 @@ public class GenericEntityListeners implements Listener {
         Random random = new Random();
         int chance = random.nextInt(3000);
         if(entity instanceof Creeper c){
-            if(c.getTarget() == null && (Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING))){
+            if(c.getTarget() == null && (((Data.has(c,"unstablecreeper",PersistentDataType.STRING) || Data.has(c,"vortex",PersistentDataType.STRING))) || entity instanceof Creeper && getDay() >= 35)){
                 if(chance <= 5 && c.getVehicle() == null){
                     c.playEffect(EntityEffect.TELEPORT_ENDER);
                     c.getWorld().playSound(c.getLocation(),Sound.ENTITY_ENDERMAN_TELEPORT,10.0F,1.0F);

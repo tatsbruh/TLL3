@@ -349,10 +349,18 @@ public class Entities {
         setIdentifierString(z,"armoredblaze");
     }
     public static void unstCr(Creeper c){
-        setName(c,"#c991d9Unstable Creeper");
-        c.setPowered(true);
-        c.setExplosionRadius(5);
-        setIdentifierString(c,"unstablecreeper");
+        if(getDay() >= 35) {
+            setName(c, "#573e45Specimen TSAR");
+            c.setPowered(true);
+            c.setExplosionRadius(15);
+            setMobHealth(c,25);
+            setIdentifierString(c, "specimentsar");
+        }else{
+            setName(c, "#c991d9Unstable Creeper");
+            c.setPowered(true);
+            c.setExplosionRadius(5);
+            setIdentifierString(c, "unstablecreeper");
+        }
     }
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);
@@ -536,8 +544,6 @@ public class Entities {
         setMobHealth(c,10);
         addPotionEffect(c,PotionEffectType.SPEED,1);
         c.setPowered(true);
-        c.setMaxFuseTicks(17);
-        c.setFuseTicks(17);
         setIdentifierString(c,"titaniumcreeper");
         setIdentifierString(c,"metal_enemy");
         setKnockresist(c,1000);
@@ -689,13 +695,40 @@ public class Entities {
     }
     public static void relicVex(Vex z){
         setName(z,"&2&lXero");
-        setMobHealth(z,15);
+        setMobHealth(z,10);
         setMainHand(z,new ItemBuilder(Material.GOLDEN_AXE).addEnchant(Enchantment.DAMAGE_ALL,35).build());
         setIdentifierString(z,"relicvex");
         setIdentifierString(z,"relicmob");
     }
-
-
+    public static void doomsDay(Creeper z){
+        setName(z,"&5&lDoomsday");
+        setMobHealth(z,10);
+        z.setExplosionRadius(7);
+        z.setPowered(true);
+        z.setSilent(true);
+        setIdentifierString(z,"doomsday");
+        setIdentifierInt(z,"burrowstate",0);
+    }
+    public static void deathbringer(Breeze z){
+        setName(z,"&5&lDeathbringer");
+        setMobHealth(z,35);
+        setMobDamage(z,35);
+        setIdentifierString(z,"doomsday");
+        setIdentifierInt(z,"burrowstate",0);
+    }
+    public static void gabrielVex(Vex z){
+        setName(z,"&f&lGabriel");
+        setMobHealth(z,10);
+        setMainHand(z,new ItemBuilder(Material.SOUL_CAMPFIRE).addEnchant(Enchantment.DAMAGE_ALL,20).build());
+        setIdentifierString(z,"gabriel");
+    }
+    public static void antiflySkeleton(Skeleton z){
+        setName(z,"&c&lAnti-air Commander");
+        setMobHealth(z,45);
+        setMobDamage(z,10);
+        setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,15).build());
+        setIdentifierString(z,"anticommander");
+    }
 
 
     public static void chooseCreeperType(Creeper e){

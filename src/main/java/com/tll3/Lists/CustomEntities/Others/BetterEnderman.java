@@ -27,7 +27,6 @@ public class BetterEnderman extends EntityEnderman {
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 65);
         EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
-        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 45);
         EntityHelper.setIdentifierString(this.getBukkitEntity(), "relicenderman");
         EntityHelper.setIdentifierString(this.getBukkitEntity(), "relicmob");
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);

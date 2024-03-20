@@ -20,11 +20,11 @@ public class BetterCreeper extends EntityCreeper {
         EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.FIRE_RESISTANCE, 0);
         EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 1);
         this.getBukkitEntity().setCustomName(ChatUtils.format("&2&lElder Vortex"));
-        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 45);
+        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 20);
         EntityHelper.setIdentifierString(this.getBukkitEntity(), "reliccreeper");
         EntityHelper.setIdentifierString(this.getBukkitEntity(), "relicmob");
         this.setPowered(true);
-        this.bV = 6;
+        this.bV = 5;
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

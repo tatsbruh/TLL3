@@ -46,7 +46,11 @@ public class ServerTickTask extends BukkitRunnable {
             p.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE,100,0,true,false,true));
             p.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE,100,0,true,false,true));
         }
+        if(getDay() >= 35){
+            health -= 12;
+        }
         health += PlayerData.getExtraHealth(p);
+        health -= PlayerData.getNegativeHealth(p);
         speed += PlayerData.getExtraSpeed(p);
         p.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(health);
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
@@ -168,6 +172,9 @@ public class ServerTickTask extends BukkitRunnable {
                 }else{
                     temperature = 0;
                 }
+            }
+            if(getDay() >= 35){
+
             }
         }
     }

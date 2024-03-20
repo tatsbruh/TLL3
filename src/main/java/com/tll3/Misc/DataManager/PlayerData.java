@@ -123,6 +123,12 @@ public class PlayerData {
     public static void setExtraHealth(Player target,int i){
         Data.setPlayerData(target, "extrahealth", String.valueOf(i));
     }
+    public static int getNegativeHealth(Player target){
+        return Integer.parseInt(Data.getPlayerData(target,"negativehealth","0"));
+    }
+    public static void setNegativeHealth(Player target,int i){
+        Data.setPlayerData(target, "negativehealth", String.valueOf(i));
+    }
     public static double getExtraSpeed(Player target){
         return Double.parseDouble(Data.getPlayerData(target,"extraspeed","0.0"));
     }

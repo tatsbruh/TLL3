@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.GenericUtils;
 import net.minecraft.core.particles.Particles;
 import net.minecraft.sounds.SoundCategory;
@@ -46,6 +47,9 @@ public class CustomMooshroom extends EntityMushroomCow {
     private static Field attributeMap;
     public CustomMooshroom(World world){
         super(EntityTypes.ap,world);
+        if(GenericUtils.getDay() >= 35){
+            this.getBukkitEntity().setCustomName(ChatUtils.format("&c&lVacaseta Rabiosa"));
+        }
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
