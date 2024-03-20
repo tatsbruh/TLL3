@@ -56,8 +56,8 @@ public class CustomIllusioner extends EntityIllagerIllusioner {
     @Override
     protected void B() {
         this.bO.a(1, new EntityRaider.b<>(this));
-        this.bO.a(4, new b());
-        this.bO.a(5, new a());
+        //this.bO.a(4, new b());
+        //this.bO.a(5, new a());
         this.bO.a(0, new PathfinderGoalFloat(this));
         this.bO.a(6, new PathfinderGoalBowShoot<>(this, 0.5, 20, 15.0F));
         this.bO.a(8, new PathfinderGoalRandomStroll(this, 0.6));

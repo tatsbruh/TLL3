@@ -115,16 +115,16 @@ public class ServerTickTask extends BukkitRunnable {
                             int effect = getRandomValue(4);
                             switch (effect) {
                                 case 0 -> {
-                                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, false, false, false));
+                                    p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0, true, false, true));
                                 }
                                 case 1 -> {
-                                    p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 2, false, false, false));
+                                    p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 2, true, false, true));
                                 }
                                 case 2 -> {
-                                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 0, false, false, false));
+                                    p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 200, 0, true, false, true));
                                 }
                                 case 3 -> {
-                                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 4, false, false, false));
+                                    p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 200, 4, true, false, true));
                                 }
                             }
                         }
@@ -154,13 +154,13 @@ public class ServerTickTask extends BukkitRunnable {
                     }
                 }
                 if(p.getLocation().getBlock().getTemperature() >= 0.9){
-                    if(temperature < 800){
+                    if(temperature < 1200){
                         temperature++;
                     }else{
                         p.setFireTicks(100);
                     }
                 }else if(p.getLocation().getBlock().getTemperature() <= 0.05){
-                    if(temperature > -800){
+                    if(temperature > -1200){
                         temperature--;
                     }else{
                         p.setFreezeTicks(200);

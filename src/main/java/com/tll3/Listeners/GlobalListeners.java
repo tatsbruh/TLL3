@@ -207,6 +207,11 @@ public class GlobalListeners implements Listener {
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
             }
         }
+        if(Data.has(entity,"relicmob",PersistentDataType.STRING)){
+            switch (reason){
+                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE,ENTITY_EXPLOSION,BLOCK_EXPLOSION -> e.setCancelled(true);
+            }
+        }
         if((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING))){
             if(entity.getVehicle() == null) {
                 if (reason == EntityDamageEvent.DamageCause.PROJECTILE) {

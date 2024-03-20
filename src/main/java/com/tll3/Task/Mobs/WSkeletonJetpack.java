@@ -2,6 +2,7 @@ package com.tll3.Task.Mobs;
 
 import org.bukkit.EntityEffect;
 import org.bukkit.Location;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.WitherSkeleton;
@@ -26,8 +27,8 @@ public class WSkeletonJetpack extends BukkitRunnable {
             if (i < 250) {
                 i++;
             } else {
-                witherSkeleton.playEffect(EntityEffect.FIREWORK_EXPLODE);
-                witherSkeleton.getWorld().playSound(witherSkeleton.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_SHOOT,5.0F,1.0F);
+                witherSkeleton.getWorld().spawnParticle(Particle.GUST_EMITTER,witherSkeleton.getLocation(),1,0,0,0,0);
+                witherSkeleton.getWorld().playSound(witherSkeleton.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_BLAST_FAR,5.0F,1.0F);
                 Vector direction = target.getLocation().toVector().subtract(location.toVector()).normalize();
                 witherSkeleton.setVelocity(direction.multiply(2.5));
                 i = 0;

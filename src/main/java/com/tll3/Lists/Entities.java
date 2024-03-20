@@ -626,7 +626,7 @@ public class Entities {
         e.setPowered(true);
         setIdentifierString(e,"starredcreeper");
     }
-    public static void starPhantom(Phantom e){
+    public static void starPhantom(Phantom e){ //Unused
         setName(e,"&bGeneral PrePhantom &e&l★");
         setMobHealth(e,45);
         setMobDamage(e,20);
@@ -666,12 +666,14 @@ public class Entities {
     }
 
 
+
+
     //Dia 35
     public static void relicZombie(Zombie z){
         setName(z,"&2&lRelic Juggernaut");
         setMobHealth(z,35);
         setMobDamage(z,16);
-        addPotionEffect(z,PotionEffectType.SPEED,1);
+        addPotionEffect(z,PotionEffectType.SPEED,2);
         z.setAdult();
         setIdentifierString(z,"reliczombie");
         setIdentifierString(z,"relicmob");
@@ -683,14 +685,6 @@ public class Entities {
         setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,45).build());
         setKnockresist(z,1000);
         setIdentifierString(z,"relicskeleton");
-        setIdentifierString(z,"relicmob");
-    }
-    public static void relicCreeper(Creeper z){
-        setName(z,"&2&lElder Vortex");
-        setMobHealth(z,45);
-        z.setPowered(true);
-        z.setExplosionRadius(5);
-        setIdentifierString(z,"reliccreeper");
         setIdentifierString(z,"relicmob");
     }
     public static void relicVex(Vex z){
@@ -727,6 +721,16 @@ public class Entities {
             }
         }
     }
+
+
+
+
+
+
+
+
+
+
 
 
     //Wasteyard Mobs
@@ -768,6 +772,18 @@ public class Entities {
         s.setSize(12);
         setIdentifierString(s,"toxiccrawler");
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     //TLL 2 Mobs
     public static void blightedSkeleton(Skeleton s){
@@ -845,6 +861,13 @@ public class Entities {
         setIdentifierString(s,"vortex");
         setIdentifierString(s,"tllt2");
     }
+
+
+
+
+
+
+
 
 
     //Primordial Mobs
@@ -1054,6 +1077,8 @@ public class Entities {
 
         } catch (Exception e) {}
     }
+
+    //@alangonza7 hola
 
 
 

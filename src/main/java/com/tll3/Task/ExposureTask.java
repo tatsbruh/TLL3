@@ -51,14 +51,24 @@ public class ExposureTask extends BukkitRunnable {
         }
 
         player.sendActionBar(exposure);
+
+
         if(exp >= 35){
             if(player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR)return;
             player.getNearbyEntities(range, range, range).forEach(entity -> {
-                if (entity instanceof Enemy e ) {
-                    if(e instanceof Enderman || e instanceof PigZombie)return;
-                    Mob m = (Mob)e;
-                    if(m.getTarget() == null){
-                        m.setTarget(player);
+                if(GenericUtils.getDay() < 35){
+                    if (entity instanceof Creature e) {
+                        if(GenericUtils.isHostileMob(e.getType())){
+                        if(e.getTarget() == null){
+                            e.setTarget(player);
+                        }
+                        }
+                    }
+                }else if(GenericUtils.getDay() >= 35){
+                    if (entity instanceof Creature e) {
+                        if(e.getTarget() == null){
+                            e.setTarget(player);
+                        }
                     }
                 }
             });
@@ -83,7 +93,6 @@ public class ExposureTask extends BukkitRunnable {
             }
             if(player.hasPotionEffect(PotionEffectType.GLOWING)){
                 switch (player.getPotionEffect(PotionEffectType.GLOWING).getAmplifier()){
-                    case 0 -> glowingdrain = 50;
                     case 1 -> glowingdrain = 35;
                     case 2 -> glowingdrain = 25;
                     case 3 -> glowingdrain = 15;

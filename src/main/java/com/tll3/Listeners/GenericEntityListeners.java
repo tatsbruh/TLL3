@@ -299,9 +299,9 @@ public class GenericEntityListeners implements Listener {
                 }
                 if(EntityNaturalSpawn.doRandomChance(10)){
                     if(getDay() >= 21){
-                      PlayerData.addDataEffect(p,"bleed",40,0);
+                       PlayerData.addDataEffect(p,"bleed",40,0);
                     }else{
-                      PlayerData.addDataEffect(p,"bleed",20,0);
+                       PlayerData.addDataEffect(p,"bleed",20,0);
                     }
                 }
                 if(getDay() >= 21){
@@ -310,6 +310,9 @@ public class GenericEntityListeners implements Listener {
                         p.getLocation().getWorld().spawnParticle(Particle.CRIT,p.getLocation(),50,1,1,1,0.5);
                         e.setDamage(e.getDamage() * 2);
                     }
+                }
+                if(Data.has(z,"reliczombie",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,80,0,true,false,true));
                 }
             }
             if(damager instanceof Fireball f){
@@ -815,6 +818,16 @@ public class GenericEntityListeners implements Listener {
         var hen = e.getHitEntity();
         var hbl = e.getHitBlock();
 
+        if(getDay() >= 7){
+            if(source instanceof Enemy){
+                if(hen != null){
+                    if(hen instanceof Enemy){
+                        e.setCancelled(true);
+                    }
+                }
+            }
+        }
+
         if(source instanceof LivingEntity l){
             if(l.hasPotionEffect(PotionEffectType.LUCK))return;
         }
@@ -849,8 +862,8 @@ public class GenericEntityListeners implements Listener {
 
         if(proj instanceof Arrow a){
             if(Data.has(a,"lol",PersistentDataType.STRING)){
-                if(hen instanceof Player p){
-                    if(p.isBlocking())a.remove();
+                if(hen instanceof Player){
+                    a.remove();
                 }
             }
             if(Data.has(a,"rev_explosion",PersistentDataType.STRING)){
@@ -914,6 +927,11 @@ public class GenericEntityListeners implements Listener {
                     Location lol = hbl.getLocation().add(0, 1, 0);
                     s.playEffect(EntityEffect.TELEPORT_ENDER);
                     s.teleport(lol);
+                }
+            }
+            if(Data.has(s,"relicskeleton",PersistentDataType.STRING)){
+                if(hen instanceof Player l){
+                    l.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,140,0,true,false,true));
                 }
             }
             if (Data.has(s, "blightedskeleton", PersistentDataType.STRING)) {
@@ -1048,9 +1066,18 @@ public class GenericEntityListeners implements Listener {
         var target = e.getTarget();
         var origin = e.getEntity();
 
+        if(getDay() >= 7){
+            if(origin instanceof Enemy && (target instanceof Enemy || target instanceof Animals || target instanceof Fish)){
+                e.setCancelled(true);
+            }
+            if(target instanceof IronGolem && origin instanceof Enemy)e.setCancelled(true);
+            if(target instanceof Enemy && origin instanceof IronGolem)e.setCancelled(true);
+        }
+
         if(origin instanceof LivingEntity l){
             if(l.hasPotionEffect(PotionEffectType.LUCK))return;
         }
+
 
         if(target instanceof Player p){
            if(origin instanceof Enemy && (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR))e.setCancelled(true);
@@ -1152,12 +1179,6 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
-        if(origin instanceof Enemy && (target instanceof Enemy || target instanceof Animals || target instanceof Fish)){
-            e.setCancelled(true);
-        }
-
-        if(target instanceof IronGolem && origin instanceof Enemy)e.setCancelled(true);
-        if(target instanceof Enemy && origin instanceof IronGolem)e.setCancelled(true);
 
     }
 
