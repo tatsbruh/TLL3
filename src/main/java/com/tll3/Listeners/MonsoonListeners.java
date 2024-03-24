@@ -27,6 +27,7 @@ import java.util.Objects;
 public class MonsoonListeners implements Listener {
 
     private static BossBar bossBar;
+    private boolean isMonsoonActive = false;
     private static Integer TaskBossBarID = 0;
     public static void createBossBar() {
         if (bossBar == null) {
@@ -51,6 +52,7 @@ public class MonsoonListeners implements Listener {
 
     @EventHandler
     public void monstartE(Monsoon.StartMonsoon e){
+        isMonsoonActive = true;
         if((EntityNaturalSpawn.doRandomChance(20) || GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) && GenericUtils.getDay() >= 21){
             GenericUtils.setMonsoonActive("true");
             GenericUtils.setVortexTyphoonActive("true");
@@ -105,6 +107,9 @@ public class MonsoonListeners implements Listener {
     }
     @EventHandler
     public void monendE(Monsoon.StopMonsoon e){
+        if (!isMonsoonActive)
+            return;
+        isMonsoonActive = false;
         Bukkit.getLogger().info("MONSOON ACABADA, CAUSA " + e.getCause());
         Bukkit.getOnlinePlayers().forEach(bossBar::removePlayer);
         if(TaskBossBarID != null) {
