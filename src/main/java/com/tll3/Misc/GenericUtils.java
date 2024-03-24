@@ -34,7 +34,7 @@ public class GenericUtils {
 
     private static LocalDate actualDate = LocalDate.now();
     private static LocalDate startDate = LocalDate.parse(ConfigData.getConfig("start_date",""));
-    private static @Getter int maxweatherdur = Integer.parseInt(ConfigData.getConfig("maxweatherdur","0"));
+    private static @Getter int maxweatherdur = Integer.parseInt(ConfigData.getConfig("weathermaxdur","0"));
     public static @Getter String monsoon_active = ConfigData.getConfig("monsoon_active","");
     public static @Getter String typhoonactive = ConfigData.getConfig("typhoon_active","");
 
