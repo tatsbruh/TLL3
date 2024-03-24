@@ -61,8 +61,8 @@ public class MonsoonListeners implements Listener {
             world.setStorm(true);
             world.setThundering(true);
             world.setThunderDuration(storm_time);
-            String setThunder = "weather thunder " + storm_time;
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+            //String setThunder = "weather thunder " + storm_time;
+            //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
             for (Player sp : Bukkit.getOnlinePlayers()) {
                 sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
                 sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
@@ -83,8 +83,11 @@ public class MonsoonListeners implements Listener {
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,true);
             int stormDurationInTicks = 18000; // 15 minutos en ticks
             int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
-            String setThunder = "weather thunder " + storm_time;
-            Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+            world.setStorm(true);
+            world.setThundering(true);
+            world.setThunderDuration(storm_time);
+            //String setThunder = "weather thunder " + storm_time;
+            //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
             for (Player sp : Bukkit.getOnlinePlayers()) {
                 sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 60, 0, false, false, false));
                 sp.getLocation().getWorld().playSound(sp.getLocation(), Sound.BLOCK_END_PORTAL_SPAWN, 10.0F, -1.0F); //Placeholder
@@ -111,7 +114,7 @@ public class MonsoonListeners implements Listener {
         World world = GenericUtils.getWorld();
         world.setStorm(false);
         world.setThundering(false);
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999");
+        //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999");
         GenericUtils.setMonsoonActive("false");
         GenericUtils.setVortexTyphoonActive("false");
         for(Player players : Bukkit.getOnlinePlayers()) {
