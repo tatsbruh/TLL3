@@ -49,7 +49,13 @@ public class MonsoonListeners implements Listener {
             bossBar = Bukkit.createBossBar(messageBar + getTime(), BarColor.BLUE, BarStyle.SEGMENTED_6);
         }
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
-            int updtime = GenericUtils.getWorld().getThunderDuration();
+            World w = GenericUtils.getWorld();
+            int updtime = w.getThunderDuration();
+            if (!w.hasStorm()){
+                w.setStorm(true);
+                w.setThundering(true);
+                w.setThunderDuration(updtime);
+            }
             if (GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
                 bossBar.setTitle(ChatUtils.format(messageBar + getTime()));
             } else {
