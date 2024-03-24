@@ -18,6 +18,7 @@ import net.minecraft.resources.MinecraftKey;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.world.level.biome.BiomeBase;
+import org.bukkit.Bukkit;
 import org.bukkit.Registry;
 import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
 import org.bukkit.entity.Player;
@@ -46,11 +47,14 @@ public final class TLL3 extends JavaPlugin {
         }
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
             MonsoonListeners.createBossBar();
+            MonsoonListeners.addAllToBossbar();
         }
     }
 
     @Override
     public void onDisable() {
+        Bukkit.getScheduler().cancelTask(MonsoonListeners.TaskBossBarID);
+        MonsoonListeners.removeAllBossbar();
         console("Plugin desactivado correctamente");
     }
 

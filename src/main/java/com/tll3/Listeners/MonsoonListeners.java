@@ -28,7 +28,8 @@ public class MonsoonListeners implements Listener {
 
     private static BossBar bossBar;
     private static boolean isMonsoonActive = Objects.equals(GenericUtils.getMonsoon_active(), "true");
-    private static Integer TaskBossBarID = null;
+    public static Integer TaskBossBarID = null;
+
     public static void createBossBar() {
 
         if (TaskBossBarID != null) {
@@ -36,31 +37,29 @@ public class MonsoonListeners implements Listener {
             TaskBossBarID = null;
         }
 
+        String messageBar;
+
+        if (GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
+            messageBar = ChatUtils.format("#259c9a☀ #77f7f6Vortex Typhoon #259c9a☀ &7| #008a8a");
+        } else {
+            messageBar = ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd");
+        }
+
         if (bossBar == null) {
-            if(GenericUtils.getTyphoonactive().equalsIgnoreCase("true")){
-                bossBar = Bukkit.createBossBar(ChatUtils.format("#259c9a☀ #77f7f6Vortex Typhoon #259c9a☀ &7| #008a8a" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
-            }else {
-                bossBar = Bukkit.createBossBar(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()), BarColor.BLUE, BarStyle.SEGMENTED_6);
-            }
+            bossBar = Bukkit.createBossBar(messageBar + getTime(), BarColor.BLUE, BarStyle.SEGMENTED_6);
         }
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
-            if (!isMonsoonActive){
-                Bukkit.getScheduler().cancelTask(TaskBossBarID);
-                TaskBossBarID = null;
-                return;
-            }
             int updtime = GenericUtils.getWorld().getThunderDuration();
-            if(GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
-                bossBar.setTitle(ChatUtils.format("#259c9a☀ #77f7f6Vortex Typhoon #259c9a☀ &7| #008a8a" + getTime()));
-            }else{
-                bossBar.setTitle(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()));
+            if (GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
+                bossBar.setTitle(ChatUtils.format(messageBar + getTime()));
+            } else {
+                bossBar.setTitle(ChatUtils.format(messageBar + getTime()));
             }
             int maxWeather = GenericUtils.getMaxweatherdur();
             double calculos = 1.0 - (((double) 1 / maxWeather) * (maxWeather - updtime));
             bossBar.setProgress(calculos);
         }, 0L, 20L);
     }
-
     @EventHandler
     public void monstartE(Monsoon.StartMonsoon e){
         isMonsoonActive = true;
@@ -138,7 +137,17 @@ public class MonsoonListeners implements Listener {
         GenericUtils.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, true);
     }
 
+    public static void removeAllBossbar(){
+        if(bossBar != null){
+            bossBar.removeAll();
+        }
+    }
 
+    public static void addAllToBossbar(){
+        if(bossBar != null){
+            Bukkit.getOnlinePlayers().forEach(bossBar::addPlayer);
+        }
+    }
 
     @EventHandler
     public void bossbJoin(PlayerJoinEvent e) {
