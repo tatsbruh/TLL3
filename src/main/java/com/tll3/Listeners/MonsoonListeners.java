@@ -43,7 +43,9 @@ public class MonsoonListeners implements Listener {
             }else{
                 bossBar.setTitle(ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd" + getTime()));
             }
-            bossBar.setProgress((double) updtime / GenericUtils.getMaxweatherdur());
+            int maxWeather = GenericUtils.getMaxweatherdur();
+            maxWeather = Math.max(maxWeather, 0);
+            bossBar.setProgress((double) updtime / maxWeather);
         }, 0L, 20L);
     }
 
@@ -56,6 +58,9 @@ public class MonsoonListeners implements Listener {
             int stormDurationInTicks = 18000; // 15 minutos en ticks
             world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,true);
             int storm_time = world.isThundering() ? world.getWeatherDuration() + GenericUtils.getDay() * stormDurationInTicks : GenericUtils.getDay() * stormDurationInTicks;
+            world.setStorm(true);
+            world.setThundering(true);
+            world.setThunderDuration(storm_time);
             String setThunder = "weather thunder " + storm_time;
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
             for (Player sp : Bukkit.getOnlinePlayers()) {
@@ -103,6 +108,9 @@ public class MonsoonListeners implements Listener {
             Bukkit.getScheduler().cancelTask(TaskBossBarID);
             TaskBossBarID = null;
         }
+        World world = GenericUtils.getWorld();
+        world.setStorm(false);
+        world.setThundering(false);
         Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999");
         GenericUtils.setMonsoonActive("false");
         GenericUtils.setVortexTyphoonActive("false");

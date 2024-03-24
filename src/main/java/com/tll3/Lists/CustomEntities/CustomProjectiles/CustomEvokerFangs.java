@@ -5,6 +5,7 @@ import net.minecraft.world.entity.EntityLiving;
 import net.minecraft.world.entity.projectile.EntityEvokerFangs;
 import net.minecraft.world.level.World;
 import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
+import org.bukkit.entity.EvokerFangs;
 
 import java.util.Iterator;
 import java.util.List;
@@ -66,9 +67,10 @@ public class CustomEvokerFangs extends EntityEvokerFangs {
         EntityLiving entityliving1 = this.q();
         if (entityliving.bx() && !entityliving.cr() && entityliving != entityliving1) {
             if (entityliving1 == null) {
-                CraftEventFactory.entityDamage = this;
+                // TODO: Error de compilación aquí
+//                CraftEventFactory.entityDamage = this;
                 entityliving.a(this.dN().o(), 6.0F);
-                CraftEventFactory.entityDamage = null;
+//                CraftEventFactory.entityDamage = null;
             } else {
                 if (entityliving1.s(entityliving)) {
                     return;
