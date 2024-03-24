@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Misc.EntityHelper;
 import com.tll3.Misc.GenericUtils;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.goal.*;
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.level.World;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.potion.PotionEffectType;
 
 public class CustomGoat extends Goat {
     public CustomGoat(World w){
@@ -24,6 +26,9 @@ public class CustomGoat extends Goat {
             this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(20);
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_KNOCKBACK).setBaseValue(75);
+        if(GenericUtils.getDay() >= 35){
+            EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED,4);
+        }
     }
     @Override
     protected void B() {

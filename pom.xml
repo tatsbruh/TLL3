@@ -89,6 +89,11 @@
             <version>0.5.1-SNAPSHOT</version>
         </dependency>
         <dependency>
+            <groupId>com.github.ZockerAxel</groupId>
+            <artifactId>CrazyAdvancementsAPI</artifactId>
+            <version>v2.1.17a</version>
+        </dependency>
+        <dependency>
             <groupId>com.github.Outspending</groupId>
             <artifactId>BiomesAPI</artifactId>
             <version>0.0.5</version>

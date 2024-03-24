@@ -2,5 +2,6 @@ name: TLL3
 version: '${project.version}'
 main: com.tll3.TLL3
 api-version: '1.20'
+softdepend: [UltimateAdvancementAPI]
 authors: [tatsu]
 description: The Last Life third and last entry, for real this time

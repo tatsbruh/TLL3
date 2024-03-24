@@ -300,7 +300,11 @@ public class GenericEntityListeners implements Listener {
             }
             if(damager instanceof PufferFish f){
                 if(Data.has(f,"acidfish",PersistentDataType.STRING)){
-                    p.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,2,false,false,false));
+                    if(getDay() >= 35){
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,4,false,false,false));
+                    }else{
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.HARM,1,2,false,false,false));
+                    }
                 }
             }
             if(damager instanceof Zombie z){

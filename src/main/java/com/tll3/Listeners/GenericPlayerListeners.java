@@ -8,6 +8,7 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
 import com.tll3.Task.*;
+import eu.endercentral.crazy_advancements.CrazyAdvancementsAPI;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.entity.EntityLiving;
@@ -52,6 +53,9 @@ public class GenericPlayerListeners implements Listener {
     @EventHandler
     public void joinL(PlayerJoinEvent e){
         var p = e.getPlayer();
+
+        CrazyAdvancementsAPI.setActiveTab(e.getPlayer(),"first_steps");
+
         if(PlayerData.getItemCooldown(p,"inv_tome") > 0){
             p.setCooldown(Material.BOOK,PlayerData.getItemCooldown(p,"inv_tome"));
         }

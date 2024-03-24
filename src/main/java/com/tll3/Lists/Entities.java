@@ -389,6 +389,7 @@ public class Entities {
         setLeggings(e,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
         setBoots(e,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
         setIdentifierString(e,"greedypiglin");
+        e.setImmuneToZombification(true);
         addPotionEffect(e,PotionEffectType.INCREASE_DAMAGE,4);
     }
     public static void strayCom(Stray s){
@@ -776,6 +777,7 @@ public class Entities {
         setName(c,"#a84738Scorched Brute");
         c.setImmuneToZombification(true);
         setMobHealth(c,55);
+        c.setImmuneToZombification(true);
         setMainHand(c,new ItemBuilder(Material.NETHERITE_AXE).setUnbreakable(true).build());
         addPotionEffect(c,PotionEffectType.SPEED,1);
         setIdentifierString(c,"scorchbeast");

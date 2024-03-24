@@ -4,6 +4,7 @@ import co.aikar.commands.PaperCommandManager;
 import com.tll3.Commands.staffCMD;
 import com.tll3.Listeners.*;
 import com.tll3.Lists.Recipes;
+import com.tll3.Misc.Advancements.NewAchievements;
 import com.tll3.Misc.Crafting.CraftingEvents;
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.Misc.GenericUtils;
@@ -46,7 +47,6 @@ public final class TLL3 extends JavaPlugin {
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true")){
             MonsoonListeners.createBossBar();
         }
-
     }
 
     @Override

@@ -162,6 +162,22 @@ public class EntityNaturalSpawn implements Listener {
                     }
                 }
             }
+        }else if(getDay() >= 35 && getDay() < 42){
+            if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
+                if (loc.getWorld().getName().equalsIgnoreCase("world")) {
+                    if (doRandomChance(5)) {
+                        summonnewmob(loc, e);
+                    }
+                }
+                if(loc.getWorld().getName().equalsIgnoreCase("world_nether")){
+                    int random = GenericUtils.getRandomValue(100);
+                    if(random <= 5){
+                        spawnNetherWasteyard(e,loc);
+                    }else if(random > 5 && random <= 12){
+                        spawnOverworldMobs(loc,e);
+                    }
+                }
+            }
         }
         switch (entity.getType()){
             case WITHER -> {
@@ -631,6 +647,7 @@ public class EntityNaturalSpawn implements Listener {
             case PIGLIN_BRUTE -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
                     if (getDay() >= 14) {
+                        ((PiglinBrute)entity).setImmuneToZombification(true);
                         EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,3);
                         EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,2);
                         if(getDay() >= 21){
@@ -674,12 +691,14 @@ public class EntityNaturalSpawn implements Listener {
                         PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
                         EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
                         EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
+                        pg.setImmuneToZombification(true);
                         if(getDay() >= 21){
                             setHead(pg,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                             setChestplate(pg,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                             setLeggings(pg,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                             setBoots(pg,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
                         }
+                        ((Hoglin)entity).setImmuneToZombification(true);
                         entity.addPassenger(pg);
                     }
                 }
@@ -842,7 +861,7 @@ public class EntityNaturalSpawn implements Listener {
             case 1 -> Entities.skeFi(w);
             case 2 -> Entities.skeRz(w);
         }
-        }else if(getDay() >= 14){
+        }else if(getDay() >= 14 && getDay() < 35){
                 Random random = new Random();
                 int chance = random.nextInt(5);
                 switch (chance){
@@ -852,6 +871,18 @@ public class EntityNaturalSpawn implements Listener {
                     case 3 -> Entities.voidOver(w);
                     case 4 -> {Entities.livingSh(w);}
                 }
+        }else if(getDay() >= 35 ){
+            Random random = new Random();
+            int chance = random.nextInt(7);
+            switch (chance){
+                case 0 ->{ Entities.skeAd(w);}
+                case 1 -> {Entities.skeFi(w);}
+                case 2 -> {Entities.skeRz(w);}
+                case 3 -> Entities.voidOver(w);
+                case 4 -> {Entities.livingSh(w);}
+                case 5 -> Entities.relicSkeleton(w);
+                case 6 -> Entities.antiflySkeleton(w);
+            }
         }
     }
     public static void chooseZombieClass1(Zombie z){
@@ -863,13 +894,22 @@ public class EntityNaturalSpawn implements Listener {
                 case 1 -> Entities.zArqueo(z);
 
             }
-        }else if(getDay() >= 28) {
+        }else if(getDay() >= 28 && getDay() < 35) {
             Random random = new Random();
             int chance = random.nextInt(3);
             switch (chance) {
                 case 0 -> Entities.zNinka(z);
                 case 1 -> Entities.zArqueo(z);
                 case 2 -> Entities.lilGhoul(z);
+            }
+        }else if(getDay() >= 35) {
+            Random random = new Random();
+            int chance = random.nextInt(4);
+            switch (chance) {
+                case 0 -> Entities.zNinka(z);
+                case 1 -> Entities.zArqueo(z);
+                case 2 -> Entities.lilGhoul(z);
+                case 3 -> Entities.relicZombie(z);
             }
         }
     }
@@ -1113,6 +1153,136 @@ public class EntityNaturalSpawn implements Listener {
             }
         }
     }
+
+    public static void netherMobSpawn(Location loc,CreatureSpawnEvent e){
+        e.setCancelled(true);
+        Random random = new Random();
+        int chance = random.nextInt(6);
+        switch (chance) {
+            case 0 -> { //Zombi Piglins
+                PigZombie p = (PigZombie) Entities.spawnMob(loc,EntityType.ZOMBIFIED_PIGLIN);
+                choosePigmanClass(p);
+            }
+            case 1 -> { //Ghasts
+                Ghast p = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
+                if(doRandomChance(35)){
+                    Entities.entropicDem(p);
+                }else{
+                    Entities.gPower(p);
+                }
+            }
+            case 2 -> { //Piglins
+                Piglin p = (Piglin) Entities.spawnMob(loc,EntityType.PIGLIN);
+                Entities.piglGr(p);
+            }
+            case 3 -> { //Piglin Brutes
+                PiglinBrute entity = (PiglinBrute)Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
+                entity.setImmuneToZombification(true);
+                EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,3);
+                EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,2);
+                setHead(entity,new ItemBuilder(Material.NETHERITE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                setChestplate(entity,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                setLeggings(entity,new ItemBuilder(Material.NETHERITE_LEGGINGS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+                setBoots(entity,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).build());
+            }
+            case 4 -> {//Hoglins
+                Hoglin entity = (Hoglin)Entities.spawnMob(loc,EntityType.HOGLIN);
+                EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,7);
+                EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,3);
+                entity.setImmuneToZombification(true);
+            }
+            case 5 -> {//Magmacubes
+                MagmaCube magma = (MagmaCube) Entities.spawnMob(loc,EntityType.MAGMA_CUBE);
+                int minsize = 10;
+                int maxsize = getRandomValue(6);
+                int result = minsize + maxsize;
+                magma.setSize(result);
+            }
+        }
+    }
+    public static void spawnOverworldMobs(Location loc,CreatureSpawnEvent e){
+            e.setCancelled(true);
+            int choice = GenericUtils.getRandomValue(17);
+            switch (choice){
+                case 0 ->{
+                    Zombie z = (Zombie) Entities.spawnMob(loc,EntityType.ZOMBIE);
+                    chooseZombieClass1(z);
+                }
+                case 1 ->{
+                    Skeleton s = (Skeleton)Entities.spawnMob(loc,EntityType.SKELETON);
+                    chooseSkeletonClass1(s);
+                }
+                case 2 ->{
+                    Spider s = (Spider) Entities.spawnMob(loc,EntityType.SPIDER);
+                    spiderMount(s);
+                }
+                case 3 ->{
+                    Creeper c = (Creeper) Entities.spawnMob(loc,EntityType.CREEPER);
+                    int type = GenericUtils.getRandomValue(3);
+                    switch (type){
+                        case 0 ->Entities.creChr(c);
+                        case 1 ->Entities.revCreeper(c);
+                        case 2 ->Entities.unstCr(c);
+                    }
+                }
+                case 4 ->{
+                    Enderman en = (Enderman) Entities.spawnMob(loc,EntityType.ENDERMAN);
+                    if(Math.random() < 0.5) {
+                        Entities.revEnderman(en);
+                    }
+                }
+                case 5 ->{
+                    Drowned d = (Drowned) Entities.spawnMob(loc,EntityType.DROWNED);
+                    Entities.drowAby(d);
+                }
+                case 6 ->{
+                    Husk h = (Husk) Entities.spawnMob(loc,EntityType.HUSK);
+                    Entities.huStr(h);
+                }
+                case 7 ->{
+                    Stray s = (Stray) Entities.spawnMob(loc,EntityType.STRAY);
+                    Entities.strayCom(s);
+                }
+                case 8 ->{
+                    Endermite en = (Endermite) Entities.spawnMob(loc,EntityType.ENDERMITE);
+                    Entities.quanmite(en);
+                }
+                case 9 ->{
+                    Silverfish s = (Silverfish) Entities.spawnMob(loc,EntityType.SILVERFISH);
+                    Entities.silverday5(s);
+                }
+                case 10 ->{
+                    CaveSpider c = (CaveSpider) Entities.spawnMob(loc,EntityType.CAVE_SPIDER);
+                    if(Math.random() < 0.5){
+                        Entities.csTerCol(c);
+                    }else{
+                        Entities.termite(c);
+                    }
+                }
+                case 12 ->{
+                    Pillager p = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
+                    Entities.nwPillager(p,false);
+                }
+                case 13 ->{
+                    Vindicator v = (Vindicator) Entities.spawnMob(loc,EntityType.VINDICATOR);
+                    Entities.nwVindicator(v,false);
+                }
+                case 14 ->{
+                    Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
+                    Entities.nwRavager(r,false);
+                }
+                case 15 ->{
+                    IronGolem i = (IronGolem) Entities.spawnMob(loc,EntityType.IRON_GOLEM);
+                    Entities.enrIG(i);
+                }
+                case 16 ->{
+                    Breeze z = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                    Entities.windTyphoon(z);
+                }
+
+            }
+        }
+
 
     public static void summonnewmob(Location loc,CreatureSpawnEvent e){
         if(getDay() >= 14 && getDay() < 21) {
