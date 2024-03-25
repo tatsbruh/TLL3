@@ -81,9 +81,9 @@ public class MonsoonListeners implements Listener {
 
         GenericUtils.setCurrentStormDuration(currentStormDuration);
 
-        System.out.println("Storm time: " + currentStormDuration);
-        System.out.println("geThunderDuration old: " + world.getThunderDuration());
-        System.out.println("getDay: " + GenericUtils.getDay());
+        //System.out.println("Storm time: " + currentStormDuration);
+        //System.out.println("geThunderDuration old: " + world.getThunderDuration());
+        //System.out.println("getDay: " + GenericUtils.getDay());
 
         world.setStorm(true);
         world.setThundering(true);
@@ -164,7 +164,7 @@ public class MonsoonListeners implements Listener {
     public void onThunderChange(ThunderChangeEvent e){
 
         if(e.getCause() == ThunderChangeEvent.Cause.COMMAND){
-            Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
+            Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.COMMAND));
         } else {
             if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
                 if (currentStormDuration <= 0) {
