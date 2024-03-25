@@ -18,7 +18,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.weather.ThunderChangeEvent;
 import org.bukkit.event.weather.WeatherChangeEvent;
-import org.bukkit.event.world.WorldInitEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -28,6 +27,7 @@ public class MonsoonListeners implements Listener {
 
     private static BossBar bossBar;
     private static boolean isMonsoonActive = Objects.equals(GenericUtils.getMonsoon_active(), "true");
+    private static Integer currentStormDuration = GenericUtils.getCurrentStormDuration();
     public static Integer TaskBossBarID = null;
 
     public static void createBossBar() {
@@ -49,13 +49,7 @@ public class MonsoonListeners implements Listener {
             bossBar = Bukkit.createBossBar(messageBar + getTime(), BarColor.BLUE, BarStyle.SEGMENTED_6);
         }
         TaskBossBarID = Bukkit.getScheduler().scheduleSyncRepeatingTask(TLL3.getInstance(), () -> {
-            World w = GenericUtils.getWorld();
-            int updtime = w.getThunderDuration();
-            if (!w.hasStorm()){
-                w.setStorm(true);
-                w.setThundering(true);
-                w.setThunderDuration(updtime);
-            }
+            int updtime = currentStormDuration;
             if (GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
                 bossBar.setTitle(ChatUtils.format(messageBar + getTime()));
             } else {
@@ -64,6 +58,8 @@ public class MonsoonListeners implements Listener {
             int maxWeather = GenericUtils.getMaxweatherdur();
             double calculos = 1.0 - (((double) 1 / maxWeather) * (maxWeather - updtime));
             bossBar.setProgress(calculos);
+            currentStormDuration -= 20;
+            GenericUtils.setCurrentStormDuration(currentStormDuration);
         }, 0L, 20L);
     }
     @EventHandler
@@ -81,32 +77,28 @@ public class MonsoonListeners implements Listener {
         else
             stormDurationInTicks = 18000; // 15 minutos en ticks
 
-        int storm_time =
-                isMonsoonActive ?
-                world.getThunderDuration() + (GenericUtils.getDay() * stormDurationInTicks)
-                :
-                (GenericUtils.getDay() * stormDurationInTicks);
+        currentStormDuration += (GenericUtils.getDay() * stormDurationInTicks);
 
-        System.out.println("Storm time: " + storm_time);
+        GenericUtils.setCurrentStormDuration(currentStormDuration);
+
+        System.out.println("Storm time: " + currentStormDuration);
         System.out.println("geThunderDuration old: " + world.getThunderDuration());
         System.out.println("getDay: " + GenericUtils.getDay());
 
         world.setStorm(true);
         world.setThundering(true);
-        world.setThunderDuration(storm_time);
-        //String setThunder = "weather thunder " + storm_time;
-        //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), setThunder);
+        world.setThunderDuration(currentStormDuration);
         for (Player sp : Bukkit.getOnlinePlayers()) {
             sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
             sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
             if (isTyphoonActive){
-                sp.sendTitle(ChatUtils.format("#305bab☀ #5acce8¡VORTEX TYPHOON! #305bab☀"),ChatUtils.format("#4c717a☁ Duración: " + GenericUtils.doTimeFormat(storm_time) + " ☁"),0,80,20);
+                sp.sendTitle(ChatUtils.format("#305bab☀ #5acce8¡VORTEX TYPHOON! #305bab☀"),ChatUtils.format("#4c717a☁ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☁"),0,80,20);
             } else {
-                sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"), ChatUtils.format("#4d52d1☂ Duración: " + GenericUtils.doTimeFormat(storm_time) + " ☂"), 0, 80, 20);
+                sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"), ChatUtils.format("#4d52d1☂ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☂"), 0, 80, 20);
 
             }
         }
-        GenericUtils.setMaxWeatherDuration(storm_time);
+        GenericUtils.setMaxWeatherDuration(currentStormDuration);
         createBossBar();
         Bukkit.getOnlinePlayers().forEach(player -> {
             bossBar.setVisible(true);
@@ -127,12 +119,13 @@ public class MonsoonListeners implements Listener {
             TaskBossBarID = null;
         }
         World world = GenericUtils.getWorld();
+        currentStormDuration = 0;
         world.setStorm(false);
         world.setThundering(false);
         world.setThunderDuration(0);
         world.setClearWeatherDuration(Integer.MAX_VALUE);
-        //Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "weather clear 999999");
         GenericUtils.setMonsoonActive("false");
+        GenericUtils.setCurrentStormDuration(0);
         GenericUtils.setVortexTyphoonActive("false");
         for(Player players : Bukkit.getOnlinePlayers()) {
             bossBar.removePlayer(players);
@@ -169,9 +162,19 @@ public class MonsoonListeners implements Listener {
     }
     @EventHandler(priority = EventPriority.NORMAL)
     public void onThunderChange(ThunderChangeEvent e){
-        if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
-            if (e.getWorld().getThunderDuration() <= 0) {
-                Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
+
+        if(e.getCause() == ThunderChangeEvent.Cause.COMMAND){
+            Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
+        } else {
+            if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
+                if (currentStormDuration <= 0) {
+                    Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
+                } else {
+                    World w = GenericUtils.getWorld();
+                    w.setStorm(true);
+                    w.setThundering(true);
+                    w.setThunderDuration(currentStormDuration);
+                }
             }
         }
     }
@@ -184,9 +187,8 @@ public class MonsoonListeners implements Listener {
         }
     }
     private static String getTime(){
-        if(GenericUtils.getWorld().getThunderDuration() > 0){
-            long segundos = (GenericUtils.getWorld().getThunderDuration());
-            return GenericUtils.doTimeFormat((int) segundos);
+        if(currentStormDuration > 0){
+            return GenericUtils.doTimeFormat(currentStormDuration);
         }
         return " ";
     }

@@ -37,6 +37,7 @@ public class GenericUtils {
     private static @Getter int maxweatherdur = Integer.parseInt(ConfigData.getConfig("weathermaxdur","0"));
     public static @Getter String monsoon_active = ConfigData.getConfig("monsoon_active","");
     public static @Getter String typhoonactive = ConfigData.getConfig("typhoon_active","");
+    public static @Getter int currentStormDuration = Integer.parseInt(ConfigData.getConfig("currentStormDur", String.valueOf(GenericUtils.getWorld().getThunderDuration())));
 
     public static int getDay(){
         return (int) ChronoUnit.DAYS.between(startDate, actualDate);
@@ -98,6 +99,10 @@ public class GenericUtils {
     public static void setMaxWeatherDuration(int ticks){
         maxweatherdur = ticks;
         ConfigData.setConfig("weathermaxdur", String.valueOf(ticks));
+    }
+
+    public static void setCurrentStormDuration(int ticks){
+        ConfigData.setConfig("currentStormDur", String.valueOf(ticks));
     }
 
 
