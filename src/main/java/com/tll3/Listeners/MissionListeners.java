@@ -16,6 +16,7 @@ import static com.tll3.Misc.GenericUtils.*;
 public class MissionListeners implements Listener {
 
     private static Player killer;
+    private static LivingEntity entity;
 
     private static int getObjective(String objective){
         return PlayerData.getObjective(killer,objective);
@@ -38,6 +39,19 @@ public class MissionListeners implements Listener {
         }
     }
 
+    private static boolean mobHasKey(String key){
+        return Data.has(entity,key, PersistentDataType.STRING);
+    }
+
+    private static boolean entityType(EntityType type){
+        return entity.getType() == type;
+    }
+
+    private static void upgradeProgressIf(boolean condition, String key){
+        if (condition)
+            upgradeMissionProgress(key);
+    }
+
     @EventHandler
     public void killmissions(EntityDeathEvent e){
         var entity = e.getEntity();
@@ -47,7 +61,8 @@ public class MissionListeners implements Listener {
             return;
 
         MissionListeners.killer = killer;
-        System.out.println("Killer: " + killer.getName());
+        MissionListeners.entity = entity;
+        System.out.println("Killer: " + MissionListeners.killer.getName());
 
         if(getDay() >= 0 && getDay() < 7){
 
@@ -58,28 +73,24 @@ public class MissionListeners implements Listener {
                     missionCompleted(killer,"#ff954fViolencia Innecesaria","05_violencia",10,4);
             }
 
-            if(entity.getType() == EntityType.GUARDIAN && getMission("04_atlantis") != 1){
-                if(getObjective("04guardianes") < 20)
-                    upgradeMissionProgress("04guardianes");
+            if(entityType(EntityType.GUARDIAN) && getMission("04_atlantis") != 1){
+                upgradeProgressIf(getObjective("04guardianes") < 20, "04guardianes");
                 if(getObjective("04guardianes") >= 20 && getObjective("04elderguardian") >= 1)
                     missionCompleted(killer,"#69c5ffAnti-Atlantis","04_atlantis",20,14);
             }
 
-            if(entity.getType() == EntityType.ELDER_GUARDIAN && getMission("04_atlantis") != 1){
-                if(getObjective("04elderguardian") < 3)
-                    upgradeMissionProgress("04elderguardian");
+            if(entityType(EntityType.ELDER_GUARDIAN) && getMission("04_atlantis") != 1){
+                upgradeProgressIf(getObjective("04elderguardian") < 3, "04elderguardian");
                 if(getObjective("04guardianes") >= 20 && getObjective("04elderguardian") >= 3)
                     missionCompleted(killer,"#69c5ffAnti-Atlantis","04_atlantis",20,14);
             }
 
-            if(entity.getType() == EntityType.WARDEN && getMission("03_warden") != 1){
-                if(getObjective("03warden") == 0)
-                    upgradeMissionProgress("03warden");
-                if(getObjective("03warden") >= 1){
+            if(entityType(EntityType.WARDEN) && getMission("03_warden") != 1){
+                upgradeProgressIf(getObjective("03warden") == 0, "03warden");
+                if(getObjective("03warden") >= 1)
                     missionCompleted(killer,"#004736Aprende y Escucha","03_warden",30,15);
-                }
             }
-            if(entity.getType() == EntityType.WITHER  && getMission("02_wither") != 1){
+            if(entityType(EntityType.WITHER) && getMission("02_wither") != 1){
                 if(getObjective("02wither") < 5)
                     upgradeMissionProgress("02wither");
                 else
@@ -110,151 +121,115 @@ public class MissionListeners implements Listener {
             //Sin Piedad fin
         }else if(getDay() >= 7 && getDay() < 14){
 
-            if(entity.getType() == EntityType.ZOMBIE){
-                if(PlayerData.getMission(killer,"12_demon") != 1){
-                    if(Data.has(entity,"revenantzombie", PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"12revzo") < 10) {
-                            PlayerData.setObjectiveCount(killer, "12revzo", PlayerData.getObjective(killer, "12revzo") + 1);
-                        }
-                    }
-                    if(checkDemonDeath(killer)){
+            if(entityType(EntityType.ZOMBIE)){
+                if(getMission("12_demon") != 1){
+                    if(mobHasKey("revenantzombie"))
+                        if(getObjective("12revzo") < 10)
+                            upgradeMissionProgress("12revzo");
+                    if(checkDemonDeath(killer))
                         missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
-                    }
                 }
-                if(PlayerData.getMission(killer,"15_cheat") != 1){
-                    if(Data.has(entity,"dead_arq",PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"15arq") < 10) {
-                            PlayerData.setObjectiveCount(killer, "15arq", PlayerData.getObjective(killer, "15arq") + 1);
-                        }
-                        if(PlayerData.getObjective(killer,"15arq") >= 10 && PlayerData.getObjective(killer,"15raz") >= 10){
+                if(getMission("15_cheat") != 1){
+                    if(mobHasKey("dead_arq")){
+                        if(getObjective("15arq") < 10)
+                            upgradeMissionProgress("15arq");
+                        if(getObjective("15arq") >= 10 && getObjective("15raz") >= 10){
                             missionCompleted(killer,"#ed572dAnti-cheat","15_cheat",22,14);
                         }
                     }
                 }
             }
-            if(entity.getType() == EntityType.SKELETON){
-                if(PlayerData.getMission(killer,"12_demon") != 1){
-                    if(Data.has(entity,"revenantskeleton", PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"12revsk") < 10) {
-                            PlayerData.setObjectiveCount(killer, "12revsk", PlayerData.getObjective(killer, "12revsk") + 1);
-                        }
-                    }
-                    if(checkDemonDeath(killer)){
+            if(entityType(EntityType.SKELETON)){
+                if(getMission("12_demon") != 1){
+                    if(mobHasKey("revenantskeleton"))
+                        if(getObjective("12revsk") < 10)
+                            upgradeMissionProgress("12revsk");
+                    if(checkDemonDeath(killer))
                         missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
-                    }
                 }
-                if(PlayerData.getMission(killer,"15_cheat") != 1){
-                    if(Data.has(entity,"razorback",PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"15raz") < 10) {
-                            PlayerData.setObjectiveCount(killer, "15raz", PlayerData.getObjective(killer, "15raz") + 1);
-                        }
-                        if(PlayerData.getObjective(killer,"15arq") >= 10 && PlayerData.getObjective(killer,"15raz") >= 10){
+                if(getMission("15_cheat") != 1){
+                    if(mobHasKey("razorback")){
+                        if(getObjective("15raz") < 10)
+                            upgradeMissionProgress("15raz");
+                        if(getObjective("15arq") >= 10 && getObjective("15raz") >= 10)
                             missionCompleted(killer,"#ed572dAnti-cheat","15_cheat",22,14);
-                        }
                     }
                 }
             }
-            if(entity.getType() == EntityType.SPIDER){
-                if(PlayerData.getMission(killer,"12_demon") != 1){
-                    if(Data.has(entity,"revenantspider", PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"12revsp") < 10) {
-                            PlayerData.setObjectiveCount(killer, "12revsp", PlayerData.getObjective(killer, "12revsp") + 1);
-                        }
-                    }
-                    if(checkDemonDeath(killer)){
+            if(entityType(EntityType.SPIDER)){
+                if(getMission("12_demon") != 1){
+                    if(mobHasKey("revenantspider"))
+                        upgradeProgressIf(getObjective("12revsp") < 10, "12revsp");
+                    if(checkDemonDeath(killer))
                         missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
-                    }
                 }
             }
-            if(entity.getType() == EntityType.CREEPER){
-                if(PlayerData.getMission(killer,"12_demon") != 1){
-                    if(Data.has(entity,"revenantcreeper", PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"12revcr") < 10) {
-                            PlayerData.setObjectiveCount(killer, "12revcr", PlayerData.getObjective(killer, "12revcr") + 1);
-                        }
-                    }
-                    if(checkDemonDeath(killer)){
-                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
-                    }
-                }
-            }
-            if(entity.getType() == EntityType.ENDERMAN){
-                if(PlayerData.getMission(killer,"12_demon") != 1){
-                    if(Data.has(entity,"revenantenderman", PersistentDataType.STRING)){
-                        if(PlayerData.getObjective(killer,"12reven") < 10) {
-                            PlayerData.setObjectiveCount(killer, "12reven", PlayerData.getObjective(killer, "12reven") + 1);
-                        }
-                    }
+
+            if(entityType(EntityType.CREEPER)){
+                if(getMission("12_demon") != 1){
+                    if(mobHasKey("revenantcreeper"))
+                        upgradeProgressIf(getObjective("12revcr") < 10, "12revcr");
                     if(checkDemonDeath(killer)){
                         missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
                     }
                 }
             }
 
+            if(entityType(EntityType.ENDERMAN)){
+                if(getMission("12_demon") != 1){
+                    if(mobHasKey("revenantenderman"))
+                        upgradeProgressIf(getObjective("12reven")<10, "12reven");
+                    if(checkDemonDeath(killer))
+                        missionCompleted(killer,"#8f0a00Caza de Demonios","12_demon",40,20);
+                }
+            }
 
-            if(entity.getType() == EntityType.WITHER_SKELETON && PlayerData.getMission(killer, "11_rol") != 1) {
-                if(Data.has(entity,"w_swordsman", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"11sword") < 5) {
-                        PlayerData.setObjectiveCount(killer, "11sword", PlayerData.getObjective(killer, "11sword") + 1);
-                    }
+            if(entityType(EntityType.WITHER_SKELETON) && getMission("11_rol") != 1) {
+                if(mobHasKey("w_swordsman")){
+                    upgradeProgressIf(getObjective("11sword") < 5, "11sword");
+                    if(checkRPG(killer))
+                        missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
+                }
+                if(mobHasKey("w_archer")){
+                    upgradeProgressIf(getObjective("11archer") < 5, "11archer");
                     if(checkRPG(killer)){
                         missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
                     }
                 }
-                if(Data.has(entity,"w_archer", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"11archer") < 5) {
-                        PlayerData.setObjectiveCount(killer, "11archer", PlayerData.getObjective(killer, "11archer") + 1);
-                    }
-                    if(checkRPG(killer)){
+                if(mobHasKey("w_tank")){
+                    upgradeProgressIf(getObjective("11jugger") < 5, "11jugger");
+                    if(checkRPG(killer))
                         missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
-                    }
                 }
-                if(Data.has(entity,"w_tank", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"11jugger") < 5) {
-                        PlayerData.setObjectiveCount(killer, "11jugger", PlayerData.getObjective(killer, "11jugger") + 1);
-                    }
-                    if(checkRPG(killer)){
+                if(mobHasKey("w_mage")){
+                    upgradeProgressIf(getObjective("11mage") < 5, "11mage");
+                    if(checkRPG(killer))
                         missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
-                    }
-                }
-                if(Data.has(entity,"w_mage", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"11mage") < 5) {
-                        PlayerData.setObjectiveCount(killer, "11mage", PlayerData.getObjective(killer, "11mage") + 1);
-                    }
-                    if(checkRPG(killer)){
-                        missionCompleted(killer,"#474747Juegos de Rol","11_rol",25,14);
-                    }
                 }
             }
-            if(entity.getType() == EntityType.CAVE_SPIDER && PlayerData.getMission(killer, "13_plaga") != 1) {
-                if(Data.has(entity,"termite", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"13term") < 10) {
-                        PlayerData.setObjectiveCount(killer, "13term", PlayerData.getObjective(killer, "13term") + 1);
-                    }
-                    if(PlayerData.getObjective(killer,"13term") >= 10 && PlayerData.getObjective(killer,"13colterm") >= 10){
+            if(entityType(EntityType.CAVE_SPIDER) && getMission("13_plaga") != 1) {
+                if(mobHasKey("termite")){
+                    upgradeProgressIf(getObjective("13term") < 10, "13term");
+                    if(getObjective("13term") >= 10 && getObjective("13colterm") >= 10){
                         missionCompleted(killer,"#17c200Epidemia Explosiva","13_plaga",28,16);
                     }
                 }
-                if(Data.has(entity,"termite_ex", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"13colterm") < 10) {
-                        PlayerData.setObjectiveCount(killer, "13colterm", PlayerData.getObjective(killer, "13colterm") + 1);
-                    }
-                    if(PlayerData.getObjective(killer,"13term") >= 10 && PlayerData.getObjective(killer,"13colterm") >= 10){
+                if(mobHasKey("termite_ex")){
+                    upgradeProgressIf(getObjective("13colterm") < 10, "13colterm");
+                    if(getObjective("13term") >= 10 && getObjective("13colterm") >= 10){
                         missionCompleted(killer,"#17c200Epidemia Explosiva","13_plaga",28,16);
                     }
                 }
             }
-            if(entity.getType() == EntityType.PHANTOM && PlayerData.getMission(killer, "14_phantom") != 1) {
-                if(Data.has(entity,"duskphantom", PersistentDataType.STRING)){
-                    if(PlayerData.getObjective(killer,"14dusk") < 5) {
-                        PlayerData.setObjectiveCount(killer, "14dusk", PlayerData.getObjective(killer, "14dusk") + 1);
-                    }else{
+            if(entityType(EntityType.PHANTOM) && getMission("14_phantom") != 1) {
+                if(mobHasKey("duskphantom")){
+                    upgradeProgressIf(getObjective("14dusk") < 5, "14dusk");
+                    if (getObjective("14dusk") >= 5)
                         missionCompleted(killer,"#37456eAcechadores Nocturnos","14_phantom",18,12);
-                    }
                 }
             }
         }else if(getDay() >= 14 && getDay() < 21){
-            if (PlayerData.getMission(killer, "21_waste") != 1) {
+            if (getMission("21_waste") != 1) {
                 if (checkWasteyardKills(killer)) {
                     missionCompleted(killer, "#524843De parte del Vertedero", "21_waste", 45, 30);
                 } else {
@@ -268,9 +243,10 @@ public class MissionListeners implements Listener {
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "22_blaze") != 1) {
-                if(entity.getType() == EntityType.BLAZE){
-                if (PlayerData.getObjective(killer, "22wind") >= 10 && PlayerData.getObjective(killer, "22armor") >= 10) {
+
+            if (getMission("22_blaze") != 1) {
+                if(entityType(EntityType.BLAZE)){
+                if (getObjective("22wind") >= 10 && getObjective("22armor") >= 10) {
                     missionCompleted(killer, "#fae3c3¡Vienen del Futuro! (y del pasado)", "22_blaze", 35, 20);
 
                 }else{
@@ -279,48 +255,38 @@ public class MissionListeners implements Listener {
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "23_ash") != 1) {
-                if (PlayerData.getObjective(killer, "23ashen") >= 1) {
+            if (getMission("23_ash") != 1) {
+                if (getObjective("23ashen") >= 1) {
                     missionCompleted(killer, "#737373Desde las Cenizas", "23_ash", 40, 25);
                 }
-                if (entity.getType() == EntityType.WITHER) {
-                    if (PlayerData.getObjective(killer, "23ashen") >= 1) {
+                if (entityType(EntityType.WITHER)) {
+                    if (getObjective("23ashen") >= 1) {
                         AddAndCheckKillCount(entity, "ashenwither", 1, killer, "23ashen");
                         missionCompleted(killer, "#737373Desde las Cenizas", "23_ash", 40, 25);
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "24_bee") != 1) {
-                if (PlayerData.getObjective(killer, "24bee") >= 20) {
+            if (getMission("24_bee") != 1 && entityType(EntityType.BEE)) {
+                upgradeProgressIf(getObjective("24bee") < 20, "24bee");
+                if (getObjective("24bee") >= 20)
                     missionCompleted(killer, "#255c3cÉpoca de plaga", "24_bee", 32, 20);
-                    return;
-                }
-                if (entity.getType() == EntityType.BEE) {
-                    if (PlayerData.getObjective(killer, "24bee") < 20) {
-                        PlayerData.setObjectiveCount(killer, "24bee", PlayerData.getObjective(killer, "24bee") + 1);
-                    }
-                }
             }
-            if (PlayerData.getMission(killer, "25_llama") != 1) {
-                if (PlayerData.getObjective(killer, "25lla") >= 10 && PlayerData.getObjective(killer, "25goa") >= 10) {
+            if (getMission("25_llama") != 1) {
+                if (getObjective("25lla") >= 10 && getObjective("25goa") >= 10) {
                     missionCompleted(killer, "#ab789bEl pastor y su rebaño", "25_llama", 36, 24);
                     return;
                 }
-                if (entity.getType() == EntityType.GOAT) {
-                    if (PlayerData.getObjective(killer, "25lla") < 10) {
-                        PlayerData.setObjectiveCount(killer, "25lla", PlayerData.getObjective(killer, "25lla") + 1);
-                    }
+                if (entityType(EntityType.GOAT)) {
+                    upgradeProgressIf(getObjective("25goa") < 10, "25goa");
                 }
-                if (entity.getType() == EntityType.LLAMA) {
-                    if (PlayerData.getObjective(killer, "25goa") < 10) {
-                        PlayerData.setObjectiveCount(killer, "25goa", PlayerData.getObjective(killer, "25goa") + 1);
-                    }
+                if (entityType(EntityType.LLAMA)) {
+                    upgradeProgressIf(getObjective("25lla") < 10, "25lla");
                 }
             }
         }else if(getDay() >= 21 && getDay() < 28){
-            if (PlayerData.getMission(killer, "31_metal") != 1) {
-                if (entity.getType() == EntityType.SKELETON || entity.getType() == EntityType.CREEPER || entity.getType() == EntityType.ENDERMAN) {
-                    if (PlayerData.getObjective(killer, "31ste") >= 5 && PlayerData.getObjective(killer, "31tit") >= 5 && PlayerData.getObjective(killer, "31cyb") >= 5) {
+            if (getMission("31_metal") != 1) {
+                if (entityType(EntityType.SKELETON) || entityType(EntityType.CREEPER) || entityType(EntityType.ENDERMAN)) {
+                    if (getObjective("31ste") >= 5 && getObjective("31tit") >= 5 && getObjective("31cyb") >= 5) {
                         missionCompleted(killer, "#737373D#717171e#707070s#6e6e6eo#6c6c6cx#6b6b6bi#696969d#686868a#666666c#646464i#636363ó#616161n", "31_metal", 45, 30);
                     } else {
                         AddAndCheckKillCount(entity, "steelrailgunner", 5, killer, "31ste");
@@ -329,9 +295,9 @@ public class MissionListeners implements Listener {
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "32_mcleg") != 1) {
-                if (entity.getType() == EntityType.ZOMBIFIED_PIGLIN) {
-                    if (PlayerData.getObjective(killer, "32pig1") >= 10 && PlayerData.getObjective(killer, "32pig2") >= 10 && PlayerData.getObjective(killer, "32pig3") >= 10) {
+            if (getMission("32_mcleg") != 1) {
+                if (entityType(EntityType.ZOMBIFIED_PIGLIN)) {
+                    if (getObjective("32pig1") >= 10 && getObjective("32pig2") >= 10 && getObjective("32pig3") >= 10) {
                         missionCompleted(killer, "#34cbfbM#3ccefbi#44d0fbn#4cd3fbe#54d6fcc#5cd8fcr#64dbfca#6cdefcf#75e0fct #7de3fcL#85e6fce#8de8fcg#95ebfde#9deefdn#a5f0fdd#adf3fds", "32_mcleg", 54, 36);
                     } else {
                         AddAndCheckKillCount(entity, "pigrider", 10, killer, "32pig3");
@@ -340,18 +306,18 @@ public class MissionListeners implements Listener {
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "33_blas") != 1) {
-                if (entity.getType() == EntityType.GHAST) {
-                    if (PlayerData.getObjective(killer, "33gas") >= 5) {
+            if (getMission("33_blas") != 1) {
+                if (entityType(EntityType.GHAST)) {
+                    if (getObjective("33gas") >= 5) {
                         missionCompleted(killer, "#fbf8aa¡#fbf9b2B#fbf9bbl#fcfac3a#fcfacbs#fcfbd4f#fcfbdce#fcfce4m#fdfceci#fdfdf5a#fdfdfd!", "33_blas", 42, 28);
                     } else {
                         AddAndCheckKillCount(entity, "entropicdemon", 5, killer, "33gas");
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "34_prop") != 1) {
-                if (entity.getType() == EntityType.PILLAGER || entity.getType() == EntityType.VINDICATOR || entity.getType() == EntityType.EVOKER) {
-                    if (PlayerData.getObjective(killer, "34ill1") >= 5 && PlayerData.getObjective(killer, "34ill2") >= 5 && PlayerData.getObjective(killer, "34ill3") >= 5) {
+            if (getMission("34_prop") != 1) {
+                if (entityType(EntityType.PILLAGER) || entityType(EntityType.VINDICATOR) || entityType(EntityType.EVOKER)) {
+                    if (getObjective("34ill1") >= 5 && getObjective("34ill2") >= 5 && getObjective("34ill3") >= 5) {
                         missionCompleted(killer, "#572424I#592929n#5b2d2dv#5d3232a#5e3737s#603b3bi#624040ó#644545n #664949d#684e4ee #695353P#6b5757r#6d5c5co#6f6161p#716565i#736a6ae#746f6fd#767373a#787878d", "34_prop", 50, 34);
                     } else {
                         AddAndCheckKillCount(entity, "pillagerex", 5, killer, "34ill1");
@@ -360,8 +326,8 @@ public class MissionListeners implements Listener {
                     }
                 }
             }
-            if (PlayerData.getMission(killer, "35_lap") != 1) {
-                if (entity.getType() == EntityType.SKELETON) {
+            if (getMission("35_lap") != 1) {
+                if (entityType(EntityType.SKELETON)) {
                     if (checkLap2(killer)) {
                         missionCompleted(killer, "#9428ffS#8f28ffe#8a29ffg#8429ffu#7f29ffn#7a29ffd#752affa #6f2affV#6a2affu#652affe#602bffl#5a2bfft#552bffa", "35_lap", 54, 36);
                     } else {
@@ -391,12 +357,8 @@ public class MissionListeners implements Listener {
     }
 
     public static void AddAndCheckKillCount(LivingEntity liv,String data, int maxkills,Player killer,String objective){
-        if(Data.has(liv,data,PersistentDataType.STRING)){
-            if(PlayerData.getObjective(killer,objective) < maxkills) {
-                PlayerData.setObjectiveCount(killer, objective, PlayerData.getObjective(killer, objective) + 1);
-            }
-        }
-
+        if(mobHasKey(data))
+            upgradeProgressIf(getObjective(objective) < maxkills, objective);
     }
 
     public static boolean checkNoMercy(Player p){
@@ -430,7 +392,7 @@ public class MissionListeners implements Listener {
 
     private static boolean checkMisions(Player p, int umbral, String... misiones){
         for(String mision : misiones){
-            if(PlayerData.getMission(p,mision) >= umbral){
+            if(!(PlayerData.getMission(p,mision) >= umbral)){
                 return false;
             }
         }
