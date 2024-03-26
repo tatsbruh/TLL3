@@ -16,7 +16,7 @@ public class Data {
         return new NamespacedKey(GenericUtils.getPlugin(), key);
     }
     private static final CreateFile config = new CreateFile(TLL3.getInstance(), "data.yml");
-    private static final CreateFile missionData = new CreateFile(TLL3.getInstance(), "missionData.yml");
+    private static final CreateFile missionData = new CreateFile(TLL3.getInstance(), "missiondata.yml");
     public static <T, Z> void set(PersistentDataHolder holder, String key, PersistentDataType<T, Z> type, Z value) {
         Data.getDataContainer(holder).set(Data.Key(key), type, value);
     }
