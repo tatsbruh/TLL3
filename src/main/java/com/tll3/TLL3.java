@@ -53,8 +53,10 @@ public final class TLL3 extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        Bukkit.getScheduler().cancelTask(MonsoonListeners.TaskBossBarID);
-        MonsoonListeners.removeAllBossbar();
+        if(MonsoonListeners.TaskBossBarID != null){
+            Bukkit.getScheduler().cancelTask(MonsoonListeners.TaskBossBarID);
+            MonsoonListeners.removeAllBossbar();
+        }
         console("Plugin desactivado correctamente");
     }
 
