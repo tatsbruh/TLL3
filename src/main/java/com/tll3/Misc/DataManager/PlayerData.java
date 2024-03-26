@@ -80,17 +80,17 @@ public class PlayerData {
 
 
     public static void setMissionCount(Player target,String mission,int number){
-        Data.setPlayerData(target, "mission_" + mission, String.valueOf(number));
+        Data.setPlayerMissionData(target, "mission_" + mission, String.valueOf(number));
     }
     public static int getMission(Player target,String mission){
-        return Integer.parseInt(Data.getPlayerData(target,"mission_" + mission,"0"));
+        return Integer.parseInt(Data.getPlayerMissionData(target,"mission_" + mission,"0"));
     }
 
     public static void setObjectiveCount(Player target,String mission,int number){
-        Data.setPlayerData(target, "obj_" + mission, String.valueOf(number));
+        Data.setPlayerMissionData(target, "obj_" + mission, String.valueOf(number));
     }
     public static int getObjective(Player target,String mission){
-        return Integer.parseInt(Data.getPlayerData(target,"obj_" + mission,"0"));
+        return Integer.parseInt(Data.getPlayerMissionData(target,"obj_" + mission,"0"));
     }
 
     public static void setTotemCount(Player target,int i){

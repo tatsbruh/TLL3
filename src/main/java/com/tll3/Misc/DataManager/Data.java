@@ -16,6 +16,7 @@ public class Data {
         return new NamespacedKey(GenericUtils.getPlugin(), key);
     }
     private static final CreateFile config = new CreateFile(TLL3.getInstance(), "data.yml");
+    private static final CreateFile missionData = new CreateFile(TLL3.getInstance(), "missionData.yml");
     public static <T, Z> void set(PersistentDataHolder holder, String key, PersistentDataType<T, Z> type, Z value) {
         Data.getDataContainer(holder).set(Data.Key(key), type, value);
     }
@@ -59,6 +60,18 @@ public class Data {
             setPlayerData(target, id, defaultValue);
         }
         return config.getConfig().getString(target.getName() + "." + id);
+    }
+
+    // Mission Player Data
+
+    public static void setPlayerMissionData(Player target, String id, String value){
+        missionData.setConfig(target.getName() + "." + id, value);
+    }
+    public static String getPlayerMissionData(Player target, String id, String defaultValue){
+        if(missionData.getConfig().getString(target.getName() + "." + id) == null){
+            setPlayerMissionData(target, id, defaultValue);
+        }
+        return missionData.getConfig().getString(target.getName() + "." + id);
     }
 
 
