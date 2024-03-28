@@ -88,6 +88,7 @@ public class MonsoonListeners implements Listener {
         world.setStorm(true);
         world.setThundering(true);
         world.setThunderDuration(currentStormDuration);
+        world.setWeatherDuration(currentStormDuration);
         for (Player sp : Bukkit.getOnlinePlayers()) {
             sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
             sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
@@ -166,14 +167,18 @@ public class MonsoonListeners implements Listener {
         if(e.getCause() == ThunderChangeEvent.Cause.COMMAND){
             Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.COMMAND));
         } else {
+            World w = GenericUtils.getWorld();
+
+            if (currentStormDuration > 0 && w.getWeatherDuration() <= 0){
+                w.setStorm(true);
+                w.setThundering(true);
+                w.setWeatherDuration(currentStormDuration);
+                w.setThunderDuration(currentStormDuration);
+            }
+
             if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
                 if (currentStormDuration <= 0) {
                     Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.NATURAL));
-                } else {
-                    World w = GenericUtils.getWorld();
-                    w.setStorm(true);
-                    w.setThundering(true);
-                    w.setThunderDuration(currentStormDuration);
                 }
             }
         }
