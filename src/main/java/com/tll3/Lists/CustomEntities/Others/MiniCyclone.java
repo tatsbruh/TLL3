@@ -28,6 +28,8 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
+import static com.tll3.Misc.EntityHelper.setIdentifierInt;
+
 public class MiniCyclone extends EntitySkeleton {
     private final CycloneClass clase;
     public enum CycloneClass{
@@ -50,7 +52,9 @@ public class MiniCyclone extends EntitySkeleton {
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
             EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 30);
             EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_zombie");
+            EntityHelper.setIdentifierInt(this.getBukkitEntity(),"burrowstate",0);
             EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 1);
+
         }else if(clase == CycloneClass.NORMAL){
             this.getBukkitEntity().setCustomName(ChatUtils.format("&f&lTermacyclone"));
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));

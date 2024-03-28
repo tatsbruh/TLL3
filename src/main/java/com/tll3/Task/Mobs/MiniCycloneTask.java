@@ -59,8 +59,10 @@ public class MiniCycloneTask extends BukkitRunnable {
                         }
                     }
                     if(Data.has(l,"minicyclone_zombie", PersistentDataType.STRING)){
-                        nearby.damage(11, l);
-                        nearby.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,100,0,true,false,true));
+                        if(l.hasAI()) {
+                            nearby.damage(11, l);
+                            nearby.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 100, 0, true, false, true));
+                        }
                     }
                     if(Data.has(l,"minicyclone_normal", PersistentDataType.STRING)){
                         nearby.damage(25, l);

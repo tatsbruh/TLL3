@@ -1,5 +1,6 @@
 package com.tll3.Listeners;
 
+import com.tll3.Misc.Advancements.NewAchievements;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.Monsoon;
@@ -20,7 +21,9 @@ public class PlayerDeathListeners implements Listener {
     @EventHandler
     public void deathE(PlayerDeathEvent e){
         var p = e.getPlayer();
-        p.setHealth(20);
+        NamespacedKey key = new NamespacedKey("afterlife","progress/death");
+        NewAchievements.awardAdvancement(p,key);
+        p.setHealth(p.getMaxHealth());
         p.setGameMode(GameMode.SPECTATOR);
         World world = GenericUtils.getWorld();
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,false);

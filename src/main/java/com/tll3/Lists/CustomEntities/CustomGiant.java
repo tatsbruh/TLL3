@@ -24,6 +24,8 @@ public class CustomGiant extends EntityGiantZombie {
         EntityHelper.setMobDamage((LivingEntity) this.getBukkitEntity(),60);
         EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(),600);
         EntityHelper.setIdentifierString(this.getBukkitEntity(),"giant");
+        ((LivingEntity)this.getBukkitEntity()).setPersistent(false);
+        ((LivingEntity)this.getBukkitEntity()).setRemoveWhenFarAway(true);
     }
     @Override
     protected void B() {

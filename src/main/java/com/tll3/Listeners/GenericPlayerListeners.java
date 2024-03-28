@@ -1,6 +1,7 @@
 package com.tll3.Listeners;
 
 import com.tll3.Lists.Entities;
+import com.tll3.Misc.Advancements.NewAchievements;
 import com.tll3.Misc.ChatUtils;
 import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.DataManager.PlayerData;
@@ -8,7 +9,6 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.TLL3;
 import com.tll3.Task.*;
-import eu.endercentral.crazy_advancements.CrazyAdvancementsAPI;
 import net.minecraft.server.level.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.entity.EntityLiving;
@@ -25,10 +25,7 @@ import org.bukkit.entity.Villager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityPoseChangeEvent;
-import org.bukkit.event.entity.EntityRegainHealthEvent;
-import org.bukkit.event.entity.EntityResurrectEvent;
-import org.bukkit.event.entity.EntityToggleSwimEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
@@ -53,9 +50,6 @@ public class GenericPlayerListeners implements Listener {
     @EventHandler
     public void joinL(PlayerJoinEvent e){
         var p = e.getPlayer();
-
-        CrazyAdvancementsAPI.setActiveTab(e.getPlayer(),"first_steps");
-
         if(PlayerData.getItemCooldown(p,"inv_tome") > 0){
             p.setCooldown(Material.BOOK,PlayerData.getItemCooldown(p,"inv_tome"));
         }
@@ -136,13 +130,21 @@ public class GenericPlayerListeners implements Listener {
         }
     }
 
+    @EventHandler
+    public void glideEv(EntityToggleGlideEvent e){
+        Player p = (Player) e.getEntity();
+        if(p.hasCooldown(Material.ELYTRA)){
+            e.setCancelled(true);
+        }
+    }
+
 
 
 
     @EventHandler
     public void itemduraE(PlayerItemDamageEvent e){
         var player = e.getPlayer();
-        if(getDay() >= 7 && getDay() < 21){
+        if(getDay() >= 7 && getDay() < 35){
         if(Objects.equals(GenericUtils.getMonsoon_active(), "true") && player.getGameMode() == GameMode.SURVIVAL){
             Location block = player.getWorld().getHighestBlockAt(player.getLocation().clone()).getLocation();
             int highestY = block.getBlockY();
@@ -154,6 +156,8 @@ public class GenericPlayerListeners implements Listener {
             }
             }
         }
+        }else if(getDay() >= 35){
+            e.setDamage(999999);
         }
     }
 

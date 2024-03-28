@@ -16,6 +16,7 @@ import com.tll3.Task.MobRain;
 import com.tll3.Task.Mobs.ArqBlockBreak;
 import com.tll3.Task.Mobs.HomingTask;
 import io.papermc.paper.event.entity.EntityMoveEvent;
+import io.papermc.paper.event.entity.WardenAngerChangeEvent;
 import net.minecraft.network.protocol.game.PacketPlayOutEntityDestroy;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.*;
@@ -670,6 +671,10 @@ public class GenericEntityListeners implements Listener {
                 EntityHelper.setIdentifierString(projectile,"lol");
                 new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
             }
+            if(Data.has(s,"anticommander",PersistentDataType.STRING)){
+                EntityHelper.setIdentifierString(projectile,"fefe");
+                new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
+            }
             if(Data.has(s,"revenantskeleton",PersistentDataType.STRING)){
                 int g = Data.get(s,"revske_amount",PersistentDataType.INTEGER);
                 if(getDay() >= 21){
@@ -885,6 +890,12 @@ public class GenericEntityListeners implements Listener {
             if(Data.has(a,"lol",PersistentDataType.STRING)){
                 if(hen instanceof Player){
                     a.remove();
+                }
+            }
+            if(Data.has(a,"fefe",PersistentDataType.STRING)){
+                if(hen instanceof Player p){
+                    a.remove();
+                    p.setCooldown(Material.ELYTRA,600); //30 seg de cooldown
                 }
             }
             if(Data.has(a,"rev_explosion",PersistentDataType.STRING)){
@@ -1155,7 +1166,7 @@ public class GenericEntityListeners implements Listener {
                if(Data.has(s,"primordialcave",PersistentDataType.STRING)){
                    int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                    if(g == 0) {
-                       if (s.isOnGround()) {
+                       if (s.isOnGround() && p.isOnGround()){
                            new BukkitRunnable() {
                                @Override
                                public void run() {
@@ -1171,7 +1182,7 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"primordialbrute",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround()) {
+                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1187,7 +1198,7 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"primordialzoglin",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround()) {
+                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1200,7 +1211,17 @@ public class GenericEntityListeners implements Listener {
                 }
             }
         }
+    }
 
+    @EventHandler
+    public void wardenTargetAB(WardenAngerChangeEvent e){
+        var entity = e.getEntity();
+        var target = e.getTarget();
+        if(getDay() >= 7){
+            if(target instanceof Enemy && e.getNewAnger() == 150){
+                e.setCancelled(true);
+            }
+        }
     }
 
     public static void returnMob(Location loc){

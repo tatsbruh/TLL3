@@ -17,4 +17,9 @@ public class ConfigData {
         return config.getConfig().getString(id);
     }
 
+    //Pepe3012
+    public static boolean getConfigBoolean(String id) {
+        return config.getConfig().getBoolean(id);
+    }
+
 }

@@ -11,16 +11,18 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
-import org.bukkit.entity.Enderman;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Pose;
+import org.bukkit.entity.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
+
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import static com.tll3.Misc.GenericUtils.getDay;
 import static com.tll3.Misc.GenericUtils.*;
@@ -31,6 +33,7 @@ public class ServerTickTask extends BukkitRunnable {
     int wast_darkness = 0;
     int wast_caution = 5;
     int temperature = 0;
+    int freezeticks = 0;
 
     public ServerTickTask(Player p){
         this.p = p;
@@ -56,6 +59,15 @@ public class ServerTickTask extends BukkitRunnable {
         p.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(speed);
         if(p.getGameMode() == GameMode.SURVIVAL) {
             InventoryUtils.lockPlayerSlots(p);
+            //Si el jugador tiene elytras puestas, esta volando Y tiene cooldown en las elytras, se cancela su vuelo completamente
+            //Esto es parte de la habilidad del Antiair Commander
+            if(p.getInventory().getChestplate().getType() == Material.ELYTRA){
+                if(p.hasCooldown(Material.ELYTRA)){
+                    if(p.getPose() == Pose.FALL_FLYING){
+                        p.setPose(Pose.STANDING);
+                    }
+                }
+            }
             if(getDay() >= 7) {
                 int radius = 0;
                 if(getDay() >= 7 && getDay() < 21){
@@ -174,7 +186,51 @@ public class ServerTickTask extends BukkitRunnable {
                 }
             }
             if(getDay() >= 35){
+                if(p.isInWater() || p.isUnderWater()){
+                    if(freezeticks < 800){
+                        freezeticks++;
+                    }else if(freezeticks >= 800){
+                        freezeticks = 801;
+                        p.setFreezeTicks(200);
+                    }
+                }else{
+                    freezeticks = 0;
+                }
+            }
 
+            //Handle mob spawn
+            if(getDay() >= 35){
+                if(getMonsoon_active().equalsIgnoreCase("true")) {
+                    Random random = new Random();
+                    var l = p.getLocation().clone();
+                    if (random.nextInt(30) == 0 && p.getNearbyEntities(30, 30, 30)
+                            .stream()
+                            .filter(entity -> entity instanceof Creature)
+                            .map(Creeper.class::cast).toList().size() < 70) {
+                        int pX = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
+                        int pZ = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
+                        int y = (int) l.getY();
+                        Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
+                        Block up = block.getRelative(BlockFace.UP);
+                        if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
+                            if (
+                                    (block.getLocation().getWorld().getName().equalsIgnoreCase("world") &&
+                                            block.getType().name().toLowerCase().contains("glass") ||
+                                            block.getType() == Material.GLOWSTONE ||
+                                            block.getType().name().toLowerCase().contains("obsidian"))
+                                    ||
+                                            (block.getLocation().getWorld().getName().equalsIgnoreCase("world_nether") &&
+                                                    block.getType().name().toLowerCase().contains("glass") ||
+                                                    block.getType() == Material.GLOWSTONE ||
+                                                    block.getType().name().toLowerCase().contains("obsidian") ||
+                                                    block.getType().name().toLowerCase().contains("ice") ||
+                                                    block.getType() == Material.BEDROCK)
+                            ) {
+                                MobRain.initMobs(up.getLocation());
+                            }
+                        }
+                    }
+                }
             }
         }
     }

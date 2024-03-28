@@ -4,6 +4,8 @@ import com.tll3.Enviroments.Worlds;
 import com.tll3.Lists.CustomEntities.*;
 import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomEvokerFangs;
 import com.tll3.Lists.CustomEntities.CustomProjectiles.CustomLlamaSpit;
+import com.tll3.Lists.CustomEntities.Others.BetterCreeper;
+import com.tll3.Lists.CustomEntities.Others.BetterEnderman;
 import com.tll3.Lists.CustomEntities.Others.MiniCyclone;
 import com.tll3.Lists.Entities;
 import com.tll3.Misc.ChatUtils;
@@ -298,6 +300,12 @@ public class EntityNaturalSpawn implements Listener {
                             Entities.revEnderman((Enderman) entity);
                         }else if(random > 35 && random <= 55 && getDay() >= 21){
                             Entities.cyberpunk((Enderman) entity);
+                        }else if(random > 55 && random <= 70 && getDay() >= 35){
+                            e.setCancelled(true);
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            BetterEnderman r = new BetterEnderman(worldServer);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                         }
                     }
                 }
@@ -1283,6 +1291,68 @@ public class EntityNaturalSpawn implements Listener {
             }
         }
 
+        public static void chooseNewCreeper(Creeper c,CreatureSpawnEvent e){
+            var loc = c.getLocation();
+            var random = getRandomValue(100);
+            if(getDay() >= 35 && getDay() < 42){
+                if(random <= 30) {
+                    Entities.revCreeper(c);
+                }else if(random > 30 && random <= 55) {
+                    Entities.unstCr(c);
+                }else if(random > 55 && random <= 68) {
+                    Entities.titaniumCreeper(c);
+                }else if(random > 68 && random <= 74) {
+                    Entities.creeperTower(c);
+                }else if(random > 74 && random <= 83) {
+                    Entities.doomsDay(c);
+                }else if(random > 83 && random <= 90){
+                    e.setCancelled(true);
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    BetterCreeper r = new BetterCreeper(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }else{
+                    Entities.creChr(c);
+                }
+            }
+        }
+    public static void chooseAirMob(Location loc,CreatureSpawnEvent e){
+        if(getDay() >= 35 && getDay() < 42){
+            e.setCancelled(true);
+            Random random = new Random();
+            int chance = random.nextInt(6);
+            switch (chance){
+                case 0 ->{
+                    Breeze r = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                    Entities.windTyphoon(r);
+                }
+                case 1 ->{
+                    Breeze r = (Breeze) Entities.spawnMob(loc,EntityType.BREEZE);
+                    Entities.deathbringer(r);
+                }
+                case 2 ->{
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    MiniCyclone r = new MiniCyclone(worldServer, MiniCyclone.CycloneClass.ZOMBIE);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case 3 ->{
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    MiniCyclone r = new MiniCyclone(worldServer, MiniCyclone.CycloneClass.NORMAL);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case 4 ->{
+                    Vex v = (Vex) Entities.spawnMob(loc,EntityType.VEX);
+                    Entities.gabrielVex(v);
+                }
+                case 5 ->{
+                    Vex v = (Vex) Entities.spawnMob(loc,EntityType.VEX);
+                    Entities.relicVex(v);
+                }
+            }
+        }
+    }
 
     public static void summonnewmob(Location loc,CreatureSpawnEvent e){
         if(getDay() >= 14 && getDay() < 21) {
@@ -1551,6 +1621,174 @@ public class EntityNaturalSpawn implements Listener {
                         CustomIllusioner r = new CustomIllusioner(worldServer);
                         r.a_(loc.getX(), loc.getY(), loc.getZ());
                         worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                }
+            }
+        }else if(getDay() >= 35 && getDay() < 42){
+            if(getMonsoon_active().equalsIgnoreCase("true")){
+                Random random = new Random();
+                int chance = random.nextInt(15);
+                switch (chance) {
+                    case 0 -> {
+                        e.setCancelled(true);
+                        IronGolem ironGolem =(IronGolem)  Entities.spawnMob(loc, EntityType.IRON_GOLEM);
+                        Entities.enrIG(ironGolem);
+                        setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
+                    }
+                    case 1 -> {
+                        e.setCancelled(true);
+                        WitherSkeleton w = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
+                        chooseWitherSkeletonClass1(w);
+                    }
+                    case 2 -> {
+                        e.setCancelled(true);
+                        Blaze z = (Blaze) Entities.spawnMob(loc,EntityType.BLAZE);
+                        chooseBlazeType(z);
+                    }
+                    case 3 -> {
+                        e.setCancelled(true);
+                        Silverfish s = (Silverfish) Entities.spawnMob(loc,EntityType.SILVERFISH);
+                        Entities.silverday5(s);
+                    }
+                    case 4 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                        CustomBee r= new CustomBee(worldServer);
+                        r.a_(loc.getX(),loc.getY(),loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                    case 5 ->{
+                        e.setCancelled(true);
+                        Pillager p = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
+                        Entities.nwPillager(p,false);
+                    }
+                    case 6 ->{
+                        e.setCancelled(true);
+                        Vindicator p = (Vindicator) Entities.spawnMob(loc,EntityType.VINDICATOR);
+                        Entities.nwVindicator(p,false);
+                    }
+                    case 7 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomEvoker r = new CustomEvoker(worldServer,false);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                    case 8 -> {
+                        chooseAirMob(loc,e);
+                    }
+                    case 9 ->{
+                        spawnNetherWasteyard(e,loc);
+                    }
+                    case 10 ->{
+                        spawnHuskDrownedStray(e,loc);
+                    }
+                    case 11 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomIllusioner r = new CustomIllusioner(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                    case 12 ->{
+                        netherMobSpawn(loc,e);
+                    }
+                    case 13 -> {
+                        if (doRandomChance(30)) {
+                            e.setCancelled(true);
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomGiant r = new CustomGiant(worldServer);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }else{
+                            netherMobSpawn(loc,e);
+                        }
+                    }
+                    case 14 ->{
+                        if(doRandomChance(35)){
+                            e.setCancelled(true);
+                            Warden w = (Warden) Entities.spawnMob(loc,EntityType.WARDEN);
+                            EntityHelper.addPotionEffect(w,PotionEffectType.SPEED,2);
+                            EntityHelper.addPotionEffect(w,PotionEffectType.INCREASE_DAMAGE,3);
+                            w.setPersistent(false);
+                            w.setRemoveWhenFarAway(true);
+                        }else{
+                            chooseAirMob(loc,e);
+                        }
+                    }
+                }
+            }else{
+                Random random = new Random();
+                int chance = random.nextInt(11);
+                switch (chance) {
+                    case 0 -> {
+                        e.setCancelled(true);
+                        IronGolem ironGolem =(IronGolem)  Entities.spawnMob(loc, EntityType.IRON_GOLEM);
+                        Entities.enrIG(ironGolem);
+                        setCustomMobcap(ironGolem, 3, 1.10, 24, 20, true);
+                    }
+                    case 1 -> {
+                        e.setCancelled(true);
+                        WitherSkeleton w = (WitherSkeleton) Entities.spawnMob(loc,EntityType.WITHER_SKELETON);
+                        chooseWitherSkeletonClass1(w);
+                    }
+                    case 2 -> {
+                        e.setCancelled(true);
+                        Blaze z = (Blaze) Entities.spawnMob(loc,EntityType.BLAZE);
+                        chooseBlazeType(z);
+                    }
+                    case 3 -> {
+                        e.setCancelled(true);
+                        Silverfish s = (Silverfish) Entities.spawnMob(loc,EntityType.SILVERFISH);
+                        Entities.silverday5(s);
+                    }
+                    case 4 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld)loc.getWorld()).getHandle();
+                        CustomBee r= new CustomBee(worldServer);
+                        r.a_(loc.getX(),loc.getY(),loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                    case 5 ->{
+                        e.setCancelled(true);
+                        Pillager p = (Pillager) Entities.spawnMob(loc,EntityType.PILLAGER);
+                        Entities.nwPillager(p,false);
+                    }
+                    case 6 -> {
+                        chooseAirMob(loc,e);
+                    }
+                    case 7 ->{
+                        e.setCancelled(true);
+                        WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                        CustomIllusioner r = new CustomIllusioner(worldServer);
+                        r.a_(loc.getX(), loc.getY(), loc.getZ());
+                        worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                    }
+                    case 8 ->{
+                        netherMobSpawn(loc,e);
+                    }
+                    case 9 -> {
+                        if (doRandomChance(30)) {
+                            e.setCancelled(true);
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomGiant r = new CustomGiant(worldServer);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }else{
+                            netherMobSpawn(loc,e);
+                        }
+                    }
+                    case 10 ->{
+                        if(doRandomChance(15)){
+                            e.setCancelled(true);
+                            Warden w = (Warden) Entities.spawnMob(loc,EntityType.WARDEN);
+                            EntityHelper.addPotionEffect(w,PotionEffectType.SPEED,2);
+                            EntityHelper.addPotionEffect(w,PotionEffectType.INCREASE_DAMAGE,3);
+                            w.setPersistent(false);
+                            w.setRemoveWhenFarAway(true);
+                        }else{
+                            chooseAirMob(loc,e);
+                        }
                     }
                 }
             }
