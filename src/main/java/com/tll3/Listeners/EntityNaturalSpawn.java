@@ -79,7 +79,7 @@ public class EntityNaturalSpawn implements Listener {
         || entity instanceof CustomDolphin || entity instanceof CustomLlama || entity instanceof CustomGoat
         || entity instanceof CustomBee || entity instanceof CustomEvoker || entity instanceof CustomEvokerFangs
         || entity instanceof CustomLlamaSpit || entity instanceof CustomPig
-        || entity instanceof MiniCyclone)return;
+        || entity instanceof MiniCyclone || entity instanceof BetterCreeper || entity instanceof BetterEnderman)return;
         if(getDay() >= 14) spawnWasteyard(e,loc);
         if(getDay() >= 21) {
             spawnZero(e, loc);

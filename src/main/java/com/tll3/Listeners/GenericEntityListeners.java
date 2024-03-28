@@ -1219,7 +1219,7 @@ public class GenericEntityListeners implements Listener {
         var target = e.getTarget();
         if(getDay() >= 7){
             if(target instanceof Enemy && e.getNewAnger() == 150){
-                e.setCancelled(true);
+                e.setNewAnger(0);
             }
         }
     }

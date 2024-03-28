@@ -203,10 +203,7 @@ public class ServerTickTask extends BukkitRunnable {
                 if(getMonsoon_active().equalsIgnoreCase("true")) {
                     Random random = new Random();
                     var l = p.getLocation().clone();
-                    if (random.nextInt(30) == 0 && p.getNearbyEntities(30, 30, 30)
-                            .stream()
-                            .filter(entity -> entity instanceof Creature)
-                            .map(Creeper.class::cast).toList().size() < 70) {
+                    if (random.nextInt(30) == 0) {
                         int pX = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
                         int pZ = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
                         int y = (int) l.getY();
