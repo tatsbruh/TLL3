@@ -1181,7 +1181,6 @@ public class GenericEntityListeners implements Listener {
                if(Data.has(s,"primordialcave",PersistentDataType.STRING)){
                    int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                    if(g == 0) {
-                       if (s.isOnGround() && p.isOnGround()){
                            new BukkitRunnable() {
                                @Override
                                public void run() {
@@ -1189,7 +1188,7 @@ public class GenericEntityListeners implements Listener {
                                    burrowStart(s, (Player) target);
                                }
                            }.runTaskLater(TLL3.getInstance(), 100L);
-                       }
+
                    }
                }
            }
@@ -1197,7 +1196,6 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"primordialbrute",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1205,7 +1203,7 @@ public class GenericEntityListeners implements Listener {
                                     burrowStart(s, (Player) target);
                                 }
                             }.runTaskLater(TLL3.getInstance(), 100L);
-                        }
+
                     }
                 }
             }
@@ -1213,7 +1211,6 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"primordialzoglin",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1221,7 +1218,7 @@ public class GenericEntityListeners implements Listener {
                                     burrowStart(s, (Player) target);
                                 }
                             }.runTaskLater(TLL3.getInstance(), 100L);
-                        }
+
                     }
                 }
             }
@@ -1229,7 +1226,6 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"doomsday",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1237,7 +1233,6 @@ public class GenericEntityListeners implements Listener {
                                     burrowStart(s, (Player) target);
                                 }
                             }.runTaskLater(TLL3.getInstance(), 100L);
-                        }
                     }
                 }
             }
@@ -1245,7 +1240,6 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"deathbringer",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1253,7 +1247,6 @@ public class GenericEntityListeners implements Listener {
                                     burrowStart(s, (Player) target);
                                 }
                             }.runTaskLater(TLL3.getInstance(), 100L);
-                        }
                     }
                 }
             }
@@ -1261,7 +1254,6 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"minicyclone_zombie",PersistentDataType.STRING)){
                     int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
                     if(g == 0) {
-                        if (s.isOnGround() && p.isOnGround()) {
                             new BukkitRunnable() {
                                 @Override
                                 public void run() {
@@ -1269,7 +1261,6 @@ public class GenericEntityListeners implements Listener {
                                     burrowStart(s, (Player) target);
                                 }
                             }.runTaskLater(TLL3.getInstance(), 100L);
-                        }
                     }
                 }
             }
