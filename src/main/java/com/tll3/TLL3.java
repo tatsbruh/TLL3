@@ -28,6 +28,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
 
+import static com.tll3.Enviroments.Worlds.loadWorlds;
+
 //TODO Please, promise me that you won't make a mess just like last time, okay? - 17/12/23
 public final class TLL3 extends JavaPlugin {
 
@@ -39,6 +41,7 @@ public final class TLL3 extends JavaPlugin {
         plugin = this;
         Biomes.registerAllBiomes();
         console("Plugin activado correctamente");
+        loadWorlds();
         loadListeners();
         loadCommands();
         Recipes.registerAllRecipes();

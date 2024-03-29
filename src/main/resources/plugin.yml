@@ -2,5 +2,6 @@ name: TLL3
 version: '${project.version}'
 main: com.tll3.TLL3
 api-version: '1.20'
-authors: [tatsu]
+authors: [tatsu, carrotw]
 description: The Last Life third and last entry, for real this time
+load: POSTWORLD
