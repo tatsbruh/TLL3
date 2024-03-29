@@ -167,15 +167,15 @@ public class EntityNaturalSpawn implements Listener {
         }else if(getDay() >= 35 && getDay() < 42){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if (loc.getWorld().getName().equalsIgnoreCase("world")) {
-                    if (doRandomChance(7)) {
+                    if (doRandomChance(9)) {
                         summonnewmob(loc, e);
                     }
                 }
                 if(loc.getWorld().getName().equalsIgnoreCase("world_nether")){
                     int random = GenericUtils.getRandomValue(100);
-                    if(random <= 5){
+                    if(random <= 8){
                         spawnNetherWasteyard(e,loc);
-                    }else if(random > 5 && random <= 12){
+                    }else if(random > 8 && random <= 20){
                         spawnOverworldMobs(loc,e);
                     }
                 }
@@ -298,7 +298,7 @@ public class EntityNaturalSpawn implements Listener {
             }
             case ENDERMAN -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG|| reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
-                    if(getDay() >= 7){
+                    if(getDay() >= 7 && !loc.getWorld().getName().equalsIgnoreCase("world_the_end")){
                         var random = getRandomValue(100);
                         if(random <= 35){
                             Entities.revEnderman((Enderman) entity);
