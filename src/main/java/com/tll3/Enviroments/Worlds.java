@@ -20,6 +20,7 @@ public class Worlds {
     protected static final World scorched;
     protected static final World wasteyard;
     protected static final World zero;
+
     static {
         overworld = getWorld("world");
         nether = getWorld("world_nether");
@@ -30,78 +31,64 @@ public class Worlds {
         scorched = funcScorched();
         zero = funcZero();
     }
+
     private static World funcWasteyard(){
-        if(GenericUtils.getDay() >= 42){
+        if(getWorld("world_wasteyard") == null) {
             WorldCreator creator = new WorldCreator("world_wasteyard");
             creator.environment(World.Environment.NETHER).generator(new Wasteyard()).generateStructures(false).type(WorldType.AMPLIFIED);
-            if(getWorld("world_wasteyard") == null) {
-                return creator.createWorld();
-            }
-            return getWorld("world_wasteyard");
-        }else{
-            return getWorld("world");
+            return creator.createWorld();
         }
+        return getWorld("world_wasteyard");
     }
+
     private static World funcPrimeval(){
-        if(GenericUtils.getDay() >= 42){
+        if(getWorld("world_primeval") == null) {
             WorldCreator creator = new WorldCreator("world_primeval");
             creator.environment(World.Environment.NORMAL);
             creator.generator(new PrimevalWoods());
             creator.generateStructures(false);
             creator.type(WorldType.AMPLIFIED);
-            if(getWorld("world_primeval") == null) {
-                return creator.createWorld();
-            }
-            return getWorld("world_primeval");
-        }else{
-            return getWorld("world");
+            return creator.createWorld();
         }
+        return getWorld("world_primeval");
     }
+
     private static World funcDunes(){
-        if(GenericUtils.getDay() >= 42) {
+        if(getWorld("world_dunes") == null) {
             WorldCreator creator = new WorldCreator("world_dunes");
             creator.environment(World.Environment.NORMAL);
             creator.generator(new SavageDunes());
             creator.generateStructures(false);
             creator.type(WorldType.AMPLIFIED);
-            if (getWorld("world_dunes") == null) {
-                return creator.createWorld();
-            }
-            return getWorld("world_dunes");
-        }else{
-            return getWorld("world");
+            return creator.createWorld();
         }
+        return getWorld("world_dunes");
     }
+
     private static World funcScorched(){
-        if(GenericUtils.getDay() >= 42) {
+        if(getWorld("world_plateau") == null) {
             WorldCreator creator = new WorldCreator("world_plateau");
             creator.environment(World.Environment.NETHER);
             creator.generator(new ScorchedPlateau());
             creator.generateStructures(false);
             creator.type(WorldType.AMPLIFIED);
-            if (getWorld("world_plateau") == null) {
-                return creator.createWorld();
-            }
-            return getWorld("world_plateau");
-        }else{
-            return getWorld("world");
+            return creator.createWorld();
         }
+        return getWorld("world_plateau");
     }
+
     private static World funcZero(){
-        if(GenericUtils.getDay() >= 42) {
+        if(getWorld("world_zero") == null) {
             WorldCreator creator = new WorldCreator("world_zero");
             creator.environment(World.Environment.THE_END);
             creator.generator(new ZeroHorizon());
             creator.generateStructures(false);
             creator.type(WorldType.AMPLIFIED);
-            if (getWorld("world_zero") == null) {
-                return creator.createWorld();
-            }
-            return getWorld("world_zero");
-        }else{
-            return getWorld("world");
+            return creator.createWorld();
         }
+        return getWorld("world_zero");
     }
+
     public static World getWorld(String name) {
         return Bukkit.getWorld(name);
     }
@@ -119,5 +106,13 @@ public class Worlds {
     public static World getDunes(){return dunes;}
     public static World getScorched(){return scorched;}
     public static World getZero(){return zero;}
+
+    public static void loadWorlds(){
+        getWasteyard();
+        getPrimeval();
+        getDunes();
+        getScorched();
+        getZero();
+    }
 
 }
