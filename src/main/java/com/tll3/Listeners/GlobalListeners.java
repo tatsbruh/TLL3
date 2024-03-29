@@ -39,23 +39,35 @@ import static com.tll3.Misc.EntityHelper.setBoots;
 import static com.tll3.Misc.GenericUtils.*;
 public class GlobalListeners implements Listener {
 
+    private static NamespacedKey getBiome(Location loc){
+        return Bukkit.getUnsafe().getBiomeKey(loc.getWorld(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+    }
+
+    private static void updateBiomeName(ChunkLoadEvent e, String key){
+        Chunk chunk = e.getChunk();
+        World w = e.getChunk().getWorld();
+        Location loc = e.getChunk().getBlock(0,0,0).getLocation();
+        String biomeKey = getBiome(loc).toString();
+
+        if(!biomeKey.equals("afterlife:" + key)){
+            System.out.println("Actualizando bioma, info:");
+            System.out.println("Biome key: " + biomeKey);
+            System.out.println("World: " + w.getName());
+            System.out.println("Loc: " + loc);
+            //CustomBiome biome1 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "primeval_woods"));
+            CustomBiome biome = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", key));
+            if (biome == null) return;
+            BiomeSetter.of().setChunkBiome(chunk,biome,true);
+        }
+
+    }
+
     @EventHandler
     public void loadBiome(ChunkLoadEvent e){
-        CustomBiome biome1 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "primeval_woods"));
-        CustomBiome biome2 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "savage_dunes"));
-        CustomBiome biome3 = BiomeHandler.getBiome(new BiomeResourceKey("afterlife", "scorched_plateau"));
-        if (biome1 == null) return;
-        if (biome2 == null) return;
-        if (biome3 == null) return;
-        if(e.getChunk().getWorld().getName().equals("world_primeval")){
-           Chunk chunk = e.getChunk();
-           BiomeSetter.of().setChunkBiome(chunk,biome1,true);
-        }else if(e.getChunk().getWorld().getName().equals("world_dunes")){
-            Chunk chunk = e.getChunk();
-            BiomeSetter.of().setChunkBiome(chunk,biome2,true);
-        }else if(e.getChunk().getWorld().getName().equals("world_plateau")){
-            Chunk chunk = e.getChunk();
-            BiomeSetter.of().setChunkBiome(chunk,biome3,true);
+        switch (e.getChunk().getWorld().getName()){
+            case "world_primeval" -> updateBiomeName(e, "primeval_woods");
+            case "world_dunes" -> updateBiomeName(e, "savage_dunes");
+            case "world_plateau" -> updateBiomeName(e, "scorched_plateau");
         }
     }
 
