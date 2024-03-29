@@ -59,6 +59,14 @@ public class MonsoonListeners implements Listener {
             double calculos = 1.0 - (((double) 1 / maxWeather) * (maxWeather - updtime));
             bossBar.setProgress(calculos);
             currentStormDuration -= 20;
+            World w = GenericUtils.getWorld();
+
+            if (currentStormDuration > 0 && w.getWeatherDuration() <= 0 && isMonsoonActive){
+                w.setStorm(true);
+                w.setThundering(true);
+                w.setWeatherDuration(currentStormDuration);
+                w.setThunderDuration(currentStormDuration);
+            }
             GenericUtils.setCurrentStormDuration(currentStormDuration);
         }, 0L, 20L);
     }
@@ -167,14 +175,6 @@ public class MonsoonListeners implements Listener {
         if(e.getCause() == ThunderChangeEvent.Cause.COMMAND){
             Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.COMMAND));
         } else {
-            World w = GenericUtils.getWorld();
-
-            if (currentStormDuration > 0 && w.getWeatherDuration() <= 0){
-                w.setStorm(true);
-                w.setThundering(true);
-                w.setWeatherDuration(currentStormDuration);
-                w.setThunderDuration(currentStormDuration);
-            }
 
             if(!e.toThunderState() && Objects.equals(GenericUtils.getMonsoon_active(), "true")) {
                 if (currentStormDuration <= 0) {
