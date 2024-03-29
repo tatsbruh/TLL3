@@ -32,6 +32,7 @@ public class CustomBee extends EntityBee {
     public CustomBee(World world){
         super(EntityTypes.h,world);
         this.getBukkitEntity().setCustomName(ChatUtils.format("#2d8a06Langosta"));
+        EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),3,1.24,60,30,true);
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

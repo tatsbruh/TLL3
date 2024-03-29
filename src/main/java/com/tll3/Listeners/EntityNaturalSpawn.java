@@ -167,7 +167,7 @@ public class EntityNaturalSpawn implements Listener {
         }else if(getDay() >= 35 && getDay() < 42){
             if ( reason == CreatureSpawnEvent.SpawnReason.NATURAL && (entity instanceof Enemy && !(entity instanceof WaterMob))) {
                 if (loc.getWorld().getName().equalsIgnoreCase("world")) {
-                    if (doRandomChance(5)) {
+                    if (doRandomChance(7)) {
                         summonnewmob(loc, e);
                     }
                 }
@@ -277,17 +277,21 @@ public class EntityNaturalSpawn implements Listener {
             case CREEPER -> {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER)) {
                     if(getDay() >= 7){
-                        var random = getRandomValue(100);
-                        if(random <= 35) {
-                            Entities.revCreeper((Creeper) entity);
-                        }else if(random > 35 && random <= 65 && getDay() >= 14) {
-                            Entities.unstCr((Creeper) entity);
-                        }else if(random > 65 && random <= 86 && getDay() >= 21) {
-                            Entities.titaniumCreeper((Creeper) entity);
-                        }else if(random > 86 && random <= 90){
-                            Entities.creeperTower((Creeper) entity);
-                        }else{
-                            Entities.creChr((Creeper) entity);
+                        if(getDay() < 35) {
+                            var random = getRandomValue(100);
+                            if (random <= 35) {
+                                Entities.revCreeper((Creeper) entity);
+                            } else if (random > 35 && random <= 65 && getDay() >= 14) {
+                                Entities.unstCr((Creeper) entity);
+                            } else if (random > 65 && random <= 86 && getDay() >= 21) {
+                                Entities.titaniumCreeper((Creeper) entity);
+                            } else if (random > 86 && random <= 90) {
+                                Entities.creeperTower((Creeper) entity);
+                            } else {
+                                Entities.creChr((Creeper) entity);
+                            }
+                        }else if(getDay() >= 35){
+                            chooseNewCreeper((Creeper) entity,e);
                         }
                     }
                 }
@@ -713,8 +717,12 @@ public class EntityNaturalSpawn implements Listener {
             }
             case BREEZE -> {
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.COMMAND){
-                    if(getDay() >= 14){
-                        Entities.windTyphoon((Breeze) entity);
+                    if(getDay() >= 14) {
+                        if (getDay() >= 35) {
+                            chooseAirMob(loc,e);
+                        } else {
+                            Entities.windTyphoon((Breeze) entity);
+                        }
                     }
                 }
             }

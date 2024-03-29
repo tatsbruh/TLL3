@@ -22,6 +22,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BoundingBox;
 
 import java.util.Random;
+import java.util.SplittableRandom;
 import java.util.stream.Collectors;
 
 import static com.tll3.Misc.GenericUtils.getDay;
@@ -34,6 +35,7 @@ public class ServerTickTask extends BukkitRunnable {
     int wast_caution = 5;
     int temperature = 0;
     int freezeticks = 0;
+    private final SplittableRandom random = new SplittableRandom();
 
     public ServerTickTask(Player p){
         this.p = p;
@@ -61,10 +63,12 @@ public class ServerTickTask extends BukkitRunnable {
             InventoryUtils.lockPlayerSlots(p);
             //Si el jugador tiene elytras puestas, esta volando Y tiene cooldown en las elytras, se cancela su vuelo completamente
             //Esto es parte de la habilidad del Antiair Commander
-            if(p.getInventory().getChestplate().getType() == Material.ELYTRA){
-                if(p.hasCooldown(Material.ELYTRA)){
-                    if(p.getPose() == Pose.FALL_FLYING){
-                        p.setPose(Pose.STANDING);
+            if(p.getInventory().getChestplate() != null) {
+                if (p.getInventory().getChestplate().getType() == Material.ELYTRA) {
+                    if (p.hasCooldown(Material.ELYTRA)) {
+                        if (p.getPose() == Pose.FALL_FLYING) {
+                            p.setPose(Pose.STANDING);
+                        }
                     }
                 }
             }
@@ -82,7 +86,9 @@ public class ServerTickTask extends BukkitRunnable {
                 for (Entity entity : p.getNearbyEntities(radius, radius, radius)) {
                     if (entity instanceof Enderman e) {
                         if(!e.getWorld().getName().equalsIgnoreCase("world_the_end")) {
-                            e.setTarget(p);
+                            if (e.getTarget() == null) {
+                                e.setTarget(p);
+                            }
                         }
                     }
                 }
@@ -201,7 +207,6 @@ public class ServerTickTask extends BukkitRunnable {
             //Handle mob spawn
             if(getDay() >= 35){
                 if(getMonsoon_active().equalsIgnoreCase("true")) {
-                    Random random = new Random();
                     var l = p.getLocation().clone();
                     if (random.nextInt(30) == 0) {
                         int pX = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;

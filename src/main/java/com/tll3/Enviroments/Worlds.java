@@ -5,6 +5,7 @@ import com.tll3.Enviroments.Forest.PrimevalWoods;
 import com.tll3.Enviroments.Volcano.ScorchedPlateau;
 import com.tll3.Enviroments.Wasteyard.Wasteyard;
 import com.tll3.Enviroments.Zero.ZeroHorizon;
+import com.tll3.Misc.GenericUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
@@ -30,56 +31,76 @@ public class Worlds {
         zero = funcZero();
     }
     private static World funcWasteyard(){
-        WorldCreator creator = new WorldCreator("world_wasteyard");
-        creator.environment(World.Environment.NETHER).generator(new Wasteyard()).generateStructures(false).type(WorldType.AMPLIFIED);
-        if(getWorld("world_wasteyard") == null) {
-            return creator.createWorld();
+        if(GenericUtils.getDay() >= 42){
+            WorldCreator creator = new WorldCreator("world_wasteyard");
+            creator.environment(World.Environment.NETHER).generator(new Wasteyard()).generateStructures(false).type(WorldType.AMPLIFIED);
+            if(getWorld("world_wasteyard") == null) {
+                return creator.createWorld();
+            }
+            return getWorld("world_wasteyard");
+        }else{
+            return getWorld("world");
         }
-        return getWorld("world_wasteyard");
     }
     private static World funcPrimeval(){
-        WorldCreator creator = new WorldCreator("world_primeval");
-        creator.environment(World.Environment.NORMAL);
-        creator.generator(new PrimevalWoods());
-        creator.generateStructures(false);
-        creator.type(WorldType.AMPLIFIED);
-        if(getWorld("world_primeval") == null) {
-            return creator.createWorld();
+        if(GenericUtils.getDay() >= 42){
+            WorldCreator creator = new WorldCreator("world_primeval");
+            creator.environment(World.Environment.NORMAL);
+            creator.generator(new PrimevalWoods());
+            creator.generateStructures(false);
+            creator.type(WorldType.AMPLIFIED);
+            if(getWorld("world_primeval") == null) {
+                return creator.createWorld();
+            }
+            return getWorld("world_primeval");
+        }else{
+            return getWorld("world");
         }
-        return getWorld("world_primeval");
     }
     private static World funcDunes(){
-        WorldCreator creator = new WorldCreator("world_dunes");
-        creator.environment(World.Environment.NORMAL);
-        creator.generator(new SavageDunes());
-        creator.generateStructures(false);
-        creator.type(WorldType.AMPLIFIED);
-        if(getWorld("world_dunes") == null) {
-            return creator.createWorld();
+        if(GenericUtils.getDay() >= 42) {
+            WorldCreator creator = new WorldCreator("world_dunes");
+            creator.environment(World.Environment.NORMAL);
+            creator.generator(new SavageDunes());
+            creator.generateStructures(false);
+            creator.type(WorldType.AMPLIFIED);
+            if (getWorld("world_dunes") == null) {
+                return creator.createWorld();
+            }
+            return getWorld("world_dunes");
+        }else{
+            return getWorld("world");
         }
-        return getWorld("world_dunes");
     }
     private static World funcScorched(){
-        WorldCreator creator = new WorldCreator("world_plateau");
-        creator.environment(World.Environment.NETHER);
-        creator.generator(new ScorchedPlateau());
-        creator.generateStructures(false);
-        creator.type(WorldType.AMPLIFIED);
-        if(getWorld("world_plateau") == null) {
-            return creator.createWorld();
+        if(GenericUtils.getDay() >= 42) {
+            WorldCreator creator = new WorldCreator("world_plateau");
+            creator.environment(World.Environment.NETHER);
+            creator.generator(new ScorchedPlateau());
+            creator.generateStructures(false);
+            creator.type(WorldType.AMPLIFIED);
+            if (getWorld("world_plateau") == null) {
+                return creator.createWorld();
+            }
+            return getWorld("world_plateau");
+        }else{
+            return getWorld("world");
         }
-        return getWorld("world_plateau");
     }
     private static World funcZero(){
-        WorldCreator creator = new WorldCreator("world_zero");
-        creator.environment(World.Environment.THE_END);
-        creator.generator(new ZeroHorizon());
-        creator.generateStructures(false);
-        creator.type(WorldType.AMPLIFIED);
-        if(getWorld("world_zero") == null) {
-            return creator.createWorld();
+        if(GenericUtils.getDay() >= 42) {
+            WorldCreator creator = new WorldCreator("world_zero");
+            creator.environment(World.Environment.THE_END);
+            creator.generator(new ZeroHorizon());
+            creator.generateStructures(false);
+            creator.type(WorldType.AMPLIFIED);
+            if (getWorld("world_zero") == null) {
+                return creator.createWorld();
+            }
+            return getWorld("world_zero");
+        }else{
+            return getWorld("world");
         }
-        return getWorld("world_zero");
     }
     public static World getWorld(String name) {
         return Bukkit.getWorld(name);

@@ -262,6 +262,9 @@ public class GenericEntityListeners implements Listener {
                 if(Data.has(s,"relicvex",PersistentDataType.STRING)){
                     p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,40,0,true,false,true));
                 }
+                if(Data.has(s,"gabriel",PersistentDataType.STRING)){
+                    p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,100,3,true,false,true));
+                }
             }
             if(damager instanceof Creeper s){
                 if(Data.has(s,"starredcreeper",PersistentDataType.STRING)){
@@ -1077,6 +1080,15 @@ public class GenericEntityListeners implements Listener {
                     }
                 }
             }
+            if(Data.has(z,"deathbringer",PersistentDataType.STRING)){
+                if (hen != null) {
+                    if(hen instanceof LivingEntity l){
+                        l.damage(40,z);
+                        l.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,100,2,true,false,true));
+                        l.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,100,4,true,false,true));
+                    }
+                }
+            }
         }
         if(source instanceof Pillager p){
             if(Data.has(p,"starredpillager",PersistentDataType.STRING)){
@@ -1210,6 +1222,54 @@ public class GenericEntityListeners implements Listener {
                     }
                 }
             }
+            if(origin instanceof Creeper s){
+                if(Data.has(s,"doomsday",PersistentDataType.STRING)){
+                    int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
+                    if(g == 0) {
+                        if (s.isOnGround() && p.isOnGround()) {
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    Data.set(s, "burrowstate", PersistentDataType.INTEGER, 1);
+                                    burrowStart(s, (Player) target);
+                                }
+                            }.runTaskLater(TLL3.getInstance(), 100L);
+                        }
+                    }
+                }
+            }
+            if(origin instanceof Breeze s){
+                if(Data.has(s,"deathbringer",PersistentDataType.STRING)){
+                    int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
+                    if(g == 0) {
+                        if (s.isOnGround() && p.isOnGround()) {
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    Data.set(s, "burrowstate", PersistentDataType.INTEGER, 1);
+                                    burrowStart(s, (Player) target);
+                                }
+                            }.runTaskLater(TLL3.getInstance(), 100L);
+                        }
+                    }
+                }
+            }
+            if(origin instanceof Skeleton s){
+                if(Data.has(s,"minicyclone_zombie",PersistentDataType.STRING)){
+                    int g = Data.get(s,"burrowstate",PersistentDataType.INTEGER);
+                    if(g == 0) {
+                        if (s.isOnGround() && p.isOnGround()) {
+                            new BukkitRunnable() {
+                                @Override
+                                public void run() {
+                                    Data.set(s, "burrowstate", PersistentDataType.INTEGER, 1);
+                                    burrowStart(s, (Player) target);
+                                }
+                            }.runTaskLater(TLL3.getInstance(), 100L);
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -1218,8 +1278,9 @@ public class GenericEntityListeners implements Listener {
         var entity = e.getEntity();
         var target = e.getTarget();
         if(getDay() >= 7){
-            if(target instanceof Enemy && e.getNewAnger() == 150){
+            if(target instanceof Creature && e.getNewAnger() >= 0){
                 e.setNewAnger(0);
+                e.setCancelled(true);
             }
         }
     }

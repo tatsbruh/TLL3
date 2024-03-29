@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Listeners.EntityNaturalSpawn;
 import net.minecraft.world.EnumHand;
 import net.minecraft.world.EnumInteractionResult;
 import net.minecraft.world.entity.EntityTypes;
@@ -16,6 +17,7 @@ public class CustomAxolotls extends Axolotl {
         super(EntityTypes.f,world);
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
+        EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),3,1.24,60,30,true);
         this.persist = false;
     }
 

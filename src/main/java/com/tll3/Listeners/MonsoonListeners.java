@@ -76,7 +76,7 @@ public class MonsoonListeners implements Listener {
         GenericUtils.setMonsoonActive("true");
         boolean isTyphoonActive = ((EntityNaturalSpawn.doRandomChance(20) || GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) && GenericUtils.getDay() >= 21);
         if (isTyphoonActive)
-            GenericUtils.setVortexTyphoonActive("false");
+            GenericUtils.setVortexTyphoonActive("true");
         World world = GenericUtils.getWorld();
         world.setGameRule(GameRule.DO_DAYLIGHT_CYCLE,true);
         int stormDurationInTicks;

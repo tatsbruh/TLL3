@@ -714,7 +714,7 @@ public class Entities {
         setName(z,"&5&lDeathbringer");
         setMobHealth(z,35);
         setMobDamage(z,35);
-        setIdentifierString(z,"doomsday");
+        setIdentifierString(z,"deathbringer");
         setIdentifierInt(z,"burrowstate",0);
     }
     public static void gabrielVex(Vex z){
@@ -753,7 +753,19 @@ public class Entities {
                 case 5 -> Entities.vortice(e);
                 case 6 -> Entities.starCreeper(e);
             }
+        }else if(getDay() >= 35 && getDay() < 42){
+        int type = getRandomValue(8);
+        switch (type) {
+            case 0 -> Entities.creChr(e);
+            case 1 -> Entities.revCreeper(e);
+            case 2 -> Entities.rustwalker(e);
+            case 3 -> Entities.unstCr(e);
+            case 4 -> Entities.titaniumCreeper(e);
+            case 5 -> Entities.vortice(e);
+            case 6 -> Entities.starCreeper(e);
+            case 7 -> Entities.doomsDay(e);
         }
+    }
     }
 
 

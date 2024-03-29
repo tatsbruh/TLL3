@@ -66,6 +66,7 @@ public class MiniCyclone extends EntitySkeleton {
         new MiniCycloneTask((Skeleton) this.getBukkitEntity()).runTaskTimer(TLL3.getInstance(),0L,1L);
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(0);
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
+        ((Skeleton) this.getBukkitEntity()).setShouldBurnInDay(false);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
         this.a(PathType.j, 0.0F);
