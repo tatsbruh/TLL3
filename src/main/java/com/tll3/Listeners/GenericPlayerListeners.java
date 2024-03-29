@@ -240,7 +240,7 @@ public class GenericPlayerListeners implements Listener {
             }
             PlayerData.setTotemCount(p,totem_c + 1);
 
-            if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",60,1);
+            if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",30,1);
         }
         if(totem_c > 29 && totem_c <= 54){
             int tot_amount = 2;
@@ -260,7 +260,7 @@ public class GenericPlayerListeners implements Listener {
                     online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
                 }
             }else{
-                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",80,2);
+                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",30,2);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
@@ -293,7 +293,7 @@ public class GenericPlayerListeners implements Listener {
                     online.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl jugador &6&l" + p.getName() + " &cno tenia suficientes totems en el inventario! &8(" + size + "/" + tot_amount + ")"));
                 }
                 }else{
-                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",120,3);
+                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",30,3);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
@@ -334,7 +334,7 @@ public class GenericPlayerListeners implements Listener {
 
                 }
             }else{
-                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",145,4);
+                if(getDay() >= 7)PlayerData.addDataEffect(p,"curse",30,4);
                 new BukkitRunnable(){
                     public void run(){
                         p.playSound(p.getLocation(), Sound.ITEM_TOTEM_USE, 10.0F, 1.0F);
@@ -418,7 +418,6 @@ public class GenericPlayerListeners implements Listener {
             p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION,350,0,true, false,true));
             p.removePotionEffect(PotionEffectType.ABSORPTION);
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-            p.setFoodLevel(p.getFoodLevel() - 2);
         }
         if(a >= 79 && a <= 87) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,350,0,true, false,true));
@@ -429,7 +428,6 @@ public class GenericPlayerListeners implements Listener {
             p.removePotionEffect(PotionEffectType.REGENERATION);
             p.removePotionEffect(PotionEffectType.ABSORPTION);
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-            p.setFoodLevel(p.getFoodLevel() - 5);
         }
         if(a >= 88 && a <= 96) {
             p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,350,0,true, false,true));
@@ -440,7 +438,6 @@ public class GenericPlayerListeners implements Listener {
             p.removePotionEffect(PotionEffectType.REGENERATION);
             p.removePotionEffect(PotionEffectType.ABSORPTION);
             p.removePotionEffect(PotionEffectType.FIRE_RESISTANCE);
-            p.setFoodLevel(p.getFoodLevel() - 15);
 
         }
         if(a >= 97  && a <= 119) {

@@ -857,10 +857,6 @@ public class GenericEntityListeners implements Listener {
             }
         }
 
-        if(source instanceof LivingEntity l){
-            if(l.hasPotionEffect(PotionEffectType.LUCK))return;
-        }
-
         if(source instanceof Player p){
             if(proj instanceof EnderPearl enderPearl){
                 if(getDay() >= 28) {
@@ -877,6 +873,12 @@ public class GenericEntityListeners implements Listener {
             }
         }
 
+        if(source instanceof LivingEntity l){
+            if(l.hasPotionEffect(PotionEffectType.LUCK))return;
+        }
+        if(hen instanceof Player p){
+            if(Data.has(p,"invulnerable",PersistentDataType.STRING))return;
+        }
         if(proj instanceof Firework f){
             if(Data.has(f,"pillagerex",PersistentDataType.STRING)){
                 if (hen != null) {
@@ -1125,6 +1127,7 @@ public class GenericEntityListeners implements Listener {
 
         if(target instanceof Player p){
            if(origin instanceof Enemy && (p.getGameMode() == GameMode.CREATIVE || p.getGameMode() == GameMode.SPECTATOR))e.setCancelled(true);
+
            if(origin instanceof Zombie z){
             if(Data.has(z,"zninja",PersistentDataType.STRING)){
                 if(z.hasPotionEffect(PotionEffectType.INVISIBILITY)){
