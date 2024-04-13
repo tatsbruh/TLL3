@@ -209,13 +209,20 @@ public class Entities {
     }
 
     public static void wsM(WitherSkeleton s){
-        if(getDay() >= 14){
-            setName(s,"&eWither Swordsman+");
-            setMobHealth(s,35);
-            setMobDamage(s,9);
-            setMainHand(s,new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL,20).addEnchant(Enchantment.FIRE_ASPECT,10).build());
-            setIdentifierString(s,"w_swordsman");
-            addPotionEffect(s,PotionEffectType.SPEED,1);
+        if(getDay() >= 14 && getDay() < 35) {
+            setName(s, "&eWither Swordsman+");
+            setMobHealth(s, 35);
+            setMobDamage(s, 9);
+            setMainHand(s, new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 20).addEnchant(Enchantment.FIRE_ASPECT, 10).build());
+            setIdentifierString(s, "w_swordsman");
+            addPotionEffect(s, PotionEffectType.SPEED, 1);
+        }else if(getDay() >= 35){
+            setName(s, "&eWither Swordsman++");
+            setMobHealth(s, 55);
+            setMobDamage(s, 14);
+            setMainHand(s, new ItemBuilder(Material.DIAMOND_SWORD).addEnchant(Enchantment.DAMAGE_ALL, 30).addEnchant(Enchantment.FIRE_ASPECT, 10).build());
+            setIdentifierString(s, "w_swordsman");
+            addPotionEffect(s, PotionEffectType.SPEED, 2);
         }else{
         setName(s,"&eWither Swordsman");
         setMobHealth(s,25);
@@ -226,12 +233,19 @@ public class Entities {
         }
     }
     public static void wsR(WitherSkeleton s){
-        if(getDay() >= 14) {
-            setName(s,"&eWither Archer+");
-            setMobHealth(s,40);
-            setMobDamage(s,4);
-            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,35).addEnchant(Enchantment.ARROW_FIRE,15).addEnchant(Enchantment.ARROW_KNOCKBACK,10).build());
-            setIdentifierString(s,"w_archer");
+        if(getDay() >= 14 && getDay() < 35) {
+            setName(s, "&eWither Archer+");
+            setMobHealth(s, 40);
+            setMobDamage(s, 4);
+            setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 35).addEnchant(Enchantment.ARROW_FIRE, 15).addEnchant(Enchantment.ARROW_KNOCKBACK, 10).build());
+            setIdentifierString(s, "w_archer");
+        }else if(getDay() >= 35){
+            setName(s, "&eWither Archer++");
+            setMobHealth(s, 60);
+            setMobDamage(s, 4);
+            setKnockresist(s,10000);
+            setMainHand(s, new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE, 45).addEnchant(Enchantment.ARROW_FIRE, 15).addEnchant(Enchantment.ARROW_KNOCKBACK, 30).build());
+            setIdentifierString(s, "w_archer");
         }else{
         setName(s,"&eWither Archer");
         setMobHealth(s,20);
@@ -241,14 +255,22 @@ public class Entities {
         }
     }
     public static void wsT(WitherSkeleton s){
-        if(getDay() >= 14){
-            setName(s,"&eWither Juggernaut+");
-            setMobHealth(s,65);
-            setMobDamage(s,4);
-            setMainHand(s,new ItemStack(Material.NETHERITE_AXE));
-            setChestplate(s,new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,5).build());
-            setBoots(s,new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,5).build());
-            setIdentifierString(s,"w_tank");
+        if(getDay() >= 14 && getDay() < 35) {
+            setName(s, "&eWither Juggernaut+");
+            setMobHealth(s, 65);
+            setMobDamage(s, 4);
+            setMainHand(s, new ItemStack(Material.NETHERITE_AXE));
+            setChestplate(s, new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).build());
+            setBoots(s, new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).build());
+            setIdentifierString(s, "w_tank");
+        }else if(getDay() >= 35){
+            setName(s, "&eWither Juggernaut++");
+            setMobHealth(s, 85);
+            setMobDamage(s, 9);
+            setMainHand(s, new ItemStack(Material.NETHERITE_AXE));
+            setChestplate(s, new ItemBuilder(Material.NETHERITE_CHESTPLATE).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).build());
+            setBoots(s, new ItemBuilder(Material.NETHERITE_BOOTS).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).build());
+            setIdentifierString(s, "w_tank");
         }else{
         setName(s,"&eWither Juggernaut");
         setMobHealth(s,45);
@@ -260,13 +282,20 @@ public class Entities {
         }
     }
     public static void wsW(WitherSkeleton s) {
-        if(getDay() >= 14){
-            setName(s,"&eWither Sorcerer+");
-            setMobHealth(s,50);
-            setMobDamage(s,4);
-            setMainHand(s,new ItemBuilder(Material.BOW).setCustomModelData(100).build());
-            setHead(s,new ItemBuilder(Material.TURTLE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL,4).addEnchant(Enchantment.THORNS,10).setUnbreakable(true).build());
-            setIdentifierString(s,"w_mage");
+        if(getDay() >= 14 && getDay() < 35) {
+            setName(s, "&eWither Sorcerer+");
+            setMobHealth(s, 50);
+            setMobDamage(s, 4);
+            setMainHand(s, new ItemBuilder(Material.BOW).setCustomModelData(100).build());
+            setHead(s, new ItemBuilder(Material.TURTLE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchant(Enchantment.THORNS, 10).setUnbreakable(true).build());
+            setIdentifierString(s, "w_mage");
+        }else if(getDay() >= 35){
+            setName(s, "&eWither Sorcerer++");
+            setMobHealth(s, 50);
+            setMobDamage(s, 4);
+            setMainHand(s, new ItemBuilder(Material.BOW).setCustomModelData(100).build());
+            setHead(s, new ItemBuilder(Material.TURTLE_HELMET).addEnchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).addEnchant(Enchantment.THORNS, 50).setUnbreakable(true).build());
+            setIdentifierString(s, "w_mage");
         }else{
         setName(s,"&eWither Sorcerer");
         setMobHealth(s,20);

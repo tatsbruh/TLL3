@@ -32,8 +32,6 @@ import static com.tll3.Enviroments.Worlds.loadWorlds;
 
 //TODO Please, promise me that you won't make a mess just like last time, okay? - 17/12/23
 public final class TLL3 extends JavaPlugin {
-
-
     private static TLL3 plugin;
     public static TLL3 getInstance(){return plugin;}
     @Override
@@ -53,7 +51,6 @@ public final class TLL3 extends JavaPlugin {
             MonsoonListeners.addAllToBossbar();
         }
     }
-
     @Override
     public void onDisable() {
         if(MonsoonListeners.TaskBossBarID != null){
@@ -62,9 +59,6 @@ public final class TLL3 extends JavaPlugin {
         }
         console("Plugin desactivado correctamente");
     }
-
-
-
     public void console(String s){
         getLogger().info(s);
     }
@@ -73,8 +67,6 @@ public final class TLL3 extends JavaPlugin {
             getServer().getPluginManager().registerEvents(listener, this);
         }
     }
-
-
     public void loadListeners(){
         registerListeners(
                 new CraftingEvents(),
@@ -89,8 +81,6 @@ public final class TLL3 extends JavaPlugin {
                 new InventoryLockListeners()
         );
     }
-
-
     public void loadCommands(){
         PaperCommandManager commandManager = new PaperCommandManager(this);
         commandManager.registerCommand(new staffCMD());
