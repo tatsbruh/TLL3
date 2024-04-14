@@ -699,7 +699,11 @@ public class EntityNaturalSpawn implements Listener {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
                     if (getDay() >= 14) {
                         EntityHelper.addPotionEffect(entity,PotionEffectType.INCREASE_DAMAGE,4);
-                        EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,1);
+                        if(getDay() >= 35){
+                            EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,3);
+                        }else{
+                            EntityHelper.addPotionEffect(entity,PotionEffectType.SPEED,1);
+                        }
                         PiglinBrute pg = (PiglinBrute) Entities.spawnMob(loc,EntityType.PIGLIN_BRUTE);
                         EntityHelper.addPotionEffect(pg,PotionEffectType.INCREASE_DAMAGE,3);
                         EntityHelper.addPotionEffect(pg,PotionEffectType.SPEED,2);
@@ -774,6 +778,15 @@ public class EntityNaturalSpawn implements Listener {
                 if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND) {
                     if (getDay() >= 28) {
                         Entities.rabbitKiller((Rabbit) entity);
+                    }
+                }
+            }
+            case COW,SHEEP -> {
+                if(reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND) {
+                    if (getDay() >= 35) {
+                        e.setCancelled(true);
+                        Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
+                        Entities.nwRavager(r,false);
                     }
                 }
             }

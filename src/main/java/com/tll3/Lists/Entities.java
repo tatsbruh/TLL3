@@ -124,9 +124,13 @@ public class Entities {
         i.setRemoveWhenFarAway(true);
         i.setPersistent(false);
         setName(i,"&4Enraged Iron Golem");
-        if(getDay() >= 14){
+        if(getDay() >= 14 && getDay() < 35){
             addPotionEffect(i,PotionEffectType.INCREASE_DAMAGE,1);
             addPotionEffect(i,PotionEffectType.SPEED,1);
+        }else if(getDay() >= 35){
+            addPotionEffect(i,PotionEffectType.INCREASE_DAMAGE,3);
+            addPotionEffect(i,PotionEffectType.SPEED,1);
+            addPotionEffect(i,PotionEffectType.REGENERATION,1);
         }
     }
     public static void enrPig(PigZombie z){

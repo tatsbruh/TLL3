@@ -114,7 +114,7 @@ public class GenericPlayerListeners implements Listener {
                 }else{
                     p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eHas consumido el #801212V#871b13o#8d2315r#942c16t#9a3518i#a13d19c#a7461bé #ae4e1cd#b5571de #bb601fl#c26820a #c87122E#cf7a23x#d68224t#dc8b26i#e39327n#e99c29c#f0a52ai#f6ad2có#fdb62dn&e, la maldición se ha quitado de ti"));
                     PlayerData.setItemConsumed(p,"vortex_extinction",1);
-                    item.setAmount(0);
+                    item.setType(Material.AIR);
                 }
             }
 

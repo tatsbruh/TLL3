@@ -31,6 +31,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import static com.tll3.Listeners.EntityNaturalSpawn.doRandomChance;
@@ -89,6 +90,27 @@ public class GlobalListeners implements Listener {
         }
     }
 
+    public static boolean shieldBreakChance(){
+        Random random = new Random();
+        int chancemax = random.nextInt(100);
+        if(getDay() >= 28 && getDay() < 35){
+            return chancemax <= 5;
+        }else if(getDay() >= 35 && getDay() < 42){
+            if(getMonsoon_active().equalsIgnoreCase("true")){
+                return chancemax <= 15;
+            }else{
+                return chancemax <= 7;
+            }
+        }else if(getDay() >= 42){
+            if(getMonsoon_active().equalsIgnoreCase("true")){
+                return true;
+            }else{
+                return chancemax <= 20;
+            }
+        }
+        return chancemax <= 5;
+    }
+
 
     @EventHandler
     public void damageE(EntityDamageEvent e){
@@ -100,7 +122,7 @@ public class GlobalListeners implements Listener {
             }
             if(getDay() >= 28){
                 if(p.isBlocking()) {
-                    if (EntityNaturalSpawn.doRandomChance(5)) {
+                    if (shieldBreakChance()) {
                         if (reason == EntityDamageEvent.DamageCause.ENTITY_ATTACK || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION || reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.PROJECTILE || reason == EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK)
                             if (p.getEquipment().getItemInMainHand().getType().equals(Material.SHIELD)) {
                                 ItemStack shield = p.getEquipment().getItemInMainHand().clone();
@@ -129,20 +151,29 @@ public class GlobalListeners implements Listener {
                         }
                     }
                     case LIGHTNING -> {
-                        if(getMonsoon_active().equalsIgnoreCase("true")){
-                            e.setDamage(e.getDamage() * 3);
+                        if (getDay() >= 35) {
+                            e.setDamage(e.getDamage() * 6);
+                        }else{
+                            if(getMonsoon_active().equalsIgnoreCase("true")){
+                                e.setDamage(e.getDamage() * 3);
+                            }
                         }
                     }
                 }
             }
-            if(getDay() >= 14){
+            if(getDay() >= 14 && getDay() < 35){
                 switch (reason){
                     case STARVATION,FREEZE,SUFFOCATION -> e.setDamage(e.getDamage() * 7);
                 }
             }
+            if(getDay() >= 35){
+                switch (reason){
+                    case STARVATION,FREEZE,SUFFOCATION -> e.setDamage(e.getDamage() * 12);
+                }
+            }
             if(getDay() >= 21 && !p.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
                 switch (reason){
-                    case LAVA: e.setDamage(e.getDamage() * 2);
+                    case LAVA: e.setDamage(e.getDamage() * 1.2);
                     case HOT_FLOOR: e.setDamage(e.getDamage() * 10);
                     case FALL: e.setDamage(e.getDamage() * 2);
                 }
@@ -151,6 +182,7 @@ public class GlobalListeners implements Listener {
 
 
         if(entity instanceof Creature enemy){
+            if(enemy instanceof Player)return; //Por alguna razón, esto se aplicaba en los jugadores, puse esto solo para evitar inconvenientes
             if(enemy.hasPotionEffect(PotionEffectType.BLINDNESS)){
                 switch (reason){
                     case FIRE,FIRE_TICK,LAVA,HOT_FLOOR -> e.setDamage(e.getDamage() * 5);
@@ -303,10 +335,12 @@ public class GlobalListeners implements Listener {
         var loc = e.getBlock().getLocation();
         var item = p.getInventory().getItemInMainHand();
 
+
         if(item != null){
             if(item.hasItemMeta()){
                if (GenericPlayerListeners.checkItemId(item,"vulcanpickaxe")){
                    if(item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH))return;
+                   if(getDay() >= 28 && getMonsoon_active().equalsIgnoreCase("true"))return;
                    switch (block){
                        case IRON_ORE,DEEPSLATE_IRON_ORE ->{
                            e.getBlock().getDrops().clear();
@@ -327,6 +361,7 @@ public class GlobalListeners implements Listener {
                    }
                }
             }
+
         }
 
         if(getDay() >= 14){
@@ -347,6 +382,13 @@ public class GlobalListeners implements Listener {
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 if(block.name().toLowerCase().contains("ore") || block == Material.ANCIENT_DEBRIS){
                     e.getBlock().getDrops().clear();
+                    if(getDay() >= 35){
+                        if(doRandomChance(20)){
+                            Silverfish f = (Silverfish) Entities.spawnMob(e.getBlock().getLocation(), EntityType.SILVERFISH);
+                            f.playEffect(EntityEffect.ENTITY_POOF);
+                            Entities.silverday5(f);
+                        }
+                    }
                 }
             }
         }
@@ -561,6 +603,15 @@ public class GlobalListeners implements Listener {
                         }
                         case RABBIT -> {
                             Entities.rabbitKiller((Rabbit) liv);
+                        }
+                    }
+                }
+                if(getDay() >= 35){
+                    switch (liv.getType()){
+                        case COW,SHEEP ->{
+                            liv.remove();
+                            Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
+                            Entities.nwRavager(r,false);
                         }
                     }
                 }

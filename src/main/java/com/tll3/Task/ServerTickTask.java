@@ -202,6 +202,11 @@ public class ServerTickTask extends BukkitRunnable {
                 }else{
                     freezeticks = 0;
                 }
+                if (getMonsoon_active().equalsIgnoreCase("true")) {
+                    if (p.getLocation().subtract(0, 1, 0).getBlock().getType().name().toLowerCase().contains("slab")) {
+                        ((CraftPlayer) p).getHandle().a(((CraftPlayer) p).getHandle().dN().f(), 99.0F);
+                    }
+                }
             }
 
             //Handle mob spawn

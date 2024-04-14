@@ -33,6 +33,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.vehicle.VehicleEnterEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.persistence.PersistentDataHolder;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
@@ -818,6 +819,15 @@ public class GenericEntityListeners implements Listener {
                     EntityHelper.setIdentifierString(enderPearl,"rev_pearl");
                 }
             }
+            }
+        }
+        if(shooter instanceof Witch){
+            if(proj instanceof ThrownPotion t){
+                ItemStack r = new ItemStack(Material.SPLASH_POTION);
+                PotionMeta b = (PotionMeta) r.getItemMeta();
+                b.addCustomEffect(new PotionEffect(PotionEffectType.HARM,0,4),true);
+                r.setItemMeta(b);
+                t.setItem(r);
             }
         }
 
