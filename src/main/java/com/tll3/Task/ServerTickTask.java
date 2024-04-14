@@ -213,7 +213,7 @@ public class ServerTickTask extends BukkitRunnable {
             if(getDay() >= 35){
                 if(getMonsoon_active().equalsIgnoreCase("true")) {
                     var l = p.getLocation().clone();
-                    if (random.nextInt(30) == 0) {
+                    if (random.nextInt(5) == 0) {
                         int pX = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
                         int pZ = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
                         int y = (int) l.getY();
@@ -222,17 +222,17 @@ public class ServerTickTask extends BukkitRunnable {
                         if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
                             if (
                                     (block.getLocation().getWorld().getName().equalsIgnoreCase("world") &&
-                                            block.getType().name().toLowerCase().contains("glass") ||
-                                            block.getType() == Material.GLOWSTONE ||
-                                            block.getType().name().toLowerCase().contains("obsidian"))
+                                            (block.getType().name().toLowerCase().contains("glass") ||
+                                            block.getType().name().toLowerCase().contains("glowstone")||
+                                            block.getType().name().toLowerCase().contains("obsidian")))
                                     ||
                                             (block.getLocation().getWorld().getName().equalsIgnoreCase("world_nether") &&
-                                                    block.getType().name().toLowerCase().contains("glass") ||
-                                                    block.getType() == Material.GLOWSTONE ||
+                                                    (block.getType().name().toLowerCase().contains("glass") ||
+                                                    block.getType().name().toLowerCase().contains("glowstone") ||
                                                     block.getType().name().toLowerCase().contains("obsidian") ||
                                                     block.getType().name().toLowerCase().contains("ice") ||
-                                                    block.getType() == Material.BEDROCK)
-                            ) {
+                                                    block.getType().name().toLowerCase().contains("bedrock"))
+                            )) {
                                 MobRain.initMobs(up.getLocation());
                             }
                         }
