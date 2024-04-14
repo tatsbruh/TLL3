@@ -251,9 +251,9 @@ public class GlobalListeners implements Listener {
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
             }
         }
-        if(Data.has(entity,"relicmob",PersistentDataType.STRING)){
+        if(Data.has(entity,"relicmob",PersistentDataType.STRING) || Data.has(entity,"zenith",PersistentDataType.STRING)){
             switch (reason){
-                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE,ENTITY_EXPLOSION,BLOCK_EXPLOSION -> e.setCancelled(true);
+                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE,ENTITY_EXPLOSION,BLOCK_EXPLOSION,LIGHTNING -> e.setCancelled(true);
             }
         }
         if(((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING))) || entity instanceof Creeper && getDay() >= 35){
@@ -322,6 +322,19 @@ public class GlobalListeners implements Listener {
                         newr.setType(Material.AIR);
                         e.setResult(newr);
                     }
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void effectE(EntityPotionEffectEvent e){
+        var entity = e.getEntity();
+        var potion = e.getNewEffect();
+        if(entity instanceof LivingEntity l){
+            if(Data.has(l,"zenith",PersistentDataType.STRING)){
+                if(potion.getType() == PotionEffectType.SLOW || potion.getType() == PotionEffectType.WEAKNESS || potion.getType() == PotionEffectType.LUCK){
+                    e.setCancelled(true);
                 }
             }
         }

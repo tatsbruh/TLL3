@@ -21,13 +21,17 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.potion.PotionEffectType;
 
 public class CustomSkeleton extends EntitySkeleton {
     public CustomSkeleton(World world){
         super(EntityTypes.aK,world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Skeleton"));
-        EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(),new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,49).build());
-        this.addEffect(new MobEffect(MobEffects.l,Integer.MAX_VALUE,0), EntityPotionEffectEvent.Cause.PLUGIN);
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Bowmaster"));
+        EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(),new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,50).build());
+        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(),70);
+        EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.FIRE_RESISTANCE,0);
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"zenithskeleton");
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"zenith");
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

@@ -1,6 +1,7 @@
 package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.EntityHelper;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityLiving;
@@ -15,13 +16,18 @@ import net.minecraft.world.level.World;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3D;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.EnumSet;
 
 public class CustomGhast extends EntityGhast {
     public CustomGhast(World world){
         super(EntityTypes.R,world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Ghast"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Dreadnought"));
+        EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.FIRE_RESISTANCE, 0);
+        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(),35);
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"zenithghast");
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"zenith");
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

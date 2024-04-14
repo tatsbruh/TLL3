@@ -2,6 +2,7 @@ package com.tll3.Lists.CustomEntities;
 
 import com.tll3.Lists.CustomEntities.CustomPathfinders.NewSwellGoal;
 import com.tll3.Misc.ChatUtils;
+import com.tll3.Misc.EntityHelper;
 import net.minecraft.util.datafix.fixes.MobEffectIdFix;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -23,7 +24,9 @@ import net.minecraft.world.level.pathfinder.PathType;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.craftbukkit.v1_20_R3.attribute.CraftAttribute;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftLivingEntity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityPotionEffectEvent;
+import org.bukkit.potion.PotionEffectType;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -33,12 +36,16 @@ public class CustomCreeper extends EntityCreeper {
     public CustomCreeper(World world) {
 
         super(EntityTypes.v, world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Creeper"));
-        this.addEffect(new MobEffect(MobEffects.a,Integer.MAX_VALUE,2), EntityPotionEffectEvent.Cause.PLUGIN);
-        this.addEffect(new MobEffect(MobEffects.n,Integer.MAX_VALUE,0), EntityPotionEffectEvent.Cause.PLUGIN);
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Supernova"));
+        EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.FIRE_RESISTANCE, 0);
+        EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.INVISIBILITY, 0);
+        EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 2);
+        EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(),20);
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"zenithcreeper");
+        EntityHelper.setIdentifierString(this.getBukkitEntity(),"zenith");
         this.setPowered(true);
         this.bV = 50; //Explosion Radius
-        this.bU = 10; //Fuse ticks
+        this.bU = 20; //Fuse ticks
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
         try { // register follow range attributes

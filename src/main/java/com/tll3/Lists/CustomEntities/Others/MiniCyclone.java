@@ -36,7 +36,8 @@ public class MiniCyclone extends EntitySkeleton {
         SPACE,
         METAL,
         NORMAL,
-        ZOMBIE
+        ZOMBIE,
+        RELIC
     }
     public MiniCyclone(World world,CycloneClass clas){
         super(EntityTypes.aK,world);

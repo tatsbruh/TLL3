@@ -229,6 +229,42 @@ public class staffCMD extends BaseCommand {
                 case "rev_spider" -> Entities.revSpider((Spider) Entities.spawnMob(p.getLocation(),EntityType.SPIDER));
                 case "rev_creeper" -> Entities.revCreeper((Creeper) Entities.spawnMob(p.getLocation(),EntityType.CREEPER));
                 case "rev_enderman" -> Entities.revEnderman((Enderman) Entities.spawnMob(p.getLocation(),EntityType.ENDERMAN));
+                case "zenithskeleton" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomSkeleton r = new CustomSkeleton(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenithspider" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomSpider r = new CustomSpider(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenithenderman" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomEnderman r = new CustomEnderman(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenithcreeper" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomCreeper r = new CustomCreeper(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenithghast" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomGhast r = new CustomGhast(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
+                case "zenithblaze" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomBlaze r = new CustomBlaze(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
                 case "test" -> {
                     WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
                     BetterCreeper r = new BetterCreeper(worldServer);
