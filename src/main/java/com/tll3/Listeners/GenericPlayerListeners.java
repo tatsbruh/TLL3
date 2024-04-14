@@ -99,12 +99,12 @@ public class GenericPlayerListeners implements Listener {
                 if(p.isInLava() || (p.getWorld().getName().equals("world_nether") && getMonsoon_active().equalsIgnoreCase("true"))){
                     if(p.hasCooldown(Material.TRIDENT))return;
                     EntityPlayer papa = ((CraftPlayer)p).getHandle();
-                    papa.t(25);
+                    papa.t(30);
                     p.playSound(p.getLocation(),Sound.ITEM_TRIDENT_RIPTIDE_3,10.0F,2.0F);
                     double speed = 6.55;
                     Vector direction = p.getLocation().getDirection().multiply(speed);
                     p.setVelocity(direction);
-                    p.setCooldown(Material.TRIDENT,30);
+                    p.setCooldown(Material.TRIDENT,35);
                 }
             }
 
@@ -120,6 +120,26 @@ public class GenericPlayerListeners implements Listener {
 
         }
     }
+
+    @EventHandler
+    public void riptideE(PlayerRiptideEvent e){
+        var player = e.getPlayer();
+        if(Data.has(player,"curse", PersistentDataType.STRING)) {
+            if (EntityNaturalSpawn.doRandomChance(GenericUtils.getPanicRNGValue(player))) {
+                double randomX = (Math.random() * 2 - 1) * 2;
+                double randomY = (Math.random() * 2 - 1) * 2;
+                double randomZ = (Math.random() * 2 - 1) * 2;
+                Vector randomVelocity = new Vector(randomX, randomY, randomZ);
+                player.setVelocity(player.getVelocity().add(randomVelocity));
+                player.setCooldown(Material.TRIDENT,120);
+
+                player.playEffect(EntityEffect.BREAK_EQUIPMENT_MAIN_HAND);
+                player.playSound(player.getLocation(),Sound.ITEM_SHIELD_BREAK,10.0F,-1.0F);
+            }
+        }
+    }
+
+
 
     @EventHandler
     public void onCraft(CraftItemEvent e){
@@ -195,6 +215,15 @@ public class GenericPlayerListeners implements Listener {
     public void eatitemE(PlayerItemConsumeEvent e){
         var player = e.getPlayer();
         var item = e.getItem();
+        if(Data.has(player,"curse", PersistentDataType.STRING)) {
+            if (EntityNaturalSpawn.doRandomChance(GenericUtils.getPanicRNGValue(player))) {
+                if(player.getSaturation() >= 0){
+                    player.setSaturation(player.getSaturation() / 2);
+                    player.playEffect(EntityEffect.BREAK_EQUIPMENT_MAIN_HAND);
+                    player.playSound(player.getLocation(),Sound.ITEM_SHIELD_BREAK,10.0F,-1.0F);
+                }
+            }
+        }
         if(getDay() >= 28){
             if(checkNonMeatFood(item)){
                 player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,200,2,true,false,true));

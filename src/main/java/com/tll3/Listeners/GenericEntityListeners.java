@@ -812,6 +812,17 @@ public class GenericEntityListeners implements Listener {
         }
         if(shooter instanceof Player p){
             if(proj instanceof EnderPearl enderPearl){
+                if(Data.has(p,"curse", PersistentDataType.STRING)) {
+                    if(EntityNaturalSpawn.doRandomChance(GenericUtils.getPanicRNGValue(p))) {
+                        p.playEffect(EntityEffect.BREAK_EQUIPMENT_MAIN_HAND);
+                        p.playSound(p.getLocation(),Sound.ITEM_SHIELD_BREAK,10.0F,-1.0F);
+                        double randomX = (Math.random() * 2 - 1) * 2;
+                        double randomY = (Math.random() * 2 - 1) * 2;
+                        double randomZ = (Math.random() * 2 - 1) * 2;
+                        Vector randomVelocity = new Vector(randomX, randomY, randomZ);
+                        enderPearl.setVelocity(enderPearl.getVelocity().add(randomVelocity));
+                    }
+                }
                 var item1 = p.getInventory().getItemInMainHand();
                 var item2 = p.getInventory().getItemInOffHand();
                 if(item1.hasItemMeta() || item2.hasItemMeta()){

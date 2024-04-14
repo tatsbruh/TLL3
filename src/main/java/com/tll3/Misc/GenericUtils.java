@@ -1,5 +1,6 @@
 package com.tll3.Misc;
 
+import com.tll3.Misc.DataManager.Data;
 import com.tll3.Misc.Files.ConfigData;
 import com.tll3.TLL3;
 import lombok.Getter;
@@ -19,6 +20,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
@@ -121,6 +123,21 @@ public class GenericUtils {
 
     public static Integer getRandomValue(int n) {
         return (int)(Math.random() * (double)n);
+    }
+    //Esto es para sacar el RNG de cada nivel de panico y sus efectos
+    public static Integer getPanicRNGValue(Player player){
+        int value = 0;
+        if(Data.has(player,"curse", PersistentDataType.STRING)) {
+            var s = Data.get(player, "curse_e", PersistentDataType.INTEGER);
+            switch (s){
+                case 1 -> value = 10;
+                case 2 -> value = 20;
+                case 3 -> value = 30;
+                case 4 -> value = 40;
+                default -> value = 1;
+            }
+        }
+        return value;
     }
     public static String damageCause(EntityDamageEvent e) {
 
