@@ -696,7 +696,6 @@ public class GenericEntityListeners implements Listener {
 
         if (entity instanceof Skeleton s) {
             if(Data.has(s,"zenithskeleton",PersistentDataType.STRING)){
-                EntityHelper.setIdentifierString(projectile, "rev_explosion");
                 EntityHelper.setIdentifierString(projectile,"steeltnt");
                 EntityHelper.setIdentifierString(projectile,"lol");
                 EntityHelper.setIdentifierString(projectile, "void");
@@ -1185,9 +1184,7 @@ public class GenericEntityListeners implements Listener {
                     hen.getWorld().strikeLightning(hen.getLocation());
                     hen.getLocation().createExplosion((Entity) source,3,true,true);
                     if (hen instanceof Player p) {
-                        p.damage(6 * p.getHealth(),z);
                         p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 200, 0, true, false, true));
-                        EntityHelper.teleportEnderman(p, p.getLocation().getBlockX(), p.getLocation().getBlockY(), p.getLocation().getBlockZ(), p.getWorld(), 128.0D);
                     }
                 }
                 if (hbl != null) {
