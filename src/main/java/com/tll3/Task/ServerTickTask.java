@@ -212,27 +212,23 @@ public class ServerTickTask extends BukkitRunnable {
             //Handle mob spawn
             if(getDay() >= 35){
                 if(getMonsoon_active().equalsIgnoreCase("true")) {
-                    var l = p.getLocation().clone();
+                    Location l = p.getLocation().clone();
                     if (random.nextInt(5) == 0) {
                         int pX = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
                         int pZ = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
-                        int y = (int) l.getY();
+                        int y = (int) l.getY() - 1;
                         Block block = l.getWorld().getBlockAt(l.getBlockX() + pX, y, l.getBlockZ() + pZ);
                         Block up = block.getRelative(BlockFace.UP);
                         if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
-                            if (
-                                    (block.getLocation().getWorld().getName().equalsIgnoreCase("world") &&
-                                            (block.getType().name().toLowerCase().contains("glass") ||
-                                            block.getType().name().toLowerCase().contains("glowstone")||
-                                            block.getType().name().toLowerCase().contains("obsidian")))
+                            if(
+                                    isBlockInAWorld(block, "world", "glass", "glowstone", "obsidian")
                                     ||
-                                            (block.getLocation().getWorld().getName().equalsIgnoreCase("world_nether") &&
-                                                    (block.getType().name().toLowerCase().contains("glass") ||
-                                                    block.getType().name().toLowerCase().contains("glowstone") ||
-                                                    block.getType().name().toLowerCase().contains("obsidian") ||
-                                                    block.getType().name().toLowerCase().contains("ice") ||
-                                                    block.getType().name().toLowerCase().contains("bedrock"))
-                            )) {
+                                    isBlockInAWorld(
+                                            block,
+                                            "world_nether",
+                                            "glass", "glowstone", "obsidian", "ice", "bedrock")
+                            ) {
+                                System.out.println("MobRain.initMobs(up.getLocation());");
                                 MobRain.initMobs(up.getLocation());
                             }
                         }
@@ -240,6 +236,14 @@ public class ServerTickTask extends BukkitRunnable {
                 }
             }
         }
+    }
+
+    private static boolean isBlockInAWorld(Block block, String world, String... blocks){
+        if(block.getLocation().getWorld().getName().equalsIgnoreCase(world))
+            for(String b : blocks)
+                if(block.getType().name().toLowerCase().contains(b))
+                    return true;
+        return false;
     }
 
 
