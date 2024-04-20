@@ -244,9 +244,9 @@ public class GenericPlayerListeners implements Listener {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,3,true,false,true));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,200,4,true,false,true));
             }
-            if((item.getType() == Material.GOLDEN_APPLE || item.getType() == Material.ENCHANTED_GOLDEN_APPLE) && new ItemBuilder(item).hasID(null)){
+            /*if((item.getType() == Material.GOLDEN_APPLE || item.getType() == Material.ENCHANTED_GOLDEN_APPLE) && new ItemBuilder(item).hasID(null)){
                 player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,200,0,true,false,true));
-            }
+            }*/
         }
         if(new ItemBuilder(item).hasID("miraclefruit")){
             if(player.hasPotionEffect(PotionEffectType.LUCK))return;

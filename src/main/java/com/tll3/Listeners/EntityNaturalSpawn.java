@@ -1415,7 +1415,7 @@ public class EntityNaturalSpawn implements Listener {
         public static void chooseNewCreeper(Creeper c,CreatureSpawnEvent e){
             var loc = c.getLocation();
             var random = getRandomValue(100);
-            if(getDay() >= 35 && getDay() < 42){
+            if(getDay() >= 35){
                 if(random <= 30) {
                     Entities.revCreeper(c);
                 }else if(random > 30 && random <= 55) {

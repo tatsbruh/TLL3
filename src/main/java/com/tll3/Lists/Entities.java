@@ -864,7 +864,7 @@ public class Entities {
                 case 5 -> Entities.vortice(e);
                 case 6 -> Entities.starCreeper(e);
             }
-        }else if(getDay() >= 35 && getDay() < 42){
+        }else if(getDay() >= 35){
         int type = getRandomValue(8);
         switch (type) {
             case 0 -> Entities.creChr(e);
