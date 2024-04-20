@@ -207,6 +207,12 @@ public class GenericPlayerListeners implements Listener {
             e.setCancelled(true);
         }
     }
+    @EventHandler
+    public void cubetavaciaE(PlayerBucketEmptyEvent e){
+        if(getDay() >= 42){
+            e.setCancelled(true);
+        }
+    }
 
 
 
@@ -228,6 +234,18 @@ public class GenericPlayerListeners implements Listener {
             if(checkNonMeatFood(item)){
                 player.addPotionEffect(new PotionEffect(PotionEffectType.POISON,200,2,true,false,true));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,200,0,true,false,true));
+            }
+        }
+        if(getDay() >= 42){
+            if(item.getType() == Material.MILK_BUCKET){
+                e.setCancelled(true);
+            }
+            if(item.getType() == Material.GOLDEN_CARROT){
+                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,200,3,true,false,true));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.HUNGER,200,4,true,false,true));
+            }
+            if((item.getType() == Material.GOLDEN_APPLE || item.getType() == Material.ENCHANTED_GOLDEN_APPLE) && new ItemBuilder(item).hasID(null)){
+                player.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,200,0,true,false,true));
             }
         }
         if(new ItemBuilder(item).hasID("miraclefruit")){

@@ -112,7 +112,11 @@ public class MonsoonListeners implements Listener {
                 sp.sendTitle(ChatUtils.format("#305bab☀ #5acce8¡Vortex Outbreak! #305bab☀"),ChatUtils.format("#4c717a☁ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☁"),0,80,20);
             } else {
                 sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"), ChatUtils.format("#4d52d1☂ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☂"), 0, 80, 20);
-
+            }
+            if(GenericUtils.getDay() >= 42){
+                if(sp.getGameMode() == GameMode.SURVIVAL){
+                    chooseRandomNegativeEffect(sp);
+                }
             }
         }
         GenericUtils.setMaxWeatherDuration(currentStormDuration);
@@ -204,5 +208,18 @@ public class MonsoonListeners implements Listener {
             return GenericUtils.doTimeFormat(currentStormDuration);
         }
         return " ";
+    }
+
+    public static void chooseRandomNegativeEffect(Player p){
+        int effects = GenericUtils.getRandomValue(7);
+        switch (effects){
+            case 0: p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW,300,2,true,false,true));
+            case 1: p.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS,300,2,true,false,true));
+            case 2: p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING,300,2,true,false,true));
+            case 3: p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,300,2,true,false,true));
+            case 4: p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER,300,2,true,false,true));
+            case 5: p.addPotionEffect(new PotionEffect(PotionEffectType.LEVITATION,150,4,true,false,true));
+            case 6: p.addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,300,2,true,false,true));
+        }
     }
 }

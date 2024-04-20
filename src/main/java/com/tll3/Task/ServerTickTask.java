@@ -130,7 +130,7 @@ public class ServerTickTask extends BukkitRunnable {
                         if (highestY < p.getLocation().getY() && chance <= 5) {
                             p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS, 200, 0, false, false, false));
                         }
-                    } else if (getMonsoon_active().equalsIgnoreCase("true") && getTyphoonactive().equalsIgnoreCase("true")) {
+                    } else if ((getMonsoon_active().equalsIgnoreCase("true") && getTyphoonactive().equalsIgnoreCase("true") && getDay() < 42) || (getDay() >= 42 && getMonsoon_active().equalsIgnoreCase("true")) ) {
                         Location block = p.getWorld().getHighestBlockAt(p.getLocation().clone()).getLocation();
                         int highestY = block.getBlockY();
                         if (highestY < p.getLocation().getY() && chance <= 5) {
@@ -216,6 +216,12 @@ public class ServerTickTask extends BukkitRunnable {
                     if (p.getLocation().subtract(0, 1, 0).getBlock().getType().name().toLowerCase().contains("slab")) {
                         ((CraftPlayer) p).getHandle().a(((CraftPlayer) p).getHandle().dN().f(), 99.0F);
                     }
+                }
+            }
+
+            if(getDay() >= 42){
+                if (p.getLocation().getBlock().getType().name().toLowerCase().contains("mushroom")) {
+                    p.getWorld().createExplosion(p.getLocation(),5);
                 }
             }
 

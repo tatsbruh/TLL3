@@ -745,6 +745,32 @@ public class GenericEntityListeners implements Listener {
         }
 
         if(entity instanceof Player p){
+            if(getDay() >= 42){
+                if(projectile instanceof Arrow arrow) {
+                    if (p.hasPotionEffect(PotionEffectType.WEAKNESS)) {
+                        int level = p.getPotionEffect(PotionEffectType.WEAKNESS).getAmplifier();
+                        switch (level) {
+                            case 0:
+                                arrow.setDamage(arrow.getDamage() - 1.5);
+                            case 1:
+                                arrow.setDamage(arrow.getDamage() - 3);
+                            case 2:
+                                arrow.setDamage(arrow.getDamage() - 4.5);
+                            case 3:
+                                arrow.setDamage(arrow.getDamage() - 6);
+                            case 4:
+                                arrow.setDamage(arrow.getDamage() - 6.5);
+                            case 5, 6, 7, 8, 9, 10:
+                                arrow.setDamage(0);
+                        }
+                    }
+                }
+                if(projectile instanceof ThrownPotion t){
+                    if (EntityNaturalSpawn.doRandomChance(20)) {
+                        t.getEffects().clear();
+                    }
+                }
+            }
             if(bow.hasItemMeta()){
             if(new ItemBuilder(bow).hasID("dread_bow")){
                 EntityHelper.setIdentifierString(projectile,"dread");

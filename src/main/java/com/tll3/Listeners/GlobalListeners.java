@@ -173,7 +173,13 @@ public class GlobalListeners implements Listener {
             }
             if(getDay() >= 21 && !p.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
                 switch (reason){
-                    case LAVA: e.setDamage(e.getDamage() * 1.2);
+                    case LAVA: {
+                        if(getDay() >= 42 && getMonsoon_active().equalsIgnoreCase("true")){
+                            e.setDamage(e.getDamage() * 99);
+                        }else{
+                            e.setDamage(e.getDamage() * 1.2);
+                        }
+                    }
                     case HOT_FLOOR: {
                         if(getDay() >= 42){
                             e.setDamage(e.getDamage() * 99);
@@ -237,6 +243,13 @@ public class GlobalListeners implements Listener {
                 }
             }
         }
+        if(getDay() >= 42){
+            if(entity instanceof Enemy){
+                switch (reason){
+                    case ENTITY_EXPLOSION,BLOCK_EXPLOSION -> e.setCancelled(true);
+                }
+            }
+        }
 
 
 
@@ -269,6 +282,15 @@ public class GlobalListeners implements Listener {
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE,ENTITY_EXPLOSION,BLOCK_EXPLOSION,LIGHTNING -> e.setCancelled(true);
             }
         }
+        if(getDay() >= 35) {
+            if (entity instanceof Llama || entity instanceof Goat) {
+                switch (reason) {
+                    case FALL, FALLING_BLOCK, SUFFOCATION, DROWNING, LAVA, THORNS, CONTACT, HOT_FLOOR, MAGIC, SONIC_BOOM, POISON, WITHER, FIRE, FIRE_TICK, FREEZE, ENTITY_EXPLOSION, BLOCK_EXPLOSION, LIGHTNING ->
+                            e.setCancelled(true);
+                }
+            }
+        }
+
         if(((Data.has(entity,"unstablecreeper",PersistentDataType.STRING) || Data.has(entity,"vortex",PersistentDataType.STRING))) || entity instanceof Creeper && getDay() >= 35){
             if(entity.getVehicle() == null) {
                 if (reason == EntityDamageEvent.DamageCause.PROJECTILE) {
@@ -322,6 +344,11 @@ public class GlobalListeners implements Listener {
                 }
             }
         }
+        if(getDay() >= 42){
+            if(block.name().toLowerCase().contains("cobweb")){
+                e.setCancelled(true);
+            }
+        }
 
         if(item != null){
             if(new ItemBuilder(item).hasID("unplaceable")){
@@ -373,7 +400,7 @@ public class GlobalListeners implements Listener {
             if(item.hasItemMeta()){
                if (GenericPlayerListeners.checkItemId(item,"vulcanpickaxe")){
                    if(item.getItemMeta().hasEnchant(Enchantment.SILK_TOUCH))return;
-                   if(getDay() >= 28 && getMonsoon_active().equalsIgnoreCase("true"))return;
+                   if((getDay() >= 28 && getMonsoon_active().equalsIgnoreCase("true")) || getDay() >= 42)return;
                    switch (block){
                        case IRON_ORE,DEEPSLATE_IRON_ORE ->{
                            e.getBlock().getDrops().clear();
@@ -411,7 +438,7 @@ public class GlobalListeners implements Listener {
                 e.getBlock().getLocation().createExplosion(10,true,true);
             }
         }
-        if(getDay() >= 28){
+        if(getDay() >= 28 || getDay() < 42){
             if(getMonsoon_active().equalsIgnoreCase("true")){
                 if(block.name().toLowerCase().contains("ore") || block == Material.ANCIENT_DEBRIS){
                     e.getBlock().getDrops().clear();
@@ -423,6 +450,13 @@ public class GlobalListeners implements Listener {
                         }
                     }
                 }
+            }
+        }else if(getDay() >= 42){
+            if(block.name().toLowerCase().contains("ore") || block == Material.ANCIENT_DEBRIS){
+                e.getBlock().getDrops().clear();
+                Silverfish f = (Silverfish) Entities.spawnMob(e.getBlock().getLocation(), EntityType.SILVERFISH);
+                f.playEffect(EntityEffect.ENTITY_POOF);
+                Entities.silverday5(f);
             }
         }
     }
@@ -442,6 +476,11 @@ public class GlobalListeners implements Listener {
         }
         if(getDay() >= 28){
             if(e.getInventory().getType() == InventoryType.MERCHANT && getTyphoonactive().equalsIgnoreCase("true")){
+                e.setCancelled(true);
+            }
+        }
+        if(getDay() >= 42){
+            if((e.getInventory().getType() == InventoryType.BARREL || e.getInventory().getType() == InventoryType.SHULKER_BOX) && getMonsoon_active().equalsIgnoreCase("true")){
                 e.setCancelled(true);
             }
         }
@@ -475,7 +514,7 @@ public class GlobalListeners implements Listener {
                 || liv instanceof CustomPanda || liv instanceof CustomPolarBear || liv instanceof CustomSniffer
                 || liv instanceof CustomMooshroom || liv instanceof CustomAxolotls
                 || liv instanceof CustomDolphin || liv instanceof CustomBee || liv instanceof CustomLlama || liv instanceof CustomGoat
-                || liv instanceof CustomPig) return;
+                || liv instanceof CustomPig || liv instanceof CustomParrot) return;
                 Location loc = liv.getLocation();
                 if (getDay() >= 7) {
                     switch (liv.getType()){
@@ -645,6 +684,22 @@ public class GlobalListeners implements Listener {
                             liv.remove();
                             Ravager r = (Ravager) Entities.spawnMob(loc,EntityType.RAVAGER);
                             Entities.nwRavager(r,false);
+                        }
+                    }
+                }
+                if(getDay() >= 42){
+                    switch (liv.getType()){
+                        case VILLAGER ->{
+                            liv.remove();
+                            WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                            CustomEvoker r = new CustomEvoker(worldServer,false);
+                            r.a_(loc.getX(), loc.getY(), loc.getZ());
+                            worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                        }
+                        case PARROT -> {
+                            liv.remove();
+                            Vex v = (Vex) Entities.spawnMob(loc,EntityType.VEX);
+                            Entities.nwVex(v);
                         }
                     }
                 }
