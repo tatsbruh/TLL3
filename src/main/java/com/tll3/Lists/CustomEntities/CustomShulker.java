@@ -53,7 +53,7 @@ public class CustomShulker extends EntityShulker {
     @Override
     protected void B() {
         this.bO.a(1, new PathfinderGoalLookAtPlayer(this, EntityHuman.class, 8.0F, 0.02F, true));
-        this.bO.a(4, new a());
+        this.bO.a(4, new fuf());
         this.bO.a(7, new f());
         this.bO.a(8, new PathfinderGoalRandomLookaround(this));
         this.bP.a(1, (new PathfinderGoalHurtByTarget(this, new Class[]{this.getClass()})).a(new Class[0]));
@@ -61,10 +61,11 @@ public class CustomShulker extends EntityShulker {
         this.bP.a(3, new c(this));
     }
 
-    private class a extends PathfinderGoal {
+
+    private class fuf extends PathfinderGoal {
         private int b;
 
-        public a() {
+        public fuf() {
             this.a(EnumSet.of(Type.a, Type.b));
         }
 
