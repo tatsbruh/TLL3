@@ -4,6 +4,8 @@ import com.tll3.Listeners.EntityNaturalSpawn;
 import com.tll3.Lists.CustomEntities.CustomAxolotls;
 import com.tll3.Lists.CustomEntities.CustomPig;
 import com.tll3.Misc.DataManager.Data;
+import com.tll3.Misc.EntityHelper;
+import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
@@ -15,6 +17,7 @@ import net.minecraft.world.entity.ai.goal.PathfinderGoalMeleeAttack;
 import net.minecraft.world.entity.ai.goal.PathfinderGoalSelector;
 import net.minecraft.world.entity.ai.goal.target.PathfinderGoalNearestAttackableTarget;
 import net.minecraft.world.entity.animal.EntityIronGolem;
+import net.minecraft.world.entity.monster.EntityEnderman;
 import net.minecraft.world.entity.monster.EntityPigZombie;
 import net.minecraft.world.entity.monster.EntitySpider;
 import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
@@ -22,6 +25,7 @@ import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.entity.projectile.EntityFireworks;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPigZombie;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftSpider;
@@ -346,8 +350,15 @@ public class Entities {
     }
     public static void silverday5(Silverfish silverfish){
         setName(silverfish,"&cPowerful Silverfish");
-        addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,14);
-        addPotionEffect(silverfish,PotionEffectType.SPEED,1);
+        setIdentifierString(silverfish,"powerfish");
+        if(getDay() >= 42){
+            addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,30);
+            addPotionEffect(silverfish,PotionEffectType.SPEED,2);
+            setIdentifierInt(silverfish,"burrowstate",0);
+        }else{
+            addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,14);
+            addPotionEffect(silverfish,PotionEffectType.SPEED,1);
+        }
     }
     public static void drowAby(Drowned drowned){
         setName(drowned,"&bAbyssal Drowned");
@@ -440,7 +451,11 @@ public class Entities {
     public static void slimeNight(Slime s){
         setName(s,"#497555Nightmare Slime");
         setMobHealth(s,65);
-        setMobDamage(s,35);
+        if(getDay() >= 42){
+            setMobDamage(s,55);
+        }else{
+            setMobDamage(s,35);
+        }
         s.setSize(14);
         setIdentifierString(s,"slimenightmare");
     }
@@ -488,49 +503,78 @@ public class Entities {
     //Revenant Mobs
     public static void revZombie(Zombie z){
         setName(z,"#592929Revenant Zombie");
-        setMobDamage(z,6);
-        setMobHealth(z,28);
         setMobRange(z,96);
         z.setAdult();
-        addPotionEffect(z,PotionEffectType.SPEED,0);
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantzombie");
         setIdentifierInt(z,"revzom_state",0);
+        if(getDay() >= 42){
+            setMobDamage(z,14);
+            setMobHealth(z,48);
+            addPotionEffect(z,PotionEffectType.SPEED,1);
+        }else{
+            setMobDamage(z,6);
+            setMobHealth(z,28);
+            addPotionEffect(z,PotionEffectType.SPEED,0);
+        }
     }
     public static void revSkeleton(Skeleton z){
         setName(z,"#592929Revenant Skeleton");
-        setMobHealth(z,32);
         setMobRange(z,96);
-        setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,19).addEnchant(Enchantment.ARROW_KNOCKBACK,2).addEnchant(Enchantment.ARROW_FIRE,2).build());
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantskeleton");
         setIdentifierInt(z,"revske_amount",0); //Controla las veces que ha disparado
+        if(getDay() >= 42){
+            setMobHealth(z,45);
+            setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,45).addEnchant(Enchantment.ARROW_KNOCKBACK,5).addEnchant(Enchantment.ARROW_FIRE,20).build());
+        }else{
+            setMobHealth(z,32);
+            setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,19).addEnchant(Enchantment.ARROW_KNOCKBACK,2).addEnchant(Enchantment.ARROW_FIRE,2).build());
+        }
     }
     public static void revSpider(Spider z){
         setName(z,"#592929Revenant Spider");
-        setMobHealth(z,15);
         setMobRange(z,96);
-        addPotionEffect(z,PotionEffectType.SPEED,1);
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantspider");
+        if(getDay() >= 42){
+            setMobHealth(z,35);
+            addPotionEffect(z,PotionEffectType.SPEED,2);
+        }else{
+            setMobHealth(z,15);
+            addPotionEffect(z,PotionEffectType.SPEED,1);
+        }
     }
     public static void revCreeper(Creeper z){
         setName(z,"#592929Revenant Creeper");
-        z.setExplosionRadius(8);
         z.setPowered(true);
         setMobRange(z,96);
-        addPotionEffect(z,PotionEffectType.SPEED,1);
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantcreeper");
+        if(getDay() >= 42){
+            z.setExplosionRadius(13);
+            addPotionEffect(z,PotionEffectType.SPEED,2);
+        }else{
+            z.setExplosionRadius(8);
+            addPotionEffect(z,PotionEffectType.SPEED,1);
+        }
     }
     public static void revEnderman(Enderman z){
         setName(z,"#592929Revenant Enderman");
-        setMobHealth(z,50);
-        setMobDamage(z,10);
-        setMobRange(z,96);
-        addPotionEffect(z,PotionEffectType.SPEED,1);
         setIdentifierString(z,"revenant_class");
         setIdentifierString(z,"revenantenderman");
+        if(getDay() >= 42){
+            setMobHealth(z,60);
+            setMobDamage(z,20);
+            setMobRange(z,190);
+            addPotionEffect(z,PotionEffectType.SPEED,3);
+            if(EntityNaturalSpawn.doRandomChance(15))injectHostileBehaviorToEnderman(z);
+        }else{
+            setMobHealth(z,50);
+            setMobDamage(z,10);
+            setMobRange(z,96);
+            addPotionEffect(z,PotionEffectType.SPEED,1);
+        }
     }
     public static void acidFish(PufferFish f){
         setName(f,"#5e8a46Acid Pufferfish");
@@ -556,6 +600,9 @@ public class Entities {
         worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
         ((LivingEntity)r.getBukkitEntity()).addPassenger(z);
         setIdentifierString(z,"pigrider");
+        if(getDay() >= 42){
+            EntityHelper.addPotionEffect(z,PotionEffectType.INCREASE_DAMAGE,4);
+        }
     }
     public static void zombpigShinobi(PigZombie z){
         injectHostileBehaviorToPig(z);
@@ -564,6 +611,9 @@ public class Entities {
         setMainHand(z,new ItemBuilder(Material.NETHERITE_SWORD).addEnchant(Enchantment.DAMAGE_ALL,15).addEnchant(Enchantment.FIRE_ASPECT,30).build());
         addPotionEffect(z,PotionEffectType.SPEED,2);
         setIdentifierString(z,"shinobipig");
+        if(getDay() >= 42){
+            EntityHelper.addPotionEffect(z,PotionEffectType.INCREASE_DAMAGE,4);
+        }
     }
     public static void zombpigAlchemist(PigZombie z){
         injectHostileBehaviorToPig(z);
@@ -572,31 +622,50 @@ public class Entities {
         setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,10).build());
         setIdentifierString(z,"alchpig");
         new AlqPotionThrow(z).runTaskTimer(TLL3.getInstance(),0L,1L);
+        if(getDay() >= 42){
+            EntityHelper.addPotionEffect(z,PotionEffectType.INCREASE_DAMAGE,4);
+        }
     }
     public static void titaniumCreeper(Creeper c){
         setName(c,"#403e3eTitanium Creeper");
-        setMobHealth(c,10);
-        addPotionEffect(c,PotionEffectType.SPEED,1);
         c.setPowered(true);
         setIdentifierString(c,"titaniumcreeper");
         setIdentifierString(c,"metal_enemy");
         setKnockresist(c,1000);
+
+        if(getDay() >= 42){
+            setMobHealth(c,25);
+            addPotionEffect(c,PotionEffectType.SPEED,2);
+        }else{
+            setMobHealth(c,10);
+            addPotionEffect(c,PotionEffectType.SPEED,1);
+        }
     }
     public static void steelrailgunner(Skeleton s){
         setName(s,"#403e3eSteel Rail-gunner");
-        setMobHealth(s,10);
         setIdentifierString(s,"steelrailgunner");
         setIdentifierString(s,"metal_enemy");
         setKnockresist(s,1000);
+        if(getDay() >= 42){
+            setMobHealth(s,30);
+            setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,20).build());
+        }else{setMobHealth(s,10);}
     }
     public static void cyberpunk(Enderman e){
         setName(e,"#403e3eCyberpunk");
-        setMobHealth(e,10);
-        setMobDamage(e,10);
-        addPotionEffect(e,PotionEffectType.SPEED,3);
         setIdentifierString(e,"cyberpunk");
         setIdentifierString(e,"metal_enemy");
         setKnockresist(e,1000);
+        if(getDay() >= 42){
+            setMobHealth(e,35);
+            setMobDamage(e,35);
+            addPotionEffect(e,PotionEffectType.SPEED,4);
+            if(EntityNaturalSpawn.doRandomChance(15))injectHostileBehaviorToEnderman(e);
+        }else{
+            setMobHealth(e,10);
+            setMobDamage(e,10);
+            addPotionEffect(e,PotionEffectType.SPEED,3);
+        }
     }
     public static void creeperTower(Creeper c){
         int quantity = getRandomValue(5);
@@ -641,6 +710,9 @@ public class Entities {
         setMobHealth(e,55);
         setMobDamage(e,15);
         setIdentifierString(e,"starredenderman");
+        if(getDay() > 42){
+            if(EntityNaturalSpawn.doRandomChance(15))injectHostileBehaviorToEnderman(e);
+        }
     }
     public static void starWither(WitherSkeleton e){
         setName(e,"&bSpace Overseer &e&l★");
@@ -678,11 +750,17 @@ public class Entities {
     }
     public static void lilGhoul(Zombie z){
         setName(z,"&cLi'l Ghoul");
-        setMobHealth(z,35);
-        setMobDamage(z,10);
-        addPotionEffect(z,PotionEffectType.SPEED,1);
         z.setBaby();
         setIdentifierString(z,"lilghoul");
+        if(getDay() >= 42){
+            setMobHealth(z,50);
+            setMobDamage(z,16);
+            addPotionEffect(z,PotionEffectType.SPEED,2);
+        }else{
+            setMobHealth(z,35);
+            setMobDamage(z,10);
+            addPotionEffect(z,PotionEffectType.SPEED,1);
+        }
     }
     public static void blazephim(Blaze z){
         setName(z,"&f&lBlazephim");
@@ -826,6 +904,9 @@ public class Entities {
         setMainHand(c,new ItemBuilder(Material.NETHERITE_AXE).setUnbreakable(true).build());
         addPotionEffect(c,PotionEffectType.SPEED,1);
         setIdentifierString(c,"scorchbeast");
+        if(getDay() >= 42){
+            new NewBlockBreakTask(c).runTaskTimer(TLL3.getInstance(),20L, 35L);
+        }
     }
     public static void rustwalker(Creeper c){
         setName(c,"#ffab4aRustwalker");
@@ -835,6 +916,10 @@ public class Entities {
         c.setExplosionRadius(5);
         addPotionEffect(c,PotionEffectType.SPEED,0);
         setIdentifierString(c,"rustwalker");
+        if(getDay() >= 42){
+            setIdentifierString(c,"barrier");
+            setIdentifierInt(c,"barrier_state",0);
+        }
     }
     public static void lostScav(Pillager p){
         setName(p,"#615e58Lost Scavenger");
@@ -872,12 +957,15 @@ public class Entities {
         setIdentifierString(s,"blightedskeleton");
         setIdentifierString(s,"tllt2");
     }
-    public static void blightedEnderman(Enderman s){
-        setName(s,"#D97BF7B#CF77EEl#C574E6i#BB70DEg#B26DD5h#A869CDt#9E66C5e#9462BCd #8A5FB4E#805BABn#7658A3d#6C549Be#635192r#594D8Am#4F4A82a#454679n");
-        setMobHealth(s,40);
-        setMobDamage(s,16);
-        setIdentifierString(s,"blightedenderman");
-        setIdentifierString(s,"tllt2");
+    public static void blightedEnderman(Enderman s) {
+        setName(s, "#D97BF7B#CF77EEl#C574E6i#BB70DEg#B26DD5h#A869CDt#9E66C5e#9462BCd #8A5FB4E#805BABn#7658A3d#6C549Be#635192r#594D8Am#4F4A82a#454679n");
+        setMobHealth(s, 40);
+        setMobDamage(s, 16);
+        setIdentifierString(s, "blightedenderman");
+        setIdentifierString(s, "tllt2");
+        if (getDay() >= 42) {
+            if (EntityNaturalSpawn.doRandomChance(15)) injectHostileBehaviorToEnderman(s);
+        }
     }
     public static void blightedGhast(Ghast s){
         setName(s,"#CB2D3E⋘ #CE2F3EB#D0313Dl#D3333Di#D5343Dg#D8363Dh#DA383Ct#DD3A3Ce#E03C3Cd #E23E3BG#E5403Bh#E7413Ba#EA433Bs#EC453At #EF473A⋙");
@@ -1128,6 +1216,22 @@ public class Entities {
     public static void injectHostileBehaviorToPig(PigZombie z){
         CraftPigZombie craft = ((CraftPigZombie) z);
         EntityPigZombie entityPigZombie = craft.getHandle();
+        try {
+            Class<? extends EntityInsentient> cl = EntityInsentient.class;
+            Field gf = cl.getDeclaredField("bO");
+            gf.setAccessible(true);
+            PathfinderGoalSelector goal = (PathfinderGoalSelector) gf.get(entityPigZombie);
+            goal.a(0, new PathfinderGoalMeleeAttack(entityPigZombie, 1.0D, true));
+            Field tf = cl.getDeclaredField("bP");
+            tf.setAccessible(true);
+            PathfinderGoalSelector target = (PathfinderGoalSelector) tf.get(entityPigZombie);
+            target.a(0, new PathfinderGoalNearestAttackableTarget<>(entityPigZombie, EntityHuman.class, 10, true, false, null));
+
+        } catch (Exception e) {}
+    }
+    public static void injectHostileBehaviorToEnderman(Enderman z){
+        CraftEnderman craft = ((CraftEnderman) z);
+        EntityEnderman entityPigZombie = craft.getHandle();
         try {
             Class<? extends EntityInsentient> cl = EntityInsentient.class;
             Field gf = cl.getDeclaredField("bO");

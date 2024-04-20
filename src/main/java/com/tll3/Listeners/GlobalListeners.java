@@ -174,8 +174,20 @@ public class GlobalListeners implements Listener {
             if(getDay() >= 21 && !p.getWorld().getName().equalsIgnoreCase("world_wasteyard")){
                 switch (reason){
                     case LAVA: e.setDamage(e.getDamage() * 1.2);
-                    case HOT_FLOOR: e.setDamage(e.getDamage() * 10);
-                    case FALL: e.setDamage(e.getDamage() * 2);
+                    case HOT_FLOOR: {
+                        if(getDay() >= 42){
+                            e.setDamage(e.getDamage() * 99);
+                        }else{
+                            e.setDamage(e.getDamage() * 10);
+                        }
+                    }
+                    case FALL: {
+                        if(getDay() >= 42){
+                            e.setDamage(e.getDamage() * 3);
+                        }else{
+                            e.setDamage(e.getDamage() * 2);
+                        }
+                    }
                 }
             }
         }
@@ -232,6 +244,7 @@ public class GlobalListeners implements Listener {
         if(entity instanceof Zombie z){
             if(Data.has(z,"zninja",PersistentDataType.STRING) && reason == EntityDamageEvent.DamageCause.FALL)e.setCancelled(true);
         }
+
         if(entity instanceof Skeleton s){
             if(Data.has(s,"firemancer",PersistentDataType.STRING) && (reason == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || reason == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION))e.setCancelled(true);
         }
@@ -269,6 +282,13 @@ public class GlobalListeners implements Listener {
                         entity.getWorld().playSound(entity.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 10.0F, 1.0F);
                         EntityHelper.teleportEnderman(entity, entity.getLocation().getBlockX(), entity.getLocation().getBlockY(), entity.getLocation().getBlockZ(), entity.getWorld(), 64.0D);
                     }
+                }
+            }
+        }
+        if(getDay() >= 42){
+            if(entity instanceof Ghast g){
+                if(Data.has(g,"soulvag",PersistentDataType.STRING)){
+                    if(reason == EntityDamageEvent.DamageCause.PROJECTILE)e.setCancelled(true);
                 }
             }
         }

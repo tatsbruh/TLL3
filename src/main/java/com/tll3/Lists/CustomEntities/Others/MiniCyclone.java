@@ -62,6 +62,17 @@ public class MiniCyclone extends EntitySkeleton {
             EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 60);
             EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_normal");
             EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 0);
+        }else if(clase == CycloneClass.METAL){
+            this.getBukkitEntity().setCustomName(ChatUtils.format("#696969Metacyclone"));
+            EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
+            EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 20);
+            EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_metal");
+        }else if(clase == CycloneClass.RELIC){
+            this.getBukkitEntity().setCustomName(ChatUtils.format("#63856cWickedcyclone"));
+            EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
+            EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 50);
+            EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_relic");
+            EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 3);
         }
         EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(),new ItemStack(Material.AIR));
         new MiniCycloneTask((Skeleton) this.getBukkitEntity()).runTaskTimer(TLL3.getInstance(),0L,1L);

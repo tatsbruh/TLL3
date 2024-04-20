@@ -514,10 +514,14 @@ public class EntityNaturalSpawn implements Listener {
             case GHAST -> { if(getDay() >= 7){
                 if(reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG || reason == CreatureSpawnEvent.SpawnReason.SPAWNER){
                     if(getDay() >= 21){
-                        if(doRandomChance(35)){
+                        if(getDay() >= 42){
                             Entities.entropicDem((Ghast) entity);
                         }else{
-                            Entities.gPower((Ghast) entity);
+                            if(doRandomChance(35)){
+                                Entities.entropicDem((Ghast) entity);
+                            }else{
+                                Entities.gPower((Ghast) entity);
+                            }
                         }
                     }else{
                         Entities.gPower((Ghast) entity);
@@ -675,10 +679,19 @@ public class EntityNaturalSpawn implements Listener {
                 if((reason == CreatureSpawnEvent.SpawnReason.NATURAL || reason == CreatureSpawnEvent.SpawnReason.COMMAND || reason == CreatureSpawnEvent.SpawnReason.SPAWNER_EGG)) {
                     if(getDay() >= 21){
                         MagmaCube magma = (MagmaCube) entity;
-                        int minsize = 10;
-                        int maxsize = getRandomValue(6);
-                        int result = minsize + maxsize;
-                        magma.setSize(result);
+                        if(getDay() >= 42){
+                            int minsize = 16;
+                            int maxsize = getRandomValue(4);
+                            int result = minsize + maxsize;
+                            EntityHelper.setMobDamage(magma,(result) + 5);
+                            magma.setSize(result);
+                        }else{
+                            int minsize = 10;
+                            int maxsize = getRandomValue(6);
+                            int result = minsize + maxsize;
+                            EntityHelper.setMobDamage(magma,result);
+                            magma.setSize(result);
+                        }
                     }
                 }
             }
@@ -687,10 +700,14 @@ public class EntityNaturalSpawn implements Listener {
                     if (getDay() >= 21) {
                         e.setCancelled(true);
                         Ghast g = (Ghast) Entities.spawnMob(loc,EntityType.GHAST);
-                        if(doRandomChance(35)){
+                        if(getDay() >= 42){
                             Entities.entropicDem(g);
                         }else{
-                            Entities.gPower(g);
+                            if(doRandomChance(35)){
+                                Entities.entropicDem(g);
+                            }else{
+                                Entities.gPower(g);
+                            }
                         }
                     }
                 }

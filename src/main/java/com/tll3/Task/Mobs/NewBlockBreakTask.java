@@ -1,32 +1,29 @@
 package com.tll3.Task.Mobs;
 
-import com.tll3.Listeners.EntityNaturalSpawn;
 import com.tll3.Misc.GenericUtils;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.entity.PiglinBrute;
 import org.bukkit.entity.Zombie;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Random;
-import java.util.Set;
-
-public class ArqBlockBreak extends BukkitRunnable {
-    private Zombie zombie;
-    public ArqBlockBreak(Zombie z){
-        this.zombie = z;
+public class NewBlockBreakTask extends BukkitRunnable {
+    private PiglinBrute piglinBrute;
+    public NewBlockBreakTask(PiglinBrute z){
+        this.piglinBrute= z;
     }
     @Override
     public void run() {
-        Block block = zombie.getTargetBlock(null,1);
+        Block block = piglinBrute.getTargetBlock(null,1);
         int x = block.getX();
         int y = block.getY();
         int z = block.getZ();
         Block block1 = block.getLocation().subtract(0,1,0).getBlock();
-        if(zombie.isDead() || !zombie.isValid()){cancel();return;}
+        if(piglinBrute.isDead() || !piglinBrute.isValid()){cancel();return;}
         if(block.getType() != Material.AIR || block1.getType() != Material.AIR){
-            if((getValidBlocks(block) && getValidBlocks(block1)) && zombie.getTarget() != null){
+            if((getValidBlocks(block) && getValidBlocks(block1)) && piglinBrute.getTarget() != null){
                 int random = GenericUtils.getRandomValue(100);
                 if(random >= 50){
                     block.getLocation().getWorld().spawnParticle(Particle.BLOCK_CRACK,block.getLocation(),10,1,1,1,1,block.getBlockData());

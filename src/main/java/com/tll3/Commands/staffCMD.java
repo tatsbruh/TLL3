@@ -271,7 +271,12 @@ public class staffCMD extends BaseCommand {
                     r.a_(loc.getX(), loc.getY(), loc.getZ());
                     worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
                 }
-                case "test2" -> Entities.starWither((WitherSkeleton) Entities.spawnMob(p.getLocation(),EntityType.WITHER_SKELETON));
+                case "test2" -> {
+                    WorldServer worldServer = ((CraftWorld) loc.getWorld()).getHandle();
+                    CustomShulker r = new CustomShulker(worldServer);
+                    r.a_(loc.getX(), loc.getY(), loc.getZ());
+                    worldServer.addFreshEntity(r, CreatureSpawnEvent.SpawnReason.CUSTOM);
+                }
 
 
                 default -> p.sendMessage(ChatUtils.format(ChatUtils.prefix + "Porfavor, Ingresa un mob valido"));

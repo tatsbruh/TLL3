@@ -157,9 +157,15 @@ public class ServerTickTask extends BukkitRunnable {
                 if (p.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.SOUL_SAND || p.getLocation().subtract(0, 1, 0).getBlock().getType() == Material.SOUL_SOIL) {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 0));
                 }
-                if (getMonsoon_active().equalsIgnoreCase("true")) {
+                if ((getMonsoon_active().equalsIgnoreCase("true") || getDay() < 42) || getDay() >= 42) {
                     if (p.getLocation().subtract(0, 1, 0).getBlock().getType().name().toLowerCase().contains("leaves")) {
-                        p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 2));
+                        if(getDay() >= 42){
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 2));
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 100, 0));
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, 1));
+                        }else{
+                            p.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 100, 2));
+                        }
                     }
                 }
             }
@@ -194,7 +200,11 @@ public class ServerTickTask extends BukkitRunnable {
             if(getDay() >= 35){
                 if(p.isInWater() || p.isUnderWater()){
                     if(freezeticks < 800){
-                        freezeticks++;
+                        if(getDay() >= 42){
+                            freezeticks += 2;
+                        }else{
+                            freezeticks++;
+                        }
                     }else if(freezeticks >= 800){
                         freezeticks = 801;
                         p.setFreezeTicks(200);
@@ -202,7 +212,7 @@ public class ServerTickTask extends BukkitRunnable {
                 }else{
                     freezeticks = 0;
                 }
-                if (getMonsoon_active().equalsIgnoreCase("true")) {
+                if ((getMonsoon_active().equalsIgnoreCase("true") && getDay() < 42) || getDay() >= 42) {
                     if (p.getLocation().subtract(0, 1, 0).getBlock().getType().name().toLowerCase().contains("slab")) {
                         ((CraftPlayer) p).getHandle().a(((CraftPlayer) p).getHandle().dN().f(), 99.0F);
                     }
@@ -211,7 +221,7 @@ public class ServerTickTask extends BukkitRunnable {
 
             //Handle mob spawn
             if(getDay() >= 35){
-                if(getMonsoon_active().equalsIgnoreCase("true")) {
+                if((getMonsoon_active().equalsIgnoreCase("true") && !(getDay() >= 42)) || getDay() >= 42) {
                     Location l = p.getLocation().clone();
                     if (random.nextInt(5) == 0) {
                         int pX = (random.nextBoolean() ? -1 : 1) * (random.nextInt(15)) + 15;
@@ -221,14 +231,15 @@ public class ServerTickTask extends BukkitRunnable {
                         Block up = block.getRelative(BlockFace.UP);
                         if (block.getType() != Material.AIR && up.getType() == Material.AIR) {
                             if(
-                                    isBlockInAWorld(block, "world", "glass", "glowstone", "obsidian")
+                                    ((isBlockInAWorld(block, "world", "glass", "glowstone", "obsidian")
                                     ||
                                     isBlockInAWorld(
                                             block,
                                             "world_nether",
-                                            "glass", "glowstone", "obsidian", "ice", "bedrock")
+                                            "glass", "glowstone", "obsidian", "ice", "bedrock")) && getDay() < 42) ||
+                                            ((isBlock(block,"glass","glowstone","obsidian","ice","bedrock","leaves")) && getDay() >= 42)
                             ) {
-                                System.out.println("MobRain.initMobs(up.getLocation());");
+                                //System.out.println("MobRain.initMobs(up.getLocation());");
                                 MobRain.initMobs(up.getLocation());
                             }
                         }
@@ -240,6 +251,12 @@ public class ServerTickTask extends BukkitRunnable {
 
     private static boolean isBlockInAWorld(Block block, String world, String... blocks){
         if(block.getLocation().getWorld().getName().equalsIgnoreCase(world))
+            for(String b : blocks)
+                if(block.getType().name().toLowerCase().contains(b))
+                    return true;
+        return false;
+    }
+    private static boolean isBlock(Block block, String... blocks){
             for(String b : blocks)
                 if(block.getType().name().toLowerCase().contains(b))
                     return true;

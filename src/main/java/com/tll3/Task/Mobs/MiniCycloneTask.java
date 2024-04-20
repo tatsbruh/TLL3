@@ -67,6 +67,13 @@ public class MiniCycloneTask extends BukkitRunnable {
                     if(Data.has(l,"minicyclone_normal", PersistentDataType.STRING)){
                         nearby.damage(25, l);
                     }
+                    if(Data.has(l,"minicyclone_metal", PersistentDataType.STRING)){
+                        nearby.damage(35, l);
+                    }
+                    if(Data.has(l,"minicyclone_relic", PersistentDataType.STRING)){
+                        nearby.damage(9, l);
+                        nearby.addPotionEffect(new PotionEffect(PotionEffectType.LUCK, 200, 0, true, false, true));
+                    }
                 }
             }
         }
