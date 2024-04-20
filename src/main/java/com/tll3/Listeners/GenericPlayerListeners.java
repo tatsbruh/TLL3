@@ -220,7 +220,8 @@ public class GenericPlayerListeners implements Listener {
     @EventHandler
     public void eatitemE(PlayerItemConsumeEvent e){
         var player = e.getPlayer();
-        var item = e.getItem();
+        ItemStack item = e.getItem();
+        //System.out.println("Custom?: " + item.getItemMeta().toString().contains("tll3:id"));
         if(Data.has(player,"curse", PersistentDataType.STRING)) {
             if (EntityNaturalSpawn.doRandomChance(GenericUtils.getPanicRNGValue(player))) {
                 if(player.getSaturation() >= 0){
@@ -523,7 +524,7 @@ public class GenericPlayerListeners implements Listener {
             return;
         }
         Player randomplayer = (Player) Bukkit.getOnlinePlayers().toArray()[new Random().nextInt(Bukkit.getOnlinePlayers().size())];
-        if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE || !randomplayer.getName().equals(p.getName()))return;
+        if(randomplayer.getGameMode() == GameMode.SPECTATOR || randomplayer.getGameMode() == GameMode.CREATIVE || randomplayer.getName().equals(p.getName()))return;
         int r = GenericUtils.getRandomValue(100);
         int maxchance = getDay() >= 21 ? 35 : 20;
         if(r < maxchance){
