@@ -38,7 +38,8 @@ public class Worlds {
             creator.environment(World.Environment.NETHER).generator(new Wasteyard()).generateStructures(false).type(WorldType.AMPLIFIED);
             return creator.createWorld();
         }
-        return getWorld("world_wasteyard");
+        //return getWorld("world_wasteyard");
+        return getWorld("world");
     }
 
     private static World funcPrimeval(){
@@ -50,7 +51,8 @@ public class Worlds {
             creator.type(WorldType.AMPLIFIED);
             return creator.createWorld();
         }
-        return getWorld("world_primeval");
+        //return getWorld("world_primeval");
+        return getWorld("world");
     }
 
     private static World funcDunes(){
@@ -62,7 +64,8 @@ public class Worlds {
             creator.type(WorldType.AMPLIFIED);
             return creator.createWorld();
         }
-        return getWorld("world_dunes");
+        //return getWorld("world_dunes");
+        return getWorld("world");
     }
 
     private static World funcScorched(){
@@ -74,7 +77,8 @@ public class Worlds {
             creator.type(WorldType.AMPLIFIED);
             return creator.createWorld();
         }
-        return getWorld("world_plateau");
+        //return getWorld("world_plateau");
+        return getWorld("world");
     }
 
     private static World funcZero(){
@@ -86,7 +90,8 @@ public class Worlds {
             creator.type(WorldType.AMPLIFIED);
             return creator.createWorld();
         }
-        return getWorld("world_zero");
+        //return getWorld("world_zero");
+        return getWorld("world");
     }
 
     public static World getWorld(String name) {

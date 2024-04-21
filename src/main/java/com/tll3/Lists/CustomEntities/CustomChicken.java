@@ -1,5 +1,6 @@
 package com.tll3.Lists.CustomEntities;
 
+import com.tll3.Listeners.EntityNaturalSpawn;
 import com.tll3.Misc.ChatUtils;
 import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.attributes.AttributeBase;
@@ -44,6 +45,7 @@ public class CustomChicken extends EntityChicken {
             this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(10);
         }
         this.craftAttributes.getAttribute(Attribute.GENERIC_MOVEMENT_SPEED).setBaseValue(0.5);
+        EntityNaturalSpawn.setCustomMobcap((LivingEntity) this.getBukkitEntity(),3,1.24,60,30,true);
     }
     @Override
     protected void B() {

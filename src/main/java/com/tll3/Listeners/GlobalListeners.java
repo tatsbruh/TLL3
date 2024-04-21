@@ -379,9 +379,11 @@ public class GlobalListeners implements Listener {
         var entity = e.getEntity();
         var potion = e.getNewEffect();
         if(entity instanceof LivingEntity l){
-            if(Data.has(l,"zenith",PersistentDataType.STRING)){
-                if(potion.getType() == PotionEffectType.SLOW || potion.getType() == PotionEffectType.WEAKNESS || potion.getType() == PotionEffectType.LUCK){
-                    e.setCancelled(true);
+            if(Data.has(l,"zenith",PersistentDataType.STRING)) {
+                if (potion != null) {
+                    if (potion.getType() == PotionEffectType.SLOW || potion.getType() == PotionEffectType.WEAKNESS || potion.getType() == PotionEffectType.LUCK) {
+                        e.setCancelled(true);
+                    }
                 }
             }
         }

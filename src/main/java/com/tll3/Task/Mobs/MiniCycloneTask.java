@@ -47,7 +47,7 @@ public class MiniCycloneTask extends BukkitRunnable {
                     DAMAGE_COOLDOWN = 5;
                     if(Data.has(l,"minicyclone_space", PersistentDataType.STRING)){
                         nearby.damage(7, l);
-                        if(EntityNaturalSpawn.doRandomChance(3)){
+                        if(EntityNaturalSpawn.doRandomChance(10)){
                             var list = l.getNearbyEntities(15, 15, 15);
                             var mob = list.get(new Random().nextInt(list.size()));
                             if (GenericUtils.isHostileMob(mob.getType())) {

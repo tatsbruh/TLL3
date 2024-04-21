@@ -29,6 +29,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import static com.tll3.Misc.EntityHelper.setIdentifierInt;
+import static com.tll3.Misc.EntityHelper.setIdentifierString;
 
 public class MiniCyclone extends EntitySkeleton {
     private final CycloneClass clase;
@@ -67,6 +68,7 @@ public class MiniCyclone extends EntitySkeleton {
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
             EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 20);
             EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_metal");
+            EntityHelper.setIdentifierString(this.getBukkitEntity(),"metal_enemy");
         }else if(clase == CycloneClass.RELIC){
             this.getBukkitEntity().setCustomName(ChatUtils.format("#63856cWickedcyclone"));
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));

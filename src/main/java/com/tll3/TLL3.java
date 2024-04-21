@@ -39,7 +39,7 @@ public final class TLL3 extends JavaPlugin {
         plugin = this;
         Biomes.registerAllBiomes();
         console("Plugin activado correctamente");
-        loadWorlds();
+        //loadWorlds();
         loadListeners();
         loadCommands();
         Recipes.registerAllRecipes();

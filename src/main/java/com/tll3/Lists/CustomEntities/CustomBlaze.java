@@ -109,7 +109,7 @@ public class CustomBlaze extends EntityBlaze {
                     double var8 = var0.dx() - this.a.dx();
                     if (this.c <= 0) { //ATACA MAS RAPIDO
 
-                        this.c = 4;
+                        this.c = 5;
                         double var10 = Math.sqrt(Math.sqrt(var2)) * 0.5;
                         for (int var12 = 0; var12 < 1; ++var12) {
                             EntitySmallFireball var13 = new EntitySmallFireball(this.a.dM(), this.a, this.a.eg().a(var4, 2.297 * var10), var6, this.a.eg().a(var8, 2.297 * var10));

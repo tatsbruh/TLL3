@@ -86,7 +86,7 @@ public class ServerTickTask extends BukkitRunnable {
                 for (Entity entity : p.getNearbyEntities(radius, radius, radius)) {
                     if (entity instanceof Enderman e) {
                         if(!e.getWorld().getName().equalsIgnoreCase("world_the_end")) {
-                            if (e.getTarget() == null) {
+                            if (e.getTarget() == null && e.hasLineOfSight(p)) {
                                 e.setTarget(p);
                             }
                         }

@@ -386,6 +386,11 @@ public class GenericEntityListeners implements Listener {
                     p.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,150,0,true,false,true));
                 }
                 if(Data.has(enderman,"zenithenderman",PersistentDataType.STRING)){
+                    if(EntityNaturalSpawn.doRandomChance(30)){
+                        p.getLocation().getWorld().playSound(p.getLocation(), Sound.ENTITY_PLAYER_ATTACK_CRIT,10.0F,-1.0F);
+                        p.getLocation().getWorld().spawnParticle(Particle.DAMAGE_INDICATOR,p.getLocation(),25,1,1,1,0.3);
+                        e.setDamage(e.getDamage() * 3);
+                    }
                     Bukkit.getScheduler().runTaskLaterAsynchronously(TLL3.getInstance(), () -> {
                         p.setNoDamageTicks(0);
                         p.setLastDamage(Integer.MAX_VALUE);
@@ -782,9 +787,10 @@ public class GenericEntityListeners implements Listener {
 
         if (entity instanceof Skeleton s) {
             if(Data.has(s,"zenithskeleton",PersistentDataType.STRING)){
-                EntityHelper.setIdentifierString(projectile,"steeltnt");
-                EntityHelper.setIdentifierString(projectile,"lol");
-                EntityHelper.setIdentifierString(projectile, "void");
+                EntityHelper.setIdentifierString(projectile,"fefe");
+                if(Math.random() < 0.2){
+                    EntityHelper.setIdentifierString(projectile, "rev_explosion");
+                }
                 new HomingTask(projectile).runTaskTimer(TLL3.getInstance(),10L,1L);
                 new BukkitRunnable() {
                     @Override
@@ -1193,6 +1199,19 @@ public class GenericEntityListeners implements Listener {
                 }
                 if (hbl != null) {
                     hbl.getLocation().getWorld().strikeLightning(hbl.getLocation());
+                }
+            }
+        }
+
+        if(source instanceof Shulker s){
+            if (Data.has(s, "eldritchmodule", PersistentDataType.STRING)) {
+                if (hen != null) {
+                    if(hen instanceof Player p){
+                        p.addPotionEffect(new PotionEffect(PotionEffectType.LUCK,250,0,true,false,true));
+                    }
+                }
+                if (hbl != null) {
+                    hbl.getLocation().createExplosion(s,7,true,true);
                 }
             }
         }
