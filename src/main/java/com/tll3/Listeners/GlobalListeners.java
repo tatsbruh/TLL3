@@ -277,9 +277,9 @@ public class GlobalListeners implements Listener {
                 case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR -> e.setCancelled(true);
             }
         }
-        if(Data.has(entity,"relicmob",PersistentDataType.STRING) || Data.has(entity,"zenith",PersistentDataType.STRING)){
+        if(Data.has(entity,"relicmob",PersistentDataType.STRING) || Data.has(entity,"zenith",PersistentDataType.STRING) || Data.has(entity,"boss",PersistentDataType.STRING)){
             switch (reason){
-                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE,ENTITY_EXPLOSION,BLOCK_EXPLOSION,LIGHTNING -> e.setCancelled(true);
+                case FALL,FALLING_BLOCK,SUFFOCATION,DROWNING,LAVA,THORNS,CONTACT,HOT_FLOOR,MAGIC,SONIC_BOOM,POISON,WITHER,FIRE,FIRE_TICK,FREEZE,ENTITY_EXPLOSION,BLOCK_EXPLOSION,LIGHTNING,CRAMMING -> e.setCancelled(true);
             }
         }
         if(getDay() >= 35) {

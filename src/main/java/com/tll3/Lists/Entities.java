@@ -10,6 +10,8 @@ import com.tll3.Misc.ItemBuilder;
 import com.tll3.Misc.Particles.ParticleDisplay;
 import com.tll3.Misc.Particles.XParticle;
 import com.tll3.TLL3;
+import com.tll3.Task.Bosses.Boss1Task;
+import com.tll3.Task.Bosses.BossHealthbar;
 import com.tll3.Task.Mobs.*;
 import net.minecraft.server.level.WorldServer;
 import net.minecraft.world.entity.EntityInsentient;
@@ -24,6 +26,9 @@ import net.minecraft.world.entity.monster.piglin.EntityPiglinBrute;
 import net.minecraft.world.entity.player.EntityHuman;
 import net.minecraft.world.entity.projectile.EntityFireworks;
 import org.bukkit.*;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarFlag;
+import org.bukkit.boss.BarStyle;
 import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEnderman;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftIronGolem;
@@ -1189,6 +1194,51 @@ public class Entities {
 
 
 
+
+
+
+
+
+
+    public static void wayfarerBoss(Location loc){
+        Skeleton s = (Skeleton) spawnMob(loc,EntityType.SKELETON);
+        setName(s,"&k&7||| &4&lThe Wayfarer &k&7|||");
+        setMobHealth(s,300);
+        setMobDamage(s,30);
+        new Boss1Task(s).runTaskTimer(TLL3.getInstance(),0L,1L);
+        setBossMob(s,"&k&7||| &4&lThe Wayfarer &k&7|||",BarColor.RED,BarStyle.SEGMENTED_6,BarFlag.PLAY_BOSS_MUSIC);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static void setBossMob(LivingEntity living, String name, BarColor color, BarStyle style, BarFlag... flags){
+        setIdentifierString(living,"boss");
+        setKnockresist(living,9999);
+        setMobRange(living,9999);
+        living.setRemoveWhenFarAway(false);
+        living.setPersistent(true);
+        new BossHealthbar(TLL3.getInstance(),living,name,color,style,flags).runTaskTimer(TLL3.getInstance(),0L,1L);
+    }
     public static LivingEntity spawnMob(Location loc, EntityType entityType){
        return (LivingEntity) loc.getWorld().spawnEntity(loc,entityType);
     }

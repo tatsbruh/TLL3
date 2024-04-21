@@ -17,7 +17,6 @@ import com.tll3.Misc.GenericUtils;
 import com.tll3.Misc.Monsoon;
 import com.tll3.Misc.World.Fawe;
 import com.tll3.TLL3;
-import com.tll3.Task.BossTask;
 import com.tll3.Task.MobRain;
 import net.minecraft.server.level.WorldServer;
 import org.bukkit.Bukkit;
@@ -159,6 +158,7 @@ public class staffCMD extends BaseCommand {
     }
 
     @Subcommand("monsoon")
+    @CommandCompletion("start|stop")
     @CommandPermission("staff.admin")
     @Description("starts or ends a monsoon fuck tg")
     public void monsoon(CommandSender sender,String[] args){
@@ -166,6 +166,17 @@ public class staffCMD extends BaseCommand {
             switch (args[0].toLowerCase()){
                 case "start" -> Bukkit.getPluginManager().callEvent(new Monsoon.StartMonsoon(Monsoon.StartMonsoon.Cause.COMMAND));
                 case "stop" -> Bukkit.getPluginManager().callEvent(new Monsoon.StopMonsoon(Monsoon.StopMonsoon.Cause.COMMAND));
+            }
+        }
+    }
+    @Subcommand("boss")
+    @CommandPermission("staff.admin")
+    @CommandCompletion("wayfarer")
+    @Description("summons a server boss wowza")
+    public void boss(CommandSender sender,String[] args){
+        if (sender instanceof Player p && args.length > 0){
+            switch (args[0].toLowerCase()){
+                case "wayfarer" -> Entities.wayfarerBoss(p.getLocation());
             }
         }
     }

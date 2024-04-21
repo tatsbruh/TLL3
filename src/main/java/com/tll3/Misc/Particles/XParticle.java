@@ -6,6 +6,29 @@ package com.tll3.Misc.Particles;
  * */
 
 
+/*
+ * The MIT License (MIT)
+ *
+ * Copyright (c) 2024 Crypto Morin
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+ * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+ * FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ */
+
+
 import com.google.common.base.Enums;
 import org.bukkit.Color;
 import org.bukkit.*;
@@ -91,7 +114,7 @@ import java.util.function.Supplier;
  * in order to be compatible with other server softwares such as <a href="https://papermc.io/software/folia">Folia</a>.
  *
  * @author Crypto Morin
- * @version 7.1.0
+ * @version 7.1.1
  * @see ParticleDisplay
  * @see Particle
  * @see Location
@@ -406,7 +429,7 @@ public final class XParticle {
     public static void filledCircle(double radius, double rate, double radiusRate, ParticleDisplay display) {
         double dynamicRate = 0;
         for (double i = 0.1; i < radius; i += radiusRate) {
-            //noinspection ConstantValue
+            // noinspection ConstantValue
             if (i > radius) i = radius;
             dynamicRate += rate / (radius / radiusRate);
             circle(i, dynamicRate, display);
@@ -442,10 +465,9 @@ public final class XParticle {
                                                  double mass1, double mass2,
                                                  boolean dimension3, int speed, ParticleDisplay display) {
         // If you want the particles to stay. But it's gonna lag a lot.
-        //Map<Vector, Vector> locs = new HashMap<>();
+        // Map<Vector, Vector> locs = new HashMap<>();
 
         return new Runnable() {
-            final Vector rotation = new Vector(Math.PI / 33, Math.PI / 44, Math.PI / 55);
             double theta = Math.PI / 2;
             double theta2 = Math.PI / 2;
             double thetaPrime = 0;
@@ -455,7 +477,7 @@ public final class XParticle {
             public void run() {
                 int repeat = speed;
                 while (repeat-- != 0) {
-                    if (dimension3) display.rotate(rotation);
+                    if (dimension3) display.rotate(Math.PI / 33, Math.PI / 44, Math.PI / 55);
                     double totalMass = mass1 + mass2;
                     double totalMassDouble = 2 * totalMass;
                     double deltaTheta = theta - theta2;
@@ -1108,8 +1130,7 @@ public final class XParticle {
                 double y = Math.toRadians((60 + rotation) * offsety);
                 double z = Math.toRadians((30 + rotation) * offsetz);
 
-                Vector vector = new Vector(x, y, z);
-                for (ParticleDisplay display : displays) display.rotate(vector);
+                for (ParticleDisplay display : displays) display.rotate(x, y, z);
                 runnable.run();
             }
         };
@@ -1170,7 +1191,7 @@ public final class XParticle {
                 ParticleDisplay.rotateAround(vector, x, y, z);
 
                 for (ParticleDisplay display : displays) {
-                    display.rotate(new Vector(x, y, z));
+                    display.rotate(x, y, z);
                     display.getLocation().add(vector);
                 }
                 runnable.run();
@@ -1427,7 +1448,7 @@ public final class XParticle {
                 double z = radius * Math.sin(theta);
 
                 for (double angle = 0; orbital > 0; angle += dist) {
-                    orbit.rotate(new Vector(0, 0, angle));
+                    orbit.rotate(ParticleDisplay.Rotation.of(angle, ParticleDisplay.Axis.Z));
                     orbit.spawn(x, 0, z);
                     orbital--;
                 }
@@ -1683,11 +1704,11 @@ public final class XParticle {
                     double x = radius * Math.cos(extension * y);
                     double z = radius * Math.sin(extension * y);
                     Location nucleotide1 = display.getLocation().clone().add(x, y, z);
-                    //display.spawn(x, y, z);
+                    // display.spawn(x, y, z);
                     circle(0.1, 10, display.cloneWithLocation(x, y, z));
                     Location nucleotide2 = display.getLocation().clone().subtract(x, -y, z);
                     circle(0.1, 10, display.cloneWithLocation(-x, y, -z));
-                    //display.spawn(-x, y, -z);
+                    // display.spawn(-x, y, -z);
 
                     // We're going to find the midpoint of the two nucleotides so we can
                     // form our hydrogen bond.
@@ -1818,7 +1839,7 @@ public final class XParticle {
         for (double i = 0; i < length; i += rate) {
             // Since the rate can be any number it's possible to get a higher number than
             // the length in the last loop.
-            //noinspection ConstantValue
+            // noinspection ConstantValue
             if (i > length) i = length;
             clone.spawn(x * i, y * i, z * i);
         }
@@ -2310,7 +2331,7 @@ public final class XParticle {
                 }
 
                 if (iteration != 0) continue;
-                //Color color = new Color(iteration | (iteration << 8));
+                // Color color = new Color(iteration | (iteration << 8));
                 display.spawn(x, y, 0);
             }
         }
@@ -2340,8 +2361,8 @@ public final class XParticle {
 
                 int i = colorScheme;
                 while (zx * zx + zy * zy < 4 && i > 0) {
-                    double xtemp = zx * zx - zy * zy + cx;//Math.pow((zx * zx + zy * zy), (n / 2)) * (Math.cos(n * Math.atan2(zy, zx))) + cx;
-                    zy = 2 * zx * zy + cy; //Math.pow((zx * zx + zy * zy), (n / 2)) * Math.sin(n * Math.atan2(zy, zx)) + cy;
+                    double xtemp = zx * zx - zy * zy + cx;// Math.pow((zx * zx + zy * zy), (n / 2)) * (Math.cos(n * Math.atan2(zy, zx))) + cx;
+                    zy = 2 * zx * zy + cy; // Math.pow((zx * zx + zy * zy), (n / 2)) * Math.sin(n * Math.atan2(zy, zx)) + cy;
                     zx = xtemp;
                     i--;
                 }
@@ -2562,7 +2583,7 @@ public final class XParticle {
     public static void atom(int orbits, double radius, double rate, ParticleDisplay orbit, ParticleDisplay nucleus) {
         double dist = Math.PI / orbits;
         for (double angle = 0; orbits > 0; angle += dist) {
-            orbit.rotate(new Vector(0, 0, angle));
+            orbit.rotate(ParticleDisplay.Rotation.of(angle, ParticleDisplay.Axis.Z));
             circle(radius, rate, orbit);
             orbits--;
         }
@@ -2648,7 +2669,7 @@ public final class XParticle {
 
                     theta = theta + Math.PI / 64;
                     x = times * Math.cos(theta);
-                    //y = 2 * Math.exp(-0.1 * times) * Math.sin(times) + 1.5;
+                    // y = 2 * Math.exp(-0.1 * times) * Math.sin(times) + 1.5;
                     z = times * Math.sin(theta);
                     secDisplay.spawn(x, y, z);
                 }
@@ -2773,9 +2794,9 @@ public final class XParticle {
                     // Transparency
                     if ((pixel >> 24) == 0x0) continue;
                     // 0 - 255
-                    //if ((pixel & 0xff000000) >>> 24 == 0) continue;
+                    // if ((pixel & 0xff000000) >>> 24 == 0) continue;
                     // 0.0 - 1.0
-                    //if (pixel == java.awt.Color.TRANSLUCENT) continue;
+                    // if (pixel == java.awt.Color.TRANSLUCENT) continue;
 
                     java.awt.Color color = new java.awt.Color(pixel);
                     int r = color.getRed();
