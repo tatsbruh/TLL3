@@ -78,7 +78,8 @@ public final class TLL3 extends JavaPlugin {
                 new MonsoonListeners(),
                 new EntityDrops(),
                 new MissionListeners(),
-                new InventoryLockListeners()
+                new InventoryLockListeners(),
+                new BossesListeners()
         );
     }
     public void loadCommands(){

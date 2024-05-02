@@ -19,97 +19,79 @@ import static com.tll3.Task.Bosses.BossUtils.*;
 
 public class Boss1Task extends BukkitRunnable {
 
+    public enum WayfarerPhases{
+        INTRO,PHASE_1,TRANSITION,PHASE_2
+    }
+
     private Skeleton skeleton;
+    private WayfarerPhases phase = WayfarerPhases.INTRO;
     public Boss1Task(Skeleton skeleton){
         this.skeleton = skeleton;
     }
 
     private String name = ChatUtils.format("&4&lThe Wayfarer: &7");
-    private static int stamina = 100; //STAMINA DE WAYFARER
-    private static int attackcd = 60; //COOLDOWN ENTRE ATAQUES
 
-    private boolean introduction = true; //ESTO CONTROLA SI ESTA EN SU ANIMACION DE INTRODUCCION
+    private boolean introduction = false;
+    private boolean introduction2 = false;
+    private boolean sandattack = false;
+    private int sandattacktime = 200;
+    private boolean canmakeattack = true;
 
-    private boolean aggresive = false; //ESTO CONTROLA SI ESTA EN MODO ATACAR
 
 
     //CONDICIONES DE ATAQUES
 
 
-
-
     @Override
     public void run() {
-        if(skeleton.isDead() || !skeleton.isValid()){
+        if (skeleton.isDead() || !skeleton.isValid()) {
             cancel();
             return;
         }
-
-
-
-        if(introduction){
-            introduction = false;
+        Bukkit.getConsoleSender().sendMessage(String.valueOf(phase));
+        if (!introduction && phase == WayfarerPhases.INTRO) {
+            introduction = true;
             freezeboss(skeleton);
-            runEventLater(()->{
+            runEventLater(() -> {
                 sendUniversalMessage(name + "Ready?");
-                runEventLater(() ->{
+                runEventLater(() -> {
                     unfreezeboss(skeleton);
-                    aggresive = true;
-                },60L);
-            },60L);
+                    phase = WayfarerPhases.PHASE_1;
+                }, 60L);
+            }, 60L);
         }
 
-
-        if(aggresive){
-            Bukkit.getConsoleSender().sendMessage(String.valueOf(stamina));
-            if(stamina < 100){
-                stamina++;
-            }
-            if(attackcd > 0){
-                attackcd--;
-            }
-
-            if(attackcd <= 0){
-                chooseAttack(skeleton,stamina);
-            }
-        }
-
-
-
-
-
-    }
-
-
-
-    private static void chooseAttack(Skeleton s,int stamina){
-        if(stamina > 0){
-            if(stamina >= 50){
-                int r1 = GenericUtils.getRandomValue(2);
-                if(r1 == 1){
-                    shootfire(s);
+        if(phase == WayfarerPhases.PHASE_1){
+            if(canmakeattack){
+                if(sandattacktime > 0){
+                    sandattacktime--;
                 }else{
-                    summonsand(s);
+                    tickSandAttack();
                 }
-                attackcd = 120;
             }
         }
     }
 
+    public void tickSandAttack(){
+        freezeboss(skeleton);
+        canmakeattack = false;
+        runEventLater(()->{
+            for(Player p : skeleton.getLocation().getNearbyPlayers(8,8,8)){
+                Location l = p.getLocation().clone();
+                FallingBlock sand = l.getWorld().spawnFallingBlock(l.add(0,5,0),Material.SAND,(byte) 0);
+                sand.setCustomName("Necromancer Orb");
+                sand.setDropItem(false);
+                sand.setGravity(false);
 
-    private static void shootfire(Skeleton s){
-        stamina = stamina - 50;
-        Fireball f = s.launchProjectile(Fireball.class);
-        f.setYield(0);
+                runEventLater(() ->{
+                    sand.setGravity(true);
+                },60L);
+            }
+            runEventLater(() ->{
+                unfreezeboss(skeleton);
+                canmakeattack = true;
+                sandattacktime = 200;
+            },90L);
+        },60L);
     }
-
-    private static void summonsand(Skeleton s) {
-        s.setAI(false);
-        stamina = stamina - 50;
-        Location loc = ValidPlayer().getLocation().clone();
-        FallingBlock fb = (FallingBlock) loc.getWorld().spawnFallingBlock(loc.add(0,4,0), Material.SAND,(byte) 0);
-        runEventLater(()-> s.setAI(true),60L);
-    }
-
-
 }
