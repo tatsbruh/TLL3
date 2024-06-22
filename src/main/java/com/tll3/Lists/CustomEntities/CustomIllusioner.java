@@ -37,7 +37,7 @@ import javax.annotation.Nullable;
 public class CustomIllusioner extends EntityIllagerIllusioner {
     public CustomIllusioner(World w){
         super(EntityTypes.ab,w);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#0e7b99Everyname"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#0e7b99Look-a-like"));
         EntityHelper.setIdentifierString(this.getBukkitEntity(),"illusionerex");
         EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(),new ItemStack(Material.BOW));
         this.craftAttributes.getAttribute(Attribute.GENERIC_MAX_HEALTH).setBaseValue(55);

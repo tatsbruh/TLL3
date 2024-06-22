@@ -36,7 +36,7 @@ import org.bukkit.persistence.PersistentDataType;
 import java.lang.reflect.Field;
 import java.util.Map;
 
-public class CustomAllay extends Allay {
+public class CustomAllay extends Allay { //UNUSED
     private static Field attributeMap;
     public CustomAllay(World world){
         super(EntityTypes.b,world);

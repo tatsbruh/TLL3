@@ -29,7 +29,7 @@ public class CustomBlaze extends EntityBlaze {
         this.a(PathType.i, 0.0F); //No longer avoids lava
         this.a(PathType.n, 0.0F); //No longer avoids fire
         this.a(PathType.o, 0.0F); //No longer avoids magma blocks
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Hellbringer"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#4000ffZenith Firestorm"));
         this.craftAttributes.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE).setBaseValue(100);
         EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 45);
         EntityHelper.setIdentifierString(this.getBukkitEntity(), "zenithblaze");

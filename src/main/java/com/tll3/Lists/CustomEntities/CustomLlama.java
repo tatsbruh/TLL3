@@ -21,7 +21,7 @@ public class CustomLlama extends EntityLlama {
 
     public CustomLlama(World w){
         super(EntityTypes.ak,w);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#bf000aLlama Imposible"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#bf000aLlama"));
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

@@ -31,6 +31,8 @@ import java.util.Objects;
 import static com.tll3.Enviroments.Worlds.loadWorlds;
 
 //TODO Please, promise me that you won't make a mess just like last time, okay? - 17/12/23
+//TODO Don't give up, you can do it - 22/06/24
+
 public final class TLL3 extends JavaPlugin {
     private static TLL3 plugin;
     public static TLL3 getInstance(){return plugin;}

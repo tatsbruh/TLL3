@@ -85,10 +85,10 @@ public class GenericPlayerListeners implements Listener {
             if(!item.hasItemMeta())return;
             if(checkItemId(item,"invulnerable_tome")){
                 if(p.hasCooldown(Material.BOOK)){
-                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&c¡No puedes usar este item aun!"));
+                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&cEl hechizo aun no esta listo"));
                     p.getWorld().playSound(p.getLocation(),Sound.BLOCK_NOTE_BLOCK_PLING,10.0F,-1.0F);
                 }else{
-                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eHas usado tu &8&lTomo de la Inmortalidad"));
+                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eTe has aplicado el hechizo de Invulnerabilidad"));
                     p.getWorld().playSound(p.getLocation(),Sound.BLOCK_ENCHANTMENT_TABLE_USE,10.0F,2.0F);
                     p.setCooldown(Material.BOOK,6000);
                     PlayerData.addDataEffect(p,"invulnerable",15,1);
@@ -110,11 +110,11 @@ public class GenericPlayerListeners implements Listener {
 
             if(checkItemId(item,"vortex_extinction")){
                 if(PlayerData.getItemConsumed(p,"vortex_extinction") >= 1){
-                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + " &c¡Ya has consumido este item!"));
+                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + " &cNo puedes volver a purificarte"));
                 }else{
-                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eHas consumido el #801212V#871b13o#8d2315r#942c16t#9a3518i#a13d19c#a7461bé #ae4e1cd#b5571de #bb601fl#c26820a #c87122E#cf7a23x#d68224t#dc8b26i#e39327n#e99c29c#f0a52ai#f6ad2có#fdb62dn&e, la maldición se ha quitado de ti"));
+                    p.sendMessage(ChatUtils.format(ChatUtils.prefix + "&eSientes que tu inventario ha recuperado su espacio"));
                     PlayerData.setItemConsumed(p,"vortex_extinction",1);
-                    item.setType(Material.AIR);
+                    item.setAmount(0);
                 }
             }
 

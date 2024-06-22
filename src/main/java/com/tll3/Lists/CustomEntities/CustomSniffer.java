@@ -24,7 +24,7 @@ public class CustomSniffer extends Sniffer {
     private static Field attributeMap;
     public CustomSniffer(World world){
         super(EntityTypes.aO,world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#ad183bSniffer Agresivo"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#ad183bBad Sniffer"));
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;

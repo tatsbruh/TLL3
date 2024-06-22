@@ -48,7 +48,7 @@ public class CustomMooshroom extends EntityMushroomCow {
     public CustomMooshroom(World world){
         super(EntityTypes.ap,world);
         if(GenericUtils.getDay() >= 35){
-            this.getBukkitEntity().setCustomName(ChatUtils.format("&c&lVacaseta Rabiosa"));
+            this.getBukkitEntity().setCustomName(ChatUtils.format("&c&lMawthshroom"));
         }
         ((LivingEntity) this.getBukkitEntity()).setRemoveWhenFarAway(true);
         this.getBukkitEntity().setPersistent(false);

@@ -38,16 +38,16 @@ public class ExposureTask extends BukkitRunnable {
         String exposure;
 
         if(exp >= 155 && exp <= 200){
-            exposure = ChatUtils.format("&8&l[#bf0000███☠███&8&l] &7| &4&l" + exp + "%");
+            exposure = ChatUtils.format("" + exp);
             range = 60.0;
         }else if(exp >= 95 && exp <= 155){
-            exposure = ChatUtils.format("&8&l[#ff5454███☢███&8&l] &7| &4&l" + exp + "%");
+            exposure = ChatUtils.format("" + exp);
             range = 40.0;
         }else if(exp >= 35 && exp <= 95){
-            exposure = ChatUtils.format("&8&l[#f6ff91███☹███&8&l] &7| &6&l" + exp + "%");
+            exposure = ChatUtils.format("" + exp);
             range = 20.0;
         }else{
-            exposure = ChatUtils.format("&8&l[#abffc1███☺███&8&l] &7| &2&l" + exp + "%");
+            exposure = ChatUtils.format("" + exp);
         }
 
         player.sendActionBar(exposure);

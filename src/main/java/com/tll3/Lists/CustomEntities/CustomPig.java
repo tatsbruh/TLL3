@@ -27,7 +27,7 @@ public class CustomPig extends EntityPig {
     private static Field attributeMap;
     public CustomPig(World w){
         super(EntityTypes.aw,w);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#7a3d5bCerdo Rabioso"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#7a3d5bCrazy Pig"));
         this.getBukkitEntity().setPersistent(false);
         this.addEffect(new MobEffect(MobEffects.a,Integer.MAX_VALUE,1), EntityPotionEffectEvent.Cause.PLUGIN);
         this.persist = false;

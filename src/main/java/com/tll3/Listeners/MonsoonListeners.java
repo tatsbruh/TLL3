@@ -40,7 +40,7 @@ public class MonsoonListeners implements Listener {
         String messageBar;
 
         if (GenericUtils.getTyphoonactive().equalsIgnoreCase("true")) {
-            messageBar = ChatUtils.format("#259c9a☀ #77f7f6Vortex Outbreak #259c9a☀ &7| #008a8a");
+            messageBar = ChatUtils.format("#259c9a☀ #77f7f6Monsoon Outbreak #259c9a☀ &7| #008a8a");
         } else {
             messageBar = ChatUtils.format("#1b20b5☽ Monsoon ☽ &7| #516ebd");
         }
@@ -109,7 +109,7 @@ public class MonsoonListeners implements Listener {
             sp.addPotionEffect(new PotionEffect(PotionEffectType.DARKNESS,60,0,false,false,false));
             sp.getLocation().getWorld().playSound(sp.getLocation(),Sound.BLOCK_END_PORTAL_SPAWN,10.0F,-1.0F); //Placeholder
             if (isTyphoonActive){
-                sp.sendTitle(ChatUtils.format("#305bab☀ #5acce8¡Vortex Outbreak! #305bab☀"),ChatUtils.format("#4c717a☁ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☁"),0,80,20);
+                sp.sendTitle(ChatUtils.format("#305bab☀ #5acce8¡Monsoon Outbreak! #305bab☀"),ChatUtils.format("#4c717a☁ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☁"),0,80,20);
             } else {
                 sp.sendTitle(ChatUtils.format("#0023ad☽ ¡Monsoon! ☽"), ChatUtils.format("#4d52d1☂ Duración: " + GenericUtils.doTimeFormat(currentStormDuration) + " ☂"), 0, 80, 20);
             }

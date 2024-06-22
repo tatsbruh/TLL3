@@ -58,19 +58,19 @@ public class MiniCyclone extends EntitySkeleton {
             EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 1);
 
         }else if(clase == CycloneClass.NORMAL){
-            this.getBukkitEntity().setCustomName(ChatUtils.format("&f&lTermacyclone"));
+            this.getBukkitEntity().setCustomName(ChatUtils.format("&f&lCyclone"));
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
             EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 60);
             EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_normal");
             EntityHelper.addPotionEffect((LivingEntity) this.getBukkitEntity(), PotionEffectType.SPEED, 0);
         }else if(clase == CycloneClass.METAL){
-            this.getBukkitEntity().setCustomName(ChatUtils.format("#696969Metacyclone"));
+            this.getBukkitEntity().setCustomName(ChatUtils.format("#696969Earthshaker"));
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
             EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 20);
             EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_metal");
             EntityHelper.setIdentifierString(this.getBukkitEntity(),"metal_enemy");
         }else if(clase == CycloneClass.RELIC){
-            this.getBukkitEntity().setCustomName(ChatUtils.format("#63856cWickedcyclone"));
+            this.getBukkitEntity().setCustomName(ChatUtils.format("#63856cEldritch Cyclone"));
             EntityHelper.setMainHand((LivingEntity) this.getBukkitEntity(), new ItemStack(Material.AIR));
             EntityHelper.setMobHealth((LivingEntity) this.getBukkitEntity(), 50);
             EntityHelper.setIdentifierString(this.getBukkitEntity(), "minicyclone_relic");

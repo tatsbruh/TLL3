@@ -67,7 +67,7 @@ public class Entities {
     }
 
     public static void skeAd(Skeleton s){
-        setName(s,"&4Rogue Skeleton");
+        setName(s,"&4Swordsbones");
         setMobHealth(s,30);
         setMobDamage(s,4);
         s.setShouldBurnInDay(false);
@@ -89,7 +89,7 @@ public class Entities {
         s.setShouldBurnInDay(false);
     }
     public static void skeRz(Skeleton s){
-        setName(s,"&0Razorback");
+        setName(s,"&0Deathshot");
         setMobHealth(s,25);
         if(getDay() >= 21){
             setMainHand(s,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,15).build());
@@ -343,7 +343,7 @@ public class Entities {
         setIdentifierString(s,"cata_ghast");
     }
     public static void phanD(Phantom phantom){
-        setName(phantom,"&7Dusk Phantom");
+        setName(phantom,"&7Dusk Monstrosity");
         if(getDay() >= 21) {
             setMobDamage(phantom, 9);
             phantom.setSize(19);
@@ -354,7 +354,7 @@ public class Entities {
         setIdentifierString(phantom,"duskphantom");
     }
     public static void silverday5(Silverfish silverfish){
-        setName(silverfish,"&cPowerful Silverfish");
+        setName(silverfish,"&cEmpowered Silverfish");
         setIdentifierString(silverfish,"powerfish");
         if(getDay() >= 42){
             addPotionEffect(silverfish,PotionEffectType.INCREASE_DAMAGE,30);
@@ -366,7 +366,7 @@ public class Entities {
         }
     }
     public static void drowAby(Drowned drowned){
-        setName(drowned,"&bAbyssal Drowned");
+        setName(drowned,"&bSulfuric Drowned");
         setMobDamage(drowned,6);
         setMobHealth(drowned,25);
         setMainHand(drowned,new ItemBuilder(Material.TRIDENT).addEnchant(Enchantment.IMPALING,5).addEnchant(Enchantment.CHANNELING,0).build());
@@ -386,20 +386,20 @@ public class Entities {
         new AshenWitherTask(w).runTaskTimer(TLL3.getInstance(),20L,450L);
     }
     public static void windChar(Blaze z){
-        setName(z,"&9&lDischarger");
+        setName(z,"&9&lCharged Spirit");
         z.setRemoveWhenFarAway(true);
         setMobHealth(z,40);
         setIdentifierString(z,"windcharger");
     }
     public static void armorBlaze(Blaze z){
-        setName(z,"#824205Armored Blaze");
+        setName(z,"#824205Magma Spirit");
         z.setRemoveWhenFarAway(true);
         setMobHealth(z,40);
         setIdentifierString(z,"armoredblaze");
     }
     public static void unstCr(Creeper c){
         if(getDay() >= 35) {
-            setName(c, "#573e45Specimen TSAR");
+            setName(c, "#573e45Specimen T-SAR");
             c.setPowered(true);
             c.setExplosionRadius(15);
             setMobHealth(c,25);
@@ -413,7 +413,7 @@ public class Entities {
     }
     public static void voidOver(Skeleton s){
         setMobHealth(s,35);
-        setName(s,"#3e574bVoid Overseer");
+        setName(s,"#3e574bEnder Revenant");
         setMobRange(s,100);
         setHead(s,new ItemStack(Material.END_PORTAL_FRAME));
         setIdentifierString(s,"void_overseer");
@@ -473,7 +473,7 @@ public class Entities {
         setIdentifierString(s,"neonspider");
     }
     public static void nwPillager(Pillager p,boolean canjoinraid){
-        setName(p,"#ff1717PyroIllager");
+        setName(p,"#ff1717ArsonIllager");
         setMainHand(p,new ItemBuilder(Material.CROSSBOW).addEnchant(Enchantment.QUICK_CHARGE,3).addEnchant(Enchantment.MULTISHOT,1).setUnbreakable(true).build());
         setOffhand(p,rocket());
         p.setCanJoinRaid(canjoinraid);
@@ -498,7 +498,7 @@ public class Entities {
         setIdentifierString(v,"vexex");
     }
     public static void windTyphoon(Breeze b){
-        setName(b,"#fbfbfbW#f3fafbi#ebf9fbn#e4f9fcd #dcf8fcT#d4f7fcy#ccf6fcp#c4f5fch#bdf5fdo#b5f4fdo#adf3fdn");
+        setName(b,"&f&lHurricane");
         setMobHealth(b,35);
         setIdentifierString(b,"windtyphoon");
     }
@@ -622,7 +622,7 @@ public class Entities {
     }
     public static void zombpigAlchemist(PigZombie z){
         injectHostileBehaviorToPig(z);
-        setName(z,"#857c5fAlchemist Pig");
+        setName(z,"#857c5fAlchemist Piglin");
         setMobHealth(z,25);
         setMainHand(z,new ItemBuilder(Material.SPLASH_POTION).addEnchant(Enchantment.DAMAGE_ALL,10).build());
         setIdentifierString(z,"alchpig");
@@ -647,7 +647,7 @@ public class Entities {
         }
     }
     public static void steelrailgunner(Skeleton s){
-        setName(s,"#403e3eSteel Rail-gunner");
+        setName(s,"#403e3eSteel Mortar");
         setIdentifierString(s,"steelrailgunner");
         setIdentifierString(s,"metal_enemy");
         setKnockresist(s,1000);
@@ -711,7 +711,7 @@ public class Entities {
 
     //Dia 28
     public static void starEnderman(Enderman e){
-        setName(e,"&bStarred Enderman &e&l★");
+        setName(e,"&bElite Enderman &e&l★");
         setMobHealth(e,55);
         setMobDamage(e,15);
         setIdentifierString(e,"starredenderman");
@@ -730,7 +730,7 @@ public class Entities {
         new WSkeletonJetpack(e).runTaskTimer(TLL3.getInstance(),0L,1L);
     }
     public static void starPillager(Pillager e){
-        setName(e,"&bInterestellar Scavenger &e&l★");
+        setName(e,"&bInterstellar Scavenger &e&l★");
         setMobHealth(e,40);
         setMobDamage(e,6);
         setMainHand(e,new ItemBuilder(Material.CROSSBOW).addEnchant(Enchantment.QUICK_CHARGE,5).addEnchant(Enchantment.PIERCING,3).build());
@@ -775,7 +775,7 @@ public class Entities {
         setIdentifierString(z,"blazephim");
     }
     public static void hellSymbiote(Blaze z){
-        setName(z,"&b&lHellfire Symbiote");
+        setName(z,"&b&lHelldust");
         setMobHealth(z,50);
         setMobDamage(z,50);
         addPotionEffect(z,PotionEffectType.SPEED,1);
@@ -793,7 +793,7 @@ public class Entities {
 
     //Dia 35
     public static void relicZombie(Zombie z){
-        setName(z,"&2&lRelic Juggernaut");
+        setName(z,"&2&lAncient Ghoul");
         setMobHealth(z,35);
         setMobDamage(z,16);
         addPotionEffect(z,PotionEffectType.SPEED,2);
@@ -802,7 +802,7 @@ public class Entities {
         setIdentifierString(z,"relicmob");
     }
     public static void relicSkeleton(Skeleton z){
-        setName(z,"&2&lAncient Sharpshooter");
+        setName(z,"&2&lMalevolent Bullseye");
         setMobHealth(z,35);
         setMobDamage(z,16);
         setMainHand(z,new ItemBuilder(Material.BOW).addEnchant(Enchantment.ARROW_DAMAGE,45).build());

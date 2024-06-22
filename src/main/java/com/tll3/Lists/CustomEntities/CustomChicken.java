@@ -28,7 +28,7 @@ public class CustomChicken extends EntityChicken {
     private static Field attributeMap;
     public CustomChicken(World world){
         super(EntityTypes.r,world);
-        this.getBukkitEntity().setCustomName(ChatUtils.format("#ebb434Pollo Cruel"));
+        this.getBukkitEntity().setCustomName(ChatUtils.format("#ebb434Cockatrice"));
         this.getBukkitEntity().setPersistent(false);
         this.persist = false;
         try { // register follow range attributes

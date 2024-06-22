@@ -21,9 +21,9 @@ public class Items {
                 .setLore(
                         "&7Dentro de estas paginas se encuentra un hechizo",
                         "&7que te permite obtener el efecto de &8&lInvulnerable&7,",
-                        "&7que te hace &cinmune &7a cualquier fuente de daño por 15 segundos.",
+                        "&7que te hace &inmune &7a cualquier fuente de daño por 15 segundos.",
                         "",
-                        "&8Cooldown de 5 minutos."
+                        "&8CD: 5 min"
                 )
                 .addEnchant(Enchantment.FROST_WALKER,1)
                 .addItemFlags(ItemFlag.HIDE_ENCHANTS)
@@ -38,13 +38,13 @@ public class Items {
 
     public static ItemStack dreadClaymore(){
         return new ItemBuilder(Material.NETHERITE_SWORD)
-                .setDisplayName("&cClaymore of the Depths")
+                .setDisplayName("&cDevilish Claymore")
                 .setID("dread_claymore")
                 .setUnbreakable(true)
                 .addEnchant(Enchantment.FIRE_ASPECT,2)
                 .setLore(
                         "",
-                        "&8Espada hecho de los restos de los &cRevenants.",
+                        "&8Espada hecho de los restos de los &cRevenants",
                         "&8Infligue &7Debilidad I &8en los mobs y hacen que",
                         "&8tomen &cx5 &8de daño por fuego.",
                         ""
@@ -53,7 +53,7 @@ public class Items {
 
     public static ItemStack dreadBow(){
         return new ItemBuilder(Material.BOW)
-                .setDisplayName("&cLongbow of the Depths")
+                .setDisplayName("&cHellshot")
                 .setID("dread_bow")
                 .setUnbreakable(true)
                 .addEnchant(Enchantment.ARROW_FIRE,1)
@@ -137,7 +137,7 @@ public class Items {
     //dia 21
     public static ItemStack vortexExtinction(){
         return new ItemBuilder(Material.LIGHT_GRAY_DYE)
-                .setDisplayName("#B134E6P#AC35E8u#A737EAr#A138EBi#9C3AEDt#973BEFy #923DF1o#8D3EF3f #873FF4t#8241F6h#7D42F8e #7844FAV#7245FBo#6D47FDi#6848FFd")
+                .setDisplayName("&c&lThe Purifier")
                 .setID("vortex_extinction")
                 .setLore(
                         "#2e3123\"#333423E#373623l #3c3922f#403c22i#453e22n #4a4122e#4e4421s#534621t#574921a #5c4c21c#614e20a#655120d#6a5420a #6e5720v#73591fe#785c1fz #7c5f1fm#81611fa#85641es #8a671ec#8f691ee#936c1er#986f1dc#9c711da#a1741d\"",
@@ -151,7 +151,7 @@ public class Items {
     //Revenant Drops
     public static ItemStack infestedFlesh(){
         return new ItemBuilder(Material.ROTTEN_FLESH)
-                .setDisplayName("&cInfested Rotten Flesh")
+                .setDisplayName("&cInfested Flesh")
                 .setLore(
                         "",
                         "&8Carne del &4Revenant Zombie&8, usado para",
@@ -163,7 +163,7 @@ public class Items {
 
     public static ItemStack infestedBones(){
         return new ItemBuilder(Material.BONE)
-                .setDisplayName("&cInfested Bones")
+                .setDisplayName("&cGlitter Bones")
                 .setLore(
                         "",
                         "&8Huesos del &4Revenant Skeleton&8, usado para",
@@ -174,7 +174,7 @@ public class Items {
     }
     public static ItemStack silverStrings(){
         return new ItemBuilder(Material.COBWEB)
-                .setDisplayName("&cSilver Strings")
+                .setDisplayName("&cSilver Webs")
                 .setLore(
                         "",
                         "&8Telarañas del &4Revenant Spider&8, usado para",
