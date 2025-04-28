@@ -7,7 +7,7 @@ para sus bases de permamierdas piteros hechos con papel
 Disponible solamente para 1.20.4, preferiblemente usen Purpur 
 
 # Creditos
-- tatsbruh - https://x.com/tatstwoh_ - tatsbruh en discord
+- tatsbruh - Twitter[https://x.com/tatstwoh_] - tatsbruh en Discord
 - Carrotw
 
 # Distribucion y forks estan permitidos, si deseas cambiar algo CREA TU PROPIO FORK Y EDITA AHI, no saques pull requests o issues porque los borrare sin importar motivo 
