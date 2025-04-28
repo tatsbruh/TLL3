@@ -30,7 +30,7 @@ import java.util.Objects;
 
 import static com.tll3.Enviroments.Worlds.loadWorlds;
 
-//Hola, ¿puedo decir la palabra Nigga aquí o la palabra Nigga está prohibida? Solo para saber si puedo decir la palabra Nigga
+//the las life temporada 5488 la venganza de mutansito
 
 public final class TLL3 extends JavaPlugin {
     private static TLL3 plugin;
